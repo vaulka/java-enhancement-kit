@@ -1,0 +1,49 @@
+plugins {
+    id "java-library"
+}
+
+ext {
+    lombokVersion = "1.18.22"
+
+    springBootVersion = "2.5.6"
+    servletVersion = "4.0.1"
+    springfoxVersion = "3.0.0"
+    mybatisPlusVersion = "3.4.3.4"
+    hibernateValidatorVersion = "6.2.0.Final"
+
+    springCloudVersion = "2020.0.4"
+
+    springDependencyManagementVersion = "1.0.11.RELEASE"
+
+    jwtVersion = "3.18.2"
+    mysqlVersion = "8.0.26"
+    hikariVersion = "5.0.0"
+    caffeineVersion = "3.0.4"
+    commonsTextVersion = "1.9"
+    fastjsonVersion = "1.2.76"
+    commonsCodecVersion = "1.15"
+    aliyunSdkOssVersion = "3.14.0"
+    commonsLang3Version = "3.12.0"
+    googleAnnotationsVersion = "3.0.1"
+    commonsCollections4Version = "4.4"
+}
+
+allprojects {
+
+    apply plugin: "idea"
+    apply plugin: "maven-publish"
+
+    sourceCompatibility = 11
+    targetCompatibility = 11
+
+    group "com.pongsky.repository"
+    version "1.0.0"
+
+    repositories {
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+        mavenCentral()
+    }
+
+}

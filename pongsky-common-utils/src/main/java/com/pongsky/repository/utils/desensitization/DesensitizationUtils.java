@@ -1,0 +1,37 @@
+package com.pongsky.repository.utils.desensitization;
+
+import org.apache.commons.lang3.StringUtils;
+
+/**
+ * @author pengsenhao
+ * @description 大概描述所属模块和介绍
+ * @date 2022-02-08 2:00 下午
+ */
+public class DesensitizationUtils {
+
+    /**
+     * 数据脱敏
+     * 将字符串明文保留前 start 位 以及 后 end 位，中位用 * 代替
+     * <p>
+     * 如果字符串长度不足，则按明文处理
+     *
+     * @param str   字符串
+     * @param start 明文保留前 start 位
+     * @param end   明文保留后 end 位
+     * @return 脱敏后的字符串
+     * @description 详细写出代码处理流程, 方法内也要详细注释
+     * @author pengsenhao
+     * @date 2022-02-08 1:49 下午
+     */
+    public static String desensitization(String str, int start, int end) {
+        if (StringUtils.isBlank(str) || 0 > start || 0 > end) {
+            return str;
+        } else if (start + end >= str.length()) {
+            return str;
+        }
+        return StringUtils.left(str, start)
+                .concat(StringUtils.leftPad("", str.length() - start - end, "*"))
+                .concat(StringUtils.right(str, end));
+    }
+
+}

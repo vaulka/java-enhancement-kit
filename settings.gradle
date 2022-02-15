@@ -1,0 +1,4 @@
+rootProject.name = 'pongsky-repository'
+include 'pongsky-common-utils'
+include 'pongsky-config-core'
+include 'pongsky-config-web'
