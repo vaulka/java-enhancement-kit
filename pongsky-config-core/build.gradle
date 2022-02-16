@@ -52,7 +52,7 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "common-config-core"
+            artifactId "config-core"
             version version.toString()
             description "Spring Cloud 增强工具 之 config-core 模块"
 

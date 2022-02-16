@@ -44,7 +44,7 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "common-config-web"
+            artifactId "config-web"
             version version.toString()
             description "Spring Cloud 增强工具 之 config-web 模块"
 
