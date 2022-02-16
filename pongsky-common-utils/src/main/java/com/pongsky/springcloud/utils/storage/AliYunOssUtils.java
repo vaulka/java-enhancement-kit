@@ -43,6 +43,16 @@ public class AliYunOssUtils implements StorageUtils {
     }
 
     /**
+     * 创建 client
+     *
+     * @return 创建 client
+     * @author pengsenhao
+     */
+    private OSS getClient() {
+        return new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+    }
+
+    /**
      * 文件上传
      *
      * @param fileName    文件名称
@@ -52,17 +62,17 @@ public class AliYunOssUtils implements StorageUtils {
      */
     @Override
     public String upload(String fileName, InputStream inputStream) {
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        OSS client = this.getClient();
         try {
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, fileName, inputStream);
-            ossClient.putObject(putObjectRequest);
+            client.putObject(putObjectRequest);
         } catch (OSSException e) {
             throw new RuntimeException(e.getErrorMessage(), e);
         } catch (ClientException e) {
             throw new RuntimeException(e.getErrorMessage(), e);
         } finally {
-            if (ossClient != null) {
-                ossClient.shutdown();
+            if (client != null) {
+                client.shutdown();
             }
         }
         return "/" + fileName;

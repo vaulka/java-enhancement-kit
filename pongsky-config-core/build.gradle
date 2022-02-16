@@ -91,22 +91,13 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    runtimeOnly "com.zaxxer:HikariCP:$hikariVersion"
-    runtimeOnly "mysql:mysql-connector-java:$mysqlVersion"
-
-    api "com.github.ben-manes.caffeine:caffeine:$caffeineVersion"
     api "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
     compileOnly "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusVersion"
 
-    api "org.springframework.boot:spring-boot-starter-cache"
-    api "org.springframework.boot:spring-boot-starter-actuator"
-    api "org.springframework.boot:spring-boot-starter-validation"
     api "org.springframework.boot:spring-boot-starter-data-redis"
     compileOnly "org.springframework.boot:spring-boot-starter-web"
     compileOnly "org.springframework.boot:spring-boot-starter-quartz"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    api "org.springframework.cloud:spring-cloud-starter-bootstrap"
     api "org.springframework.cloud:spring-cloud-starter-openfeign"
-    api "org.springframework.cloud:spring-cloud-starter-consul-discovery"
 }

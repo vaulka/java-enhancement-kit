@@ -90,7 +90,7 @@ public class SystemConfig {
      */
     private static String instanceId;
 
-    @Value("${application.instance-id}")
+    @Value("${application.instance-id:${brokerId}}")
     public void setInstanceId(String instanceId) {
         SystemConfig.instanceId = instanceId;
     }

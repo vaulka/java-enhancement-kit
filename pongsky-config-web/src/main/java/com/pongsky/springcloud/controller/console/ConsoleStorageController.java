@@ -54,8 +54,7 @@ public class ConsoleStorageController {
         if (storageUtils == null) {
             return null;
         }
-        String fileName = storageUtils.buildFileName(file.getOriginalFilename(),
-                SystemConfig.getApplicationName(), SystemConfig.getActive().name());
+        String fileName = storageUtils.buildFileName(file.getOriginalFilename(), SystemConfig.getActive().name());
         String url = storageUtils.upload(fileName, file.getInputStream());
         return new UploadFileInfo(url);
     }

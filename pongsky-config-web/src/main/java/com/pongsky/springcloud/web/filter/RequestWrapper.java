@@ -1,6 +1,7 @@
 package com.pongsky.springcloud.web.filter;
 
-import org.apache.http.entity.ContentType;
+
+import feign.form.ContentType;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -32,7 +33,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     public byte[] readBody(HttpServletRequest request) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (request.getContentType().contains(ContentType.APPLICATION_FORM_URLENCODED.getMimeType())) {
+        if (request.getContentType().contains(ContentType.URLENCODED.getHeader())) {
             request.getParameterMap().forEach((k, v) -> {
                 if (v == null) {
                     return;
