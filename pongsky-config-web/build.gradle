@@ -16,7 +16,7 @@ dependencyManagement {
 }
 
 dependencies {
-    api project(":pongsky-config-core")
+    api project(":config-core")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"

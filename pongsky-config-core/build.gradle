@@ -24,7 +24,7 @@ processResources {
 }
 
 dependencies {
-    api project(":pongsky-common-utils")
+    api project(":common-utils")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"

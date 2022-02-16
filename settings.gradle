@@ -1,4 +1,7 @@
-rootProject.name = 'spring-cloud-enhancement-kit'
-include 'pongsky-common-utils'
-include 'pongsky-config-core'
-include 'pongsky-config-web'
+rootProject.name = "spring-cloud-enhancement-kit"
+include "pongsky-common-utils"
+findProject(":pongsky-common-utils")?.name = "common-utils"
+include "pongsky-config-core"
+findProject(":pongsky-config-core")?.name = "config-core"
+include "pongsky-config-web"
+findProject(":pongsky-config-web")?.name = "config-web"
