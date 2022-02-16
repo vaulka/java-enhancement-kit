@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
+ * 当前请求信息
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-01-24 1:50 下午
  */
 @Data
 @Accessors(chain = true)

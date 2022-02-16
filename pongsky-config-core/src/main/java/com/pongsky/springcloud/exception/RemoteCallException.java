@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
  * 远程调用异常
  *
  * @author pengsenhao
- * @create 2021-02-14
  */
 public class RemoteCallException extends FeignException {
 

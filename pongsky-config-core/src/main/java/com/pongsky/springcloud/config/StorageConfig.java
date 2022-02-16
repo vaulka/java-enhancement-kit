@@ -10,9 +10,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * 云存储配置
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-13 3:44 下午
  */
 @Data
 @Configuration
@@ -33,9 +33,7 @@ public class StorageConfig {
      * 获取云存储工具类
      *
      * @return 获取云存储工具类
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-16 7:54 上午
      */
     public StorageUtils getUtils() {
         switch (this.type) {
@@ -94,9 +92,7 @@ public class StorageConfig {
          * 获取阿里云 OSS 工具类
          *
          * @return 获取阿里云 OSS 工具类
-         * @description 详细写出代码处理流程, 方法内也要详细注释
          * @author pengsenhao
-         * @date 2022-02-13 6:59 下午
          */
         public static AliYunOssUtils getUtils() {
             return new AliYunOssUtils(endpoint, bucket, accessKeyId, accessKeySecret);

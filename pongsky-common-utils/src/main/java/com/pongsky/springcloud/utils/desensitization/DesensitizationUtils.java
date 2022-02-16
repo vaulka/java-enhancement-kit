@@ -3,9 +3,9 @@ package com.pongsky.springcloud.utils.desensitization;
 import org.apache.commons.lang3.StringUtils;
 
 /**
+ * 数据脱敏工具类
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-08 2:00 下午
  */
 public class DesensitizationUtils {
 
@@ -19,9 +19,7 @@ public class DesensitizationUtils {
      * @param start 明文保留前 start 位
      * @param end   明文保留后 end 位
      * @return 脱敏后的字符串
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-08 1:49 下午
      */
     public static String desensitization(String str, int start, int end) {
         if (StringUtils.isBlank(str) || 0 > start || 0 > end) {

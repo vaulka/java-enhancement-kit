@@ -4,7 +4,6 @@ package com.pongsky.springcloud.exception;
  * 存在异常
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 public class ExistException extends RuntimeException {
 

@@ -6,9 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
+ * 时间工具类
+ *
  * @author pengsenhao
- * @description
- * @create 2021-08-03
  */
 public class DateTimeUtils {
 
@@ -42,9 +42,7 @@ public class DateTimeUtils {
      *
      * @param localDateTime LocalDateTime
      * @return String yyyy-MM-dd HH:mm:ss
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-13 3:31 下午
      */
     public static String localDateTime2String(LocalDateTime localDateTime) {
         return LOCAL_DATE_TIME_FORMAT.format(localDateTime);

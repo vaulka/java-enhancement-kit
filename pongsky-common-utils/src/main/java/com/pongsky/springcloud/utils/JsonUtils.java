@@ -9,8 +9,8 @@ import com.google.gson.GsonBuilder;
  * Json工具
  *
  * @author pengsenhao
- * @create 2019-10-21 9:55
  */
+@Deprecated
 public class JsonUtils {
 
     /**
@@ -36,9 +36,7 @@ public class JsonUtils {
      *
      * @param obj 微信信息
      * @return 将 微信 object 转 json 字符串
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-09 12:36 下午
      */
     public static String toJson(Object obj) {
         Gson gson = new GsonBuilder()

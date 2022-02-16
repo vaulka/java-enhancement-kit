@@ -6,9 +6,9 @@ import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
+ * 应用实例ID配置
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-07 22:10
  **/
 public class InstancePropertySourceEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
 

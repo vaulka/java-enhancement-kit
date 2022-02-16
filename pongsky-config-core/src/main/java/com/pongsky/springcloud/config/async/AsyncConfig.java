@@ -8,9 +8,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
+ * 异步配置
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-01-02 10:17
  **/
 @EnableAsync
 public class AsyncConfig {

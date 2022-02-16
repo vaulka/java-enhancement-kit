@@ -8,9 +8,9 @@ import java.text.MessageFormat;
 import java.util.UUID;
 
 /**
+ * 当前请求信息配置
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-01-21 10:38 上午
  */
 @Data
 public class CurrentThreadConfig {
@@ -30,9 +30,7 @@ public class CurrentThreadConfig {
      *
      * @param request request
      * @return 链路ID
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-21 10:58 上午
      */
     public static String buildTraceId(HttpServletRequest request) {
         String traceId;
@@ -52,9 +50,7 @@ public class CurrentThreadConfig {
      * 获取请求信息
      *
      * @return 获取请求信息
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-21 10:44 上午
      */
     public static CurrentInfo getCurrentInfo() {
         return CURRENT_INFO_THREAD_LOCAL.get();
@@ -64,9 +60,7 @@ public class CurrentThreadConfig {
      * 获取 链路ID
      *
      * @return 链路ID
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-24 3:17 下午
      */
     public static String getTraceId() {
         CurrentInfo currentInfo = getCurrentInfo();
@@ -80,9 +74,7 @@ public class CurrentThreadConfig {
      * 获取 Authorization
      *
      * @return Authorization
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-24 3:17 下午
      */
     public static String getAuthorization() {
         CurrentInfo currentInfo = getCurrentInfo();
@@ -96,9 +88,7 @@ public class CurrentThreadConfig {
      * 设置 请求信息
      *
      * @param currentInfo 请求信息
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-21 10:45 上午
      */
     public static void setCurrentInfo(CurrentInfo currentInfo) {
         CURRENT_INFO_THREAD_LOCAL.set(currentInfo);
@@ -107,9 +97,7 @@ public class CurrentThreadConfig {
     /**
      * 删除 请求信息
      *
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-21 10:46 上午
      */
     public static void relCurrentInfo() {
         CURRENT_INFO_THREAD_LOCAL.remove();

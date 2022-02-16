@@ -18,7 +18,6 @@ import java.util.Objects;
  * request 工具类
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 public class RequestUtils {
 
@@ -49,9 +48,7 @@ public class RequestUtils {
      *
      * @param annotations 注解列表
      * @return 获取请求方法
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-11 10:54 上午
      */
     public static RequestMethod getMethod(Annotation[] annotations) {
         return Arrays.stream(annotations)
@@ -77,9 +74,7 @@ public class RequestUtils {
      *
      * @param annotations 注解列表
      * @return 获取请求 uri
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-11 10:54 上午
      */
     public static String getUri(Annotation[] annotations) {
         return Arrays.stream(annotations)

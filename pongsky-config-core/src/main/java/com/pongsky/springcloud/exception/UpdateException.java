@@ -4,7 +4,6 @@ package com.pongsky.springcloud.exception;
  * 更新异常
  *
  * @author pengsenhao
- * @create 2021-02-12
  */
 public class UpdateException extends RuntimeException {
 

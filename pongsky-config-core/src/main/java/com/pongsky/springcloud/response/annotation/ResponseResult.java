@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
  * 统一响应数据注解
  *
  * @author pengsenhao
- * @create 2021-02-10
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

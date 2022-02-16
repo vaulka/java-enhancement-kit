@@ -17,12 +17,11 @@ import java.lang.reflect.Method;
  * controller 注解加入 request.attribute
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 @Aspect
 @Component
 @Order(value = 1)
-public class ControllerAnnotationAspect {
+public class ControllerAspect {
 
     @Before("(@within(org.springframework.stereotype.Controller) " +
             "|| @within(org.springframework.web.bind.annotation.RestController)) " +

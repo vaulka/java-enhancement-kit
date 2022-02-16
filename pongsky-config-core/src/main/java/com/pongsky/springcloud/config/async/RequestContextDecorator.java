@@ -9,9 +9,9 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 
 /**
+ * 异步间传递数据
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-01-21 4:05 下午
  */
 public class RequestContextDecorator implements TaskDecorator {
 

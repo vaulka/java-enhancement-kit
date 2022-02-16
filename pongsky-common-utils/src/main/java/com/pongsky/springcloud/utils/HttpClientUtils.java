@@ -16,9 +16,9 @@ import java.util.Map;
  * JDK11 Http Client工具类
  *
  * @author pengsenhao
- * @create 2019-10-16 16:16
  */
 @Slf4j
+@Deprecated
 public class HttpClientUtils {
 
     /**
@@ -292,9 +292,7 @@ public class HttpClientUtils {
     /**
      * 休眠
      *
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-09 9:07 下午
      */
     public static void sleep() {
         try {

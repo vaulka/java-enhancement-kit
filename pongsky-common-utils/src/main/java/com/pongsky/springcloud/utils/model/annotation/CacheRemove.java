@@ -9,8 +9,6 @@ import java.lang.annotation.Target;
  * 模糊删除key
  *
  * @author pengsenhao
- * @description
- * @create 2021-08-09
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -18,13 +16,13 @@ public @interface CacheRemove {
 
     /**
      * @return cacheNames
-     * @see {@link org.springframework.cache.annotation.CacheEvict#cacheNames()} ()}
+     * 用法参照 {@link org.springframework.cache.annotation.CacheEvict#cacheNames()} ()}
      */
     String cacheNames() default "";
 
     /**
      * @return key
-     * @see {@link org.springframework.cache.annotation.CacheEvict#key()}
+     * 用法参照 {@link org.springframework.cache.annotation.CacheEvict#key()}
      */
     String key() default "";
 

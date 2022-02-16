@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
+ * 文件上传返回信息
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-13 9:33 下午
  */
 @Data
 @NoArgsConstructor

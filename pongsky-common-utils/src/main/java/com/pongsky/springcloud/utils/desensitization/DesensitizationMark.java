@@ -15,8 +15,6 @@ import java.lang.annotation.Target;
  * 2、field type（字段类型）/ method returnType（方法返回值类型）必须为 String / Class
  *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-08 3:34 下午
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -27,9 +25,7 @@ public @interface DesensitizationMark {
      * 脱敏类型
      *
      * @return 脱敏类型
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-08 3:36 下午
      */
     DesensitizationType type();
 

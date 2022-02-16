@@ -5,9 +5,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import java.io.InputStream;
 
 /**
+ * 云存储工具类
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-13 6:36 下午
  */
 public interface StorageUtils {
 
@@ -22,9 +22,7 @@ public interface StorageUtils {
      * @param fileName 文件名称
      * @param args     参数列表
      * @return 文件访问路径
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-13 6:44 下午
      */
     default String buildFileName(String fileName, String... args) {
         StringBuilder sb = new StringBuilder();
@@ -54,9 +52,7 @@ public interface StorageUtils {
      * @param fileName    文件名称
      * @param inputStream input 流
      * @return 文件访问路径
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-13 6:37 下午
      */
     String upload(String fileName, InputStream inputStream);
 

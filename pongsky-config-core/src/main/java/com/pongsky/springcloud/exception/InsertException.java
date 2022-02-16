@@ -4,7 +4,6 @@ package com.pongsky.springcloud.exception;
  * 保存异常
  *
  * @author pengsenhao
- * @create 2021-02-12
  */
 public class InsertException extends RuntimeException {
 

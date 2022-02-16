@@ -11,7 +11,6 @@ import java.net.UnknownHostException;
  * 系统配置文件
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 @Component
 public class SystemConfig {

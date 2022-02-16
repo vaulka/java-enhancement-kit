@@ -8,9 +8,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * 序列化 String key 配置
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2021-11-25 14:37
  **/
 public class KeyStringRedisSerializer implements RedisSerializer<String> {
 

@@ -32,13 +32,12 @@ import java.util.concurrent.TimeUnit;
  * 防重检测
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 @Aspect
 @Component
 @Order(value = 2)
 @RequiredArgsConstructor
-public class PreventDuplicationControllerAspect {
+public class PreventDuplicationAspect {
 
     private final ObjectMapper jsonMapper;
     private final RedisTemplate<String, Object> redisTemplate;

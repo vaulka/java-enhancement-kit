@@ -15,9 +15,9 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * redis 配置
+ *
  * @author pengsenhao
- * @description redis 配置
- * @create 2020-03-15
  */
 @Component
 @EnableCaching

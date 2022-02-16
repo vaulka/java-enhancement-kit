@@ -6,8 +6,6 @@ package com.pongsky.springcloud.utils.trace;
  * x- 开头
  *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2021-12-31 23:55
  **/
 public interface DiyHeader {
 

@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
+ * 数据脱敏类型
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-08 3:21 下午
  */
 @Getter
 @AllArgsConstructor
@@ -100,9 +100,7 @@ public enum DesensitizationType {
      *
      * @param str 明文信息
      * @return 脱敏后的信息
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-08 3:22 下午
      */
     public abstract String desensitization(String str);
 

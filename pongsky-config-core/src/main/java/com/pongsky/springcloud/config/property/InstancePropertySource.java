@@ -6,9 +6,9 @@ import org.springframework.core.log.LogMessage;
 import javax.annotation.Nonnull;
 
 /**
+ * 应用实例ID属性配置信息
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-07 3:13 下午
  */
 public class InstancePropertySource extends PropertySource<Instance> {
 

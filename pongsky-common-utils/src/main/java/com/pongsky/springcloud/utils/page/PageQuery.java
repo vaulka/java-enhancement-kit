@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
  * 分页请求参数
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 @Data
 @NoArgsConstructor
@@ -77,6 +76,9 @@ public class PageQuery {
 
     /**
      * 偏移量
+     *
+     * @return 偏移量
+     * @author pengsenhao
      */
     @JsonIgnore
     public Long getOffset() {
@@ -87,6 +89,7 @@ public class PageQuery {
      * 赋值总数量、总页数
      *
      * @param count 总数量
+     * @author pengsenhao
      */
     public void setPageCount(Long count) {
         if (count == null) {

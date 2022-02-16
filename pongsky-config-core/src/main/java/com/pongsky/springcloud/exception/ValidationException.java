@@ -4,7 +4,6 @@ package com.pongsky.springcloud.exception;
  * 校验异常
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 public class ValidationException extends RuntimeException {
 

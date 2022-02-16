@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 校验工具类
+ *
  * @author pengsenhao
- * @description 校验类
- * @create 2020-03-12
  */
 public class ValidationUtils {
 

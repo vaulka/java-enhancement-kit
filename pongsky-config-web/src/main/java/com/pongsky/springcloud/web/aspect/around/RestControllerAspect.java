@@ -44,9 +44,10 @@ import java.util.stream.Collectors;
  * controller 请求日志打印
  * <p>
  * 数据脱敏
+ * <p>
+ * 云存储自动添加 uri
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 @Slf4j
 @Aspect

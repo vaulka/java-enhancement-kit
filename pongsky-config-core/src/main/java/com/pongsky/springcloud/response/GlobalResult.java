@@ -15,7 +15,6 @@ import lombok.experimental.Accessors;
  * 响应数据体
  *
  * @author pengsenhao
- * @create 2021-02-10
  */
 @ApiOperation("响应数据体")
 @Data
@@ -74,6 +73,7 @@ public class GlobalResult<T> {
      * 【成功】构造方法
      *
      * @param data 接口响应数据体
+     * @param <T>  范型
      * @return 成功响应体
      */
     public static <T> GlobalResult<T> success(T data) {

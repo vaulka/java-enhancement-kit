@@ -20,9 +20,9 @@ import java.text.MessageFormat;
 import java.util.List;
 
 /**
+ * Swagger 配置
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2021-12-04 23:34
  **/
 @Configuration
 @ConditionalOnProperty(value = "springfox.documentation.enabled", havingValue = "true", matchIfMissing = true)
@@ -32,9 +32,7 @@ public class SwaggerConfig {
      * 创建 swagger 配置信息
      *
      * @return 创建 swagger 配置信息
-     * @description 详细写出代码处理流程，方法内也要详细注释
      * @author pengsenhao
-     * @date 2021-12-04 23:40
      */
     @Bean
     public Docket docket() {

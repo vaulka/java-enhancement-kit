@@ -7,9 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 防重检测标记
+ *
  * @author pengsenhao
- * @description 防重注解
- * @create 2021-09-30
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

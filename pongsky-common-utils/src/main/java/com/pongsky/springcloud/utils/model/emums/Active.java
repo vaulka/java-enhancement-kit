@@ -4,7 +4,6 @@ package com.pongsky.springcloud.utils.model.emums;
  * 环境变量
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 public enum Active {
 

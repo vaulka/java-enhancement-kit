@@ -22,8 +22,9 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 /**
+ * Feign 配置
+ *
  * @author pengsenhao
- * @create 2021-03-02
  */
 @Component
 public class FeignConfig implements RequestInterceptor {

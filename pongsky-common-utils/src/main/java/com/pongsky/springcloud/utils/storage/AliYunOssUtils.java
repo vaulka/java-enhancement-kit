@@ -9,9 +9,9 @@ import com.aliyun.oss.model.PutObjectRequest;
 import java.io.InputStream;
 
 /**
+ * 阿里云 OSS 工具类
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-13 6:34 下午
  */
 public class AliYunOssUtils implements StorageUtils {
 
@@ -48,9 +48,7 @@ public class AliYunOssUtils implements StorageUtils {
      * @param fileName    文件名称
      * @param inputStream input 流
      * @return 文件访问路径
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-13 6:37 下午
      */
     @Override
     public String upload(String fileName, InputStream inputStream) {

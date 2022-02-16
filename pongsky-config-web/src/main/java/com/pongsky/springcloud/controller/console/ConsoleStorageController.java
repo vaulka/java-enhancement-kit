@@ -24,7 +24,6 @@ import java.io.IOException;
  * 公共组件 by 云存储
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 @Api(tags = "公共组件 by 云存储")
 @Slf4j
@@ -42,9 +41,8 @@ public class ConsoleStorageController {
      *
      * @param file 文件
      * @return 文件访问路径
-     * @description 详细写出代码处理流程, 方法内也要详细注释
+     * @throws IOException IOException
      * @author pengsenhao
-     * @date 2022-02-13 7:23 下午
      */
     @ApiOperation("文件上传")
     @PostMapping

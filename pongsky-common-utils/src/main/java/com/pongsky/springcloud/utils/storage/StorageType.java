@@ -1,9 +1,9 @@
 package com.pongsky.springcloud.utils.storage;
 
 /**
+ * 云存储类型
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-13 7:10 下午
  */
 public enum StorageType {
 

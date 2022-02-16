@@ -18,7 +18,6 @@ import java.lang.reflect.Method;
  * feign 远程调用日志打印
  *
  * @author pengsenhao
- * @create 2021-02-14
  */
 @Slf4j
 @Aspect

@@ -6,9 +6,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ * 实例ID生成器
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-07 3:14 下午
  */
 public class Instance {
 
@@ -16,9 +16,7 @@ public class Instance {
      * 获取实例ID
      *
      * @return 实例ID
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-07 3:16 下午
      */
     public String getId() {
         InetAddress address;

@@ -7,7 +7,6 @@ import lombok.Getter;
  * 响应数据枚举
  *
  * @author pengsenhao
- * @create 2021-02-10
  */
 @Getter
 @AllArgsConstructor

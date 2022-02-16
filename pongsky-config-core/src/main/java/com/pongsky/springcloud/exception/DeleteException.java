@@ -4,7 +4,6 @@ package com.pongsky.springcloud.exception;
  * 删除异常
  *
  * @author pengsenhao
- * @create 2021-02-12
  */
 public class DeleteException extends RuntimeException {
 

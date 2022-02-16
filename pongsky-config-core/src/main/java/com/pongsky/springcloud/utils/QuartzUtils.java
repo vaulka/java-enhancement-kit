@@ -20,7 +20,6 @@ import java.util.Date;
  * 定时任务工具类
  *
  * @author pengsenhao
- * @create 2021-02-25
  */
 @RequiredArgsConstructor
 public class QuartzUtils {
@@ -69,7 +68,9 @@ public class QuartzUtils {
      * @param name        任务名称
      * @param group       任务组
      * @param description 描述
-     * @param cron        时间循环
+     * @param jobDataMap  定时任务属性数据
+     * @param cron        cron 表达式
+     * @param t           job 实现类
      * @param <T>         泛型
      * @throws SchedulerException 调度器异常
      */
@@ -119,6 +120,7 @@ public class QuartzUtils {
      *
      * @param name  任务名称
      * @param group 任务组
+     * @return 根据任务名称和任务组检测存在
      * @throws SchedulerException 调度去异常
      */
     public boolean exists(String name, String group) throws SchedulerException {
