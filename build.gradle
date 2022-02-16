@@ -36,17 +36,7 @@ allprojects {
     targetCompatibility = 11
 
     group "com.pongsky.springcloud"
-    version "1.0.0"
-
-    task sourcesJar(type: Jar) {
-        from sourceSets.main.allJava
-        classifier 'sources'
-    }
-
-    task javadocJar(type: Jar) {
-        from javadoc
-        classifier 'javadoc'
-    }
+    version "1.0.0-release"
 
     repositories {
         mavenLocal()
