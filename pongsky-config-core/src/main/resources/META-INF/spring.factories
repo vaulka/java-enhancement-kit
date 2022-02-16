@@ -1,8 +1,8 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-com.pongsky.repository.config.property.InstancePropertySourceEnvironmentPostProcessor
+com.pongsky.springcloud.config.property.InstancePropertySourceEnvironmentPostProcessor
 
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.repository.config.FeignConfig,\
-com.pongsky.repository.config.StorageConfig,\
-com.pongsky.repository.config.SwaggerConfig,\
-com.pongsky.repository.config.SystemConfig
+com.pongsky.springcloud.config.FeignConfig,\
+com.pongsky.springcloud.config.StorageConfig,\
+com.pongsky.springcloud.config.SwaggerConfig,\
+com.pongsky.springcloud.config.SystemConfig

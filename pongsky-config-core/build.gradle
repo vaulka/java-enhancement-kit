@@ -17,6 +17,8 @@ dependencyManagement {
     }
 }
 
+compileJava.inputs.files(processResources)
+
 processResources {
     filter ReplaceTokens, tokens: [name: rootProject.name.toString(), version: version.toString()]
 }
@@ -40,7 +42,7 @@ dependencies {
     api "org.springframework.boot:spring-boot-starter-data-redis"
     compileOnly "org.springframework.boot:spring-boot-starter-web"
     compileOnly "org.springframework.boot:spring-boot-starter-quartz"
-    api "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     api "org.springframework.cloud:spring-cloud-starter-bootstrap"
     api "org.springframework.cloud:spring-cloud-starter-openfeign"

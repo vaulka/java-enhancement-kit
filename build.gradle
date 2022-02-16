@@ -36,7 +36,7 @@ allprojects {
     sourceCompatibility = 11
     targetCompatibility = 11
 
-    group "com.pongsky.repository"
+    group "com.pongsky.springcloud"
     version "1.0.0"
 
     repositories {

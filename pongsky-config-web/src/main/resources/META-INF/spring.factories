@@ -1,9 +1,10 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-com.pongsky.repository.config.property.InstancePropertySourceEnvironmentPostProcessor
+com.pongsky.springcloud.config.property.InstancePropertySourceEnvironmentPostProcessor
 
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.repository.web.aspect.around.RemoteCallAspect,\
-com.pongsky.repository.web.aspect.around.RestControllerAspect,\
-com.pongsky.repository.web.aspect.before.ControllerAnnotationAspect,\
-com.pongsky.repository.web.aspect.before.PreventDuplicationControllerAspect,\
-com.pongsky.repository.web.filter.ReplaceStreamFilter
+com.pongsky.springcloud.controller.console.ConsoleStorageController,\
+com.pongsky.springcloud.web.aspect.around.RemoteCallAspect,\
+com.pongsky.springcloud.web.aspect.around.RestControllerAspect,\
+com.pongsky.springcloud.web.aspect.before.ControllerAnnotationAspect,\
+com.pongsky.springcloud.web.aspect.before.PreventDuplicationControllerAspect,\
+com.pongsky.springcloud.web.filter.ReplaceStreamFilter
