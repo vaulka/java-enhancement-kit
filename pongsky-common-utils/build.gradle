@@ -71,7 +71,6 @@ dependencies {
     compileOnly("io.minio:minio:$minioVersion") {
         exclude group: "com.squareup.okhttp3", module: "okhttp"
     }
-    api "com.auth0:java-jwt:$jwtVersion"
     api "com.alibaba:fastjson:$fastjsonVersion"
     api "commons-codec:commons-codec:$commonsCodecVersion"
     api "org.apache.commons:commons-text:$commonsTextVersion"

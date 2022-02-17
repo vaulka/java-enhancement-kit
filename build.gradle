@@ -15,12 +15,8 @@ ext {
 
     springDependencyManagementVersion = "1.0.11.RELEASE"
 
-    jwtVersion = "3.18.2"
     minioVersion = "8.3.4"
-    mysqlVersion = "8.0.26"
-    hikariVersion = "5.0.0"
     okHttpVersion = "4.9.3"
-    caffeineVersion = "3.0.4"
     commonsTextVersion = "1.9"
     fastjsonVersion = "1.2.76"
     commonsCodecVersion = "1.15"
