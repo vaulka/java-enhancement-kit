@@ -34,7 +34,7 @@ allprojects {
     targetCompatibility = 11
 
     group "com.pongsky.springcloud"
-    version "1.0.0"
+    version "2.5.6-1.0.0"
 
     repositories {
         mavenLocal()
