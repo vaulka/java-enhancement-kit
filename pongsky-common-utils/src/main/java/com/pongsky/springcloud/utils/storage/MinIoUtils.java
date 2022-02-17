@@ -6,9 +6,9 @@ import io.minio.PutObjectArgs;
 import java.io.InputStream;
 
 /**
+ * MinIO 工具类
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-16 6:46 下午
  */
 public class MinIoUtils implements StorageUtils {
 
