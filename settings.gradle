@@ -1,4 +1,4 @@
-rootProject.name = "spring-cloud-enhancement-kit"
+rootProject.name = "java-enhancement-kit"
 include "kit-common-utils"
 findProject(":kit-common-utils")?.name = "common-utils"
 include "kit-spring-boot-starter-storage"

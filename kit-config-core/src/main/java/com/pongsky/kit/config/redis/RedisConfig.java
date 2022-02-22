@@ -4,13 +4,15 @@ import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import com.pongsky.kit.config.SystemConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -21,9 +23,10 @@ import java.util.concurrent.TimeUnit;
  *
  * @author pengsenhao
  */
-@Component
 @EnableCaching
 @RequiredArgsConstructor
+@Configuration(proxyBeanMethods = false)
+@AutoConfigureBefore(RedisAutoConfiguration.class)
 public class RedisConfig {
 
     private final SystemConfig systemConfig;
@@ -49,7 +52,7 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory factory) {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         // 创建 RedisTemplate 对象
         RedisTemplate<String, Object> template = new RedisTemplate<>();
 

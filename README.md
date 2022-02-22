@@ -4,7 +4,7 @@
     </a>
 </p>
 
-<p style="text-align:center"><b>Spring Cloud 增强套件</b> 旨在减少重复造轮子以及统一模块规范，值得一试。</p>
+<p style="text-align:center"><b>Java 增强套件</b> 旨在减少重复造轮子以及统一模块规范，值得一试。</p>
 
 > 本项目基于 `Spring Boot 2.5.6` 及对应 `Spring Cloud` 版本进行构建。
 
