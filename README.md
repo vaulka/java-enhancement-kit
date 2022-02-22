@@ -51,7 +51,7 @@
 ```xml
 
 <dependency>
-    <groupId>com.pongsky.springcloud</groupId>
+    <groupId>com.pongsky.kit</groupId>
     <artifactId>common-utils</artifactId>
     <version>${version}</version>
 </dependency>
@@ -60,7 +60,7 @@
 ```xml
 
 <dependency>
-    <groupId>com.pongsky.springcloud</groupId>
+    <groupId>com.pongsky.kit</groupId>
     <artifactId>config-core</artifactId>
     <version>${version}</version>
 </dependency>
@@ -69,7 +69,7 @@
 ```xml
 
 <dependency>
-    <groupId>com.pongsky.springcloud</groupId>
+    <groupId>com.pongsky.kit</groupId>
     <artifactId>config-web</artifactId>
     <version>${version}</version>
 </dependency>
@@ -78,15 +78,15 @@
 ## Gradle 依赖
 
 ```groovy
-api "com.pongsky.springcloud:common-utils:$version"
+api "com.pongsky.kit:common-utils:$version"
 ```
 
 ```groovy
-api "com.pongsky.springcloud:config-core:$version"
+api "com.pongsky.kit:config-core:$version"
 ```
 
 ```groovy
-api "com.pongsky.springcloud:config-web:$version"
+api "com.pongsky.kit:config-web:$version"
 ```
 
 ## 前置条件
@@ -135,7 +135,6 @@ api "com.pongsky.springcloud:config-web:$version"
 
 ```yml
 storage:
-  enable: true # 云存储是否启用
   type: aliyun # 云存储类型
   base-uri: https://storage.pongsky.com # 上传文件后，返回的路径自动拼接此URI
 aliyun:
@@ -205,27 +204,27 @@ logging:
 * `${project}`-common-entity
     * 依赖 `${project}`-common-utils
 * `${project}`-common-utils
-    * 依赖 `com.pongsky.springcloud:common-utils`
+    * 依赖 `com.pongsky.kit:common-utils`
 * `${project}`-config-core
     * 依赖 `${project}`-common-entity
-    * 依赖 `com.pongsky.springcloud:config-core`
+    * 依赖 `com.pongsky.kit:config-core`
 * `${project}`-config-core
     * 依赖 `${project}`-config-core
-    * 依赖 `com.pongsky.springcloud:config-web`
+    * 依赖 `com.pongsky.kit:config-web`
 * `${project}`-service-`${service}`
-    * 依赖 `com.pongsky.springcloud:config-core` / `com.pongsky.springcloud:config-web`
+    * 依赖 `com.pongsky.kit:config-core` / `com.pongsky.kit:config-web`
 
 # 代码、分包建议
 
 > 按照此信息进行代码实装、分包，配合此套件能获得最佳的体验～
 >
-> `${basePackage}`：基础项目包，譬如 `com.pongsky.springcloud`。
+> `${basePackage}`：基础项目包，譬如 `com.pongsky.kit`。
 
 ## `${project}`-config-core
 
 ### 包：`${basePackage}`.config
 
-譬如：com.pongsky.springcloud.config
+譬如：com.pongsky.kit.config
 
 #### BaseConfig
 
@@ -334,7 +333,7 @@ mybatis-plus:
 
 ### 包：`${basePackage}`.security
 
-譬如：com.pongsky.springcloud.security
+譬如：com.pongsky.kit.security
 
 > 基于 `spring-boot-starter-security` 拦截。
 
@@ -424,10 +423,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 #### TraceFilter
 
 ```java
-import com.pongsky.springcloud.utils.trace.CurrentInfo;
-import com.pongsky.springcloud.utils.trace.CurrentThreadConfig;
-import com.pongsky.springcloud.utils.trace.DiyHeader;
-import com.pongsky.springcloud.web.request.Whitelist;
+import CurrentInfo;
+import CurrentThreadConfig;
+import DiyHeader;
+import com.pongsky.kit.web.request.Whitelist;
 import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -487,631 +486,11 @@ public class TraceFilter extends OncePerRequestFilter {
 }
 ```
 
-### 包：`${basePackage}`.web.handler
-
-譬如：com.pongsky.springcloud..web.handler
-
-#### GlobalExceptionHandler
-
-```java
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pongsky.springcloud.exception.DeleteException;
-import com.pongsky.springcloud.exception.DoesNotExistException;
-import com.pongsky.springcloud.exception.ExistException;
-import com.pongsky.springcloud.exception.FrequencyException;
-import com.pongsky.springcloud.exception.HttpException;
-import com.pongsky.springcloud.exception.InsertException;
-import com.pongsky.springcloud.exception.RemoteCallException;
-import com.pongsky.springcloud.exception.UpdateException;
-import com.pongsky.springcloud.exception.ValidationException;
-import com.pongsky.springcloud.response.GlobalResult;
-import com.pongsky.springcloud.response.enums.ResultCode;
-import com.pongsky.springcloud.utils.IpUtils;
-import com.pongsky.springcloud.utils.trace.CurrentThreadConfig;
-import com.pongsky.springcloud.web.request.RequestUtils;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.MultipartException;
-import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import javax.annotation.Nonnull;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Optional;
-
-/**
- * 全局异常处理
- *
- * @author pengsenhao
- */
-@Slf4j
-@RestControllerAdvice
-@RequiredArgsConstructor
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
-    private final ObjectMapper jsonMapper;
-
-    /**
-     * 打印堆栈信息最小标识码
-     */
-    private static final int BOUNDARY = 500;
-
-    /**
-     * 校验 param 数据异常
-     *
-     * @param ex      ex
-     * @param headers headers
-     * @param status  status
-     * @param request request
-     * @return 校验 param 数据异常
-     */
-    @Nonnull
-    @Override
-    protected ResponseEntity<Object> handleBindException(@Nonnull BindException ex,
-                                                         @Nonnull HttpHeaders headers,
-                                                         @Nonnull HttpStatus status,
-                                                         @Nonnull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        Object result = getResult(ResultCode.BindException, getFieldMessages(ex.getBindingResult()),
-                ex, httpServletRequest);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 校验 param 数据异常
-     *
-     * @param ex      ex
-     * @param headers headers
-     * @param status  status
-     * @param request request
-     * @return 校验 param 数据异常
-     */
-    @Nonnull
-    @Override
-    protected ResponseEntity<Object> handleMissingServletRequestParameter(@Nonnull MissingServletRequestParameterException ex,
-                                                                          @Nonnull HttpHeaders headers,
-                                                                          @Nonnull HttpStatus status,
-                                                                          @Nonnull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        Object result = getResult(ResultCode.BindException, ex.getMessage(), ex, httpServletRequest);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 校验 body 数据异常
-     *
-     * @param ex      ex
-     * @param headers headers
-     * @param status  status
-     * @param request request
-     * @return 校验 body 数据异常
-     */
-    @Nonnull
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(@Nonnull MethodArgumentNotValidException ex,
-                                                                  @Nonnull HttpHeaders headers,
-                                                                  @Nonnull HttpStatus status,
-                                                                  @Nonnull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        Object result = getResult(ResultCode.MethodArgumentNotValidException,
-                getFieldMessages(ex.getBindingResult()), ex, httpServletRequest);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 获取字段错误信息
-     *
-     * @param bindingResult bindingResult
-     * @return 字段错误信息
-     */
-    private String getFieldMessages(BindingResult bindingResult) {
-        String escapeInterval = "\\.";
-        String interval = ".";
-        String listStart = "java.util.List<";
-        StringBuilder stringBuilder = new StringBuilder("[ ");
-        if (bindingResult.getTarget() == null) {
-            bindingResult.getFieldErrors().forEach(error -> appendErrorMessage(stringBuilder,
-                    error.getField(), error.getDefaultMessage()));
-        } else {
-            bindingResult.getFieldErrors().forEach(error -> {
-                String filedName = error.getField();
-                Field field = Arrays.stream(bindingResult.getTarget().getClass().getDeclaredFields())
-                        .filter(f -> f.getName().equals(error.getField()))
-                        .findFirst()
-                        .orElse(null);
-                if (field == null) {
-                    appendErrorMessage(stringBuilder, filedName, error.getDefaultMessage());
-                    return;
-                }
-                ApiModelProperty meaning = field.getAnnotation(ApiModelProperty.class);
-                if (meaning != null) {
-                    filedName = meaning.value();
-                }
-                if (!(filedName.split(escapeInterval).length > 1 && meaning != null)) {
-                    appendErrorMessage(stringBuilder, filedName, error.getDefaultMessage());
-                    return;
-                }
-                int i = filedName.lastIndexOf(interval, (filedName.lastIndexOf(interval) - 1)) + 1;
-                String[] split = filedName.substring(i).split(escapeInterval);
-                filedName = split[0].substring(0, filedName.lastIndexOf("["));
-                String typeName = field.getGenericType().getTypeName();
-                if (!(typeName.startsWith(listStart))) {
-                    appendErrorMessage(stringBuilder, filedName, error.getDefaultMessage());
-                    return;
-                }
-                typeName = typeName.substring(listStart.length(), typeName.lastIndexOf(">"));
-                try {
-                    Optional<ApiModelProperty> optionalMeaning = Arrays.stream(Class.forName(typeName).getDeclaredFields())
-                            .filter(f -> f.getName().equals(split[1]))
-                            .map(f -> f.getAnnotation(ApiModelProperty.class))
-                            .findFirst();
-                    if (optionalMeaning.isPresent()) {
-                        filedName += optionalMeaning.get().value();
-                    }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                appendErrorMessage(stringBuilder, filedName, error.getDefaultMessage());
-            });
-        }
-        return stringBuilder.append("]").toString();
-    }
-
-    /**
-     * 追加错误字段信息
-     *
-     * @param stringBuilder 全部错误信息
-     * @param filedName     字段名称
-     * @param message       字段错误信息
-     */
-    private void appendErrorMessage(StringBuilder stringBuilder, String filedName, String message) {
-        stringBuilder
-                .append(filedName)
-                .append(" ")
-                .append(message)
-                .append("; ");
-    }
-
-    /**
-     * JSON 数据错误异常
-     *
-     * @param ex      ex
-     * @param headers headers
-     * @param status  status
-     * @param request request
-     * @return JSON 数据错误异常
-     */
-    @Nonnull
-    @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(@Nonnull HttpMessageNotReadableException ex,
-                                                                  @Nonnull HttpHeaders headers,
-                                                                  @Nonnull HttpStatus status,
-                                                                  @Nonnull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        Object result = getResult(ResultCode.HttpMessageNotReadableException, null, ex, httpServletRequest);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 接口不存在异常
-     *
-     * @param ex      ex
-     * @param headers headers
-     * @param status  status
-     * @param request request
-     * @return 接口不存在异常
-     * @author pengsenhao
-     */
-    @Nonnull
-    @Override
-    protected ResponseEntity<Object> handleNoHandlerFoundException(@Nonnull NoHandlerFoundException ex,
-                                                                   @Nonnull HttpHeaders headers,
-                                                                   @Nonnull HttpStatus status,
-                                                                   @Nonnull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        Object result = getResult(ResultCode.NoHandlerFoundException,
-                httpServletRequest.getRequestURI() + " 接口不存在", ex, httpServletRequest);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 方法不存在异常
-     *
-     * @param ex      ex
-     * @param headers headers
-     * @param status  status
-     * @param request request
-     * @return 方法不存在异常
-     * @author pengsenhao
-     */
-    @Nonnull
-    @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(@Nonnull HttpRequestMethodNotSupportedException ex,
-                                                                         @Nonnull HttpHeaders headers,
-                                                                         @Nonnull HttpStatus status,
-                                                                         @Nonnull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        Object result = getResult(ResultCode.HttpRequestMethodNotSupportedException,
-                httpServletRequest.getMethod() + " 方法不存在", ex, httpServletRequest);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 不存在异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 不存在异常
-     */
-    @ExceptionHandler(value = DoesNotExistException.class)
-    public Object doesNotExistException(DoesNotExistException exception, HttpServletRequest request) {
-        return getResult(ResultCode.DoesNotExistException, exception.getLocalizedMessage(), exception, request);
-    }
-
-    /**
-     * 校验异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 校验异常
-     */
-    @ExceptionHandler(value = {ValidationException.class, ConstraintViolationException.class})
-    public Object validationException(ValidationException exception, HttpServletRequest request) {
-        return getResult(ResultCode.ValidationException, exception.getLocalizedMessage(), exception, request);
-    }
-
-    /**
-     * HTTP 请求异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return HTTP 请求异常
-     */
-    @ExceptionHandler(value = HttpException.class)
-    public Object httpException(HttpException exception, HttpServletRequest request) {
-        return getResult(ResultCode.HttpException, exception.getLocalizedMessage(), exception, request);
-    }
-
-    /**
-     * 空文件上传异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 空文件上传异常
-     */
-    @ExceptionHandler(value = MultipartException.class)
-    public Object multipartException(MultipartException exception, HttpServletRequest request) {
-        return getResult(ResultCode.MultipartException, null, exception, request);
-    }
-
-    /**
-     * 最大文件上传大小
-     */
-    @Value(value = "${spring.servlet.multipart.max-file-size}")
-    private String maxFileSize;
-
-    /**
-     * 文件上传大小异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 文件上传大小异常
-     */
-    @ExceptionHandler(value = MaxUploadSizeExceededException.class)
-    public Object maxUploadSizeExceededException(MaxUploadSizeExceededException exception, HttpServletRequest request) {
-        return getResult(ResultCode.MaxUploadSizeExceededException,
-                "文件最大 " + maxFileSize + " ，请缩小文件内容后重新上传", exception, request);
-    }
-
-    /**
-     * 非法参数异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 非法参数异常
-     */
-    @ExceptionHandler(value = IllegalArgumentException.class)
-    public Object illegalArgumentException(IllegalArgumentException exception, HttpServletRequest request) {
-        return getResult(ResultCode.IllegalArgumentException, null, exception, request);
-    }
-
-    /**
-     * 存在异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 存在异常
-     */
-    @ExceptionHandler(value = ExistException.class)
-    public Object existException(ExistException exception, HttpServletRequest request) {
-        return getResult(ResultCode.ExistException, null, exception, request);
-    }
-
-    /**
-     * 频率异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 频率异常
-     */
-    @ExceptionHandler(value = FrequencyException.class)
-    public Object frequencyException(FrequencyException exception, HttpServletRequest request) {
-        return getResult(ResultCode.FrequencyException, null, exception, request);
-    }
-
-    /**
-     * 保存异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 保存异常
-     */
-    @ExceptionHandler(value = InsertException.class)
-    public Object insertException(InsertException exception, HttpServletRequest request) {
-        return getResult(ResultCode.InsertException, null, exception, request);
-    }
-
-    /**
-     * 更新异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 更新异常
-     */
-    @ExceptionHandler(value = UpdateException.class)
-    public Object updateException(UpdateException exception, HttpServletRequest request) {
-        return getResult(ResultCode.UpdateException, null, exception, request);
-    }
-
-    /**
-     * 删除异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 更新异常
-     */
-    @ExceptionHandler(value = DeleteException.class)
-    public Object deleteException(DeleteException exception, HttpServletRequest request) {
-        return getResult(ResultCode.DeleteException, null, exception, request);
-    }
-
-    /**
-     * 远程调用异常
-     *
-     * @param exception exception
-     * @return 远程调用异常
-     */
-    @ExceptionHandler(value = RemoteCallException.class)
-    public Object remoteCallException(RemoteCallException exception) {
-        return exception.getResult();
-    }
-
-    /**
-     * 系统异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 系统异常
-     */
-    @ExceptionHandler(value = Exception.class)
-    public Object exception(Exception exception, HttpServletRequest request) {
-        return getResult(ResultCode.Exception, null, exception, request);
-    }
-
-    /**
-     * 封装异常响应体并打印
-     *
-     * @param resultCode resultCode
-     * @param message    message
-     * @param exception  exception
-     * @param request    request
-     * @return 封装异常响应体并打印
-     */
-    private Object getResult(ResultCode resultCode, String message, Exception exception, HttpServletRequest request) {
-        String ip = IpUtils.getIp(request);
-        // 可通过 getAttribute 获取自定义注解对 body 数据对特定业务场景进行特殊处理
-        GlobalResult<Void> result = GlobalResult.fail(ip, resultCode, request.getRequestURI(), exception.getClass());
-        exception = getException(exception, 0);
-        if (message != null) {
-            result.setMessage(message);
-        } else if (result.getMessage() == null) {
-            if (exception.getLocalizedMessage() != null) {
-                result.setMessage(exception.getLocalizedMessage());
-            } else if (exception.getMessage() != null) {
-                result.setMessage(exception.getMessage());
-            }
-        }
-        log(exception, request, result);
-        return result;
-    }
-
-    /**
-     * 异常递归次数，防止堆溢出
-     */
-    private static final int THROWABLE_COUNT = 10;
-
-    /**
-     * 获取最底层的异常
-     *
-     * @param exception 异常
-     * @param number    次数
-     * @return 获取最底层的异常
-     */
-    private Exception getException(Exception exception, int number) {
-        if (number > THROWABLE_COUNT) {
-            return exception;
-        }
-        if (exception.getCause() != null) {
-            return getException(exception, ++number);
-        }
-        return exception;
-    }
-
-    /**
-     * 打印日志详细信息
-     *
-     * @param exception 异常
-     * @param request   request
-     * @param result    错误响应数据
-     */
-    private void log(Exception exception, HttpServletRequest request, GlobalResult<Void> result) {
-        log.error("");
-        log.error("Started exception");
-        String ip = IpUtils.getIp(request);
-        String userAgent = Optional.ofNullable(request.getHeader(HttpHeaders.USER_AGENT)).orElse("");
-        String referer = Optional.ofNullable(request.getHeader(HttpHeaders.REFERER)).orElse("");
-        log.error("request header: IP [{}] userAgent [{}] referer [{}]", ip, userAgent, referer);
-        if (result.getCode() >= BOUNDARY) {
-            log.error("request: methodURL [{}] methodType [{}] params [{}] body [{}]",
-                    request.getRequestURI(),
-                    request.getMethod(),
-                    Optional.ofNullable(request.getQueryString()).orElse(""),
-                    Optional.ofNullable(RequestUtils.getBody(request)).orElse(""));
-            log.error("exception message: [{}]", result.getMessage());
-            Arrays.asList(exception.getStackTrace()).forEach(stackTrace -> log.error(stackTrace.toString()));
-        } else {
-            log.error("exception message: [{}]", result.getMessage());
-        }
-        try {
-            log.error("response: [{}]", jsonMapper.writeValueAsString(result));
-        } catch (JsonProcessingException e) {
-            log.error(e.getLocalizedMessage());
-        }
-        log.error("Ended exception");
-    }
-
-}
-```
-
-#### ResponseResultHandler
-
-```java
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pongsky.springcloud.config.SystemConfig;
-import com.pongsky.springcloud.response.GlobalResult;
-import com.pongsky.springcloud.response.annotation.ResponseResult;
-import com.pongsky.springcloud.utils.IpUtils;
-import com.pongsky.springcloud.utils.trace.CurrentThreadConfig;
-import com.pongsky.springcloud.utils.trace.DiyHeader;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.MethodParameter;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
-import javax.annotation.Nonnull;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
-
-/**
- * 接口响应体处理器
- *
- * @author pengsenhao
- */
-@Slf4j
-@ControllerAdvice
-@RequiredArgsConstructor
-public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
-
-    private final ObjectMapper jsonMapper;
-
-    @Override
-    public boolean supports(@Nonnull MethodParameter returnType,
-                            @Nonnull Class<? extends HttpMessageConverter<?>> converterType) {
-        return true;
-    }
-
-    @Override
-    public Object beforeBodyWrite(Object body,
-                                  @Nonnull MethodParameter returnType,
-                                  @Nonnull MediaType selectedContentType,
-                                  @Nonnull Class<? extends HttpMessageConverter<?>> selectedConverterType,
-                                  @Nonnull ServerHttpRequest request,
-                                  @Nonnull ServerHttpResponse response) {
-        String traceId = CurrentThreadConfig.getTraceId();
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        Optional.ofNullable(attributes.getResponse())
-                .ifPresent(httpServletResponse -> {
-                    httpServletResponse.setHeader(DiyHeader.X_HOSTNAME, SystemConfig.getHostName());
-                    httpServletResponse.setHeader(DiyHeader.X_INSTANCE_ID, SystemConfig.getInstanceId());
-                    httpServletResponse.setHeader(DiyHeader.X_TRACE_ID, traceId);
-                    httpServletResponse.setHeader(DiyHeader.X_BACKEND_VERSION, SystemConfig.getVersion());
-                });
-        HttpServletRequest httpServletRequest = attributes.getRequest();
-        // 判断是否已封装好全局响应结果
-        if (body instanceof GlobalResult) {
-            GlobalResult<?> result = (GlobalResult<?>) body;
-            if (result.getIp() == null) {
-                result.setIp(IpUtils.getIp(httpServletRequest));
-            }
-            if (result.getPath() == null) {
-                result.setPath(httpServletRequest.getRequestURI());
-            }
-            return result;
-        }
-        // 特殊业务场景返回特定格式 直接 return
-        // if (httpServletRequest.getAttribute(XXX.class.getSimpleName()) != null) {
-        // return body;
-        // }
-        // 判断是否全局响应数据
-        if (httpServletRequest.getAttribute(ResponseResult.class.getSimpleName()) != null) {
-            if (body instanceof String) {
-                try {
-                    return jsonMapper.writeValueAsString(GlobalResult.success(body));
-                } catch (JsonProcessingException e) {
-                    log.error(e.getLocalizedMessage());
-                    return GlobalResult.success(body);
-                }
-            } else {
-                return GlobalResult.success(body);
-            }
-        }
-        return body;
-    }
-
-}
-```
-
 ## `${project}`-service-`${service}`
 
 ### 包：`${basePackage}`.config
 
-譬如：com.pongsky.springcloud.config
+譬如：com.pongsky.kit.config
 
 #### LocalConfig
 
@@ -1130,7 +509,7 @@ public class LocalConfig {
 #### QuartzConfig
 
 ```java
-import com.pongsky.springcloud.utils.QuartzUtils;
+import QuartzUtils;
 import lombok.RequiredArgsConstructor;
 import org.quartz.Scheduler;
 import org.springframework.context.annotation.Bean;
@@ -1158,49 +537,49 @@ public class QuartzConfig {
 
 ### 包：`${basePackage}`.controller
 
-譬如：com.pongsky.springcloud.controller
+譬如：com.pongsky.kit.controller
 
 用于放置所有 controller 接口。
 
 #### 包：`${basePackage}`.controller.api
 
-譬如：com.pongsky.springcloud.controller.api
+譬如：com.pongsky.kit.controller.api
 
 该包下接口用于第三方调用。
 
 #### 包：`${basePackage}`.controller.console
 
-譬如：com.pongsky.springcloud.controller.console
+譬如：com.pongsky.kit.controller.console
 
 该包下接口用于前端项目调用。
 
 #### 包：`${basePackage}`.controller.service
 
-譬如：com.pongsky.springcloud.controller.service
+譬如：com.pongsky.kit.controller.service
 
 该包下接口用于后端项目远程调用。
 
 ### 包：`${basePackage}`.job
 
-譬如：com.pongsky.springcloud.job
+譬如：com.pongsky.kit.job
 
 用于放置所有 job 定时任务调度。
 
 ### 包：`${basePackage}`.mapper
 
-譬如：com.pongsky.springcloud.mapper
+譬如：com.pongsky.kit.mapper
 
 用于放置所有 Mapper。
 
 ### 包：`${basePackage}`.service
 
-譬如：com.pongsky.springcloud.service
+譬如：com.pongsky.kit.service
 
 用于放置所有 Service。
 
 #### 包：`${basePackage}`.service.impl
 
-譬如：com.pongsky.springcloud.service.impl
+譬如：com.pongsky.kit.service.impl
 
 用于放置所有 Service Impl。
 

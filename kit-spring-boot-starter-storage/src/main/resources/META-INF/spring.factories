@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.pongsky.kit.storage.config.StorageConfig,\
+com.pongsky.kit.storage.controller.ConsoleStorageController,\
+com.pongsky.kit.storage.web.aspect.around.StorageAspect,\
+com.pongsky.kit.storage.web.aspect.before.UploadAspect
