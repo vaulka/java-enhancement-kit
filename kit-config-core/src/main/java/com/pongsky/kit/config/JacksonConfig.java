@@ -17,9 +17,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * Jackson 配置
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-02-18 10:39 下午
  */
 @Configuration
 public class JacksonConfig {
@@ -33,18 +33,16 @@ public class JacksonConfig {
     /**
      * 补充 Jackson 序列化、反序列化
      * <p>
-     * 将 Long 类型转为 String 类型（防止前端 js 精度丢失）
-     * 将 Double 类型转为 String 类型（防止前端 js 精度丢失）
+     * Long to String（防止前端 js 精度丢失）
+     * Double to String（防止前端 js 精度丢失）
      * <p>
      * 统一时间格式：
-     * LocalDateTime > yyyy-MM-dd HH:mm:ss
-     * LocalDate > yyyy-MM-dd
-     * LocalTime > HH:mm:ss
+     * LocalDateTime to yyyy-MM-dd HH:mm:ss
+     * LocalDate to yyyy-MM-dd
+     * LocalTime to HH:mm:ss
      *
      * @return Jackson 配置
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-18 10:52 下午
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {

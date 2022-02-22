@@ -49,7 +49,6 @@ import java.util.Optional;
  * 全局异常处理
  *
  * @author pengsenhao
- * @create 2021-02-11
  */
 @Slf4j
 @RestControllerAdvice
@@ -231,9 +230,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @param status  status
      * @param request request
      * @return 接口不存在异常
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-24 11:57 上午
      */
     @Nonnull
     @Override
@@ -256,9 +253,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @param status  status
      * @param request request
      * @return 方法不存在异常
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-01-24 11:57 上午
      */
     @Nonnull
     @Override
