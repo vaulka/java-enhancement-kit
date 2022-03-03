@@ -5,5 +5,6 @@ com.pongsky.kit.web.aspect.around.RestControllerAspect,\
 com.pongsky.kit.web.aspect.before.ControllerAspect,\
 com.pongsky.kit.web.aspect.before.PreventDuplicationAspect,\
 com.pongsky.kit.web.filter.ReplaceStreamFilter,\
+com.pongsky.kit.web.filter.TraceFilter,\
 com.pongsky.kit.web.handler.GlobalExceptionHandler,\
 com.pongsky.kit.web.handler.ResponseResultHandler
