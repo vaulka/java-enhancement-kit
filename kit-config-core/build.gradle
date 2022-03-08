@@ -92,6 +92,7 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     api "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
+    api "com.github.shijingsh:knife4j-spring-boot-starter:$knife4jVersion"
     compileOnly "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusVersion"
 
     api "org.springframework.boot:spring-boot-starter-validation"
