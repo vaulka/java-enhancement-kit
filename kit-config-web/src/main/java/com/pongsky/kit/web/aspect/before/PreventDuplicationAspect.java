@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pongsky.kit.exception.FrequencyException;
 import com.pongsky.kit.utils.IpUtils;
-import com.pongsky.kit.utils.model.annotation.PreventDuplication;
 import com.pongsky.kit.utils.trace.DiyHeader;
 import com.pongsky.kit.web.request.RequestUtils;
 import lombok.Data;
@@ -23,6 +22,11 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -116,6 +120,30 @@ public class PreventDuplicationAspect {
          * requestBody
          */
         private String requestBody;
+
+    }
+
+    /**
+     * 防重检测标记
+     *
+     * @author pengsenhao
+     */
+    @Documented
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.FIELD, ElementType.METHOD})
+    public @interface PreventDuplication {
+
+        /**
+         * 默认频率
+         */
+        int DEFAULT_FREQUENCY = 100;
+
+        /**
+         * 防重频率，单位毫秒
+         *
+         * @return 防重频率，单位毫秒
+         */
+        int frequency() default DEFAULT_FREQUENCY;
 
     }
 

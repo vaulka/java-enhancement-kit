@@ -5,21 +5,24 @@ plugins {
 ext {
     lombokVersion = "1.18.22"
 
-    springBootVersion = "2.5.6"
-    druidVersion = "1.2.8"
+    springBootVersion = "2.4.13"
     servletVersion = "4.0.1"
     springfoxVersion = "3.0.0"
-    mybatisPlusVersion = "3.4.3.4"
-    hibernateValidatorVersion = "6.2.0.Final"
+    mybatisPlusVersion = "3.5.1"
 
-    springCloudVersion = "2020.0.4"
+    // 需要兼容 org.springframework.boot:spring-boot-starter-validation 下的版本
+    // org.hibernate.validator:hibernate-validator
+    hibernateValidatorVersion = "6.1.7.Final"
+
+    // 需要兼容 org.springframework.boot:spring-boot-starter 版本
+    springCloudVersion = "2020.0.5"
 
     springDependencyManagementVersion = "1.0.11.RELEASE"
 
-    minioVersion = "8.3.4"
-    okHttpVersion = "4.9.3"
+    druidVersion = "1.2.8"
+    minioVersion = "7.1.4"
     commonsTextVersion = "1.9"
-    fastjsonVersion = "1.2.76"
+    fastjsonVersion = "1.2.79"
     commonsCodecVersion = "1.15"
     aliyunSdkOssVersion = "3.14.0"
     commonsLang3Version = "3.12.0"
@@ -35,7 +38,7 @@ allprojects {
     targetCompatibility = 11
 
     group "com.pongsky.kit"
-    version "2.5.6-1.1.4"
+    version "2.4.13-1.0.0"
 
     repositories {
         mavenLocal()

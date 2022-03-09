@@ -8,6 +8,10 @@ plugins {
     id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
+jar {
+    enabled = true
+}
+
 bootJar {
     enabled = false
 }
@@ -92,10 +96,9 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     compileOnly "com.alibaba:druid-spring-boot-starter:$druidVersion"
-    api "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
     compileOnly "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusVersion"
+    compileOnly "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
 
-    api "org.springframework.boot:spring-boot-starter-validation"
     api "org.springframework.boot:spring-boot-starter-data-redis"
     compileOnly "org.springframework.boot:spring-boot-starter-web"
     compileOnly "org.springframework.boot:spring-boot-starter-quartz"

@@ -9,9 +9,8 @@ import org.springframework.http.HttpHeaders;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.Contact;
+import springfox.documentation.service.HttpAuthenticationScheme;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -43,18 +42,19 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(new ApiInfoBuilder()
                         .title(MessageFormat.format("{0}-{1} API Docs", systemConfig.getActive(), systemConfig.getServiceName()))
-                        .description("FBI, Open The Door")
-                        .contact(new Contact("PONGSKY", "https://www.pongsky.com", "kelry@vip.qq.com"))
                         .version(systemConfig.getVersion())
                         .build())
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build()
-                .securitySchemes(List.of(new ApiKey(HttpHeaders.AUTHORIZATION, HttpHeaders.AUTHORIZATION, "header")))
+                .securitySchemes(List.of(HttpAuthenticationScheme.JWT_BEARER_BUILDER.name(HttpHeaders.AUTHORIZATION).build()))
                 .securityContexts(List.of(SecurityContext.builder()
-                        .securityReferences(List.of(new SecurityReference(HttpHeaders.AUTHORIZATION,
-                                new AuthorizationScope[]{new AuthorizationScope("global", "accessAnything")})))
+                        .securityReferences(List.of(
+                                SecurityReference.builder()
+                                        .reference(HttpHeaders.AUTHORIZATION)
+                                        .scopes(new AuthorizationScope[]{new AuthorizationScope("global", "accessAnything")})
+                                        .build()))
                         .build()));
     }
 

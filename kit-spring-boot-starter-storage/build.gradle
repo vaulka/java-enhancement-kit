@@ -6,6 +6,10 @@ plugins {
     id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
+jar {
+    enabled = true
+}
+
 bootJar {
     enabled = false
 }
@@ -85,6 +89,6 @@ dependencies {
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    api "org.springframework.boot:spring-boot-starter-web"
-    api "org.springframework.boot:spring-boot-starter-aop"
+    compileOnly "org.springframework.boot:spring-boot-starter-web"
+    compileOnly "org.springframework.boot:spring-boot-starter-aop"
 }

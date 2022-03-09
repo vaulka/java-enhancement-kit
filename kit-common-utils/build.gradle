@@ -68,13 +68,10 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    compileOnly("io.minio:minio:$minioVersion") {
-        exclude group: "com.squareup.okhttp3", module: "okhttp"
-    }
+    compileOnly "io.minio:minio:$minioVersion"
     api "com.alibaba:fastjson:$fastjsonVersion"
     api "commons-codec:commons-codec:$commonsCodecVersion"
     api "org.apache.commons:commons-text:$commonsTextVersion"
-    compileOnly "com.squareup.okhttp3:okhttp:$okHttpVersion"
     api "org.apache.commons:commons-lang3:$commonsLang3Version"
     api "io.springfox:springfox-boot-starter:$springfoxVersion"
     compileOnly "javax.servlet:javax.servlet-api:$servletVersion"

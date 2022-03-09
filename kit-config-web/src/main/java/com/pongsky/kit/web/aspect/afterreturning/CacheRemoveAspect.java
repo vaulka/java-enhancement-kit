@@ -1,6 +1,5 @@
 package com.pongsky.kit.web.aspect.afterreturning;
 
-import com.pongsky.kit.utils.model.annotation.CacheRemove;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -14,6 +13,10 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 import java.util.Set;
 
@@ -39,7 +42,7 @@ public class CacheRemoveAspect {
      */
     private static final String HASHTAG = "#";
 
-    @AfterReturning("@annotation(com.pongsky.kit.utils.model.annotation.CacheRemove)")
+    @AfterReturning("@annotation(com.pongsky.kit.web.aspect.afterreturning.CacheRemoveAspect.CacheRemove)")
     public void remove(JoinPoint point) {
         Method method = ((MethodSignature) point.getSignature()).getMethod();
         CacheRemove cacheRemove = method.getAnnotation(CacheRemove.class);
@@ -93,5 +96,36 @@ public class CacheRemoveAspect {
         }
         return parser.parseExpression(key).getValue(context, String.class);
     }
+
+    /**
+     * 模糊删除key
+     *
+     * @author pengsenhao
+     */
+    @Target({ElementType.METHOD})
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface CacheRemove {
+
+        /**
+         * @return cacheNames
+         * @see org.springframework.cache.annotation.CacheEvict#cacheNames()
+         */
+        String cacheNames() default "";
+
+        /**
+         * @return key
+         * @see org.springframework.cache.annotation.CacheEvict#key()
+         */
+        String key() default "";
+
+        /**
+         * 模糊删除key列表
+         *
+         * @return 模糊删除key列表
+         */
+        String[] keys() default {};
+
+    }
+
 
 }

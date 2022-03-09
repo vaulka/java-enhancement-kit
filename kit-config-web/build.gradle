@@ -6,6 +6,10 @@ plugins {
     id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
+jar {
+    enabled = true
+}
+
 bootJar {
     enabled = false
 }
@@ -83,8 +87,13 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    compileOnly "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
+
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
+    api "org.springframework.boot:spring-boot-starter-validation"
     api "org.springframework.boot:spring-boot-starter-web"
     api "org.springframework.boot:spring-boot-starter-aop"
+
+    api "org.springframework.cloud:spring-cloud-starter-openfeign"
 }
