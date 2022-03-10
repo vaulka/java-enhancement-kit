@@ -46,14 +46,22 @@ public interface StorageUtils {
         return sb.toString();
     }
 
+    /***
+     *  创建 bucket（如果不存在，则自动创建）
+     *
+     * @author pengsenhao
+     */
+    void createBucket();
+
     /**
      * 文件上传
      *
      * @param fileName    文件名称
+     * @param contentType 文件类型
      * @param inputStream input 流
      * @return 文件访问路径
      * @author pengsenhao
      */
-    String upload(String fileName, InputStream inputStream);
+    String upload(String fileName, String contentType, InputStream inputStream);
 
 }

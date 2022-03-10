@@ -1,16 +1,14 @@
 package com.pongsky.kit.storage.controller;
 
-import com.pongsky.kit.storage.config.StorageConfig;
 import com.pongsky.kit.config.SystemConfig;
-import com.pongsky.kit.exception.ValidationException;
 import com.pongsky.kit.response.annotation.ResponseResult;
+import com.pongsky.kit.storage.config.StorageConfig;
 import com.pongsky.kit.utils.storage.StorageUtils;
 import com.pongsky.kit.utils.storage.UploadFileInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +28,7 @@ import java.io.IOException;
 @ResponseResult
 @RestController
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "storage.is-enable-controller", havingValue = "true")
+@ConditionalOnProperty(value = "storage.is-enable-controller", havingValue = "true", matchIfMissing = true)
 @RequestMapping(value = "${storage.controller-base-uri:/console/${application.module}/common/storage}")
 public class ConsoleStorageController {
 
@@ -48,15 +46,12 @@ public class ConsoleStorageController {
     @ApiOperation("文件上传")
     @PostMapping
     public UploadFileInfo upload(@RequestParam MultipartFile file) throws IOException {
-        if (file.isEmpty() || file.getSize() == 0 || StringUtils.isBlank(file.getOriginalFilename())) {
-            throw new ValidationException("请选择文件进行上传");
-        }
         StorageUtils storageUtils = storageConfig.getUtils();
         if (storageUtils == null) {
             return null;
         }
         String fileName = storageUtils.buildFileName(file.getOriginalFilename(), systemConfig.getActive().name());
-        String url = storageUtils.upload(fileName, file.getInputStream());
+        String url = storageUtils.upload(fileName, file.getContentType(), file.getInputStream());
         return new UploadFileInfo(url);
     }
 
