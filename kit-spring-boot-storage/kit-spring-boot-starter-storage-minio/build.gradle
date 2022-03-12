@@ -81,7 +81,7 @@ signing {
 }
 
 dependencies {
-    api project(":kit-spring-boot-storage")
+    api project(":spring-boot-storage")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
