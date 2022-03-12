@@ -53,9 +53,7 @@ public class DesensitizationAspect {
      * @param mark         数据脱敏注解
      * @param originResult 原始 result
      * @return 脱敏后的数据
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-08 3:46 下午
      */
     @SuppressWarnings({"unchecked"})
     private Object desensitization(DesensitizationMark mark, Object originResult) {
@@ -110,9 +108,7 @@ public class DesensitizationAspect {
      *
      * @param originResult 返回值
      * @return 返回值是否是基础数据类型
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-08 6:59 下午
      */
     private boolean isBasicDataType(Object originResult) {
         return originResult == null
@@ -141,9 +137,7 @@ public class DesensitizationAspect {
      *
      * @param field 字段
      * @return 字段是否是基础数据类型 / 常量
-     * @description 详细写出代码处理流程, 方法内也要详细注释
      * @author pengsenhao
-     * @date 2022-02-08 6:59 下午
      */
     private boolean unisBasicFieldDataType(Field field) {
         return field != null

@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.util.Assert;
 
 /**
+ * 阿里云 OSS 自动装配
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-03-12 3:54 下午
  */
 @ConditionalOnClass({OSS.class})
 @Configuration(proxyBeanMethods = false)
@@ -26,6 +26,7 @@ public class OssAutoConfiguration {
     /**
      * 获取阿里云 OSS 工具类
      *
+     * @param properties properties
      * @return 获取阿里云 OSS 工具类
      * @author pengsenhao
      */

@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.util.Assert;
 
 /**
+ * MinIO 自动装配
+ *
  * @author pengsenhao
- * @description 大概描述所属模块和介绍
- * @date 2022-03-12 3:54 下午
  */
 @ConditionalOnClass({MinioClient.class})
 @Configuration(proxyBeanMethods = false)
@@ -26,6 +26,7 @@ public class MinioAutoConfiguration {
     /**
      * 获取 MinIO 工具类
      *
+     * @param properties properties
      * @return 获取 MinIO 工具类
      * @author pengsenhao
      */
