@@ -2,15 +2,6 @@ package com.pongsky.kit.web.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pongsky.kit.exception.DeleteException;
-import com.pongsky.kit.exception.DoesNotExistException;
-import com.pongsky.kit.exception.ExistException;
-import com.pongsky.kit.exception.FrequencyException;
-import com.pongsky.kit.exception.HttpException;
-import com.pongsky.kit.exception.InsertException;
-import com.pongsky.kit.exception.RemoteCallException;
-import com.pongsky.kit.exception.UpdateException;
-import com.pongsky.kit.exception.ValidationException;
 import com.pongsky.kit.response.GlobalResult;
 import com.pongsky.kit.response.enums.ResultCode;
 import com.pongsky.kit.utils.IpUtils;
@@ -18,7 +9,6 @@ import com.pongsky.kit.web.request.RequestUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,14 +23,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Optional;
@@ -56,11 +43,6 @@ import java.util.Optional;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final ObjectMapper jsonMapper;
-
-    /**
-     * 打印堆栈信息最小标识码
-     */
-    private static final int BOUNDARY = 500;
 
     /**
      * 校验 param 数据异常
@@ -269,165 +251,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * 不存在异常
+     * 异常处理器
      *
      * @param exception exception
      * @param request   request
-     * @return 不存在异常
-     */
-    @ExceptionHandler(value = DoesNotExistException.class)
-    public Object doesNotExistException(DoesNotExistException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.DoesNotExistException, exception.getLocalizedMessage(), exception, request);
-    }
-
-    /**
-     * 校验异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 校验异常
-     */
-    @ExceptionHandler(value = {ValidationException.class, ConstraintViolationException.class})
-    public Object validationException(ValidationException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.ValidationException, exception.getLocalizedMessage(), exception, request);
-    }
-
-    /**
-     * HTTP 请求异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return HTTP 请求异常
-     */
-    @ExceptionHandler(value = HttpException.class)
-    public Object httpException(HttpException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.HttpException, exception.getLocalizedMessage(), exception, request);
-    }
-
-    /**
-     * 空文件上传异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 空文件上传异常
-     */
-    @ExceptionHandler(value = MultipartException.class)
-    public Object multipartException(MultipartException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.MultipartException, null, exception, request);
-    }
-
-    /**
-     * 最大文件上传大小
-     */
-    @Value(value = "${spring.servlet.multipart.max-file-size}")
-    private String maxFileSize;
-
-    /**
-     * 文件上传大小异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 文件上传大小异常
-     */
-    @ExceptionHandler(value = MaxUploadSizeExceededException.class)
-    public Object maxUploadSizeExceededException(MaxUploadSizeExceededException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.MaxUploadSizeExceededException,
-                "文件最大 " + maxFileSize + " ，请缩小文件内容后重新上传", exception, request);
-    }
-
-    /**
-     * 非法参数异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 非法参数异常
-     */
-    @ExceptionHandler(value = IllegalArgumentException.class)
-    public Object illegalArgumentException(IllegalArgumentException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.IllegalArgumentException, null, exception, request);
-    }
-
-    /**
-     * 存在异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 存在异常
-     */
-    @ExceptionHandler(value = ExistException.class)
-    public Object existException(ExistException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.ExistException, null, exception, request);
-    }
-
-    /**
-     * 频率异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 频率异常
-     */
-    @ExceptionHandler(value = FrequencyException.class)
-    public Object frequencyException(FrequencyException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.FrequencyException, null, exception, request);
-    }
-
-    /**
-     * 保存异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 保存异常
-     */
-    @ExceptionHandler(value = InsertException.class)
-    public Object insertException(InsertException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.InsertException, null, exception, request);
-    }
-
-    /**
-     * 更新异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 更新异常
-     */
-    @ExceptionHandler(value = UpdateException.class)
-    public Object updateException(UpdateException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.UpdateException, null, exception, request);
-    }
-
-    /**
-     * 删除异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 更新异常
-     */
-    @ExceptionHandler(value = DeleteException.class)
-    public Object deleteException(DeleteException exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.DeleteException, null, exception, request);
-    }
-
-    /**
-     * 远程调用异常
-     *
-     * @param exception exception
-     * @return 远程调用异常
-     */
-    @ExceptionHandler(value = RemoteCallException.class)
-    public Object remoteCallException(RemoteCallException exception) {
-        return exception.getResult();
-    }
-
-    /**
-     * 系统异常
-     *
-     * @param exception exception
-     * @param request   request
-     * @return 系统异常
+     * @return 响应结果
      */
     @ExceptionHandler(value = Exception.class)
-    public Object exception(Exception exception, HttpServletRequest request) {
-        return this.getResult(ResultCode.Exception, null, exception, request);
+    public Object exceptionHandler(Exception exception, HttpServletRequest request) {
+        ResultCode resultCode = ResultCode.getCode(exception);
+        if (resultCode.getIsThrow()) {
+            return exception;
+        }
+        return this.getResult(resultCode, resultCode.getMessage(), exception, request);
     }
 
     /**
@@ -478,6 +314,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return exception;
     }
+
+    /**
+     * 打印堆栈信息最小标识码
+     */
+    private static final int BOUNDARY = 500;
 
     /**
      * 打印日志详细信息

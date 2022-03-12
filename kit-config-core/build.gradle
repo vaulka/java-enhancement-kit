@@ -99,10 +99,12 @@ dependencies {
     compileOnly "com.baomidou:mybatis-plus-boot-starter:$mybatisPlusVersion"
     compileOnly "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
 
-    api "org.springframework.boot:spring-boot-starter-data-redis"
     compileOnly "org.springframework.boot:spring-boot-starter-web"
     compileOnly "org.springframework.boot:spring-boot-starter-quartz"
+    compileOnly "org.springframework.boot:spring-boot-starter-security"
+    compileOnly "org.springframework.boot:spring-boot-starter-validation"
+    compileOnly "org.springframework.boot:spring-boot-starter-data-redis"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    api "org.springframework.cloud:spring-cloud-starter-openfeign"
+    compileOnly "org.springframework.cloud:spring-cloud-starter-openfeign"
 }

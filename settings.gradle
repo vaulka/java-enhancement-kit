@@ -1,15 +1,24 @@
 rootProject.name = "java-enhancement-kit"
 include "kit-common-utils"
 findProject(":kit-common-utils")?.name = "common-utils"
+
 include "kit-config-core"
 findProject(":kit-config-core")?.name = "config-core"
+
 include "kit-config-web"
 findProject(":kit-config-web")?.name = "config-web"
-include "kit-spring-boot-starter-desensitization"
-findProject("kit-spring-boot-starter-desensitization")?.name = "spring-boot-starter-desensitization"
+
+include "kit-spring-boot-desensitization"
+findProject(":kit-spring-boot-desensitization")?.name = "spring-boot-desensitization"
+
+include ":spring-boot-desensitization:kit-spring-boot-starter-desensitization"
+findProject(":spring-boot-desensitization:kit-spring-boot-starter-desensitization")?.name = "spring-boot-starter-desensitization"
+
 include "kit-spring-boot-storage"
 findProject(":kit-spring-boot-storage")?.name = "spring-boot-storage"
-include "kit-spring-boot-storage:kit-spring-boot-starter-storage-minio"
-findProject(":kit-spring-boot-storage:kit-spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
-include "kit-spring-boot-storage:kit-spring-boot-starter-storage-oss"
-findProject(":kit-spring-boot-storage:kit-spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
+
+include "spring-boot-storage:kit-spring-boot-starter-storage-minio"
+findProject(":spring-boot-storage:kit-spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
+
+include "spring-boot-storage:kit-spring-boot-starter-storage-oss"
+findProject(":spring-boot-storage:kit-spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"

@@ -17,7 +17,6 @@ bootJar {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
     }
 }
 
@@ -48,14 +47,14 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "config-web"
+            artifactId "spring-boot-starter-desensitization"
             version version.toString()
-            description "Spring Cloud 增强套件 之 config-web 模块"
+            description "Spring Boot 增强套件 之 数据脱敏 模块"
 
             pom {
-                name = "spring-cloud-enhancement-kit"
-                description = "Spring Cloud 增强套件"
-                url = "https://github.com/JarvisPongSky/spring-cloud-enhancement-kit"
+                name = "java-enhancement-kit"
+                description = "Java 增强套件"
+                url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
                         name = "GPL-v3.0 协议"
@@ -70,7 +69,7 @@ publishing {
                     }
                 }
                 scm {
-                    url = "https://github.com/JarvisPongSky/spring-cloud-enhancement-kit"
+                    url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 }
             }
         }
@@ -82,19 +81,13 @@ signing {
 }
 
 dependencies {
-    api project(":config-core")
+    api project(":spring-boot-desensitization")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    compileOnly "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
-
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    compileOnly "org.springframework.boot:spring-boot-starter-web"
-    compileOnly "org.springframework.boot:spring-boot-starter-aop"
-    compileOnly "org.springframework.boot:spring-boot-starter-validation"
-    compileOnly "org.springframework.boot:spring-boot-starter-data-redis"
-
-    compileOnly "org.springframework.cloud:spring-cloud-starter-openfeign"
+    api "org.springframework.boot:spring-boot-starter-web"
+    api "org.springframework.boot:spring-boot-starter-aop"
 }
