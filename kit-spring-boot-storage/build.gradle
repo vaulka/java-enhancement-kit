@@ -47,9 +47,9 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-starter-desensitization"
+            artifactId "spring-boot-storage"
             version version.toString()
-            description "Spring Boot 增强套件 之 数据脱敏 模块"
+            description "Spring Boot 增强套件 之 云存储 模块"
 
             pom {
                 name = "java-enhancement-kit"

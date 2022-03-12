@@ -1,0 +1,35 @@
+{
+    "groups": [
+        {
+            "name": "minio",
+            "description": "MinIO 相关信息."
+        }
+    ],
+    "properties": [
+        {
+            "name": "minio.endpoint",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.MinioProperties",
+            "description": "endpoint."
+        },
+        {
+            "name": "minio.bucket",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.MinioProperties",
+            "description": "bucket."
+        },
+        {
+            "name": "minio.accessKey",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.MinioProperties",
+            "description": "accessKey."
+        },
+        {
+            "name": "minio.secretKey",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.MinioProperties",
+            "description": "secretKey."
+        }
+    ],
+    "hints": []
+}

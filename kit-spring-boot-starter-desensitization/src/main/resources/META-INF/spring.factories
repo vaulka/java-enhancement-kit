@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.desensitization.web.aspect.around.DesensitizationAspect
+com.pongsky.kit.desensitization.config.DesensitizationAutoConfiguration
+

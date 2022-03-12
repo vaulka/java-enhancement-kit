@@ -1,11 +1,14 @@
-package com.pongsky.kit.desensitization.web.aspect.around;
+package com.pongsky.kit.storage.web.aspect.around;
 
-import com.pongsky.kit.desensitization.utils.DesensitizationMark;
+import com.pongsky.kit.storage.config.StorageProperties;
+import com.pongsky.kit.storage.utils.StorageResourceMark;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -25,14 +28,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 数据脱敏
+ * 云存储自动添加 uri
  *
  * @author pengsenhao
  */
 @Slf4j
 @Aspect
 @Component
-public class DesensitizationAspect {
+@RequiredArgsConstructor
+@ConditionalOnProperty(value = "storage.is-enable-resource-mark", havingValue = "true", matchIfMissing = true)
+public class StorageAspect {
+
+    private final StorageProperties storageProperties;
 
     @Around("(@within(org.springframework.stereotype.Controller) " +
             "|| @within(org.springframework.web.bind.annotation.RestController)) " +
@@ -44,11 +51,11 @@ public class DesensitizationAspect {
     public Object exec(ProceedingJoinPoint point) throws Throwable {
         Object result = point.proceed();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
-        return this.desensitization(method.getAnnotation(DesensitizationMark.class), result);
+        return this.storageResource(method.getAnnotation(StorageResourceMark.class), result);
     }
 
     /**
-     * 数据脱敏
+     * 云存储资源 uri 拼接
      *
      * @param mark         数据脱敏注解
      * @param originResult 原始 result
@@ -58,25 +65,25 @@ public class DesensitizationAspect {
      * @date 2022-02-08 3:46 下午
      */
     @SuppressWarnings({"unchecked"})
-    private Object desensitization(DesensitizationMark mark, Object originResult) {
+    private Object storageResource(StorageResourceMark mark, Object originResult) {
         if (this.isBasicDataType(originResult)) {
             return originResult;
         } else if (originResult instanceof String) {
             return mark == null
                     ? originResult
-                    : mark.type().desensitization(originResult.toString());
+                    : storageProperties.getBaseUri() + originResult;
         } else if (originResult instanceof List) {
             List<Object> list = (List<Object>) originResult;
             List<Object> results = new ArrayList<>(list.size());
             for (Object result : list) {
-                results.add(this.desensitization(null, result));
+                results.add(this.storageResource(null, result));
             }
             return results;
         } else if (originResult instanceof Set) {
             Set<Object> set = (Set<Object>) originResult;
             Set<Object> results = new HashSet<>(set.size());
             for (Object result : set) {
-                results.add(this.desensitization(null, result));
+                results.add(this.storageResource(null, result));
             }
             return results;
         }
@@ -85,18 +92,18 @@ public class DesensitizationAspect {
                 .collect(Collectors.toList());
         for (Field field : fields) {
             if (field.getType().toString().equals(String.class.toString())) {
-                mark = field.getAnnotation(DesensitizationMark.class);
+                mark = field.getAnnotation(StorageResourceMark.class);
                 if (mark == null) {
                     continue;
                 }
                 Object result = this.getValue(originResult, field);
                 if (result != null) {
-                    this.setValue(originResult, field, mark.type().desensitization(result.toString()));
+                    this.setValue(originResult, field, storageProperties.getBaseUri() + result);
                 }
             } else {
                 Object result = this.getValue(originResult, field);
                 if (result != null) {
-                    this.desensitization(null, result);
+                    this.storageResource(null, result);
                 }
             }
         }

@@ -1,0 +1,35 @@
+{
+    "groups": [
+        {
+            "name": "aliyun.oss",
+            "description": "阿里云 OSS 相关信息."
+        }
+    ],
+    "properties": [
+        {
+            "name": "aliyun.oss.endpoint",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.OssProperties",
+            "description": "endpoint."
+        },
+        {
+            "name": "aliyun.oss.bucket",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.OssProperties",
+            "description": "bucket."
+        },
+        {
+            "name": "aliyun.oss.access-key-id",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.OssProperties",
+            "description": "accessKeyId."
+        },
+        {
+            "name": "aliyun.oss.secret-access-key",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.OssProperties",
+            "description": "secretAccessKey."
+        }
+    ],
+    "hints": []
+}

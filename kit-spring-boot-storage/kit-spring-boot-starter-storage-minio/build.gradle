@@ -2,8 +2,8 @@ plugins {
     id "signing"
     id "java-library"
     id "maven-publish"
-    id "org.springframework.boot" version "$springBootVersion"
-    id "io.spring.dependency-management" version "$springDependencyManagementVersion"
+    id "org.springframework.boot"
+    id "io.spring.dependency-management"
 }
 
 jar {
@@ -47,9 +47,9 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-starter-desensitization"
+            artifactId "spring-boot-starter-storage-minio"
             version version.toString()
-            description "Spring Boot 增强套件 之 数据脱敏 模块"
+            description "Spring Boot 增强套件 之 云存储 MinIO 模块"
 
             pom {
                 name = "java-enhancement-kit"
@@ -81,13 +81,12 @@ signing {
 }
 
 dependencies {
+    api project(":kit-spring-boot-storage")
+
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    api "org.apache.commons:commons-lang3:$commonsLang3Version"
+    implementation "io.minio:minio:$minioVersion"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
-    api "org.springframework.boot:spring-boot-starter-web"
-    api "org.springframework.boot:spring-boot-starter-aop"
 }

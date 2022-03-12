@@ -1,0 +1,24 @@
+{
+    "groups": [
+        {
+            "name": "storage",
+            "description": "云存储相关信息."
+        }
+    ],
+    "properties": [
+        {
+            "name": "storage.base-uri",
+            "type": "java.lang.String",
+            "sourceType": "com.pongsky.kit.storage.config.StorageConfig",
+            "description": "文件基地址.",
+            "defaultValue": ""
+        },
+        {
+            "name": "storage.is-enable-resource-mark",
+            "type": "java.lang.Boolean",
+            "description": "是否启用补充 uri.",
+            "defaultValue": "true"
+        }
+    ],
+    "hints": []
+}
