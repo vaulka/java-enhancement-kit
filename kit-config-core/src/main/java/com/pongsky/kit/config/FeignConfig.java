@@ -11,6 +11,7 @@ import feign.codec.Decoder;
 import feign.optionals.OptionalDecoder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
 import org.springframework.cloud.openfeign.support.SpringDecoder;
@@ -27,6 +28,7 @@ import java.lang.reflect.Type;
  * @author pengsenhao
  */
 @Component
+@ConditionalOnClass(RequestInterceptor.class)
 public class FeignConfig implements RequestInterceptor {
 
     @Override

@@ -49,7 +49,7 @@ publishing {
             groupId group.toString()
             artifactId "spring-boot-starter-desensitization"
             version version.toString()
-            description "Spring Boot 增强套件 之 数据脱敏 模块"
+            description "Java 增强套件 之 数据脱敏 starter 模块"
 
             pom {
                 name = "java-enhancement-kit"

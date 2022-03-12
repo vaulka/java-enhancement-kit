@@ -49,7 +49,7 @@ publishing {
             groupId group.toString()
             artifactId "spring-boot-starter-storage-minio"
             version version.toString()
-            description "Spring Boot 增强套件 之 云存储 MinIO 模块"
+            description "Java 增强套件 之 云存储 MinIO starter 模块"
 
             pom {
                 name = "java-enhancement-kit"

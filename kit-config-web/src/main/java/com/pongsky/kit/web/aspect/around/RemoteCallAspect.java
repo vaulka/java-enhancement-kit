@@ -1,12 +1,12 @@
 package com.pongsky.kit.web.aspect.around;
 
 import com.pongsky.kit.web.request.RequestUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 @Slf4j
 @Aspect
 @Component
-@RequiredArgsConstructor
+@ConditionalOnClass(FeignClient.class)
 public class RemoteCallAspect {
 
     @SuppressWarnings({"unchecked"})

@@ -68,14 +68,12 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    compileOnly "io.minio:minio:$minioVersion"
     api "com.alibaba:fastjson:$fastjsonVersion"
     api "commons-codec:commons-codec:$commonsCodecVersion"
     api "org.apache.commons:commons-text:$commonsTextVersion"
     api "org.apache.commons:commons-lang3:$commonsLang3Version"
     api "io.springfox:springfox-boot-starter:$springfoxVersion"
     compileOnly "javax.servlet:javax.servlet-api:$servletVersion"
-    compileOnly "com.aliyun.oss:aliyun-sdk-oss:$aliyunSdkOssVersion"
     api "org.apache.commons:commons-collections4:$commonsCollections4Version"
     compileOnly "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion"
 }
