@@ -8,23 +8,33 @@ findProject(":kit-config-core")?.name = "config-core"
 include "kit-config-web"
 findProject(":kit-config-web")?.name = "config-web"
 
-include "kit-spring-boot-desensitization"
-findProject(":kit-spring-boot-desensitization")?.name = "spring-boot-desensitization"
+include "kit-desensitization"
+findProject(":kit-desensitization")?.name = "desensitization"
 
-include "spring-boot-desensitization:kit-spring-boot-desensitization-utils"
-findProject(":spring-boot-desensitization:kit-spring-boot-desensitization-utils")?.name = "spring-boot-desensitization-utils"
+include "desensitization:kit-desensitization-annotation"
+findProject(":desensitization:kit-desensitization-annotation")?.name = "desensitization-annotation"
 
-include "spring-boot-desensitization:kit-spring-boot-desensitization-annotation"
-findProject(":spring-boot-desensitization:kit-spring-boot-desensitization-annotation")?.name = "spring-boot-desensitization-annotation"
+include "desensitization:kit-desensitization-utils"
+findProject(":desensitization:kit-desensitization-utils")?.name = "desensitization-utils"
 
-include ":spring-boot-desensitization:kit-spring-boot-starter-desensitization"
-findProject(":spring-boot-desensitization:kit-spring-boot-starter-desensitization")?.name = "spring-boot-starter-desensitization"
+include ":desensitization:kit-spring-boot-starter-desensitization"
+findProject(":desensitization:kit-spring-boot-starter-desensitization")?.name = "spring-boot-starter-desensitization"
 
-include "kit-spring-boot-storage"
-findProject(":kit-spring-boot-storage")?.name = "spring-boot-storage"
+include "kit-storage"
+findProject(":kit-storage")?.name = "storage"
 
-include "spring-boot-storage:kit-spring-boot-starter-storage-minio"
-findProject(":spring-boot-storage:kit-spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
+include 'storage:kit-storage-annotation'
+findProject(':storage:kit-storage-annotation')?.name = 'storage-annotation'
 
-include "spring-boot-storage:kit-spring-boot-starter-storage-oss"
-findProject(":spring-boot-storage:kit-spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
+include 'storage:kit-storage-utils'
+findProject(':storage:kit-storage-utils')?.name = 'storage-utils'
+
+include 'storage:kit-spring-boot-storage'
+findProject(':storage:kit-spring-boot-storage')?.name = 'spring-boot-storage'
+
+include "storage:kit-spring-boot-starter-storage-minio"
+findProject(":storage:kit-spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
+
+include "storage:kit-spring-boot-starter-storage-oss"
+findProject(":storage:kit-spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
+
