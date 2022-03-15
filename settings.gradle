@@ -11,6 +11,12 @@ findProject(":kit-config-web")?.name = "config-web"
 include "kit-spring-boot-desensitization"
 findProject(":kit-spring-boot-desensitization")?.name = "spring-boot-desensitization"
 
+include "spring-boot-desensitization:kit-spring-boot-desensitization-utils"
+findProject(":spring-boot-desensitization:kit-spring-boot-desensitization-utils")?.name = "spring-boot-desensitization-utils"
+
+include "spring-boot-desensitization:kit-spring-boot-desensitization-annotation"
+findProject(":spring-boot-desensitization:kit-spring-boot-desensitization-annotation")?.name = "spring-boot-desensitization-annotation"
+
 include ":spring-boot-desensitization:kit-spring-boot-starter-desensitization"
 findProject(":spring-boot-desensitization:kit-spring-boot-starter-desensitization")?.name = "spring-boot-starter-desensitization"
 

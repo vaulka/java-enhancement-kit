@@ -1,4 +1,4 @@
-package com.pongsky.kit.desensitization.utils;
+package com.pongsky.kit.desensitization.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -22,11 +22,11 @@ import java.lang.annotation.Target;
 public @interface DesensitizationMark {
 
     /**
-     * 脱敏类型
+     * 脱敏处理器
      *
-     * @return 脱敏类型
+     * @return 脱敏处理器
      * @author pengsenhao
      */
-    DesensitizationType type();
+    Class<? extends DesensitizationHandler> handler();
 
 }

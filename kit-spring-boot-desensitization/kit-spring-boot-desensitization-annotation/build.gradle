@@ -2,22 +2,10 @@ plugins {
     id "signing"
     id "java-library"
     id "maven-publish"
-    id "org.springframework.boot" version "$springBootVersion"
-    id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
 jar {
     enabled = true
-}
-
-bootJar {
-    enabled = false
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
-    }
 }
 
 task sourcesJar(type: Jar) {
@@ -47,9 +35,9 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-starter-desensitization"
+            artifactId "spring-boot-desensitization"
             version version.toString()
-            description "Java 增强套件 之 数据脱敏 starter 模块"
+            description "Java 增强套件 之 数据脱敏 annotation 模块"
 
             pom {
                 name = "java-enhancement-kit"
@@ -81,13 +69,6 @@ signing {
 }
 
 dependencies {
-    api project(":spring-boot-desensitization:spring-boot-desensitization-utils")
-
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
-
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
-    api "org.springframework.boot:spring-boot-starter-web"
-    api "org.springframework.boot:spring-boot-starter-aop"
 }

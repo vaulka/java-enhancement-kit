@@ -1,6 +1,7 @@
 package com.pongsky.kit.desensitization.web.aspect.around;
 
-import com.pongsky.kit.desensitization.utils.DesensitizationMark;
+import com.pongsky.kit.desensitization.annotation.DesensitizationHandler;
+import com.pongsky.kit.desensitization.annotation.DesensitizationMark;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,6 +10,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -18,6 +20,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -56,13 +59,15 @@ public class DesensitizationAspect {
      * @author pengsenhao
      */
     @SuppressWarnings({"unchecked"})
-    private Object desensitization(DesensitizationMark mark, Object originResult) {
+    private Object desensitization(DesensitizationMark mark, Object originResult)
+            throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        DesensitizationHandler handler = this.getHandler(mark);
         if (this.isBasicDataType(originResult)) {
             return originResult;
-        } else if (originResult instanceof String) {
-            return mark == null
-                    ? originResult
-                    : mark.type().desensitization(originResult.toString());
+        } else if (originResult instanceof String
+                && mark != null
+                && handler.willDoExec(originResult.toString())) {
+            return handler.exec(originResult.toString());
         } else if (originResult instanceof List) {
             List<Object> list = (List<Object>) originResult;
             List<Object> results = new ArrayList<>(list.size());
@@ -88,8 +93,8 @@ public class DesensitizationAspect {
                     continue;
                 }
                 Object result = this.getValue(originResult, field);
-                if (result != null) {
-                    this.setValue(originResult, field, mark.type().desensitization(result.toString()));
+                if (result != null && handler.willDoExec(originResult.toString())) {
+                    this.setValue(originResult, field, handler.exec(result.toString()));
                 }
             } else {
                 Object result = this.getValue(originResult, field);
@@ -195,6 +200,34 @@ public class DesensitizationAspect {
         } catch (IllegalAccessException e) {
             log.error(e.getLocalizedMessage());
         }
+    }
+
+    /**
+     * 数据脱敏处理器列表
+     */
+    private static final Map<String, DesensitizationHandler> HANDLERS = new HashMap<>(16);
+
+    /**
+     * 获取数据脱敏处理器
+     *
+     * @param mark 数据脱敏注解
+     * @return 数据脱敏处理器
+     */
+    private DesensitizationHandler getHandler(DesensitizationMark mark) throws
+            NoSuchMethodException, InvocationTargetException,
+            InstantiationException, IllegalAccessException {
+        if (mark == null) {
+            return null;
+        }
+        Class<? extends DesensitizationHandler> type = mark.handler();
+        String key = type.getName();
+        DesensitizationHandler desensitizationHandler = HANDLERS.get(key);
+        if (desensitizationHandler != null) {
+            return desensitizationHandler;
+        }
+        desensitizationHandler = type.getDeclaredConstructor().newInstance();
+        HANDLERS.put(key, desensitizationHandler);
+        return desensitizationHandler;
     }
 
 }
