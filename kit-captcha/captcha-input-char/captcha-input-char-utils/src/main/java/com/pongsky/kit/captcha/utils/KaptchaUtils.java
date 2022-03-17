@@ -139,6 +139,7 @@ public class KaptchaUtils {
      *
      * @param code 验证码
      * @return 创建验证码 Stream 流
+     * @throws IOException IOException
      */
     public ByteArrayOutputStream createImageByStream(String code) throws IOException {
         BufferedImage image = this.createImage(code);
@@ -152,7 +153,9 @@ public class KaptchaUtils {
     /**
      * 创建图像验证码，并写入 Stream 流
      *
-     * @param code 验证码
+     * @param code         验证码
+     * @param outputStream outputStream
+     * @throws IOException IOException
      */
     public void createImageByStream(String code, OutputStream outputStream) throws IOException {
         BufferedImage image = this.createImage(code);
@@ -166,6 +169,7 @@ public class KaptchaUtils {
      *
      * @param code 验证码
      * @return 创建验证码 Base64 信息
+     * @throws IOException IOException
      */
     public String createImageByBase64(String code) throws IOException {
         ByteArrayOutputStream outputStream = this.createImageByStream(code);
