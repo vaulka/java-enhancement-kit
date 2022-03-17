@@ -26,7 +26,6 @@ ext {
     commonsCodecVersion = "1.15"
     aliyunSdkOssVersion = "3.14.0"
     commonsLang3Version = "3.12.0"
-    penggleKaptchaVersion = "2.3.2"
     googleAnnotationsVersion = "3.0.1"
     commonsCollections4Version = "4.4"
 }
