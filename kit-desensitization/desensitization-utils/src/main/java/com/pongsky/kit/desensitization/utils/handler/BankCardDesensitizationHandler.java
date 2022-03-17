@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
  * 示例：6217********1201
  *
  * @author pengsenhao
- * @date 2022-03-15 11:57
  */
 public class BankCardDesensitizationHandler implements DesensitizationHandler {
 

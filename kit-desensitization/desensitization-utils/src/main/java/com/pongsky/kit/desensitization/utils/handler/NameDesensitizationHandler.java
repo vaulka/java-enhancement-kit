@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
  * 示例：彭**豪
  *
  * @author pengsenhao
- * @date 2022-03-15 11:57
  */
 public class NameDesensitizationHandler implements DesensitizationHandler {
 

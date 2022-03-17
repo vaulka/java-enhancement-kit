@@ -1,8 +1,9 @@
 package com.pongsky.kit.desensitization.utils;
 
 /**
+ * 脱敏处理器
+ *
  * @author pengsenhao
- * @date 2022-03-15 11:49
  */
 public interface DesensitizationHandler {
 
