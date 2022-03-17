@@ -1,4 +1,17 @@
 rootProject.name = "java-enhancement-kit"
+
+include "kit-captcha"
+findProject(":kit-captcha")?.name = "captcha"
+
+include "captcha:captcha-input-char"
+findProject(":captcha:captcha-input-char")?.name = "captcha-input-char"
+
+include "captcha:captcha-input-char:captcha-input-char-utils"
+findProject(":captcha:captcha-input-char:captcha-input-char-utils")?.name = "captcha-input-char-utils"
+
+include "captcha:captcha-input-char:spring-boot-starter-captcha-input-char"
+findProject(":captcha:captcha-input-char:spring-boot-starter-captcha-input-char")?.name = "spring-boot-starter-captcha-input-char"
+
 include "kit-common-utils"
 findProject(":kit-common-utils")?.name = "common-utils"
 
@@ -23,14 +36,14 @@ findProject(":desensitization:spring-boot-starter-desensitization")?.name = "spr
 include "kit-storage"
 findProject(":kit-storage")?.name = "storage"
 
-include 'storage:storage-annotation'
-findProject(':storage:storage-annotation')?.name = 'storage-annotation'
+include "storage:storage-annotation"
+findProject(":storage:storage-annotation")?.name = "storage-annotation"
 
-include 'storage:storage-utils'
-findProject(':storage:storage-utils')?.name = 'storage-utils'
+include "storage:storage-utils"
+findProject(":storage:storage-utils")?.name = "storage-utils"
 
-include 'storage:spring-boot-storage'
-findProject(':storage:spring-boot-storage')?.name = 'spring-boot-storage'
+include "storage:spring-boot-storage"
+findProject(":storage:spring-boot-storage")?.name = "spring-boot-storage"
 
 include "storage:spring-boot-starter-storage-minio"
 findProject(":storage:spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
