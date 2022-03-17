@@ -14,11 +14,15 @@ public class KaptchaConfiguration {
     /**
      * 创建验证码工具类
      *
+     * @param kaptchaProperties 验证码参数配置
      * @return 验证码工具类
      */
     @Bean
-    public KaptchaUtils kaptchaUtils() {
-        return new KaptchaUtils();
+    public KaptchaUtils kaptchaUtils(KaptchaProperties kaptchaProperties) {
+        return new KaptchaUtils(kaptchaProperties.getCodeNum(),
+                kaptchaProperties.getCodeNum() * kaptchaProperties.getCodeWidthSpace(),
+                kaptchaProperties.getImageHeight(),
+                kaptchaProperties.getDrawCount(), kaptchaProperties.getLineWidth());
     }
 
 }
