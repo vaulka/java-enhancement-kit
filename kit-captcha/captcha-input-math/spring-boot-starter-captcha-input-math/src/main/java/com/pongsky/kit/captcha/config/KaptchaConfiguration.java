@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 
 
 /**
- * 输入型字符 验证码 配置
+ * 输入型算数 验证码 配置
  *
  * @author pengsenhao
  */
@@ -19,8 +19,9 @@ public class KaptchaConfiguration {
      */
     @Bean
     public KaptchaUtils kaptchaUtils(KaptchaProperties properties) {
-        return new KaptchaUtils(properties.getCodeNum(),
-                properties.getCodeNum() * properties.getCodeWidthSpace(),
+        return new KaptchaUtils(properties.getMinCode(), properties.getMaxCode(),
+                (String.valueOf(properties.getMaxCode()).length() + 3)
+                        * properties.getCodeWidthSpace(),
                 properties.getImageHeight(),
                 properties.getDrawCount(), properties.getLineWidth());
     }

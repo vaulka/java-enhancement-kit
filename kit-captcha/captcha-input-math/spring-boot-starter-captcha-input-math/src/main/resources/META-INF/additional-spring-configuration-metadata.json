@@ -2,15 +2,21 @@
     "groups": [
         {
             "name": "kaptcha",
-            "description": "输入型字符 验证码 相关信息."
+            "description": "输入型算数 验证码 相关信息."
         }
     ],
     "properties": [
         {
-            "name": "kaptcha.codeNum",
+            "name": "kaptcha.minCode",
             "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.codeNum",
-            "description": "验证码数量."
+            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.minCode",
+            "description": "最小验证码数值."
+        },
+        {
+            "name": "kaptcha.maxCode",
+            "type": "java.lang.Integer",
+            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.maxCode",
+            "description": "最大验证码数值."
         },
         {
             "name": "kaptcha.codeWidthSpace",

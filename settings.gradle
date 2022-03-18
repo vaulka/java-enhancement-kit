@@ -12,6 +12,15 @@ findProject(":captcha:captcha-input-char:captcha-input-char-utils")?.name = "cap
 include "captcha:captcha-input-char:spring-boot-starter-captcha-input-char"
 findProject(":captcha:captcha-input-char:spring-boot-starter-captcha-input-char")?.name = "spring-boot-starter-captcha-input-char"
 
+include "captcha:captcha-input-math"
+findProject(":captcha:captcha-input-math")?.name = "captcha-input-math"
+
+include 'captcha:captcha-input-math:captcha-input-math-utils'
+findProject(':captcha:captcha-input-math:captcha-input-math-utils')?.name = 'captcha-input-math-utils'
+
+include "captcha:captcha-input-math:spring-boot-starter-captcha-input-math"
+findProject(":captcha:captcha-input-math:spring-boot-starter-captcha-input-math")?.name = "spring-boot-starter-captcha-input-math"
+
 include "kit-common-utils"
 findProject(":kit-common-utils")?.name = "common-utils"
 
@@ -50,4 +59,3 @@ findProject(":storage:spring-boot-starter-storage-minio")?.name = "spring-boot-s
 
 include "storage:spring-boot-starter-storage-oss"
 findProject(":storage:spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
-
