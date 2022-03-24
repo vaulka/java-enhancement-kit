@@ -1,5 +1,6 @@
 package com.pongsky.kit.captcha.utils;
 
+import com.pongsky.kit.captcha.enums.MathType;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 

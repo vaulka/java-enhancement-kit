@@ -1,4 +1,4 @@
-package com.pongsky.kit.captcha.utils;
+package com.pongsky.kit.captcha.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
