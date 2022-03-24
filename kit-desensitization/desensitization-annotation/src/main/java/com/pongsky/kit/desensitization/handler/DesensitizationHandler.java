@@ -1,4 +1,4 @@
-package com.pongsky.kit.desensitization.utils;
+package com.pongsky.kit.desensitization.handler;
 
 /**
  * 脱敏处理器

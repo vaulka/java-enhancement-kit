@@ -1,6 +1,6 @@
 package com.pongsky.kit.desensitization.annotation;
 
-import com.pongsky.kit.desensitization.utils.DesensitizationHandler;
+import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

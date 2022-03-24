@@ -1,17 +1,17 @@
-package com.pongsky.kit.desensitization.utils.handler;
+package com.pongsky.kit.desensitization.handler;
 
-import com.pongsky.kit.desensitization.utils.DesensitizationHandler;
+import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
 import com.pongsky.kit.desensitization.utils.DesensitizationUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 密码脱敏
+ * 手机号脱敏
  * <p>
- * 示例：******
+ * 示例：151***5510
  *
  * @author pengsenhao
  */
-public class PasswordDesensitizationHandler implements DesensitizationHandler {
+public class PhoneDesensitizationHandler implements DesensitizationHandler {
 
     @Override
     public boolean willDoExec(String str) {
@@ -20,7 +20,7 @@ public class PasswordDesensitizationHandler implements DesensitizationHandler {
 
     @Override
     public String exec(String str) {
-        return DesensitizationUtils.desensitization(str, 0, 0);
+        return DesensitizationUtils.desensitization(str, 3, 4);
     }
 
 }

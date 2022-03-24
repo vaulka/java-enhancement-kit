@@ -1,6 +1,6 @@
 package com.pongsky.kit.desensitization.web.aspect.around;
 
-import com.pongsky.kit.desensitization.utils.DesensitizationHandler;
+import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
 import com.pongsky.kit.desensitization.annotation.DesensitizationMark;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

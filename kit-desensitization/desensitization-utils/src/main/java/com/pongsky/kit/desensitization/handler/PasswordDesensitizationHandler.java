@@ -1,17 +1,17 @@
-package com.pongsky.kit.desensitization.utils.handler;
+package com.pongsky.kit.desensitization.handler;
 
-import com.pongsky.kit.desensitization.utils.DesensitizationHandler;
+import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
 import com.pongsky.kit.desensitization.utils.DesensitizationUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 银行卡号脱敏
+ * 密码脱敏
  * <p>
- * 示例：6217********1201
+ * 示例：******
  *
  * @author pengsenhao
  */
-public class BankCardDesensitizationHandler implements DesensitizationHandler {
+public class PasswordDesensitizationHandler implements DesensitizationHandler {
 
     @Override
     public boolean willDoExec(String str) {
@@ -20,7 +20,7 @@ public class BankCardDesensitizationHandler implements DesensitizationHandler {
 
     @Override
     public String exec(String str) {
-        return DesensitizationUtils.desensitization(str, 4, 4);
+        return DesensitizationUtils.desensitization(str, 0, 0);
     }
 
 }

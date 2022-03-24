@@ -1,6 +1,6 @@
-package com.pongsky.kit.desensitization.utils.handler;
+package com.pongsky.kit.desensitization.handler;
 
-import com.pongsky.kit.desensitization.utils.DesensitizationHandler;
+import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
 import com.pongsky.kit.desensitization.utils.DesensitizationUtils;
 import org.apache.commons.lang3.StringUtils;
 
