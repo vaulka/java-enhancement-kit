@@ -19,6 +19,7 @@ ext {
 
     springDependencyManagementVersion = "1.0.11.RELEASE"
 
+    poiVersion = "5.2.2"
     druidVersion = "1.2.8"
     minioVersion = "7.1.4"
     commonsTextVersion = "1.9"

@@ -15,8 +15,8 @@ findProject(":captcha:captcha-input-char:spring-boot-starter-captcha-input-char"
 include "captcha:captcha-input-math"
 findProject(":captcha:captcha-input-math")?.name = "captcha-input-math"
 
-include 'captcha:captcha-input-math:captcha-input-math-utils'
-findProject(':captcha:captcha-input-math:captcha-input-math-utils')?.name = 'captcha-input-math-utils'
+include "captcha:captcha-input-math:captcha-input-math-utils"
+findProject(":captcha:captcha-input-math:captcha-input-math-utils")?.name = "captcha-input-math-utils"
 
 include "captcha:captcha-input-math:spring-boot-starter-captcha-input-math"
 findProject(":captcha:captcha-input-math:spring-boot-starter-captcha-input-math")?.name = "spring-boot-starter-captcha-input-math"
@@ -41,6 +41,15 @@ findProject(":desensitization:desensitization-utils")?.name = "desensitization-u
 
 include ":desensitization:spring-boot-starter-desensitization"
 findProject(":desensitization:spring-boot-starter-desensitization")?.name = "spring-boot-starter-desensitization"
+
+include "kit-excel"
+findProject(":kit-excel")?.name = "excel"
+
+include "excel:excel-utils"
+findProject(":excel:excel-utils")?.name = "excel-utils"
+
+include "excel:excel-annotation"
+findProject(":excel:excel-annotation")?.name = "excel-annotation"
 
 include "kit-storage"
 findProject(":kit-storage")?.name = "storage"
