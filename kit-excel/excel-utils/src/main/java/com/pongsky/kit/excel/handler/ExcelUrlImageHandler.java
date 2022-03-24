@@ -18,7 +18,7 @@ import java.net.URL;
 public class ExcelUrlImageHandler extends ExcelBufferedImageHandler {
 
     @Override
-    public void exec(Excel excel, Object obj, ExcelExportInfo<?> info) throws IOException {
+    public void exec(Excel excel, Object obj, ExcelExportInfo info) throws IOException {
         String imageUrl = null;
         if (obj instanceof String) {
             imageUrl = obj.toString();

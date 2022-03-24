@@ -3,7 +3,7 @@ package com.pongsky.kit.excel.utils;
 import com.pongsky.kit.excel.annotation.Excel;
 import com.pongsky.kit.excel.annotation.Excels;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
-import com.pongsky.kit.excel.enums.FieldType;
+import com.pongsky.kit.excel.enums.ParseResultUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -20,14 +20,12 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -35,15 +33,15 @@ import java.util.stream.Collectors;
  *
  * @author pengsenhao
  **/
-public class ExcelExportUtils<T> {
+public class ExcelExportUtils {
 
     /**
      * 导出 excel 相关参数信息
      */
-    private final ExcelExportInfo<T> info;
+    private final ExcelExportInfo info;
 
-    public ExcelExportUtils(Class<T> clazz) {
-        info = new ExcelExportInfo<>();
+    public ExcelExportUtils(Class<?> clazz) {
+        info = new ExcelExportInfo();
         List<Class<?>> classes = new ArrayList<>();
         this.getSuperclasses(classes, clazz);
         info.setFields(new ArrayList<>());
@@ -88,7 +86,7 @@ public class ExcelExportUtils<T> {
      * @param sheetName 工作表名称
      * @return 导出 excel
      */
-    public SXSSFWorkbook export(List<T> results, String sheetName) {
+    public SXSSFWorkbook export(List<?> results, String sheetName) {
         info.setHeights(new HashMap<>(results.size() * 2));
         info.setResults(results);
         // 创建工作薄
@@ -186,7 +184,7 @@ public class ExcelExportUtils<T> {
      * 构建 数据列表
      */
     private void buildResults() {
-        for (T result : info.getResults()) {
+        for (Object result : info.getResults()) {
             info.setRow(info.getSheet().createRow(info.getRowNum()));
             for (int i = 0; i < info.getFields().size(); i++) {
                 info.setCell(info.getRow().createCell(i));
@@ -194,7 +192,7 @@ public class ExcelExportUtils<T> {
                 Field field = ExcelExportInfo.getField(fieldExcels);
                 Excel excel = ExcelExportInfo.getExcel(fieldExcels);
                 info.getCell().setCellStyle(this.getCellStyle(excel, false));
-                Object fieldValue = this.parseFieldValue(field, excel, result);
+                Object fieldValue = ParseResultUtils.parseFieldValue(field, excel.attrs(), result);
                 try {
                     excel.handler().getDeclaredConstructor().newInstance()
                             .exec(excel, fieldValue, info);
@@ -208,112 +206,6 @@ public class ExcelExportUtils<T> {
             }
             info.rowNumPlusOne();
         }
-    }
-
-    /**
-     * 解析数据
-     *
-     * @param field  field
-     * @param excel  导出 excel 相关信息
-     * @param result 行数据
-     * @return 解析数据
-     */
-    private Object parseFieldValue(Field field, Excel excel, Object result) {
-        Object fieldValue = this.getFieldValue(result, field);
-        if (StringUtils.isNotBlank(excel.attrs())) {
-            fieldValue = this.parseFieldValueByAttrs(excel.attrs(), fieldValue);
-        }
-        return fieldValue;
-    }
-
-    /**
-     * 点符号
-     */
-    private static final String POINT = ".";
-
-    /**
-     * 左方括号
-     */
-    private static final String LEFT_SQUARE_BRACKETS = "[";
-
-    /**
-     * 右方括号
-     */
-    private static final String RIGHT_SQUARE_BRACKETS = "]";
-
-    /**
-     * 解析 attrs 层级数据
-     *
-     * @param attrs attrs
-     * @param value 基层数据
-     * @return 解析 attrs 层级数据
-     */
-    private Object parseFieldValueByAttrs(String attrs, Object value) {
-        String attr = attrs;
-        String lastAttr = null;
-        if (attr.contains(POINT)) {
-            attr = attr.substring(0, attr.indexOf(POINT));
-            lastAttr = attrs.substring(attr.length());
-            if (StringUtils.isNotBlank(lastAttr) && lastAttr.startsWith(POINT)) {
-                lastAttr = lastAttr.substring(1);
-            }
-        }
-        Object index = null;
-        if (attr.contains(LEFT_SQUARE_BRACKETS) && attr.contains(RIGHT_SQUARE_BRACKETS)) {
-            index = attr.substring(attr.indexOf(LEFT_SQUARE_BRACKETS) + 1, attr.indexOf(RIGHT_SQUARE_BRACKETS));
-            attr = attr.substring(0, attr.lastIndexOf(LEFT_SQUARE_BRACKETS));
-        }
-        Object val;
-        try {
-            Field field = value.getClass().getDeclaredField(attr);
-            FieldType type = FieldType.getType(field);
-            val = this.getFieldValue(value, field);
-            if (index != null) {
-                switch (type) {
-                    case MAP:
-                        val = ((Map<?, ?>) val).get(index);
-                        break;
-                    case LIST:
-                        val = ((List<?>) val).get(Integer.parseInt(index.toString()));
-                        break;
-                    case SET:
-                        val = ((Set<?>) val).toArray()[Integer.parseInt(index.toString())];
-                        break;
-                    default:
-                        break;
-                }
-            }
-            if (StringUtils.isNotBlank(lastAttr)) {
-                return this.parseFieldValueByAttrs(lastAttr, val);
-            }
-            return val;
-        } catch (NoSuchFieldException | SecurityException e) {
-            throw new RuntimeException(MessageFormat.format(
-                    "attr {0} 解析失败：{1}",
-                    attr, e.getLocalizedMessage()),
-                    e);
-        }
-    }
-
-    /**
-     * 获取属性值
-     *
-     * @param obj   obj
-     * @param field field
-     * @return 获取属性值
-     */
-    private Object getFieldValue(Object obj, Field field) {
-        field.setAccessible(true);
-        Object result;
-        try {
-            result = field.get(obj);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(MessageFormat.format(
-                    "获取 {0}.{1} 属性值失败：{2}",
-                    obj.getClass().getName(), field.getName(), e.getLocalizedMessage()),
-                    e);
-        }
-        return result;
     }
 
 }

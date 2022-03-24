@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 public class ExcelStringHandler implements ExcelHandler {
 
     @Override
-    public void exec(Excel excel, Object obj, ExcelExportInfo<?> info) {
+    public void exec(Excel excel, Object obj, ExcelExportInfo info) {
         if (obj == null || StringUtils.isBlank(obj.toString())) {
             obj = excel.defaultValue();
         }

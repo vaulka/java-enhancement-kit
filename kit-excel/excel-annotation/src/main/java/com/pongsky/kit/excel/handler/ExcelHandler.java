@@ -20,6 +20,6 @@ public interface ExcelHandler {
      * @param info  导出 excel 相关参数信息
      * @throws IOException IOException
      */
-    void exec(Excel excel, Object obj, ExcelExportInfo<?> info) throws IOException;
+    void exec(Excel excel, Object obj, ExcelExportInfo info) throws IOException;
 
 }

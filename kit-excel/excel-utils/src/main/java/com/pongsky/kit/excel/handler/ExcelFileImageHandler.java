@@ -18,7 +18,7 @@ import java.io.IOException;
 public class ExcelFileImageHandler extends ExcelBufferedImageHandler {
 
     @Override
-    public void exec(Excel excel, Object obj, ExcelExportInfo<?> info) throws IOException {
+    public void exec(Excel excel, Object obj, ExcelExportInfo info) throws IOException {
         File imageFile = null;
         if (obj instanceof File) {
             imageFile = (File) obj;

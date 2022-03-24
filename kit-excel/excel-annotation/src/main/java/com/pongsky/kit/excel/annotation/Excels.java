@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
  * excel 信息 列表
  *
  * @author pengsenhao
- * @date 2022-03-22 13:56
  **/
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -37,7 +37,7 @@ publishing {
             groupId group.toString()
             artifactId "excel-annotation"
             version version.toString()
-            description "Java 增强套件 之 excel annotation 模块"
+            description "Java 增强套件 之 Excel annotation 模块"
 
             pom {
                 name = "java-enhancement-kit"

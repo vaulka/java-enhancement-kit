@@ -27,7 +27,7 @@ public abstract class ExcelBufferedImageHandler implements ExcelHandler {
     private String suffix = null;
 
     @Override
-    public void exec(Excel excel, Object obj, ExcelExportInfo<?> info) throws IOException {
+    public void exec(Excel excel, Object obj, ExcelExportInfo info) throws IOException {
         if (bufferedImage == null) {
             return;
         }

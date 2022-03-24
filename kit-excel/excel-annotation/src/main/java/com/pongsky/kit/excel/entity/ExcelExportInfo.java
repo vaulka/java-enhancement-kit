@@ -22,7 +22,7 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-public class ExcelExportInfo<T> {
+public class ExcelExportInfo {
 
     /**
      * field 与 excel 列表
@@ -167,7 +167,7 @@ public class ExcelExportInfo<T> {
     /**
      * 数据列表
      */
-    private List<T> results;
+    private List<?> results;
 
     /**
      * 工作簿

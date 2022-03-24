@@ -2,10 +2,22 @@ plugins {
     id "signing"
     id "java-library"
     id "maven-publish"
+    id "org.springframework.boot" version "$springBootVersion"
+    id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
 jar {
     enabled = true
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+    }
 }
 
 task sourcesJar(type: Jar) {
@@ -35,9 +47,9 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "excel-utils"
+            artifactId "spring-boot-starter-excel"
             version version.toString()
-            description "Java 增强套件 之 Excel utils 模块"
+            description "Java 增强套件 之 Excel Spring Boot Starter 模块"
 
             pom {
                 name = "java-enhancement-kit"
@@ -69,11 +81,13 @@ signing {
 }
 
 dependencies {
-    api project(":excel:excel-annotation")
+    api project(":excel:excel-utils")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    api "org.apache.poi:poi-ooxml:$poiVersion"
-    api "org.apache.commons:commons-lang3:$commonsLang3Version"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    api "org.springframework.boot:spring-boot-starter-web"
+    api "org.springframework.boot:spring-boot-starter-aop"
 }
