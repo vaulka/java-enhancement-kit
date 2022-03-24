@@ -1,4 +1,4 @@
-package com.pongsky.kit.storage.utils;
+package com.pongsky.kit.storage.entity;
 
 import com.pongsky.kit.storage.annotation.StorageResourceMark;
 import lombok.Data;
