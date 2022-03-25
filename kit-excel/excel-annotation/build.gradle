@@ -72,6 +72,6 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    compileOnly "org.apache.poi:poi-ooxml:$poiVersion"
-    compileOnly "org.apache.commons:commons-lang3:$commonsLang3Version"
+    api "org.apache.poi:poi-ooxml:$poiVersion"
+    api "org.apache.commons:commons-lang3:$commonsLang3Version"
 }
