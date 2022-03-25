@@ -46,6 +46,7 @@ public abstract class ExcelBufferedImageHandler implements ExcelHandler {
     /**
      * 获取图片格式后缀
      *
+     * @param inputStream inputStream
      * @return 获取图片格式后缀
      * @throws IOException IOException
      */

@@ -48,6 +48,8 @@ public @interface Excel {
      * 1、 {@link Excel#defaultValue()}、{@link Excel#suffix()} 需手动设置
      * 2、列值需手动设置
      * 3、宽度、高度需手动设置
+     *
+     * @return 列值处理器
      */
     Class<? extends ExcelHandler> handler() default ExcelStringHandler.class;
 
@@ -61,12 +63,12 @@ public @interface Excel {
     String defaultValue() default "";
 
     /**
-     * 列值后缀
+     * 列值后缀（需结合 {@link com.pongsky.kit.excel.handler.ExcelStringHandler} 使用或自定义 handler 进行设置）
      * <p>
      * 譬如：
      * 数据 90，后缀 %
      * <p>
-     * 90 -> 90%
+     * 90 变更为 90%
      *
      * @return 列值后缀
      */
