@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 public @interface Excel {
 
     /**
-     * 列名，优先度： value > name
+     * 列名，优先度： value &gt; name
      * <p>
      * 不填写则默认获取字段名
      *
@@ -29,7 +29,7 @@ public @interface Excel {
     String value() default "";
 
     /**
-     * 列名，优先度： value > name
+     * 列名，优先度： value &gt; name
      * <p>
      * 不填写则默认获取字段名
      *
@@ -82,7 +82,7 @@ public @interface Excel {
      * 譬如：
      * 数据 90，后缀 %
      * <p>
-     * 90 变更为 90%
+     * 90 &gt; 90%
      *
      * @return 列值后缀
      */
