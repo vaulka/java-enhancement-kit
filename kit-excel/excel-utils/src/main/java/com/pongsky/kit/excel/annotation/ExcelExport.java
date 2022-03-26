@@ -21,7 +21,7 @@ public @interface ExcelExport {
      *
      * @return 返回的数据类信息
      */
-    Class<?> resultClazz();
+    Class<?> value();
 
     /**
      * 获取多层级属性名称

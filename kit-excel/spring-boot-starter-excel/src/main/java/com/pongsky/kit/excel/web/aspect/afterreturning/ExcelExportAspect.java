@@ -63,7 +63,7 @@ public class ExcelExportAspect {
         switch (type) {
             case LIST: {
                 List<?> list = (List<?>) result;
-                SXSSFWorkbook workbook = new ExcelExportUtils(excelExport.resultClazz())
+                SXSSFWorkbook workbook = new ExcelExportUtils(excelExport.value())
                         .export(list, excelExport.sheetName());
                 response.setContentType("application/octet-stream");
                 response.setHeader("Content-Disposition",
