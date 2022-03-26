@@ -8,6 +8,7 @@ import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.URL;
 
 /**
@@ -18,7 +19,7 @@ import java.net.URL;
 public class ExcelUrlImageHandler extends ExcelBufferedImageHandler {
 
     @Override
-    public void exec(Excel excel, Object obj, ExcelExportInfo info) throws IOException {
+    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) throws IOException {
         String imageUrl = null;
         if (obj instanceof String) {
             imageUrl = obj.toString();
@@ -35,7 +36,7 @@ public class ExcelUrlImageHandler extends ExcelBufferedImageHandler {
         }
         this.setBufferedImage(bufferedImage);
         this.setSuffix(suffix);
-        super.exec(excel, obj, info);
+        super.exec(field, excel, obj, info);
     }
 
 }

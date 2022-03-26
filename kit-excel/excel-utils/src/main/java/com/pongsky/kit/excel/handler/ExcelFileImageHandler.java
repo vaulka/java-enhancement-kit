@@ -9,6 +9,7 @@ import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 /**
  * File 图片 处理器
@@ -18,7 +19,7 @@ import java.io.IOException;
 public class ExcelFileImageHandler extends ExcelBufferedImageHandler {
 
     @Override
-    public void exec(Excel excel, Object obj, ExcelExportInfo info) throws IOException {
+    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) throws IOException {
         File imageFile = null;
         if (obj instanceof File) {
             imageFile = (File) obj;
@@ -34,7 +35,7 @@ public class ExcelFileImageHandler extends ExcelBufferedImageHandler {
         }
         this.setBufferedImage(bufferedImage);
         this.setSuffix(suffix);
-        super.exec(excel, obj, info);
+        super.exec(field, excel, obj, info);
     }
 
 }

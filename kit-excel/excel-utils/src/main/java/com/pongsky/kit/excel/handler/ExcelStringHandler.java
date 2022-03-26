@@ -5,15 +5,17 @@ import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
+import java.lang.reflect.Field;
+
 /**
- * 字符串 处理器
+ * String 处理器
  *
  * @author pengsenhao
  **/
 public class ExcelStringHandler implements ExcelHandler {
 
     @Override
-    public void exec(Excel excel, Object obj, ExcelExportInfo info) {
+    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {
         if (obj == null || StringUtils.isBlank(obj.toString())) {
             obj = excel.defaultValue();
         }

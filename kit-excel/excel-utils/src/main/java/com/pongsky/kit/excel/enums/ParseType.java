@@ -1,12 +1,28 @@
 package com.pongsky.kit.excel.enums;
 
+import com.pongsky.kit.excel.handler.ExcelBigDecimalHandler;
+import com.pongsky.kit.excel.handler.ExcelBooleanHandler;
+import com.pongsky.kit.excel.handler.ExcelDateHandler;
+import com.pongsky.kit.excel.handler.ExcelDayOfWeekHandler;
+import com.pongsky.kit.excel.handler.ExcelHandler;
+import com.pongsky.kit.excel.handler.ExcelLocalDateHandler;
+import com.pongsky.kit.excel.handler.ExcelLocalDateTimeHandler;
+import com.pongsky.kit.excel.handler.ExcelLocalTimeHandler;
+import com.pongsky.kit.excel.handler.ExcelMonthHandler;
+import com.pongsky.kit.excel.handler.ExcelStringHandler;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +34,16 @@ import java.util.stream.Collectors;
  *
  * @author pengsenhao
  **/
+@Getter
+@AllArgsConstructor
 public enum ParseType {
 
     /**
      * 未知
+     * <p>
+     * 兜底类型
      */
-    UNKNOWN() {
+    UNKNOWN(1, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return false;
@@ -32,28 +52,13 @@ public enum ParseType {
         @Override
         public boolean validationClassType(Object result) {
             return false;
-        }
-    },
-
-    /**
-     * String
-     */
-    STRING() {
-        @Override
-        public boolean validationFieldType(Field field) {
-            return field.getType().toString().equals(String.class.toString());
-        }
-
-        @Override
-        public boolean validationClassType(Object result) {
-            return result instanceof String;
         }
     },
 
     /**
      * Enum
      */
-    ENUM() {
+    ENUM(1, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().getEnumConstants() != null;
@@ -66,9 +71,24 @@ public enum ParseType {
     },
 
     /**
+     * String
+     */
+    STRING(0, ExcelStringHandler.class) {
+        @Override
+        public boolean validationFieldType(Field field) {
+            return field.getType().toString().equals(String.class.toString());
+        }
+
+        @Override
+        public boolean validationClassType(Object result) {
+            return result instanceof String;
+        }
+    },
+
+    /**
      * Byte
      */
-    BYTE() {
+    BYTE(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Byte.class.toString());
@@ -83,7 +103,7 @@ public enum ParseType {
     /**
      * Short
      */
-    SHORT() {
+    SHORT(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Short.class.toString());
@@ -98,7 +118,7 @@ public enum ParseType {
     /**
      * Integer
      */
-    INTEGER() {
+    INTEGER(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Integer.class.toString());
@@ -113,7 +133,7 @@ public enum ParseType {
     /**
      * Long
      */
-    LONG() {
+    LONG(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Long.class.toString());
@@ -128,7 +148,7 @@ public enum ParseType {
     /**
      * Float
      */
-    FLOAT() {
+    FLOAT(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Float.class.toString());
@@ -143,7 +163,7 @@ public enum ParseType {
     /**
      * Double
      */
-    DOUBLE() {
+    DOUBLE(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Double.class.toString());
@@ -158,7 +178,7 @@ public enum ParseType {
     /**
      * Character
      */
-    CHARACTER() {
+    CHARACTER(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Character.class.toString());
@@ -173,7 +193,7 @@ public enum ParseType {
     /**
      * Boolean
      */
-    BOOLEAN() {
+    BOOLEAN(0, ExcelBooleanHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Boolean.class.toString());
@@ -188,7 +208,7 @@ public enum ParseType {
     /**
      * List
      */
-    LIST() {
+    LIST(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(List.class.toString());
@@ -203,7 +223,7 @@ public enum ParseType {
     /**
      * Set
      */
-    SET() {
+    SET(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Set.class.toString());
@@ -218,7 +238,7 @@ public enum ParseType {
     /**
      * Map
      */
-    MAP() {
+    MAP(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Map.class.toString());
@@ -233,7 +253,7 @@ public enum ParseType {
     /**
      * BigInteger
      */
-    BIG_INTEGER() {
+    BIG_INTEGER(0, ExcelStringHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(BigInteger.class.toString());
@@ -248,7 +268,7 @@ public enum ParseType {
     /**
      * BigDecimal
      */
-    BIG_DECIMAL() {
+    BIG_DECIMAL(0, ExcelBigDecimalHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(BigDecimal.class.toString());
@@ -263,7 +283,7 @@ public enum ParseType {
     /**
      * Date
      */
-    DATE() {
+    DATE(0, ExcelDateHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(Date.class.toString());
@@ -278,7 +298,7 @@ public enum ParseType {
     /**
      * LocalDate
      */
-    LOCAL_DATE() {
+    LOCAL_DATE(0, ExcelLocalDateHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(LocalDate.class.toString());
@@ -293,7 +313,7 @@ public enum ParseType {
     /**
      * LocalTime
      */
-    LOCAL_TIME() {
+    LOCAL_TIME(0, ExcelLocalTimeHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(LocalTime.class.toString());
@@ -308,7 +328,7 @@ public enum ParseType {
     /**
      * LocalDateTime
      */
-    LOCAL_DATE_TIME() {
+    LOCAL_DATE_TIME(0, ExcelLocalDateTimeHandler.class) {
         @Override
         public boolean validationFieldType(Field field) {
             return field.getType().toString().equals(LocalDateTime.class.toString());
@@ -320,7 +340,49 @@ public enum ParseType {
         }
     },
 
+    /**
+     * DayOfWeek
+     */
+    DAY_OF_WEEK(0, ExcelDayOfWeekHandler.class) {
+        @Override
+        public boolean validationFieldType(Field field) {
+            return field.getType().toString().equals(DayOfWeek.class.toString());
+        }
+
+        @Override
+        public boolean validationClassType(Object result) {
+            return result instanceof DayOfWeek;
+        }
+    },
+
+    /**
+     * MONTH
+     */
+    MONTH(0, ExcelMonthHandler.class) {
+        @Override
+        public boolean validationFieldType(Field field) {
+            return field.getType().toString().equals(Month.class.toString());
+        }
+
+        @Override
+        public boolean validationClassType(Object result) {
+            return result instanceof Month;
+        }
+    },
+
     ;
+
+    /**
+     * 解析顺序
+     * <p>
+     * 有些 Java 内置常用枚举优先解析成特定处理器，不匹配则走枚举统一处理器
+     */
+    private final Integer sort;
+
+    /**
+     * 列值处理器
+     */
+    private final Class<? extends ExcelHandler> handler;
 
     /**
      * 校验字段类型是否匹配
@@ -342,6 +404,7 @@ public enum ParseType {
      * 所有 字段类型 列表
      */
     private static final List<ParseType> ALL = Arrays.stream(values())
+            .sorted(Comparator.comparing(p -> p.sort))
             .collect(Collectors.toList());
 
     /**

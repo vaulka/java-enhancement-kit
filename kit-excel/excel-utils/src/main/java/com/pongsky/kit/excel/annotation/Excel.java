@@ -1,7 +1,7 @@
 package com.pongsky.kit.excel.annotation;
 
+import com.pongsky.kit.excel.handler.ExcelAutoHandler;
 import com.pongsky.kit.excel.handler.ExcelHandler;
-import com.pongsky.kit.excel.handler.ExcelStringHandler;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
@@ -20,7 +20,16 @@ import java.lang.annotation.Target;
 public @interface Excel {
 
     /**
-     * 列名
+     * 列名，优先度： value > name
+     * <p>
+     * 不填写则默认获取字段名
+     *
+     * @return 列名
+     */
+    String value() default "";
+
+    /**
+     * 列名，优先度： value > name
      * <p>
      * 不填写则默认获取字段名
      *
@@ -42,19 +51,21 @@ public @interface Excel {
     String attrs() default "";
 
     /**
-     * 列值处理器
+     * 列值处理器，默认根据字段类型自动选择转换器
      * <p>
      * 如果自定义的话，需注意如下：
-     * 1、 {@link Excel#defaultValue()}、{@link Excel#suffix()} 需手动设置
-     * 2、列值需手动设置
-     * 3、宽度、高度需手动设置
+     * 1、列值需手动设置
+     * 2、宽度、高度需手动设置，否则无法自适应
      *
      * @return 列值处理器
      */
-    Class<? extends ExcelHandler> handler() default ExcelStringHandler.class;
+    Class<? extends ExcelHandler> handler() default ExcelAutoHandler.class;
 
     /**
      * 列值默认值
+     * <p>
+     * 目前仅使用 {@link com.pongsky.kit.excel.handler.ExcelStringHandler} 处理器才生效
+     * 可自定义 handler 进行设置
      * <p>
      * 如果空数据，则显示默认值
      *
@@ -63,7 +74,10 @@ public @interface Excel {
     String defaultValue() default "";
 
     /**
-     * 列值后缀（需结合 {@link com.pongsky.kit.excel.handler.ExcelStringHandler} 使用或自定义 handler 进行设置）
+     * 列值后缀
+     * <p>
+     * 目前仅使用 {@link com.pongsky.kit.excel.handler.ExcelStringHandler} 处理器才生效
+     * 可自定义 handler 进行设置
      * <p>
      * 譬如：
      * 数据 90，后缀 %

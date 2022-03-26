@@ -13,6 +13,7 @@ import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Iterator;
 
 /**
@@ -27,7 +28,7 @@ public abstract class ExcelBufferedImageHandler implements ExcelHandler {
     private String suffix = null;
 
     @Override
-    public void exec(Excel excel, Object obj, ExcelExportInfo info) throws IOException {
+    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) throws IOException {
         if (bufferedImage == null) {
             return;
         }

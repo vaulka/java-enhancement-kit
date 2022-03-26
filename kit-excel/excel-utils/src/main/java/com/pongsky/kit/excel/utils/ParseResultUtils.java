@@ -1,5 +1,6 @@
-package com.pongsky.kit.excel.enums;
+package com.pongsky.kit.excel.utils;
 
+import com.pongsky.kit.excel.enums.ParseType;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;

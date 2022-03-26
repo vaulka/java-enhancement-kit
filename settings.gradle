@@ -48,9 +48,6 @@ findProject(":kit-excel")?.name = "excel"
 include "excel:excel-utils"
 findProject(":excel:excel-utils")?.name = "excel-utils"
 
-include "excel:excel-annotation"
-findProject(":excel:excel-annotation")?.name = "excel-annotation"
-
 include "excel:spring-boot-starter-excel"
 findProject(":excel:spring-boot-starter-excel")?.name = "spring-boot-starter-excel"
 

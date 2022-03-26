@@ -3,7 +3,6 @@ package com.pongsky.kit.excel.utils;
 import com.pongsky.kit.excel.annotation.Excel;
 import com.pongsky.kit.excel.annotation.Excels;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
-import com.pongsky.kit.excel.enums.ParseResultUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -164,9 +163,11 @@ public class ExcelExportUtils {
             List<Object> fieldExcels = info.getFields().get(i);
             Field field = ExcelExportInfo.getField(fieldExcels);
             Excel excel = ExcelExportInfo.getExcel(fieldExcels);
-            String columnName = StringUtils.isBlank(excel.name())
-                    ? field.getName()
-                    : excel.name();
+            String columnName = StringUtils.isNotBlank(excel.value())
+                    ? excel.value()
+                    : StringUtils.isNotBlank(excel.name())
+                    ? excel.name()
+                    : field.getName();
             // 设置样式
             info.getCell().setCellStyle(this.getCellStyle(excel, true));
             // 填充内容
@@ -195,7 +196,7 @@ public class ExcelExportUtils {
                 Object fieldValue = ParseResultUtils.parseFieldValue(field, excel.attrs(), result);
                 try {
                     excel.handler().getDeclaredConstructor().newInstance()
-                            .exec(excel, fieldValue, info);
+                            .exec(field, excel, fieldValue, info);
                 } catch (InstantiationException
                         | IllegalAccessException
                         | InvocationTargetException
