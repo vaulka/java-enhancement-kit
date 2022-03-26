@@ -16,6 +16,8 @@ public class ExcelStringHandler implements ExcelHandler {
 
     @Override
     public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {
+        // 不能使用 (String)obj
+        // 原因是未知类型以及一些其他类型默认也是使用此 handler 进行处理，无法转为 String，故使用 toString()
         if (obj == null || StringUtils.isBlank(obj.toString())) {
             obj = excel.defaultValue();
         }

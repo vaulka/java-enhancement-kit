@@ -20,11 +20,8 @@ public class ExcelFileImageHandler extends ExcelBufferedImageHandler {
 
     @Override
     public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) throws IOException {
-        File imageFile = null;
-        if (obj instanceof File) {
-            imageFile = (File) obj;
-        }
-        if (imageFile == null) {
+        File imageFile = (File) obj;
+        if (imageFile == null || !imageFile.exists() || imageFile.isDirectory() || imageFile.length() == 0) {
             return;
         }
         BufferedImage bufferedImage;
@@ -35,7 +32,7 @@ public class ExcelFileImageHandler extends ExcelBufferedImageHandler {
         }
         this.setBufferedImage(bufferedImage);
         this.setSuffix(suffix);
-        super.exec(field, excel, obj, info);
+        super.exec(field, excel, imageFile, info);
     }
 
 }

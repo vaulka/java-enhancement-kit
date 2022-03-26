@@ -6,34 +6,34 @@ import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.net.URL;
 
 /**
- * URL 图片 处理器
+ * byte[] 图片 处理器
  *
  * @author pengsenhao
  **/
-public class ExcelUrlImageHandler extends ExcelBufferedImageHandler {
+public class ExcelByteImageHandler extends ExcelBufferedImageHandler {
 
     @Override
     public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) throws IOException {
-        if (obj == null) {
+        byte[] bytes = (byte[]) obj;
+        if (bytes == null || bytes.length == 0) {
             return;
         }
-        String imageUrl = (String) obj;
         BufferedImage bufferedImage;
         String suffix;
-        try (InputStream inputStream = new URL(imageUrl).openStream();
-             ImageInputStream stream = ImageIO.createImageInputStream(inputStream)) {
+        try (ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+             ImageInputStream stream = ImageIO.createImageInputStream(inputStream);
+             ByteArrayInputStream imageInputStream = new ByteArrayInputStream(bytes)) {
             suffix = this.getSuffix(stream);
-            bufferedImage = ImageIO.read(new URL(imageUrl));
+            bufferedImage = ImageIO.read(imageInputStream);
         }
         this.setBufferedImage(bufferedImage);
         this.setSuffix(suffix);
-        super.exec(field, excel, imageUrl, info);
+        super.exec(field, excel, bytes, info);
     }
 
 }
