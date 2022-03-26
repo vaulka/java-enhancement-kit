@@ -4,14 +4,16 @@ import com.pongsky.kit.excel.annotation.Excel;
 import com.pongsky.kit.excel.annotation.Excels;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Comment;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.xssf.streaming.SXSSFDrawing;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -138,6 +140,19 @@ public class ExcelExportUtils {
     }
 
     /**
+     * 添加超链接
+     *
+     * @param cell          列
+     * @param hyperLinkInfo 超链接信息
+     */
+    private void addHyperlink(Cell cell, String hyperLinkInfo) {
+        CreationHelper createHelper = info.getWorkbook().getCreationHelper();
+        Hyperlink hyperlink = createHelper.createHyperlink(HyperlinkType.URL);
+        hyperlink.setAddress(hyperLinkInfo);
+        cell.setHyperlink(hyperlink);
+    }
+
+    /**
      * 添加批注
      *
      * @param cell        列
@@ -147,8 +162,7 @@ public class ExcelExportUtils {
         ClientAnchor anchor = new XSSFClientAnchor(0, 0, 0, 0,
                 cell.getColumnIndex(), cell.getRowIndex(),
                 cell.getColumnIndex() + 2, cell.getRowIndex() + 2);
-        SXSSFDrawing drawing = info.getSheet().createDrawingPatriarch();
-        Comment comment = drawing.createCellComment(anchor);
+        Comment comment = info.getDrawing().createCellComment(anchor);
         comment.setString(new XSSFRichTextString(commentInfo));
         cell.setCellComment(comment);
     }
@@ -172,6 +186,10 @@ public class ExcelExportUtils {
             info.getCell().setCellStyle(this.getCellStyle(excel, true));
             // 填充内容
             info.getCell().setCellValue(new XSSFRichTextString(columnName));
+            // 添加超链接
+            if (StringUtils.isNotBlank(excel.hyperlink())) {
+                this.addHyperlink(info.getCell(), excel.hyperlink());
+            }
             // 添加批注
             if (StringUtils.isNotBlank(excel.comment())) {
                 this.addComment(info.getCell(), excel.comment());

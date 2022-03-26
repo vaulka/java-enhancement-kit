@@ -98,6 +98,15 @@ public @interface Excel {
     String dataFormat() default "@";
 
     /**
+     * 列名 超链接
+     * <p>
+     * 目前仅支持 URL 超链接
+     *
+     * @return 列名 超链接
+     */
+    String hyperlink() default "";
+
+    /**
      * 列名 批注
      *
      * @return 列名 批注
