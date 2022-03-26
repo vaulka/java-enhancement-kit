@@ -3,6 +3,7 @@ package com.pongsky.kit.excel.annotation;
 import com.pongsky.kit.excel.handler.ExcelAutoHandler;
 import com.pongsky.kit.excel.handler.ExcelHandler;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 import java.lang.annotation.ElementType;
@@ -121,6 +122,20 @@ public @interface Excel {
      * @return 列排序值
      */
     int sort() default 0;
+
+    /**
+     * 列名 背景颜色
+     *
+     * @return 列名 背景颜色
+     */
+    IndexedColors backgroundColor() default IndexedColors.GREY_25_PERCENT;
+
+    /**
+     * 列名 字体颜色
+     *
+     * @return 列名 字体颜色
+     */
+    IndexedColors fontColor() default IndexedColors.BLACK;
 
     /**
      * 字体

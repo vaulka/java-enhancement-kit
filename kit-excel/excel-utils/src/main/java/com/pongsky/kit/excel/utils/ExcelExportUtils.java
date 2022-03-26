@@ -13,7 +13,6 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Hyperlink;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -131,8 +130,10 @@ public class ExcelExportUtils {
         if (isColumnTitle) {
             // 列名 加粗
             font.setBold(true);
-            // 列名 灰色 前景色
-            cellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+            // 列名 字体颜色
+            font.setColor(excel.fontColor().getIndex());
+            // 列名 前景色
+            cellStyle.setFillForegroundColor(excel.backgroundColor().getIndex());
             cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         }
         cellStyle.setFont(font);
