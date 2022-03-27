@@ -195,6 +195,11 @@ public class ExcelExportInfo {
     private Cell cell;
 
     /**
+     * 列名最大行数，从 0 开始
+     */
+    private int titleMaxNum;
+
+    /**
      * 当前行号
      */
     private int rowNum = 0;

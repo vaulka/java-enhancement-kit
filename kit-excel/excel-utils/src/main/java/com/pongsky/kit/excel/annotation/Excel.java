@@ -21,22 +21,13 @@ import java.lang.annotation.Target;
 public @interface Excel {
 
     /**
-     * 列名，优先度： value &gt; name
+     * 列名
      * <p>
      * 不填写则默认获取字段名
      *
      * @return 列名
      */
-    String value() default "";
-
-    /**
-     * 列名，优先度： value &gt; name
-     * <p>
-     * 不填写则默认获取字段名
-     *
-     * @return 列名
-     */
-    String name() default "";
+    String[] value() default {};
 
     /**
      * 获取多层级属性名称
