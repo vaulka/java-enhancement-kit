@@ -62,7 +62,7 @@ publishing {
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件"
+                description = "Java 增强套件 之 config-core 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {

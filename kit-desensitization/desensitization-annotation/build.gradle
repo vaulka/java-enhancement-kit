@@ -41,7 +41,7 @@ publishing {
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件"
+                description = "Java 增强套件 之 数据脱敏 annotation 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {

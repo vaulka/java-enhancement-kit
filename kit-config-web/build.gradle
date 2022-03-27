@@ -54,7 +54,7 @@ publishing {
 
             pom {
                 name = "spring-cloud-enhancement-kit"
-                description = "Java 增强套件"
+                description = "Java 增强套件 之 config-web 模块"
                 url = "https://github.com/JarvisPongSky/spring-cloud-enhancement-kit"
                 licenses {
                     license {

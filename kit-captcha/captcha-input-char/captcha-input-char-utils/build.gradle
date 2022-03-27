@@ -41,7 +41,7 @@ publishing {
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件"
+                description = "Java 增强套件 之 输入型字符 验证码 utils 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
