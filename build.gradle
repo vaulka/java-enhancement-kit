@@ -35,8 +35,8 @@ allprojects {
 
     apply plugin: "idea"
 
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 8
+    targetCompatibility = 8
 
     group "com.pongsky.kit"
     version "3.0.0-2.4.13-jdk8"
