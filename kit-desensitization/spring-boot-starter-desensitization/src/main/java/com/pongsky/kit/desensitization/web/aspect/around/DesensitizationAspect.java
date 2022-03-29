@@ -1,7 +1,7 @@
 package com.pongsky.kit.desensitization.web.aspect.around;
 
-import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
 import com.pongsky.kit.desensitization.annotation.DesensitizationMark;
+import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -92,6 +92,7 @@ public class DesensitizationAspect {
                 if (mark == null) {
                     continue;
                 }
+                handler = this.getHandler(mark);
                 Object result = this.getValue(originResult, field);
                 if (result != null && handler.willDoExec(originResult.toString())) {
                     this.setValue(originResult, field, handler.exec(result.toString()));
