@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
 import java.time.DayOfWeek;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,15 +16,17 @@ import java.util.Map;
  **/
 public class ExcelDayOfWeekHandler implements ExcelHandler {
 
-    private static final Map<DayOfWeek, String> DAY_OF_WEEK_STRING_MAP = Map.of(
-            DayOfWeek.MONDAY, "星期一",
-            DayOfWeek.TUESDAY, "星期二",
-            DayOfWeek.WEDNESDAY, "星期三",
-            DayOfWeek.THURSDAY, "星期四",
-            DayOfWeek.FRIDAY, "星期五",
-            DayOfWeek.SATURDAY, "星期六",
-            DayOfWeek.SUNDAY, "星期日"
-    );
+    private static final Map<DayOfWeek, String> DAY_OF_WEEK_STRING_MAP = new HashMap<DayOfWeek, String>(16) {
+        {
+            put(DayOfWeek.MONDAY, "星期一");
+            put(DayOfWeek.TUESDAY, "星期二");
+            put(DayOfWeek.WEDNESDAY, "星期三");
+            put(DayOfWeek.THURSDAY, "星期四");
+            put(DayOfWeek.FRIDAY, "星期五");
+            put(DayOfWeek.SATURDAY, "星期六");
+            put(DayOfWeek.SUNDAY, "星期日");
+        }
+    };
 
     @Override
     public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {

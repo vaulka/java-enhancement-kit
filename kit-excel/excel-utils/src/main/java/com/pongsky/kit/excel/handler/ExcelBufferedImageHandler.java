@@ -37,8 +37,12 @@ public abstract class ExcelBufferedImageHandler implements ExcelHandler {
         ClientAnchor anchor = new XSSFClientAnchor(10, 10, 10, 10,
                 (short) info.getCell().getColumnIndex(), info.getCell().getRow().getRowNum(),
                 (short) (info.getCell().getColumnIndex() + 1), info.getCell().getRow().getRowNum() + 1);
-        try (outputStream) {
+        try {
             info.getDrawing().createPicture(anchor, info.getWorkbook().addPicture(outputStream.toByteArray(), this.getPictureType(suffix)));
+        } finally {
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
         info.setImageWidth(info.getCell().getColumnIndex(), bufferedImage.getWidth());
         info.setImageHeight(info.getCell().getRow().getRowNum(), bufferedImage.getHeight());

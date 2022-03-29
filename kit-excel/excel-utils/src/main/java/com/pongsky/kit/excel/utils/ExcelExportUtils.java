@@ -57,13 +57,13 @@ public class ExcelExportUtils {
                 Excel excel = field.getAnnotation(Excel.class);
                 if (excel != null) {
                     titleMaxNum = Integer.max(titleMaxNum, excel.value().length);
-                    info.getFields().add(List.of(field, excel));
+                    info.getFields().add(Arrays.asList(field, excel));
                 }
                 Excels excels = field.getAnnotation(Excels.class);
                 if (excels != null) {
                     for (Excel ex : excels.value()) {
                         titleMaxNum = Integer.max(titleMaxNum, ex.value().length);
-                        info.getFields().add(List.of(field, ex));
+                        info.getFields().add(Arrays.asList(field, ex));
                     }
                 }
             }

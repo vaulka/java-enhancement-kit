@@ -146,8 +146,10 @@ public class KaptchaUtils {
     public ByteArrayOutputStream createImageByStream(String code) throws IOException {
         BufferedImage image = this.createImage(code);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try (outputStream) {
+        try {
             ImageIO.write(image, FORMAT_NAME, outputStream);
+        } finally {
+            outputStream.close();
         }
         return outputStream;
     }
@@ -161,8 +163,12 @@ public class KaptchaUtils {
      */
     public void createImageByStream(String code, OutputStream outputStream) throws IOException {
         BufferedImage image = this.createImage(code);
-        try (outputStream) {
+        try {
             ImageIO.write(image, FORMAT_NAME, outputStream);
+        } finally {
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
     }
 

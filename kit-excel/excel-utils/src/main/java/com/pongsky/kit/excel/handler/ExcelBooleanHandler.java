@@ -5,6 +5,7 @@ import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,10 +15,10 @@ import java.util.Map;
  **/
 public class ExcelBooleanHandler implements ExcelHandler {
 
-    private static final Map<Boolean, String> BOOLEAN_STRING_MAP = Map.of(
-            Boolean.TRUE, "是",
-            Boolean.FALSE, "否"
-    );
+    private static final Map<Boolean, String> BOOLEAN_STRING_MAP = new HashMap<Boolean, String>() {{
+        put(Boolean.TRUE, "是");
+        put(Boolean.FALSE, "否");
+    }};
 
     @Override
     public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {

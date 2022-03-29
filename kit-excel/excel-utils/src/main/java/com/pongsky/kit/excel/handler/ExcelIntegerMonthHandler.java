@@ -15,7 +15,7 @@ import java.util.Map;
  **/
 public class ExcelIntegerMonthHandler implements ExcelHandler {
 
-    private static final Map<Integer, String> INTEGER_MONTH_STRING_MAP = new HashMap<>(16) {
+    private static final Map<Integer, String> INTEGER_MONTH_STRING_MAP = new HashMap<Integer, String>(16) {
         {
             put(1, "一月");
             put(2, "二月");

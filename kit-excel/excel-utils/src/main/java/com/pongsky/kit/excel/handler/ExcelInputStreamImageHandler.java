@@ -2,6 +2,7 @@ package com.pongsky.kit.excel.handler;
 
 import com.pongsky.kit.excel.annotation.Excel;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
+import org.apache.poi.util.IOUtils;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
@@ -25,7 +26,7 @@ public class ExcelInputStreamImageHandler extends ExcelBufferedImageHandler {
         }
         byte[] bytes;
         try (InputStream inputStream = (InputStream) obj) {
-            bytes = inputStream.readAllBytes();
+            bytes = IOUtils.toByteArray(inputStream);
         }
         if (bytes == null || bytes.length == 0) {
             return;

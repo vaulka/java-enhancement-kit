@@ -6,6 +6,7 @@ import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.SetBucketPolicyArgs;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -148,7 +149,7 @@ public class MinIoUtils implements StorageUtils {
      */
     @Override
     public String upload(String fileName, String contentType, InputStream inputStream) {
-        try (inputStream) {
+        try {
             client.putObject(PutObjectArgs.builder()
                     .bucket(bucket)
                     .object(fileName)
@@ -157,6 +158,14 @@ public class MinIoUtils implements StorageUtils {
                     .build());
         } catch (Exception e) {
             throw new RuntimeException(e.getLocalizedMessage(), e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return "/" + fileName;
     }
