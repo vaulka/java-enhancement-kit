@@ -1,6 +1,6 @@
 package com.pongsky.kit.excel.handler;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -18,9 +18,9 @@ public class ExcelDateHandler implements ExcelHandler {
     private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excel.defaultValue()
+                ? excelProperty.defaultValue()
                 : DateFormatUtils.format((Date) obj, PATTERN);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());

@@ -1,7 +1,7 @@
 package com.pongsky.kit.excel.utils;
 
-import com.pongsky.kit.excel.annotation.Excel;
-import com.pongsky.kit.excel.annotation.Excels;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
+import com.pongsky.kit.excel.annotation.ExcelPropertys;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import com.pongsky.kit.excel.entity.ExcelForceInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -51,17 +51,17 @@ public class ExcelExportUtils {
         int titleMaxNum = 1;
         for (Class<?> cla : classes) {
             List<Field> fieldList = Arrays.stream(cla.getDeclaredFields())
-                    .filter(f -> f.isAnnotationPresent(Excel.class) || f.isAnnotationPresent(Excels.class))
+                    .filter(f -> f.isAnnotationPresent(ExcelProperty.class) || f.isAnnotationPresent(ExcelPropertys.class))
                     .collect(Collectors.toList());
             for (Field field : fieldList) {
-                Excel excel = field.getAnnotation(Excel.class);
-                if (excel != null) {
-                    titleMaxNum = Integer.max(titleMaxNum, excel.value().length);
-                    info.getFields().add(List.of(field, excel));
+                ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
+                if (excelProperty != null) {
+                    titleMaxNum = Integer.max(titleMaxNum, excelProperty.value().length);
+                    info.getFields().add(List.of(field, excelProperty));
                 }
-                Excels excels = field.getAnnotation(Excels.class);
-                if (excels != null) {
-                    for (Excel ex : excels.value()) {
+                ExcelPropertys excelPropertys = field.getAnnotation(ExcelPropertys.class);
+                if (excelPropertys != null) {
+                    for (ExcelProperty ex : excelPropertys.value()) {
                         titleMaxNum = Integer.max(titleMaxNum, ex.value().length);
                         info.getFields().add(List.of(field, ex));
                     }
@@ -122,26 +122,33 @@ public class ExcelExportUtils {
     /**
      * 获取单元格样式
      *
-     * @param excel         导出 excel 相关信息
+     * @param excelProperty 导出 excel 相关信息
      * @param isColumnTitle 是否是列名
      * @return 获取单元格样式
      */
-    private CellStyle getCellStyle(Excel excel, boolean isColumnTitle) {
+    private CellStyle getCellStyle(ExcelProperty excelProperty, boolean isColumnTitle) {
         CellStyle cellStyle = info.getWorkbook().createCellStyle();
-        cellStyle.setDataFormat(info.getWorkbook().createDataFormat().getFormat(excel.dataFormat()));
+        cellStyle.setDataFormat(info.getWorkbook().createDataFormat().getFormat(excelProperty.dataFormat()));
         cellStyle.setWrapText(true);
-        cellStyle.setAlignment(excel.alignment());
-        cellStyle.setVerticalAlignment(excel.verticalAlignment());
+        cellStyle.setAlignment(excelProperty.alignment());
+        cellStyle.setVerticalAlignment(excelProperty.verticalAlignment());
         Font font = info.getWorkbook().createFont();
-        font.setFontName(excel.fontName());
-        font.setFontHeightInPoints(excel.fontSize());
+        font.setFontName(excelProperty.fontName());
+        font.setFontHeightInPoints(excelProperty.fontSize());
         if (isColumnTitle) {
-            // 列名 加粗
-            font.setBold(true);
             // 列名 字体颜色
-            font.setColor(excel.fontColor().getIndex());
+            font.setColor(excelProperty.fontColor().getIndex());
+            // 列名 边框样式、边框颜色
+            cellStyle.setBorderBottom(excelProperty.borderStyle());
+            cellStyle.setBottomBorderColor(excelProperty.borderColor().getIndex());
+            cellStyle.setBorderLeft(excelProperty.borderStyle());
+            cellStyle.setLeftBorderColor(excelProperty.borderColor().getIndex());
+            cellStyle.setBorderRight(excelProperty.borderStyle());
+            cellStyle.setRightBorderColor(excelProperty.borderColor().getIndex());
+            cellStyle.setBorderTop(excelProperty.borderStyle());
+            cellStyle.setTopBorderColor(excelProperty.borderColor().getIndex());
             // 列名 前景色
-            cellStyle.setFillForegroundColor(excel.backgroundColor().getIndex());
+            cellStyle.setFillForegroundColor(excelProperty.backgroundColor().getIndex());
             cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         }
         cellStyle.setFont(font);
@@ -208,29 +215,29 @@ public class ExcelExportUtils {
                 info.setCell(info.getRow().createCell(x));
                 List<Object> fieldExcels = info.getFields().get(x);
                 Field field = ExcelExportInfo.getField(fieldExcels);
-                Excel excel = ExcelExportInfo.getExcel(fieldExcels);
+                ExcelProperty excelProperty = ExcelExportInfo.getExcel(fieldExcels);
                 String columnName = field.getName();
-                for (int z = 0; z < excel.value().length; z++) {
-                    if (StringUtils.isBlank(excel.value()[z])) {
+                for (int z = 0; z < excelProperty.value().length; z++) {
+                    if (StringUtils.isBlank(excelProperty.value()[z])) {
                         continue;
                     }
-                    columnName = excel.value()[z];
+                    columnName = excelProperty.value()[z];
                     // 如果 Y 轴 相等，就不再往下获取，退出循环
                     if (z == y) {
                         break;
                     }
                 }
                 // 设置样式
-                info.getCell().setCellStyle(this.getCellStyle(excel, true));
+                info.getCell().setCellStyle(this.getCellStyle(excelProperty, true));
                 // 填充内容
                 info.getCell().setCellValue(new XSSFRichTextString(columnName));
                 // 添加超链接
-                if (StringUtils.isNotBlank(excel.hyperlink())) {
-                    this.addHyperlink(info.getCell(), excel.hyperlink());
+                if (StringUtils.isNotBlank(excelProperty.hyperlink())) {
+                    this.addHyperlink(info.getCell(), excelProperty.hyperlink());
                 }
                 // 添加批注
-                if (StringUtils.isNotBlank(excel.comment())) {
-                    this.addComment(info.getCell(), excel.comment());
+                if (StringUtils.isNotBlank(excelProperty.comment())) {
+                    this.addComment(info.getCell(), excelProperty.comment());
                 }
                 info.setTextWidth(x, columnName.length());
                 // 记录 X、Y 轴对应列名信息
@@ -423,12 +430,12 @@ public class ExcelExportUtils {
                 info.setCell(info.getRow().createCell(i));
                 List<Object> fieldExcels = info.getFields().get(i);
                 Field field = ExcelExportInfo.getField(fieldExcels);
-                Excel excel = ExcelExportInfo.getExcel(fieldExcels);
-                info.getCell().setCellStyle(this.getCellStyle(excel, false));
-                Object fieldValue = ParseResultUtils.parseFieldValue(field, excel.attrs(), result);
+                ExcelProperty excelProperty = ExcelExportInfo.getExcel(fieldExcels);
+                info.getCell().setCellStyle(this.getCellStyle(excelProperty, false));
+                Object fieldValue = ParseResultUtils.parseFieldValue(field, excelProperty.attrs(), result);
                 try {
-                    excel.handler().getDeclaredConstructor().newInstance()
-                            .exec(field, excel, fieldValue, info);
+                    excelProperty.handler().getDeclaredConstructor().newInstance()
+                            .exec(field, excelProperty, fieldValue, info);
                 } catch (InstantiationException
                         | IllegalAccessException
                         | InvocationTargetException

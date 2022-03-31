@@ -1,6 +1,6 @@
 package com.pongsky.kit.excel.entity;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -57,8 +57,8 @@ public class ExcelExportInfo {
      * @param fieldExcels fieldExcels
      * @return 获取 excel 信息
      */
-    public static Excel getExcel(List<Object> fieldExcels) {
-        return (Excel) fieldExcels.get(EXCEL_INDEX);
+    public static ExcelProperty getExcel(List<Object> fieldExcels) {
+        return (ExcelProperty) fieldExcels.get(EXCEL_INDEX);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.pongsky.kit.excel.annotation;
 
 import com.pongsky.kit.excel.handler.ExcelAutoHandler;
 import com.pongsky.kit.excel.handler.ExcelHandler;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -18,7 +19,7 @@ import java.lang.annotation.Target;
  **/
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Excel {
+public @interface ExcelProperty {
 
     /**
      * 列名
@@ -90,6 +91,15 @@ public @interface Excel {
     String dataFormat() default "@";
 
     /**
+     * 列排序值
+     * <p>
+     * 值越大排越后面
+     *
+     * @return 列排序值
+     */
+    int sort() default 0;
+
+    /**
      * 列名 超链接
      * <p>
      * 目前仅支持 URL 超链接
@@ -106,20 +116,11 @@ public @interface Excel {
     String comment() default "";
 
     /**
-     * 列排序值
-     * <p>
-     * 值越大排越后面
-     *
-     * @return 列排序值
-     */
-    int sort() default 0;
-
-    /**
      * 列名 背景颜色
      *
      * @return 列名 背景颜色
      */
-    IndexedColors backgroundColor() default IndexedColors.GREY_25_PERCENT;
+    IndexedColors backgroundColor() default IndexedColors.PALE_BLUE;
 
     /**
      * 列名 字体颜色
@@ -141,6 +142,20 @@ public @interface Excel {
      * @return 字号
      */
     short fontSize() default 11;
+
+    /**
+     * 列名 边框样式
+     *
+     * @return 列名 边框样式
+     */
+    BorderStyle borderStyle() default BorderStyle.MEDIUM;
+
+    /**
+     * 列名 边框颜色
+     *
+     * @return 边框颜色
+     */
+    IndexedColors borderColor() default IndexedColors.WHITE;
 
     /**
      * 水平对齐方式

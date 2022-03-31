@@ -1,6 +1,6 @@
 package com.pongsky.kit.excel.handler;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -16,12 +16,12 @@ import java.math.BigDecimal;
 public class ExcelBigDecimalHandler implements ExcelHandler {
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excel.defaultValue()
+                ? excelProperty.defaultValue()
                 : ((BigDecimal) obj).toPlainString();
-        value = StringUtils.isNotBlank(excel.suffix())
-                ? value + excel.suffix()
+        value = StringUtils.isNotBlank(excelProperty.suffix())
+                ? value + excelProperty.suffix()
                 : value;
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());

@@ -1,6 +1,6 @@
 package com.pongsky.kit.excel.handler;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 
 import javax.imageio.ImageIO;
@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
 public class ExcelInputStreamImageHandler extends ExcelBufferedImageHandler {
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) throws IOException {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) throws IOException {
         if (obj == null) {
             return;
         }
@@ -40,7 +40,7 @@ public class ExcelInputStreamImageHandler extends ExcelBufferedImageHandler {
         }
         this.setBufferedImage(bufferedImage);
         this.setSuffix(suffix);
-        super.exec(field, excel, bytes, info);
+        super.exec(field, excelProperty, bytes, info);
     }
 
 }
