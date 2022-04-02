@@ -4,6 +4,7 @@ import com.pongsky.kit.excel.annotation.ExcelProperty;
 
 import java.lang.reflect.Field;
 import java.time.DayOfWeek;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,15 +14,17 @@ import java.util.Map;
  **/
 public class ExcelDayOfWeekImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, DayOfWeek> DAY_OF_WEEK_MAP = Map.of(
-            "星期一", DayOfWeek.MONDAY,
-            "星期二", DayOfWeek.TUESDAY,
-            "星期三", DayOfWeek.WEDNESDAY,
-            "星期四", DayOfWeek.THURSDAY,
-            "星期五", DayOfWeek.FRIDAY,
-            "星期六", DayOfWeek.SATURDAY,
-            "星期日", DayOfWeek.SUNDAY
-    );
+    private static final Map<String, DayOfWeek> DAY_OF_WEEK_MAP = new HashMap<String, DayOfWeek>(16) {
+        {
+            put("星期一", DayOfWeek.MONDAY);
+            put("星期二", DayOfWeek.TUESDAY);
+            put("星期三", DayOfWeek.WEDNESDAY);
+            put("星期四", DayOfWeek.THURSDAY);
+            put("星期五", DayOfWeek.FRIDAY);
+            put("星期六", DayOfWeek.SATURDAY);
+            put("星期日", DayOfWeek.SUNDAY);
+        }
+    };
 
     @Override
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {

@@ -67,13 +67,13 @@ public class ExcelImportUtils {
                 ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
                 if (excelProperty != null) {
                     titleMaxNum = Integer.max(titleMaxNum, excelProperty.value().length);
-                    info.getFields().add(List.of(field, excelProperty));
+                    info.getFields().add(Arrays.asList(field, excelProperty));
                 }
                 ExcelPropertys excelPropertys = field.getAnnotation(ExcelPropertys.class);
                 if (excelPropertys != null) {
                     for (ExcelProperty ex : excelPropertys.value()) {
                         titleMaxNum = Integer.max(titleMaxNum, ex.value().length);
-                        info.getFields().add(List.of(field, ex));
+                        info.getFields().add(Arrays.asList(field, ex));
                     }
                 }
             }
@@ -227,7 +227,7 @@ public class ExcelImportUtils {
             throw new RuntimeException("上传文件不是一个 excel 文件");
         }
         Workbook workbook;
-        try (inputStream) {
+        try {
             switch (excelType) {
                 case XLS:
                     workbook = new HSSFWorkbook(inputStream);
@@ -236,6 +236,10 @@ public class ExcelImportUtils {
                 default:
                     workbook = new XSSFWorkbook(inputStream);
                     break;
+            }
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
             }
         }
         return workbook;

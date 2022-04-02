@@ -14,7 +14,7 @@ import java.util.Map;
  **/
 public class ExcelMonthImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, Month> MONTH_MAP = new HashMap<>(16) {
+    private static final Map<String, Month> MONTH_MAP = new HashMap<String, Month>(16) {
         {
             put("一月", Month.JANUARY);
             put("二月", Month.FEBRUARY);

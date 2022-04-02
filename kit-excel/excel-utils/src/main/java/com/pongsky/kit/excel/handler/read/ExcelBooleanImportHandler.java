@@ -3,6 +3,7 @@ package com.pongsky.kit.excel.handler.read;
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,10 +13,12 @@ import java.util.Map;
  **/
 public class ExcelBooleanImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, Boolean> BOOLEAN_MAP = Map.of(
-            "是", Boolean.TRUE,
-            "否", Boolean.FALSE
-    );
+    private static final Map<String, Boolean> BOOLEAN_MAP = new HashMap<String, Boolean>(16) {
+        {
+            put("是", Boolean.TRUE);
+            put("否", Boolean.FALSE);
+        }
+    };
 
     @Override
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
