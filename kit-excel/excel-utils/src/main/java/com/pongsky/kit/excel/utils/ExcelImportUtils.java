@@ -106,7 +106,9 @@ public class ExcelImportUtils {
      * @param filename    文件名称
      * @param inputStream inputStream
      * @param sheetName   工作表名称
-     * @return list
+     * @return 读取数据结果列表
+     * @throws IOException                  IOException
+     * @throws ReflectiveOperationException ReflectiveOperationException
      */
     public List<?> read(String filename, InputStream inputStream, String sheetName) throws IOException, ReflectiveOperationException {
         if (info.getFields().size() == 0) {
@@ -122,8 +124,11 @@ public class ExcelImportUtils {
     /**
      * 读取 excel 文件
      *
-     * @param file excel文件
-     * @return list
+     * @param file      excel 文件
+     * @param sheetName 工作表名称
+     * @return 读取数据结果列表
+     * @throws IOException                  IOException
+     * @throws ReflectiveOperationException ReflectiveOperationException
      */
     public List<?> read(File file, String sheetName) throws IOException, ReflectiveOperationException {
         if (info.getFields().size() == 0) {
@@ -141,7 +146,8 @@ public class ExcelImportUtils {
      *
      * @param workbook  工作薄
      * @param sheetName 工作表名称
-     * @return list
+     * @return 读取数据结果列表
+     * @throws ReflectiveOperationException ReflectiveOperationException
      */
     public List<?> read(Workbook workbook, String sheetName) throws ReflectiveOperationException {
         if (workbook == null) {
