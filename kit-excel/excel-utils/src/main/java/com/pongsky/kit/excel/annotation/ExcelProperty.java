@@ -1,7 +1,9 @@
 package com.pongsky.kit.excel.annotation;
 
-import com.pongsky.kit.excel.handler.ExcelAutoHandler;
-import com.pongsky.kit.excel.handler.ExcelHandler;
+import com.pongsky.kit.excel.handler.export.ExcelAutoExportHandler;
+import com.pongsky.kit.excel.handler.export.ExcelExportHandler;
+import com.pongsky.kit.excel.handler.read.ExcelAutoImportHandler;
+import com.pongsky.kit.excel.handler.read.ExcelImportHandler;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -44,7 +46,7 @@ public @interface ExcelProperty {
     String attrs() default "";
 
     /**
-     * 列值处理器，默认根据字段类型自动选择转换器
+     * 导出 列值处理器，默认根据字段类型自动选择转换器
      * <p>
      * 如果自定义的话，需注意如下：
      * 1、列值需手动设置
@@ -52,12 +54,19 @@ public @interface ExcelProperty {
      *
      * @return 列值处理器
      */
-    Class<? extends ExcelHandler> handler() default ExcelAutoHandler.class;
+    Class<? extends ExcelExportHandler> exportHandler() default ExcelAutoExportHandler.class;
+
+    /**
+     * 导入 列值处理器，默认根据字段类型自动选择转换器
+     *
+     * @return 列值处理器
+     */
+    Class<? extends ExcelImportHandler> importHandler() default ExcelAutoImportHandler.class;
 
     /**
      * 列值默认值
      * <p>
-     * 目前仅使用 {@link com.pongsky.kit.excel.handler.ExcelStringHandler} 处理器才生效
+     * 目前仅使用 {@link com.pongsky.kit.excel.handler.export.ExcelStringExportHandler} 处理器才生效
      * 可自定义 handler 进行设置
      * <p>
      * 如果空数据，则显示默认值
@@ -69,7 +78,7 @@ public @interface ExcelProperty {
     /**
      * 列值后缀
      * <p>
-     * 目前仅使用 {@link com.pongsky.kit.excel.handler.ExcelStringHandler} 处理器才生效
+     * 目前仅使用 {@link com.pongsky.kit.excel.handler.export.ExcelStringExportHandler} 处理器才生效
      * 可自定义 handler 进行设置
      * <p>
      * 譬如：

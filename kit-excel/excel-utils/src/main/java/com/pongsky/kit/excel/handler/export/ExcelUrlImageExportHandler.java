@@ -1,38 +1,39 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.net.URL;
 
 /**
- * File 图片 处理器
+ * URL 图片 处理器
  *
  * @author pengsenhao
  **/
-public class ExcelFileImageHandler extends ExcelBufferedImageHandler {
+public class ExcelUrlImageExportHandler extends ExcelBufferedImageExportHandler {
 
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) throws IOException {
-        File imageFile = (File) obj;
-        if (imageFile == null || !imageFile.exists() || imageFile.isDirectory() || imageFile.length() == 0) {
+        if (obj == null) {
             return;
         }
+        String imageUrl = (String) obj;
         BufferedImage bufferedImage;
         String suffix;
-        try (ImageInputStream inputStream = new FileImageInputStream(imageFile)) {
-            suffix = this.getSuffix(inputStream);
-            bufferedImage = ImageIO.read(imageFile);
+        try (InputStream inputStream = new URL(imageUrl).openStream();
+             ImageInputStream stream = ImageIO.createImageInputStream(inputStream)) {
+            suffix = this.getSuffix(stream);
+            bufferedImage = ImageIO.read(new URL(imageUrl));
         }
         this.setBufferedImage(bufferedImage);
         this.setSuffix(suffix);
-        super.exec(field, excelProperty, imageFile, info);
+        super.exec(field, excelProperty, imageUrl, info);
     }
 
 }

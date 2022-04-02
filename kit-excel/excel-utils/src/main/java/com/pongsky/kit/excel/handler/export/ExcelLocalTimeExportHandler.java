@@ -1,34 +1,27 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
-import java.util.Map;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
- * Integer Week 处理器
+ * LocalTime 处理器
  *
  * @author pengsenhao
  **/
-public class ExcelIntegerWeekHandler implements ExcelHandler {
+public class ExcelLocalTimeExportHandler implements ExcelExportHandler {
 
-    private static final Map<Integer, String> INTEGER_WEEK_STRING_MAP = Map.of(
-            1, "星期一",
-            2, "星期二",
-            3, "星期三",
-            4, "星期四",
-            5, "星期五",
-            6, "星期六",
-            7, "星期日"
-    );
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
                 ? excelProperty.defaultValue()
-                : INTEGER_WEEK_STRING_MAP.get((Integer) obj);
+                : FORMAT.format((LocalTime) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

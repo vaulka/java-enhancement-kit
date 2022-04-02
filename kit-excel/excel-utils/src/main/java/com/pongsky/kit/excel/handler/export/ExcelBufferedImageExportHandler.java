@@ -1,4 +1,4 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
@@ -22,7 +22,7 @@ import java.util.Iterator;
  * @author pengsenhao
  **/
 @Setter
-public abstract class ExcelBufferedImageHandler implements ExcelHandler {
+public abstract class ExcelBufferedImageExportHandler implements ExcelExportHandler {
 
     private BufferedImage bufferedImage = null;
     private String suffix = null;

@@ -1,4 +1,4 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
@@ -13,9 +13,9 @@ import java.util.Map;
  *
  * @author pengsenhao
  **/
-public class ExcelIntegerMonthHandler implements ExcelHandler {
+public class ExcelIntegerMonthExportHandler implements ExcelExportHandler {
 
-    private static final Map<Integer, String> INTEGER_MONTH_STRING_MAP = new HashMap<>(16) {
+    private static final Map<Integer, String> INTEGER_MONTH_MAP = new HashMap<>(16) {
         {
             put(1, "一月");
             put(2, "二月");
@@ -36,7 +36,7 @@ public class ExcelIntegerMonthHandler implements ExcelHandler {
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
                 ? excelProperty.defaultValue()
-                : INTEGER_MONTH_STRING_MAP.get((Integer) obj);
+                : INTEGER_MONTH_MAP.get((Integer) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

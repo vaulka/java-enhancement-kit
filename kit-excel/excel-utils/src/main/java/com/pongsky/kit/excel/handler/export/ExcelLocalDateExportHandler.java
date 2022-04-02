@@ -1,28 +1,27 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
- * BigDecimal 处理器
+ * LocalDate 处理器
  *
  * @author pengsenhao
  **/
-public class ExcelBigDecimalHandler implements ExcelHandler {
+public class ExcelLocalDateExportHandler implements ExcelExportHandler {
+
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
                 ? excelProperty.defaultValue()
-                : ((BigDecimal) obj).toPlainString();
-        value = StringUtils.isNotBlank(excelProperty.suffix())
-                ? value + excelProperty.suffix()
-                : value;
+                : FORMAT.format((LocalDate) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

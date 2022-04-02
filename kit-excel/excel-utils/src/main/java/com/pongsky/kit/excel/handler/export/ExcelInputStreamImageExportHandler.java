@@ -1,4 +1,4 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
  *
  * @author pengsenhao
  **/
-public class ExcelInputStreamImageHandler extends ExcelBufferedImageHandler {
+public class ExcelInputStreamImageExportHandler extends ExcelBufferedImageExportHandler {
 
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) throws IOException {

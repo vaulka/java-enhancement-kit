@@ -434,7 +434,7 @@ public class ExcelExportUtils {
                 info.getCell().setCellStyle(this.getCellStyle(excelProperty, false));
                 Object fieldValue = ParseResultUtils.parseFieldValue(field, excelProperty.attrs(), result);
                 try {
-                    excelProperty.handler().getDeclaredConstructor().newInstance()
+                    excelProperty.exportHandler().getDeclaredConstructor().newInstance()
                             .exec(field, excelProperty, fieldValue, info);
                 } catch (InstantiationException
                         | IllegalAccessException
