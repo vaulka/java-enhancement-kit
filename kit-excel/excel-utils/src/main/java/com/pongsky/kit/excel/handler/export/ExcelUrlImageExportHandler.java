@@ -1,6 +1,6 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 
 import javax.imageio.ImageIO;
@@ -16,10 +16,10 @@ import java.net.URL;
  *
  * @author pengsenhao
  **/
-public class ExcelUrlImageHandler extends ExcelBufferedImageHandler {
+public class ExcelUrlImageExportHandler extends ExcelBufferedImageExportHandler {
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) throws IOException {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) throws IOException {
         if (obj == null) {
             return;
         }
@@ -33,7 +33,7 @@ public class ExcelUrlImageHandler extends ExcelBufferedImageHandler {
         }
         this.setBufferedImage(bufferedImage);
         this.setSuffix(suffix);
-        super.exec(field, excel, imageUrl, info);
+        super.exec(field, excelProperty, imageUrl, info);
     }
 
 }

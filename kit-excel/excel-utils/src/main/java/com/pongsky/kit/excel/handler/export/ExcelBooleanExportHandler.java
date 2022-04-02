@@ -1,6 +1,6 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
@@ -13,18 +13,18 @@ import java.util.Map;
  *
  * @author pengsenhao
  **/
-public class ExcelBooleanHandler implements ExcelHandler {
+public class ExcelBooleanExportHandler implements ExcelExportHandler {
 
-    private static final Map<Boolean, String> BOOLEAN_STRING_MAP = new HashMap<Boolean, String>() {{
+    private static final Map<Boolean, String> BOOLEAN_MAP = new HashMap<Boolean, String>() {{
         put(Boolean.TRUE, "是");
         put(Boolean.FALSE, "否");
     }};
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excel.defaultValue()
-                : BOOLEAN_STRING_MAP.get((Boolean) obj);
+                ? excelProperty.defaultValue()
+                : BOOLEAN_MAP.get((Boolean) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

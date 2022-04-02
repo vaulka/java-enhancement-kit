@@ -1,6 +1,6 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
@@ -13,9 +13,9 @@ import java.util.Map;
  *
  * @author pengsenhao
  **/
-public class ExcelIntegerWeekHandler implements ExcelHandler {
+public class ExcelIntegerWeekExportHandler implements ExcelExportHandler {
 
-    private static final Map<Integer, String> INTEGER_WEEK_STRING_MAP = new HashMap<Integer, String>() {{
+    private static final Map<Integer, String> INTEGER_WEEK_MAP = new HashMap<Integer, String>() {{
         put(1, "星期一");
         put(2, "星期二");
         put(3, "星期三");
@@ -26,10 +26,10 @@ public class ExcelIntegerWeekHandler implements ExcelHandler {
     }};
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excel.defaultValue()
-                : INTEGER_WEEK_STRING_MAP.get((Integer) obj);
+                ? excelProperty.defaultValue()
+                : INTEGER_WEEK_MAP.get((Integer) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

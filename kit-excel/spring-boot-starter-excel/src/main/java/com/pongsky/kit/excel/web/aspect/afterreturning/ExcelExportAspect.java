@@ -1,9 +1,9 @@
 package com.pongsky.kit.excel.web.aspect.afterreturning;
 
 import com.pongsky.kit.excel.annotation.ExcelExport;
-import com.pongsky.kit.excel.utils.ParseResultUtils;
 import com.pongsky.kit.excel.enums.ParseType;
 import com.pongsky.kit.excel.utils.ExcelExportUtils;
+import com.pongsky.kit.excel.utils.ParseResultUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.aspectj.lang.JoinPoint;
@@ -60,20 +60,15 @@ public class ExcelExportAspect {
         ExcelExport excelExport = ((MethodSignature) point.getSignature()).getMethod().getAnnotation(ExcelExport.class);
         result = ParseResultUtils.parseFieldValue(excelExport.attrs(), result);
         ParseType type = ParseType.getClassType(result);
-        switch (type) {
-            case LIST: {
-                List<?> list = (List<?>) result;
-                SXSSFWorkbook workbook = new ExcelExportUtils(excelExport.value())
-                        .export(list, excelExport.sheetName());
-                response.setContentType("application/octet-stream");
-                response.setHeader("Content-Disposition",
-                        MessageFormat.format("attachment;filename={0}.xlsx", excelExport.fileName()));
-                workbook.write(response.getOutputStream());
-                workbook.dispose();
-                break;
-            }
-            default:
-                break;
+        if (type == ParseType.LIST) {
+            List<?> list = (List<?>) result;
+            SXSSFWorkbook workbook = new ExcelExportUtils(excelExport.value())
+                    .export(list, excelExport.sheetName());
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition",
+                    MessageFormat.format("attachment;filename={0}.xlsx", excelExport.fileName()));
+            workbook.write(response.getOutputStream());
+            workbook.dispose();
         }
     }
 

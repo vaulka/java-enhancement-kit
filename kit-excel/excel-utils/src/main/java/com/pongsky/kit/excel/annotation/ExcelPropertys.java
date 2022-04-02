@@ -12,13 +12,13 @@ import java.lang.annotation.Target;
  **/
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Excels {
+public @interface ExcelPropertys {
 
     /**
      * excel 信息 列表
      *
      * @return excel 信息 列表
      */
-    Excel[] value();
+    ExcelProperty[] value();
 
 }

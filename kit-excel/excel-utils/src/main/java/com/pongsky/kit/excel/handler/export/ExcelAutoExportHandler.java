@@ -1,6 +1,6 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import com.pongsky.kit.excel.enums.ParseType;
 
@@ -13,14 +13,17 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author pengsenhao
  **/
-public class ExcelAutoHandler implements ExcelHandler {
+public class ExcelAutoExportHandler implements ExcelExportHandler {
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         ParseType type = ParseType.getFieldType(field);
+        if (type.getExportHandler() == null) {
+            return;
+        }
         try {
-            type.getHandler().getDeclaredConstructor().newInstance()
-                    .exec(field, excel, obj, info);
+            type.getExportHandler().getDeclaredConstructor().newInstance()
+                    .exec(field, excelProperty, obj, info);
         } catch (InstantiationException
                 | IllegalAccessException
                 | InvocationTargetException

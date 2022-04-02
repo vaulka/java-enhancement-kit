@@ -1,7 +1,10 @@
 package com.pongsky.kit.excel.annotation;
 
-import com.pongsky.kit.excel.handler.ExcelAutoHandler;
-import com.pongsky.kit.excel.handler.ExcelHandler;
+import com.pongsky.kit.excel.handler.export.ExcelAutoExportHandler;
+import com.pongsky.kit.excel.handler.export.ExcelExportHandler;
+import com.pongsky.kit.excel.handler.read.ExcelAutoImportHandler;
+import com.pongsky.kit.excel.handler.read.ExcelImportHandler;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -18,7 +21,7 @@ import java.lang.annotation.Target;
  **/
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Excel {
+public @interface ExcelProperty {
 
     /**
      * 列名
@@ -43,7 +46,7 @@ public @interface Excel {
     String attrs() default "";
 
     /**
-     * 列值处理器，默认根据字段类型自动选择转换器
+     * 导出 列值处理器，默认根据字段类型自动选择转换器
      * <p>
      * 如果自定义的话，需注意如下：
      * 1、列值需手动设置
@@ -51,12 +54,19 @@ public @interface Excel {
      *
      * @return 列值处理器
      */
-    Class<? extends ExcelHandler> handler() default ExcelAutoHandler.class;
+    Class<? extends ExcelExportHandler> exportHandler() default ExcelAutoExportHandler.class;
+
+    /**
+     * 导入 列值处理器，默认根据字段类型自动选择转换器
+     *
+     * @return 列值处理器
+     */
+    Class<? extends ExcelImportHandler> importHandler() default ExcelAutoImportHandler.class;
 
     /**
      * 列值默认值
      * <p>
-     * 目前仅使用 {@link com.pongsky.kit.excel.handler.ExcelStringHandler} 处理器才生效
+     * 目前仅使用 {@link com.pongsky.kit.excel.handler.export.ExcelStringExportHandler} 处理器才生效
      * 可自定义 handler 进行设置
      * <p>
      * 如果空数据，则显示默认值
@@ -68,7 +78,7 @@ public @interface Excel {
     /**
      * 列值后缀
      * <p>
-     * 目前仅使用 {@link com.pongsky.kit.excel.handler.ExcelStringHandler} 处理器才生效
+     * 目前仅使用 {@link com.pongsky.kit.excel.handler.export.ExcelStringExportHandler} 处理器才生效
      * 可自定义 handler 进行设置
      * <p>
      * 譬如：
@@ -90,6 +100,15 @@ public @interface Excel {
     String dataFormat() default "@";
 
     /**
+     * 列排序值
+     * <p>
+     * 值越大排越后面
+     *
+     * @return 列排序值
+     */
+    int sort() default 0;
+
+    /**
      * 列名 超链接
      * <p>
      * 目前仅支持 URL 超链接
@@ -106,20 +125,11 @@ public @interface Excel {
     String comment() default "";
 
     /**
-     * 列排序值
-     * <p>
-     * 值越大排越后面
-     *
-     * @return 列排序值
-     */
-    int sort() default 0;
-
-    /**
      * 列名 背景颜色
      *
      * @return 列名 背景颜色
      */
-    IndexedColors backgroundColor() default IndexedColors.GREY_25_PERCENT;
+    IndexedColors backgroundColor() default IndexedColors.PALE_BLUE;
 
     /**
      * 列名 字体颜色
@@ -141,6 +151,20 @@ public @interface Excel {
      * @return 字号
      */
     short fontSize() default 11;
+
+    /**
+     * 列名 边框样式
+     *
+     * @return 列名 边框样式
+     */
+    BorderStyle borderStyle() default BorderStyle.MEDIUM;
+
+    /**
+     * 列名 边框颜色
+     *
+     * @return 边框颜色
+     */
+    IndexedColors borderColor() default IndexedColors.WHITE;
 
     /**
      * 水平对齐方式

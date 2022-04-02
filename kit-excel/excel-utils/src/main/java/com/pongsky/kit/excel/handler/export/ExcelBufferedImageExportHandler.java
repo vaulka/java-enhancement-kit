@@ -1,6 +1,6 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import lombok.Setter;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -22,13 +22,13 @@ import java.util.Iterator;
  * @author pengsenhao
  **/
 @Setter
-public abstract class ExcelBufferedImageHandler implements ExcelHandler {
+public abstract class ExcelBufferedImageExportHandler implements ExcelExportHandler {
 
     private BufferedImage bufferedImage = null;
     private String suffix = null;
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) throws IOException {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) throws IOException {
         if (bufferedImage == null) {
             return;
         }

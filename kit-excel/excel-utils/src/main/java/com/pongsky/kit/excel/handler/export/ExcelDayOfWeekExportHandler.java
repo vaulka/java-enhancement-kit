@@ -1,6 +1,6 @@
-package com.pongsky.kit.excel.handler;
+package com.pongsky.kit.excel.handler.export;
 
-import com.pongsky.kit.excel.annotation.Excel;
+import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
@@ -14,9 +14,9 @@ import java.util.Map;
  *
  * @author pengsenhao
  **/
-public class ExcelDayOfWeekHandler implements ExcelHandler {
+public class ExcelDayOfWeekExportHandler implements ExcelExportHandler {
 
-    private static final Map<DayOfWeek, String> DAY_OF_WEEK_STRING_MAP = new HashMap<DayOfWeek, String>(16) {
+    private static final Map<DayOfWeek, String> DAY_OF_WEEK_MAP = new HashMap<DayOfWeek, String>(16) {
         {
             put(DayOfWeek.MONDAY, "星期一");
             put(DayOfWeek.TUESDAY, "星期二");
@@ -29,10 +29,10 @@ public class ExcelDayOfWeekHandler implements ExcelHandler {
     };
 
     @Override
-    public void exec(Field field, Excel excel, Object obj, ExcelExportInfo info) {
+    public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excel.defaultValue()
-                : DAY_OF_WEEK_STRING_MAP.get((DayOfWeek) obj);
+                ? excelProperty.defaultValue()
+                : DAY_OF_WEEK_MAP.get((DayOfWeek) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }
