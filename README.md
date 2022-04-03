@@ -1,20 +1,82 @@
-<p style="text-align:center">
-    <a href="https://github.com/JarvisPongSky/spring-cloud-enhancement-kit" target="_blank" rel="noopener noreferrer">
-        <img width="100" src="https://spring.io/images/spring-logo-9146a4d3298760c2e7e49595184e1975.svg" alt="Spring logo" />
+<p align="center">
+    <a href="https://github.com/JarvisPongSky/java-enhancement-kit" target="_blank" rel="noopener noreferrer">
+        <img width="100" src="https://www.pongsky.com/upload/2021/04/origin-logo.1-fc8493fcd5f449be9d87c141c1a93ac9.png" alt="Spring logo" />
     </a>
 </p>
 
-<p style="text-align:center"><b>Java 增强套件</b> 旨在减少重复造轮子以及统一模块规范，值得一试。</p>
+<p style="text-align:center"><b>Java 增强套件</b> 旨在减少重复造轮子以及封装一些实用功能，让开发者专注于业务，提高工作效率，值得一试。</p>
 
-> 本项目基于 `Spring Boot 2.5.6` 及对应 `Spring Cloud` 版本进行构建。
+# 包含组件
 
-# 功能特点
+## kit-captcha 验证码模块
+
+### captcha-input-char 输入型字符 字符验证码模块
+
+|模块|介绍|
+|---|---|
+|captcha-input-char-utils|输入型字符 验证码 Utils 模块|
+|spring-boot-starter-captcha-input-char|输入型字符 验证码 Spring Boot Starter 模块|
+
+### captcha-input-math 输入型算数 字符验证码模块
+
+|模块|介绍|
+|---|---|
+|captcha-input-math-utils|输入型算数 验证码 Utils 模块|
+|spring-boot-starter-captcha-input-math|输入型算数 验证码 Spring Boot Starter 模块|
+
+## kit-desensitization 数据脱敏模块
+
+|模块|介绍|
+|---|---|
+|desensitization-annotation|数据脱敏 Annotation 模块|
+|desensitization-utils|数据脱敏 Utils 模块|
+|spring-boot-starter-desensitization|数据脱敏 Spring Boot Starter 模块|
+
+## kit-excel 读/写 Excel 模块
+
+|模块|介绍|
+|---|---|
+|excel-utils|Excel Utils 模块|
+|spring-boot-starter-excel|Excel Spring Boot Starter 模块|
+
+## kit-storage 云存储模块
+
+|模块|介绍|
+|---|---|
+|storage-annotation|云存储 Annotation 模块|
+|storage-utils|云存储 Utils 模块|
+|spring-boot-storage|云存储 Spring Boot 模块|
+|spring-boot-starter-storage-oss|云存储 阿里云 OSS Spring Boot Starter 模块|
+|spring-boot-starter-storage-minio|云存储 MinIO Spring Boot Starter 模块|
+
+# 使用
+
+> 版本号说明
+>
+> 版本由：`项目版本号`-`Spring Boot 版本`-`JDK 版本` 组成。
+>
+> 最新版本请点击 [Maven Repository](https://mvnrepository.com/search?q=pongsky) 查阅
+
+## Maven 依赖
+
+```xml
+<dependency>
+    <groupId>com.pongsky.kit</groupId>
+    <artifactId>spring-boot-starter-captcha-input-math</artifactId>
+    <version>${latestVersion}</version>
+</dependency>
+```
+
+## Gradle 依赖
+
+```groovy
+implementation "com.pongsky.kit:spring-boot-starter-captcha-input-math:$latestVersion"
+```
+# 其他功能特点
 
 * config-core
     * 全局实例ID（自动装配）
     * Redis 统一前缀以及配置（需手动引入）
-    * MyBatis 配置（需手动引入）
-    * 云存储配置（yml 启用以及配置相关信息）
     * Swagger 配置（自动装配）
     * 全局日志链路追踪（需配合 bootstrap.yml）
     * 异步配置（增强日志链路追踪）
@@ -25,69 +87,8 @@
     * Redis 模糊删除 Key
     * Feign 调用日志打印
     * Controller 调用统一日志打印
-    * 数据脱敏
-    * 云存储URL自动添加显示前缀
-        * 文件上传判空校验
-        * 启用云存储自动装配云存储 Controller
     * 接口防重校验
     * 可重复读取 Request Body
-
-# 使用
-
-> 版本号说明
->
-> 版本由：`Spring Boot 版本`-`迭代版本` 组成。
->
-> 譬如 `2.5.6-1.0.0` 则是 `增强套件 1.0.0`  基于 `Spring Boot 2.5.6` 构建。
-
-> 依赖引用说明
->
-> `config-core` 依赖 `common-utils`。
->
-> `config-web` 依赖 `config-core`。
-
-## Maven 依赖
-
-```xml
-
-<dependency>
-    <groupId>com.pongsky.kit</groupId>
-    <artifactId>common-utils</artifactId>
-    <version>${version}</version>
-</dependency>
-```
-
-```xml
-
-<dependency>
-    <groupId>com.pongsky.kit</groupId>
-    <artifactId>config-core</artifactId>
-    <version>${version}</version>
-</dependency>
-```
-
-```xml
-
-<dependency>
-    <groupId>com.pongsky.kit</groupId>
-    <artifactId>config-web</artifactId>
-    <version>${version}</version>
-</dependency>
-```
-
-## Gradle 依赖
-
-```groovy
-api "com.pongsky.kit:common-utils:$version"
-```
-
-```groovy
-api "com.pongsky.kit:config-core:$version"
-```
-
-```groovy
-api "com.pongsky.kit:config-web:$version"
-```
 
 ## 前置条件
 
@@ -119,14 +120,6 @@ api "com.pongsky.kit:config-web:$version"
 
 ```java
 @Import({RedisConfig.class})
-```
-
-## MyBatis 配置
-
-目前就加入了乐观锁配置，如需使用请手动导入该 Bean。
-
-```java
-@Import({MyBatisConfig.class})
 ```
 
 ## 云存储配置
