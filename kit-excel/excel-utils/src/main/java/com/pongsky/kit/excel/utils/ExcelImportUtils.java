@@ -4,6 +4,7 @@ import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.annotation.ExcelPropertys;
 import com.pongsky.kit.excel.entity.ExcelImportInfo;
 import com.pongsky.kit.excel.enums.ExcelType;
+import com.pongsky.kit.excel.enums.ParseType;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPicture;
 import org.apache.poi.hssf.usermodel.HSSFPictureData;
@@ -12,6 +13,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ooxml.POIXMLDocumentPart;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.PictureData;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -30,6 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -183,9 +187,10 @@ public class ExcelImportUtils<T> {
                 }
                 List<Object> fieldExcels = info.getFields().get(i);
                 Field field = ExcelImportInfo.getField(fieldExcels);
+                ParseType type = ParseType.getFieldType(field);
                 ExcelProperty excelProperty = ExcelImportInfo.getExcel(fieldExcels);
                 PictureData pictureData = pictureDates.get(this.buildCoordinateKey(rowNum, i));
-                String cellValue = this.getCellValue(cell);
+                Object cellValue = this.getCellValue(cell, type);
                 try {
                     excelProperty.importHandler().getDeclaredConstructor().newInstance()
                             // 如果有图片，则优先处理图片
@@ -279,34 +284,57 @@ public class ExcelImportUtils<T> {
      * 获取列值
      *
      * @param cell 列
+     * @param type 字段类型
      * @return 获取列值
      */
-    private String getCellValue(Cell cell) {
-        String cellValue = null;
+    private Object getCellValue(Cell cell, ParseType type) {
+        Object cellValue = null;
         // 判断数据的类型
         switch (cell.getCellType()) {
             // 数字
             case NUMERIC:
-                cellValue = String.valueOf(cell.getNumericCellValue());
+                // 公式
+            case FORMULA:
+                cellValue = cell.getNumericCellValue();
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    // POI Excel 日期格式转换
+                    switch (type) {
+                        case DATE:
+                            cellValue = DateUtil.getJavaDate((Double) cellValue);
+                            break;
+                        case LOCAL_DATE:
+                            cellValue = DateUtil.getLocalDateTime((Double) cellValue).toLocalDate();
+                            break;
+                        case LOCAL_TIME:
+                            cellValue = DateUtil.getLocalDateTime((Double) cellValue).toLocalTime();
+                            break;
+                        case LOCAL_DATE_TIME:
+                        default:
+                            cellValue = DateUtil.getLocalDateTime((Double) cellValue);
+                            break;
+                    }
+                } else {
+                    if ((Double) cellValue % 1 != 0) {
+                        cellValue = new BigDecimal(cellValue.toString());
+                    } else {
+                        cellValue = new DecimalFormat("0").format(cellValue);
+                    }
+                }
                 break;
             // 字符串
             case STRING:
-                cellValue = String.valueOf(cell.getStringCellValue());
+                cellValue = cell.getStringCellValue();
                 break;
-            // Boolean
+            // 布尔
             case BOOLEAN:
-                cellValue = String.valueOf(cell.getBooleanCellValue());
-                break;
-            // 公式
-            case FORMULA:
-                cellValue = String.valueOf(cell.getCellFormula());
-                break;
-            // 空值
-            case BLANK:
-                cellValue = "";
+                cellValue = cell.getBooleanCellValue();
                 break;
             // 故障
             case ERROR:
+                cellValue = cell.getErrorCellValue();
+                break;
+            // 空值
+            case BLANK:
             default:
                 break;
         }
