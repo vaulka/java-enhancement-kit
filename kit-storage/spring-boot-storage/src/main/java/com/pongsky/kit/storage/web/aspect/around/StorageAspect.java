@@ -66,10 +66,9 @@ public class StorageAspect {
     private Object storageResource(StorageResourceMark mark, Object originResult) {
         if (this.isBasicDataType(originResult)) {
             return originResult;
-        } else if (originResult instanceof String) {
-            return mark == null
-                    ? originResult
-                    : storageProperties.getBaseUri() + originResult;
+        } else if (originResult instanceof String
+                && mark != null) {
+            return storageProperties.getBaseUri() + originResult;
         } else if (originResult instanceof List) {
             List<Object> list = (List<Object>) originResult;
             List<Object> results = new ArrayList<>(list.size());
