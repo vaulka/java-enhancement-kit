@@ -6,8 +6,8 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
 import java.time.Month;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Month 处理器
@@ -16,7 +16,7 @@ import java.util.Map;
  **/
 public class ExcelMonthExportHandler implements ExcelExportHandler {
 
-    private static final Map<Month, String> MONTH_MAP = new HashMap<>(16) {
+    private static final Map<Month, String> MONTH_MAP = new ConcurrentHashMap<>(16) {
         {
             put(Month.JANUARY, "一月");
             put(Month.FEBRUARY, "二月");
