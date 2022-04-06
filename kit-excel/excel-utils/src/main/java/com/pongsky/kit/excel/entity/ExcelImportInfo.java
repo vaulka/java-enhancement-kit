@@ -16,7 +16,11 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-public class ExcelImportInfo {
+public class ExcelImportInfo<T> {
+
+    public ExcelImportInfo(Class<T> clazz) {
+        this.clazz = clazz;
+    }
 
     /**
      * field 与 excel 列表
@@ -58,7 +62,7 @@ public class ExcelImportInfo {
     /**
      * 数据实体类
      */
-    private Class<?> clazz;
+    private Class<T> clazz;
 
     /**
      * 列名最大行数，从 0 开始

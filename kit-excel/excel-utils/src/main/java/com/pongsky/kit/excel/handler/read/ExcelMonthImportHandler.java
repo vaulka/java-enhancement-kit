@@ -4,8 +4,8 @@ import com.pongsky.kit.excel.annotation.ExcelProperty;
 
 import java.lang.reflect.Field;
 import java.time.Month;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Month 处理器
@@ -14,7 +14,7 @@ import java.util.Map;
  **/
 public class ExcelMonthImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, Month> MONTH_MAP = new HashMap<String, Month>(16) {
+    private static final Map<String, Month> MONTH_MAP = new ConcurrentHashMap<String, Month>(16) {
         {
             put("一月", Month.JANUARY);
             put("二月", Month.FEBRUARY);

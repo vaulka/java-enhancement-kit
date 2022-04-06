@@ -1,6 +1,5 @@
 package com.pongsky.kit.desensitization.handler;
 
-import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
 import com.pongsky.kit.desensitization.utils.DesensitizationUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,12 +15,10 @@ import org.apache.commons.lang3.StringUtils;
 public class NameDesensitizationHandler implements DesensitizationHandler {
 
     @Override
-    public boolean willDoExec(String str) {
-        return StringUtils.isNotBlank(str);
-    }
-
-    @Override
     public String exec(String str) {
+        if (StringUtils.isBlank(str)) {
+            return str;
+        }
         return str.length() == 2
                 ? DesensitizationUtils.desensitization(str, 1, 0)
                 : DesensitizationUtils.desensitization(str, 1, 1);

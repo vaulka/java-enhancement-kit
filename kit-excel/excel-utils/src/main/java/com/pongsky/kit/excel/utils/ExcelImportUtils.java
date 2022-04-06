@@ -45,16 +45,15 @@ import java.util.stream.Collectors;
  *
  * @author pengsenhao
  **/
-public class ExcelImportUtils {
+public class ExcelImportUtils<T> {
 
     /**
      * 导入 excel 相关参数信息
      */
-    private final ExcelImportInfo info;
+    private final ExcelImportInfo<T> info;
 
-    public ExcelImportUtils(Class<?> clazz) {
-        info = new ExcelImportInfo();
-        info.setClazz(clazz);
+    public ExcelImportUtils(Class<T> clazz) {
+        info = new ExcelImportInfo<>(clazz);
         List<Class<?>> classes = new ArrayList<>();
         this.getSuperclasses(classes, clazz);
         info.setFields(new ArrayList<>());
@@ -110,7 +109,7 @@ public class ExcelImportUtils {
      * @throws IOException                  IOException
      * @throws ReflectiveOperationException ReflectiveOperationException
      */
-    public List<?> read(String filename, InputStream inputStream, String sheetName) throws IOException, ReflectiveOperationException {
+    public List<T> read(String filename, InputStream inputStream, String sheetName) throws IOException, ReflectiveOperationException {
         if (info.getFields().size() == 0) {
             // 没有任何字段需要写入则直接返回空结果
             return Collections.emptyList();
@@ -130,7 +129,7 @@ public class ExcelImportUtils {
      * @throws IOException                  IOException
      * @throws ReflectiveOperationException ReflectiveOperationException
      */
-    public List<?> read(File file, String sheetName) throws IOException, ReflectiveOperationException {
+    public List<T> read(File file, String sheetName) throws IOException, ReflectiveOperationException {
         if (info.getFields().size() == 0) {
             // 没有任何字段需要写入则直接返回空结果
             return Collections.emptyList();
@@ -149,7 +148,7 @@ public class ExcelImportUtils {
      * @return 读取数据结果列表
      * @throws ReflectiveOperationException ReflectiveOperationException
      */
-    public List<?> read(Workbook workbook, String sheetName) throws ReflectiveOperationException {
+    public List<T> read(Workbook workbook, String sheetName) throws ReflectiveOperationException {
         if (workbook == null) {
             return Collections.emptyList();
         }
@@ -168,7 +167,7 @@ public class ExcelImportUtils {
                 pictureDates = this.getPictureDataByXlsx((XSSFSheet) sheet);
                 break;
         }
-        List<Object> results = new ArrayList<>();
+        List<T> results = new ArrayList<>();
         // 循环读取行数据
         for (int rowNum = info.getTitleMaxNum(); rowNum <= sheet.getLastRowNum(); rowNum++) {
             Row row = sheet.getRow(rowNum);
@@ -176,7 +175,7 @@ public class ExcelImportUtils {
                 // 行内不包含任何单元格，则跳过
                 continue;
             }
-            Object result = info.getClazz().getDeclaredConstructor().newInstance();
+            T result = info.getClazz().getDeclaredConstructor().newInstance();
             for (int i = 0; i < info.getFields().size(); i++) {
                 Cell cell = row.getCell(i);
                 if (cell == null) {

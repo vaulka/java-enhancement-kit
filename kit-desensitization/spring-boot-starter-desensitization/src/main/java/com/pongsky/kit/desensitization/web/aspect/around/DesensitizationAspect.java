@@ -20,11 +20,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -65,8 +65,7 @@ public class DesensitizationAspect {
         if (this.isBasicDataType(originResult)) {
             return originResult;
         } else if (originResult instanceof String
-                && mark != null
-                && handler.willDoExec(originResult.toString())) {
+                && mark != null) {
             return handler.exec(originResult.toString());
         } else if (originResult instanceof List) {
             List<Object> list = (List<Object>) originResult;
@@ -94,7 +93,7 @@ public class DesensitizationAspect {
                 }
                 handler = this.getHandler(mark);
                 Object result = this.getValue(originResult, field);
-                if (result != null && handler.willDoExec(originResult.toString())) {
+                if (result != null) {
                     this.setValue(originResult, field, handler.exec(result.toString()));
                 }
             } else {
@@ -206,7 +205,7 @@ public class DesensitizationAspect {
     /**
      * 数据脱敏处理器列表
      */
-    private static final Map<String, DesensitizationHandler> HANDLERS = new HashMap<>(16);
+    private static final Map<String, DesensitizationHandler> HANDLERS = new ConcurrentHashMap<>(16);
 
     /**
      * 获取数据脱敏处理器

@@ -5,8 +5,8 @@ import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Month 处理器
@@ -15,7 +15,7 @@ import java.util.Map;
  **/
 public class ExcelIntegerMonthExportHandler implements ExcelExportHandler {
 
-    private static final Map<Integer, String> INTEGER_MONTH_MAP = new HashMap<Integer, String>(16) {
+    private static final Map<Integer, String> INTEGER_MONTH_MAP = new ConcurrentHashMap<Integer, String>(16) {
         {
             put(1, "一月");
             put(2, "二月");
