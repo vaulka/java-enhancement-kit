@@ -8,15 +8,6 @@ package com.pongsky.kit.desensitization.handler;
 public interface DesensitizationHandler {
 
     /**
-     * 判断是否执行 {@link DesensitizationHandler#exec(java.lang.String)}
-     *
-     * @param str 明文信息
-     * @return 判断是否执行结果
-     * @author pengsenhao
-     */
-    boolean willDoExec(String str);
-
-    /**
      * 执行数据脱敏
      *
      * @param str 明文信息

@@ -65,8 +65,7 @@ public class DesensitizationAspect {
         if (this.isBasicDataType(originResult)) {
             return originResult;
         } else if (originResult instanceof String
-                && mark != null
-                && handler.willDoExec(originResult.toString())) {
+                && mark != null) {
             return handler.exec(originResult.toString());
         } else if (originResult instanceof List) {
             List<Object> list = (List<Object>) originResult;
@@ -94,7 +93,7 @@ public class DesensitizationAspect {
                 }
                 handler = this.getHandler(mark);
                 Object result = this.getValue(originResult, field);
-                if (result != null && handler.willDoExec(originResult.toString())) {
+                if (result != null) {
                     this.setValue(originResult, field, handler.exec(result.toString()));
                 }
             } else {
