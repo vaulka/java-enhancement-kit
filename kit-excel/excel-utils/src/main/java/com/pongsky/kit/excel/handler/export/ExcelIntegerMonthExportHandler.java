@@ -9,13 +9,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Month 处理器
+ * Integer Month 处理器
  *
  * @author pengsenhao
  **/
 public class ExcelIntegerMonthExportHandler implements ExcelExportHandler {
 
-    private static final Map<Integer, String> INTEGER_MONTH_MAP = new ConcurrentHashMap<>(16) {
+    private static final Map<Integer, String> MAP = new ConcurrentHashMap<>(16) {
         {
             put(1, "一月");
             put(2, "二月");
@@ -36,7 +36,7 @@ public class ExcelIntegerMonthExportHandler implements ExcelExportHandler {
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
                 ? excelProperty.defaultValue()
-                : INTEGER_MONTH_MAP.get((Integer) obj);
+                : MAP.get((Integer) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

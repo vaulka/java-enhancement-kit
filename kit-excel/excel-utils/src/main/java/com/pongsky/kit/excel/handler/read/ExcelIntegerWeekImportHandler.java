@@ -3,24 +3,23 @@ package com.pongsky.kit.excel.handler.read;
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 
 import java.lang.reflect.Field;
-import java.time.DayOfWeek;
 import java.util.Map;
 
 /**
- * DayOfWeek 处理器
+ * Integer Week 处理器
  *
  * @author pengsenhao
  **/
-public class ExcelDayOfWeekImportHandler implements ExcelImportHandler {
+public class ExcelIntegerWeekImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, DayOfWeek> MAP = Map.of(
-            "星期一", DayOfWeek.MONDAY,
-            "星期二", DayOfWeek.TUESDAY,
-            "星期三", DayOfWeek.WEDNESDAY,
-            "星期四", DayOfWeek.THURSDAY,
-            "星期五", DayOfWeek.FRIDAY,
-            "星期六", DayOfWeek.SATURDAY,
-            "星期日", DayOfWeek.SUNDAY
+    private static final Map<String, Integer> MAP = Map.of(
+            "星期一", 1,
+            "星期二", 2,
+            "星期三", 3,
+            "星期四", 4,
+            "星期五", 5,
+            "星期六", 6,
+            "星期日", 7
     );
 
     @Override
@@ -28,7 +27,7 @@ public class ExcelDayOfWeekImportHandler implements ExcelImportHandler {
         String str = obj != null
                 ? obj.toString()
                 : excelProperty.defaultValue();
-        DayOfWeek value = MAP.get(str);
+        Integer value = MAP.get(str);
         if (value == null) {
             return;
         }

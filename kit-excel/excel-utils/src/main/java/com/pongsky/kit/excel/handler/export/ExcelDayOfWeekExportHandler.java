@@ -15,7 +15,7 @@ import java.util.Map;
  **/
 public class ExcelDayOfWeekExportHandler implements ExcelExportHandler {
 
-    private static final Map<DayOfWeek, String> DAY_OF_WEEK_MAP = Map.of(
+    private static final Map<DayOfWeek, String> MAP = Map.of(
             DayOfWeek.MONDAY, "星期一",
             DayOfWeek.TUESDAY, "星期二",
             DayOfWeek.WEDNESDAY, "星期三",
@@ -29,7 +29,7 @@ public class ExcelDayOfWeekExportHandler implements ExcelExportHandler {
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
                 ? excelProperty.defaultValue()
-                : DAY_OF_WEEK_MAP.get((DayOfWeek) obj);
+                : MAP.get((DayOfWeek) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }
