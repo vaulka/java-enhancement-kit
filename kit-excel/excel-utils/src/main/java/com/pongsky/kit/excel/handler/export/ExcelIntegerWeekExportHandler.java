@@ -15,7 +15,7 @@ import java.util.Map;
  **/
 public class ExcelIntegerWeekExportHandler implements ExcelExportHandler {
 
-    private static final Map<Integer, String> INTEGER_WEEK_MAP = new HashMap<Integer, String>() {{
+    private static final Map<Integer, String> MAP = new HashMap<Integer, String>(10) {{
         put(1, "星期一");
         put(2, "星期二");
         put(3, "星期三");
@@ -29,7 +29,7 @@ public class ExcelIntegerWeekExportHandler implements ExcelExportHandler {
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
                 ? excelProperty.defaultValue()
-                : INTEGER_WEEK_MAP.get((Integer) obj);
+                : MAP.get((Integer) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

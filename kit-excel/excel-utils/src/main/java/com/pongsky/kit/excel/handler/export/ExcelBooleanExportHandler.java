@@ -15,7 +15,7 @@ import java.util.Map;
  **/
 public class ExcelBooleanExportHandler implements ExcelExportHandler {
 
-    private static final Map<Boolean, String> BOOLEAN_MAP = new HashMap<Boolean, String>() {{
+    private static final Map<Boolean, String> MAP = new HashMap<Boolean, String>(4) {{
         put(Boolean.TRUE, "是");
         put(Boolean.FALSE, "否");
     }};
@@ -24,7 +24,7 @@ public class ExcelBooleanExportHandler implements ExcelExportHandler {
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
                 ? excelProperty.defaultValue()
-                : BOOLEAN_MAP.get((Boolean) obj);
+                : MAP.get((Boolean) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

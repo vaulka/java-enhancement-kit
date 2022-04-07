@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 public class ExcelMonthExportHandler implements ExcelExportHandler {
 
-    private static final Map<Month, String> MONTH_MAP = new ConcurrentHashMap<Month, String>(16) {
+    private static final Map<Month, String> MAP = new ConcurrentHashMap<Month, String>(16) {
         {
             put(Month.JANUARY, "一月");
             put(Month.FEBRUARY, "二月");
@@ -37,7 +37,7 @@ public class ExcelMonthExportHandler implements ExcelExportHandler {
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
                 ? excelProperty.defaultValue()
-                : MONTH_MAP.get((Month) obj);
+                : MAP.get((Month) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

@@ -14,7 +14,7 @@ import java.util.Map;
  **/
 public class ExcelDayOfWeekImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, DayOfWeek> DAY_OF_WEEK_MAP = new HashMap<String, DayOfWeek>(16) {
+    private static final Map<String, DayOfWeek> MAP = new HashMap<String, DayOfWeek>(10) {
         {
             put("星期一", DayOfWeek.MONDAY);
             put("星期二", DayOfWeek.TUESDAY);
@@ -31,7 +31,7 @@ public class ExcelDayOfWeekImportHandler implements ExcelImportHandler {
         String str = obj != null
                 ? obj.toString()
                 : excelProperty.defaultValue();
-        DayOfWeek value = DAY_OF_WEEK_MAP.get(str);
+        DayOfWeek value = MAP.get(str);
         if (value == null) {
             return;
         }

@@ -13,7 +13,7 @@ import java.util.Map;
  **/
 public class ExcelBooleanImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, Boolean> BOOLEAN_MAP = new HashMap<String, Boolean>(16) {
+    private static final Map<String, Boolean> MAP = new HashMap<String, Boolean>(4) {
         {
             put("是", Boolean.TRUE);
             put("否", Boolean.FALSE);
@@ -22,10 +22,16 @@ public class ExcelBooleanImportHandler implements ExcelImportHandler {
 
     @Override
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
+        if (obj instanceof Boolean) {
+            // 如果是布尔类型，则直接处理
+            this.setValue(result, field, obj);
+            return;
+        }
+        // 如果不是布尔类型，则默认按照字符串类型处理
         String str = obj != null
                 ? obj.toString()
                 : excelProperty.defaultValue();
-        Boolean value = BOOLEAN_MAP.get(str);
+        Boolean value = MAP.get(str);
         if (value == null) {
             return;
         }

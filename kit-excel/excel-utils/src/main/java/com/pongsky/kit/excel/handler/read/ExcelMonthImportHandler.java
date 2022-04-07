@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 public class ExcelMonthImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, Month> MONTH_MAP = new ConcurrentHashMap<String, Month>(16) {
+    private static final Map<String, Month> MAP = new ConcurrentHashMap<String, Month>(16) {
         {
             put("一月", Month.JANUARY);
             put("二月", Month.FEBRUARY);
@@ -36,7 +36,7 @@ public class ExcelMonthImportHandler implements ExcelImportHandler {
         String str = obj != null
                 ? obj.toString()
                 : excelProperty.defaultValue();
-        Month value = MONTH_MAP.get(str);
+        Month value = MAP.get(str);
         if (value == null) {
             return;
         }
