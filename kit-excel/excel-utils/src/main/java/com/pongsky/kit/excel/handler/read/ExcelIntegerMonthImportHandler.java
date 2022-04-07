@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 public class ExcelIntegerMonthImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, Integer> MAP = new ConcurrentHashMap<>(16) {
+    private static final Map<String, Integer> MAP = new ConcurrentHashMap<String, Integer>(16) {
         {
             put("一月", 1);
             put("二月", 2);
