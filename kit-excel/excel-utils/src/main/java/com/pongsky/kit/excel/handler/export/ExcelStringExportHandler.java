@@ -19,10 +19,10 @@ public class ExcelStringExportHandler implements ExcelExportHandler {
         // 不能使用 (String)obj
         // 原因是未知类型以及一些其他类型默认也是使用此 handler 进行处理，无法转为 String，故使用 toString()
         if (obj == null || StringUtils.isBlank(obj.toString())) {
-            obj = excelProperty.defaultValue();
+            obj = excelProperty.contentStyle().defaultValue();
         }
-        String value = StringUtils.isNotBlank(excelProperty.suffix())
-                ? obj + excelProperty.suffix()
+        String value = StringUtils.isNotBlank(excelProperty.contentStyle().suffix())
+                ? obj + excelProperty.contentStyle().suffix()
                 : obj.toString();
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());

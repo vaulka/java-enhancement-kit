@@ -30,7 +30,7 @@ public class ExcelDayOfWeekImportHandler implements ExcelImportHandler {
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
         String str = obj != null
                 ? obj.toString()
-                : excelProperty.defaultValue();
+                : excelProperty.contentStyle().defaultValue();
         DayOfWeek value = MAP.get(str);
         if (value == null) {
             return;

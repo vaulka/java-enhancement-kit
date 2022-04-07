@@ -20,7 +20,7 @@ public class ExcelDateExportHandler implements ExcelExportHandler {
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excelProperty.defaultValue()
+                ? excelProperty.contentStyle().defaultValue()
                 : DateFormatUtils.format((Date) obj, PATTERN);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());

@@ -30,7 +30,7 @@ public class ExcelBooleanImportHandler implements ExcelImportHandler {
         // 如果不是布尔类型，则默认按照字符串类型处理
         String str = obj != null
                 ? obj.toString()
-                : excelProperty.defaultValue();
+                : excelProperty.contentStyle().defaultValue();
         Boolean value = MAP.get(str);
         if (value == null) {
             return;

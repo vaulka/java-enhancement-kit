@@ -26,7 +26,7 @@ public class ExcelLocalDateTimeImportHandler implements ExcelImportHandler {
         // 如果不是日期类型，则默认按照字符串类型处理
         String str = obj != null
                 ? obj.toString()
-                : excelProperty.defaultValue();
+                : excelProperty.contentStyle().defaultValue();
         if (StringUtils.isBlank(str)) {
             return;
         }

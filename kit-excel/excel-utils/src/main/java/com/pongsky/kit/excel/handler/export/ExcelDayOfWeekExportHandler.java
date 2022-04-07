@@ -31,7 +31,7 @@ public class ExcelDayOfWeekExportHandler implements ExcelExportHandler {
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excelProperty.defaultValue()
+                ? excelProperty.contentStyle().defaultValue()
                 : MAP.get((DayOfWeek) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());

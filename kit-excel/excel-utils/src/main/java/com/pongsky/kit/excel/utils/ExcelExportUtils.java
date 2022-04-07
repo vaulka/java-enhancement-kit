@@ -2,6 +2,8 @@ package com.pongsky.kit.excel.utils;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.annotation.ExcelPropertys;
+import com.pongsky.kit.excel.annotation.style.ExcelContentStyle;
+import com.pongsky.kit.excel.annotation.style.ExcelHeadStyle;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import com.pongsky.kit.excel.entity.ExcelForceInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -56,13 +58,13 @@ public class ExcelExportUtils {
             for (Field field : fieldList) {
                 ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
                 if (excelProperty != null) {
-                    titleMaxNum = Integer.max(titleMaxNum, excelProperty.value().length);
+                    titleMaxNum = Integer.max(titleMaxNum, excelProperty.yHead().length);
                     info.getFields().add(Arrays.asList(field, excelProperty));
                 }
                 ExcelPropertys excelPropertys = field.getAnnotation(ExcelPropertys.class);
                 if (excelPropertys != null) {
                     for (ExcelProperty ex : excelPropertys.value()) {
-                        titleMaxNum = Integer.max(titleMaxNum, ex.value().length);
+                        titleMaxNum = Integer.max(titleMaxNum, ex.yHead().length);
                         info.getFields().add(Arrays.asList(field, ex));
                     }
                 }
@@ -120,38 +122,87 @@ public class ExcelExportUtils {
     }
 
     /**
-     * 获取单元格样式
-     *
-     * @param excelProperty 导出 excel 相关信息
-     * @param isColumnTitle 是否是列名
-     * @return 获取单元格样式
+     * 保护单元格的密码
      */
-    private CellStyle getCellStyle(ExcelProperty excelProperty, boolean isColumnTitle) {
+    private static final String PROTECT_SHEET = "解锁";
+
+    /**
+     * 获取标题样式
+     *
+     * @param headStyle excel 标题样式
+     * @return 获取标题样式
+     */
+    @SuppressWarnings("Duplicates")
+    private CellStyle getHeadCellStyle(ExcelHeadStyle headStyle) {
         CellStyle cellStyle = info.getWorkbook().createCellStyle();
-        cellStyle.setDataFormat(info.getWorkbook().createDataFormat().getFormat(excelProperty.dataFormat()));
+        cellStyle.setDataFormat(info.getWorkbook().createDataFormat().getFormat(headStyle.dataFormat()));
         cellStyle.setWrapText(true);
-        cellStyle.setAlignment(excelProperty.alignment());
-        cellStyle.setVerticalAlignment(excelProperty.verticalAlignment());
+        cellStyle.setAlignment(headStyle.alignment());
+        cellStyle.setVerticalAlignment(headStyle.verticalAlignment());
         Font font = info.getWorkbook().createFont();
-        font.setFontName(excelProperty.fontName());
-        font.setFontHeightInPoints(excelProperty.fontSize());
-        if (isColumnTitle) {
-            // 列名 字体颜色
-            font.setColor(excelProperty.fontColor().getIndex());
-            // 列名 边框样式、边框颜色
-            cellStyle.setBorderBottom(excelProperty.borderStyle());
-            cellStyle.setBottomBorderColor(excelProperty.borderColor().getIndex());
-            cellStyle.setBorderLeft(excelProperty.borderStyle());
-            cellStyle.setLeftBorderColor(excelProperty.borderColor().getIndex());
-            cellStyle.setBorderRight(excelProperty.borderStyle());
-            cellStyle.setRightBorderColor(excelProperty.borderColor().getIndex());
-            cellStyle.setBorderTop(excelProperty.borderStyle());
-            cellStyle.setTopBorderColor(excelProperty.borderColor().getIndex());
-            // 列名 前景色
-            cellStyle.setFillForegroundColor(excelProperty.backgroundColor().getIndex());
-            cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        font.setFontName(headStyle.fontName());
+        font.setFontHeightInPoints(headStyle.fontSize());
+        // 标题 加粗
+        font.setBold(headStyle.isBold());
+        // 标题 锁定
+        if (headStyle.isLocked()) {
+            info.getSheet().protectSheet(PROTECT_SHEET);
         }
-        cellStyle.setFont(font);
+        cellStyle.setLocked(headStyle.isLocked());
+        // 标题 字体颜色
+        font.setColor(headStyle.fontColor().getIndex());
+        // 标题 边框样式、边框颜色
+        cellStyle.setBorderTop(headStyle.borderTop());
+        cellStyle.setTopBorderColor(headStyle.borderTopColor().getIndex());
+        cellStyle.setBorderBottom(headStyle.borderBottom());
+        cellStyle.setBottomBorderColor(headStyle.borderBottomColor().getIndex());
+        cellStyle.setBorderLeft(headStyle.borderLeft());
+        cellStyle.setLeftBorderColor(headStyle.borderLeftColor().getIndex());
+        cellStyle.setBorderRight(headStyle.borderRight());
+        cellStyle.setRightBorderColor(headStyle.borderRightColor().getIndex());
+        // 标题 前景色
+        cellStyle.setFillForegroundColor(headStyle.backgroundColor().getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        return cellStyle;
+    }
+
+    /**
+     * 获取内容样式
+     *
+     * @param contentStyle excel 内容样式
+     * @return 获取内容样式
+     */
+    @SuppressWarnings("Duplicates")
+    private CellStyle getContentCellStyle(ExcelContentStyle contentStyle) {
+        CellStyle cellStyle = info.getWorkbook().createCellStyle();
+        cellStyle.setDataFormat(info.getWorkbook().createDataFormat().getFormat(contentStyle.dataFormat()));
+        cellStyle.setWrapText(true);
+        cellStyle.setAlignment(contentStyle.alignment());
+        cellStyle.setVerticalAlignment(contentStyle.verticalAlignment());
+        Font font = info.getWorkbook().createFont();
+        font.setFontName(contentStyle.fontName());
+        font.setFontHeightInPoints(contentStyle.fontSize());
+        // 内容 加粗
+        font.setBold(contentStyle.isBold());
+        // 内容 锁定
+        if (contentStyle.isLocked()) {
+            info.getSheet().protectSheet(PROTECT_SHEET);
+        }
+        cellStyle.setLocked(contentStyle.isLocked());
+        // 内容 字体颜色
+        font.setColor(contentStyle.fontColor().getIndex());
+        // 内容 边框样式、边框颜色
+        cellStyle.setBorderTop(contentStyle.borderTop());
+        cellStyle.setTopBorderColor(contentStyle.borderTopColor().getIndex());
+        cellStyle.setBorderBottom(contentStyle.borderBottom());
+        cellStyle.setBottomBorderColor(contentStyle.borderBottomColor().getIndex());
+        cellStyle.setBorderLeft(contentStyle.borderLeft());
+        cellStyle.setLeftBorderColor(contentStyle.borderLeftColor().getIndex());
+        cellStyle.setBorderRight(contentStyle.borderRight());
+        cellStyle.setRightBorderColor(contentStyle.borderRightColor().getIndex());
+        // 内容 前景色
+        cellStyle.setFillForegroundColor(contentStyle.backgroundColor().getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         return cellStyle;
     }
 
@@ -217,27 +268,27 @@ public class ExcelExportUtils {
                 Field field = ExcelExportInfo.getField(fieldExcels);
                 ExcelProperty excelProperty = ExcelExportInfo.getExcel(fieldExcels);
                 String columnName = field.getName();
-                for (int z = 0; z < excelProperty.value().length; z++) {
-                    if (StringUtils.isBlank(excelProperty.value()[z])) {
+                for (int z = 0; z < excelProperty.yHead().length; z++) {
+                    if (StringUtils.isBlank(excelProperty.yHead()[z])) {
                         continue;
                     }
-                    columnName = excelProperty.value()[z];
+                    columnName = excelProperty.yHead()[z];
                     // 如果 Y 轴 相等，就不再往下获取，退出循环
                     if (z == y) {
                         break;
                     }
                 }
                 // 设置样式
-                info.getCell().setCellStyle(this.getCellStyle(excelProperty, true));
+                info.getCell().setCellStyle(this.getHeadCellStyle(excelProperty.yHeadStyle()));
                 // 填充内容
                 info.getCell().setCellValue(new XSSFRichTextString(columnName));
                 // 添加超链接
-                if (StringUtils.isNotBlank(excelProperty.hyperlink())) {
-                    this.addHyperlink(info.getCell(), excelProperty.hyperlink());
+                if (StringUtils.isNotBlank(excelProperty.yHeadStyle().hyperlink())) {
+                    this.addHyperlink(info.getCell(), excelProperty.yHeadStyle().hyperlink());
                 }
                 // 添加批注
-                if (StringUtils.isNotBlank(excelProperty.comment())) {
-                    this.addComment(info.getCell(), excelProperty.comment());
+                if (StringUtils.isNotBlank(excelProperty.yHeadStyle().comment())) {
+                    this.addComment(info.getCell(), excelProperty.yHeadStyle().comment());
                 }
                 info.setTextWidth(x, columnName.length());
                 // 记录 X、Y 轴对应列名信息
@@ -431,7 +482,7 @@ public class ExcelExportUtils {
                 List<Object> fieldExcels = info.getFields().get(i);
                 Field field = ExcelExportInfo.getField(fieldExcels);
                 ExcelProperty excelProperty = ExcelExportInfo.getExcel(fieldExcels);
-                info.getCell().setCellStyle(this.getCellStyle(excelProperty, false));
+                info.getCell().setCellStyle(this.getContentCellStyle(excelProperty.contentStyle()));
                 Object fieldValue = ParseResultUtils.parseFieldValue(field, excelProperty.attrs(), result);
                 try {
                     excelProperty.exportHandler().getDeclaredConstructor().newInstance()

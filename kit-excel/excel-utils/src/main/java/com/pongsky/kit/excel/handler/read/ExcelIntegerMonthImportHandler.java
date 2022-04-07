@@ -34,7 +34,7 @@ public class ExcelIntegerMonthImportHandler implements ExcelImportHandler {
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
         String str = obj != null
                 ? obj.toString()
-                : excelProperty.defaultValue();
+                : excelProperty.contentStyle().defaultValue();
         Integer value = MAP.get(str);
         if (value == null) {
             return;
