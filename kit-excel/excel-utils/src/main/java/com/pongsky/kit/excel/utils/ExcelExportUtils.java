@@ -55,7 +55,6 @@ public class ExcelExportUtils {
 
     public ExcelExportUtils(Class<?> clazz, List<String> topHeadAttrs, List<String> leftHeadAttrs) {
         info = new ExcelExportInfo()
-                .setRowMap(Collections.emptyMap())
                 .setTopHeadAttrs(topHeadAttrs != null ? topHeadAttrs : Collections.emptyList())
                 .setLeftHeadAttrs(leftHeadAttrs != null ? leftHeadAttrs : Collections.emptyList());
         List<Class<?>> classes = new ArrayList<>();
@@ -116,7 +115,10 @@ public class ExcelExportUtils {
         info.setHeights(new HashMap<>(results.size() * 2));
         info.setResults(results);
         // 创建工作薄
-        info.setWorkbook(new SXSSFWorkbook(results.size() + 1));
+        int rowAccessWindowSize = Integer.max((info.getTopHeadMaxNum() + 1) + (info.getLeftHeadMaxNum() + 1),
+                100);
+        info.setRowAccessWindowSize(rowAccessWindowSize);
+        info.setWorkbook(new SXSSFWorkbook(rowAccessWindowSize));
         info.getWorkbook().setCompressTempFiles(true);
         // 创建工作表
         info.setSheet(info.getWorkbook().createSheet(sheetName));
@@ -349,7 +351,6 @@ public class ExcelExportUtils {
         int maxY = 0;
         Map<String, String> coordinateMap
                 = new HashMap<>((info.getLeftHeadMaxNum() + 1) * info.getFields().size() * 2);
-        info.setRowMap(new HashMap<>((info.getLeftHeadMaxNum() + 1) * info.getFields().size() * 2));
         // 循环 X 轴
         for (int y = info.getTopHeadMaxNum() + 1; y <= this.info.getFields().size() + info.getTopHeadMaxNum(); y++) {
             Row row = null;
@@ -363,7 +364,6 @@ public class ExcelExportUtils {
                 if (row == null) {
                     row = info.getSheet().createRow(y);
                     info.setRow(row);
-                    info.getRowMap().put(y, info.getRow());
                 }
                 info.setCell(info.getRow().createCell(x));
                 String columnName = field.getName();
@@ -588,8 +588,8 @@ public class ExcelExportUtils {
      */
     private void buildResults() {
         for (Object result : info.getResults()) {
-            if (info.getRowMap().containsKey(info.getRowNum())) {
-                info.setRow(info.getRowMap().get(info.getRowNum()));
+            if (info.getRowAccessWindowSize() > info.getRowNum()) {
+                info.setRow(info.getSheet().getRow(info.getRowNum()));
             } else {
                 info.setRow(info.getSheet().createRow(info.getRowNum()));
             }

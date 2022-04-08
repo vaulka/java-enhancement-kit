@@ -35,8 +35,8 @@ public abstract class ExcelBufferedImageExportHandler implements ExcelExportHand
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, suffix, outputStream);
         ClientAnchor anchor = new XSSFClientAnchor(10, 10, 10, 10,
-                (short) info.getCell().getColumnIndex(), info.getCell().getRow().getRowNum(),
-                (short) (info.getCell().getColumnIndex() + 1), info.getCell().getRow().getRowNum() + 1);
+                (short) info.getCell().getColumnIndex(), info.getRow().getRowNum(),
+                (short) (info.getCell().getColumnIndex() + 1), info.getRow().getRowNum() + 1);
         try {
             info.getDrawing().createPicture(anchor, info.getWorkbook().addPicture(outputStream.toByteArray(), this.getPictureType(suffix)));
         } finally {
@@ -45,7 +45,7 @@ public abstract class ExcelBufferedImageExportHandler implements ExcelExportHand
             }
         }
         info.setImageWidth(info.getCell().getColumnIndex(), bufferedImage.getWidth());
-        info.setImageHeight(info.getCell().getRow().getRowNum(), bufferedImage.getHeight());
+        info.setImageHeight(info.getRow().getRowNum(), bufferedImage.getHeight());
     }
 
     /**

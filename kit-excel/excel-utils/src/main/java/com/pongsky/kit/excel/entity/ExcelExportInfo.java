@@ -190,11 +190,6 @@ public class ExcelExportInfo {
     private Row row;
 
     /**
-     * 行 MAP
-     */
-    private Map<Integer, Row> rowMap;
-
-    /**
      * 当前列
      */
     private Cell cell;
@@ -232,5 +227,10 @@ public class ExcelExportInfo {
      * 当前列号
      */
     private int cellNum = 0;
+
+    /**
+     * 缓存到内存的行数
+     */
+    private Integer rowAccessWindowSize;
 
 }
