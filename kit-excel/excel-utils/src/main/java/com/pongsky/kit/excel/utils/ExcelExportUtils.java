@@ -441,7 +441,9 @@ public class ExcelExportUtils {
                 String last = coordinateMap.get(this.buildCoordinateKey(x, y));
                 int nextY = y + 1;
                 String next = coordinateMap.get(this.buildCoordinateKey(x, nextY));
-                if (!last.equals(next)) {
+                if (last == null) {
+                    continue;
+                } else if (!last.equals(next)) {
                     if (forceInfo != null) {
                         // 如果上一次有合并信息，还未添加，遇到不可合并的结果，则进行中止，开始下一轮循环
                         forceInfos.add(forceInfo);
@@ -480,7 +482,9 @@ public class ExcelExportUtils {
                 String last = coordinateMap.get(this.buildCoordinateKey(x, y));
                 int nextX = x + 1;
                 String next = coordinateMap.get(this.buildCoordinateKey(nextX, y));
-                if (!last.equals(next)) {
+                if (last == null) {
+                    continue;
+                } else if (!last.equals(next)) {
                     if (forceInfo != null && isNewForce) {
                         // 如果上一次有合并信息，还未添加，遇到不可合并的结果，则进行中止，开始下一轮循环
                         forceInfos.add(forceInfo);
