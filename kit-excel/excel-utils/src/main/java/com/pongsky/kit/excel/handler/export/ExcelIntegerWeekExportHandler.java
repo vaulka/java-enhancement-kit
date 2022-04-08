@@ -5,6 +5,7 @@ import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,21 +15,21 @@ import java.util.Map;
  **/
 public class ExcelIntegerWeekExportHandler implements ExcelExportHandler {
 
-    private static final Map<Integer, String> INTEGER_WEEK_MAP = Map.of(
-            1, "星期一",
-            2, "星期二",
-            3, "星期三",
-            4, "星期四",
-            5, "星期五",
-            6, "星期六",
-            7, "星期日"
-    );
+    private static final Map<Integer, String> MAP = new HashMap<Integer, String>(10) {{
+        put(1, "星期一");
+        put(2, "星期二");
+        put(3, "星期三");
+        put(4, "星期四");
+        put(5, "星期五");
+        put(6, "星期六");
+        put(7, "星期日");
+    }};
 
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excelProperty.defaultValue()
-                : INTEGER_WEEK_MAP.get((Integer) obj);
+                ? excelProperty.contentStyle().defaultValue()
+                : MAP.get((Integer) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

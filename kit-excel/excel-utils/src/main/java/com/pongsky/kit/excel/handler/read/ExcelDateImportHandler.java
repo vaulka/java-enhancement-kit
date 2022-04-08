@@ -19,9 +19,15 @@ public class ExcelDateImportHandler implements ExcelImportHandler {
 
     @Override
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
+        if (obj instanceof Date) {
+            // 如果是日期类型，则直接处理
+            this.setValue(result, field, obj);
+            return;
+        }
+        // 如果不是日期类型，则默认按照字符串类型处理
         String str = obj != null
                 ? obj.toString()
-                : excelProperty.defaultValue();
+                : excelProperty.contentStyle().defaultValue();
         if (StringUtils.isBlank(str)) {
             return;
         }

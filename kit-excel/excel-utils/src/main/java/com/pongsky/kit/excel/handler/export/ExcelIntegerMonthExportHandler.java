@@ -5,17 +5,17 @@ import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Month 处理器
+ * Integer Month 处理器
  *
  * @author pengsenhao
  **/
 public class ExcelIntegerMonthExportHandler implements ExcelExportHandler {
 
-    private static final Map<Integer, String> INTEGER_MONTH_MAP = new HashMap<>(16) {
+    private static final Map<Integer, String> MAP = new ConcurrentHashMap<Integer, String>(16) {
         {
             put(1, "一月");
             put(2, "二月");
@@ -35,8 +35,8 @@ public class ExcelIntegerMonthExportHandler implements ExcelExportHandler {
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excelProperty.defaultValue()
-                : INTEGER_MONTH_MAP.get((Integer) obj);
+                ? excelProperty.contentStyle().defaultValue()
+                : MAP.get((Integer) obj);
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());
     }

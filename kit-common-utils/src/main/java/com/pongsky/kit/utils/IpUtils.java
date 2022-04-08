@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class IpUtils {
 
     private static final String UNKNOWN = "unknown";
 
-    private static final List<String> LOCALHOST = List.of("127.0.0.1", "0:0:0:0:0:0:0:1");
+    private static final List<String> LOCALHOST = Arrays.asList("127.0.0.1", "0:0:0:0:0:0:0:1");
 
     public static String getIp(HttpServletRequest request) {
 

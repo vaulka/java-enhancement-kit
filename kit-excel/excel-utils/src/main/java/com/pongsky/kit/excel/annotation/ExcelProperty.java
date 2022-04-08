@@ -1,13 +1,12 @@
 package com.pongsky.kit.excel.annotation;
 
+import com.pongsky.kit.excel.annotation.content.ExcelContentStyle;
+import com.pongsky.kit.excel.annotation.header.ExcelHeadAttr;
+import com.pongsky.kit.excel.annotation.header.ExcelHeadStyle;
 import com.pongsky.kit.excel.handler.export.ExcelAutoExportHandler;
 import com.pongsky.kit.excel.handler.export.ExcelExportHandler;
 import com.pongsky.kit.excel.handler.read.ExcelAutoImportHandler;
 import com.pongsky.kit.excel.handler.read.ExcelImportHandler;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -24,13 +23,43 @@ import java.lang.annotation.Target;
 public @interface ExcelProperty {
 
     /**
-     * 列名
+     * 是否导出数据
+     *
+     * @return 是否导出数据
+     */
+    boolean isExportData() default true;
+
+    /**
+     * 顶部 列名
      * <p>
      * 不填写则默认获取字段名
      *
-     * @return 列名
+     * @return 顶部 列名
      */
-    String[] value() default {};
+    String[] topHeads() default {};
+
+    /**
+     * 顶部 列名属性信息列表
+     *
+     * @return 顶部 列名属性信息列表
+     */
+    ExcelHeadAttr[] topHeadAttrs() default {};
+
+    /**
+     * 左部 列名
+     * <p>
+     * 不填写则默认获取字段名
+     *
+     * @return 左部 列名
+     */
+    String[] leftHeads() default {};
+
+    /**
+     * 左部 列名属性信息列表
+     *
+     * @return 左部 列名属性信息列表
+     */
+    ExcelHeadAttr[] leftHeadAttrs() default {};
 
     /**
      * 获取多层级属性名称
@@ -43,7 +72,7 @@ public @interface ExcelProperty {
      *
      * @return 枚举格式
      */
-    String attrs() default "";
+    String attr() default "";
 
     /**
      * 导出 列值处理器，默认根据字段类型自动选择转换器
@@ -64,42 +93,6 @@ public @interface ExcelProperty {
     Class<? extends ExcelImportHandler> importHandler() default ExcelAutoImportHandler.class;
 
     /**
-     * 列值默认值
-     * <p>
-     * 目前仅使用 {@link com.pongsky.kit.excel.handler.export.ExcelStringExportHandler} 处理器才生效
-     * 可自定义 handler 进行设置
-     * <p>
-     * 如果空数据，则显示默认值
-     *
-     * @return 列值默认值
-     */
-    String defaultValue() default "";
-
-    /**
-     * 列值后缀
-     * <p>
-     * 目前仅使用 {@link com.pongsky.kit.excel.handler.export.ExcelStringExportHandler} 处理器才生效
-     * 可自定义 handler 进行设置
-     * <p>
-     * 譬如：
-     * 数据 90，后缀 %
-     * <p>
-     * 90 &gt; 90%
-     *
-     * @return 列值后缀
-     */
-    String suffix() default "";
-
-    /**
-     * 数据格式
-     * <p>
-     * 填写参数查阅 {@link org.apache.poi.ss.usermodel.BuiltinFormats#_formats}
-     *
-     * @return 数据格式
-     */
-    String dataFormat() default "@";
-
-    /**
      * 列排序值
      * <p>
      * 值越大排越后面
@@ -109,75 +102,24 @@ public @interface ExcelProperty {
     int sort() default 0;
 
     /**
-     * 列名 超链接
-     * <p>
-     * 目前仅支持 URL 超链接
+     * 顶部 标题样式
      *
-     * @return 列名 超链接
+     * @return 顶部 标题样式
      */
-    String hyperlink() default "";
+    ExcelHeadStyle topHeadStyle() default @ExcelHeadStyle;
 
     /**
-     * 列名 批注
+     * 左部 标题样式
      *
-     * @return 列名 批注
+     * @return 左部 标题样式
      */
-    String comment() default "";
+    ExcelHeadStyle leftHeadStyle() default @ExcelHeadStyle;
 
     /**
-     * 列名 背景颜色
+     * 自定义 内容样式
      *
-     * @return 列名 背景颜色
+     * @return 自定义 内容样式
      */
-    IndexedColors backgroundColor() default IndexedColors.PALE_BLUE;
-
-    /**
-     * 列名 字体颜色
-     *
-     * @return 列名 字体颜色
-     */
-    IndexedColors fontColor() default IndexedColors.BLACK;
-
-    /**
-     * 字体
-     *
-     * @return 字体
-     */
-    String fontName() default "Arial";
-
-    /**
-     * 字号
-     *
-     * @return 字号
-     */
-    short fontSize() default 11;
-
-    /**
-     * 列名 边框样式
-     *
-     * @return 列名 边框样式
-     */
-    BorderStyle borderStyle() default BorderStyle.MEDIUM;
-
-    /**
-     * 列名 边框颜色
-     *
-     * @return 边框颜色
-     */
-    IndexedColors borderColor() default IndexedColors.WHITE;
-
-    /**
-     * 水平对齐方式
-     *
-     * @return 水平对齐方式
-     */
-    HorizontalAlignment alignment() default HorizontalAlignment.CENTER;
-
-    /**
-     * 垂直对齐方式
-     *
-     * @return 垂直对齐方式
-     */
-    VerticalAlignment verticalAlignment() default VerticalAlignment.CENTER;
+    ExcelContentStyle contentStyle() default @ExcelContentStyle;
 
 }

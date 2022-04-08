@@ -18,10 +18,10 @@ public class ExcelBigDecimalExportHandler implements ExcelExportHandler {
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) {
         String value = obj == null
-                ? excelProperty.defaultValue()
+                ? excelProperty.contentStyle().defaultValue()
                 : ((BigDecimal) obj).toPlainString();
-        value = StringUtils.isNotBlank(excelProperty.suffix())
-                ? value + excelProperty.suffix()
+        value = StringUtils.isNotBlank(excelProperty.contentStyle().suffix())
+                ? value + excelProperty.contentStyle().suffix()
                 : value;
         info.getCell().setCellValue(new XSSFRichTextString(value));
         info.setTextWidth(info.getCell().getColumnIndex(), value.length());

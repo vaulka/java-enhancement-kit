@@ -3,35 +3,34 @@ package com.pongsky.kit.excel.handler.read;
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Boolean 处理器
+ * Integer Week 处理器
  *
  * @author pengsenhao
  **/
-public class ExcelBooleanImportHandler implements ExcelImportHandler {
+public class ExcelIntegerWeekImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, Boolean> MAP = new HashMap<String, Boolean>(4) {
+    private static final Map<String, Integer> MAP = new ConcurrentHashMap<String, Integer>(10) {
         {
-            put("是", Boolean.TRUE);
-            put("否", Boolean.FALSE);
+            put("星期一", 1);
+            put("星期二", 2);
+            put("星期三", 3);
+            put("星期四", 4);
+            put("星期五", 5);
+            put("星期六", 6);
+            put("星期日", 7);
         }
     };
 
     @Override
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
-        if (obj instanceof Boolean) {
-            // 如果是布尔类型，则直接处理
-            this.setValue(result, field, obj);
-            return;
-        }
-        // 如果不是布尔类型，则默认按照字符串类型处理
         String str = obj != null
                 ? obj.toString()
                 : excelProperty.contentStyle().defaultValue();
-        Boolean value = MAP.get(str);
+        Integer value = MAP.get(str);
         if (value == null) {
             return;
         }

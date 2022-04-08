@@ -12,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class ReplaceStreamFilter implements Filter {
     /**
      * 上传文件请求头
      */
-    private static final List<String> UPLOAD_FILE_CONTENT_TYPE = List.of(
+    private static final List<String> UPLOAD_FILE_CONTENT_TYPE = Arrays.asList(
             MediaType.IMAGE_GIF_VALUE,
             MediaType.IMAGE_JPEG_VALUE,
             MediaType.IMAGE_PNG_VALUE,
@@ -48,8 +49,7 @@ public class ReplaceStreamFilter implements Filter {
             return false;
         }
         return UPLOAD_FILE_CONTENT_TYPE.stream()
-                .filter(contentType -> request.getContentType().contains(contentType))
-                .findAny().isEmpty();
+                .noneMatch(contentType -> request.getContentType().contains(contentType));
     }
 
     @Override

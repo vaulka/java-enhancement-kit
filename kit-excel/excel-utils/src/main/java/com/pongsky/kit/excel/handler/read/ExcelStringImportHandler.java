@@ -16,9 +16,9 @@ public class ExcelStringImportHandler implements ExcelImportHandler {
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
         String str = obj != null
                 ? obj.toString()
-                : excelProperty.defaultValue();
-        String value = StringUtils.isNotBlank(excelProperty.suffix())
-                ? str.substring(0, str.lastIndexOf(excelProperty.suffix()))
+                : excelProperty.contentStyle().defaultValue();
+        String value = StringUtils.isNotBlank(excelProperty.contentStyle().suffix())
+                ? str.substring(0, str.lastIndexOf(excelProperty.contentStyle().suffix()))
                 : str;
         this.setValue(result, field, value);
     }

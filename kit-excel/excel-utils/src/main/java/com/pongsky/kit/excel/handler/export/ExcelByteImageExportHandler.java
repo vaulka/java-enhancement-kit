@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
  *
  * @author pengsenhao
  **/
-public class ExcelByteImageExportHandler extends ExcelBufferedImageExportHandler {
+public class ExcelByteImageExportHandler extends BaseExcelBufferedImageExportHandler {
 
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) throws IOException {

@@ -64,14 +64,14 @@ public class ExcelExportInfo {
     /**
      * 单元格宽度信息
      * <p>
-     * Map<X轴,List<宽度>>
+     * Map<X 轴,List<宽度>>
      */
     private Map<Integer, Integer> widths;
 
     /**
      * 单元格高度信息
      * <p>
-     * Map<Y轴,List<高度>>
+     * Map<Y 轴,List<高度>>
      */
     private Map<Integer, Short> heights;
 
@@ -195,9 +195,24 @@ public class ExcelExportInfo {
     private Cell cell;
 
     /**
-     * 列名最大行数，从 0 开始
+     * 顶部 标题最大行数，从 0 开始
      */
-    private int titleMaxNum;
+    private int topHeadMaxNum;
+
+    /**
+     * 顶部 标题动态值列表
+     */
+    private List<String> topHeadAttrs;
+
+    /**
+     * 左部 标题最大行数，从 0 开始
+     */
+    private int leftHeadMaxNum;
+
+    /**
+     * 左部 标题动态值列表
+     */
+    private List<String> leftHeadAttrs;
 
     /**
      * 当前行号
@@ -207,5 +222,15 @@ public class ExcelExportInfo {
     public void rowNumPlusOne() {
         rowNum++;
     }
+
+    /**
+     * 当前列号
+     */
+    private int cellNum = 0;
+
+    /**
+     * 缓存到内存的行数
+     */
+    private Integer rowAccessWindowSize;
 
 }

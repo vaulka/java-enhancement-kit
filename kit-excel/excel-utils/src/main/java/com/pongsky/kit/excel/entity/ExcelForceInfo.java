@@ -24,16 +24,16 @@ public class ExcelForceInfo {
         this.endCell = endCell;
     }
 
-    public ExcelForceInfo copy() {
-        return new ExcelForceInfo(this.columnTitle, this.startRow, this.endRow, this.startCell, this.endCell);
+    public void copy() {
+        this.copy = new ExcelForceInfo(this.columnTitle, this.startRow, this.endRow, this.startCell, this.endCell);
     }
 
-    public void rollback(ExcelForceInfo forceInfo) {
-        this.columnTitle = forceInfo.columnTitle;
-        this.startRow = forceInfo.startRow;
-        this.endRow = forceInfo.endRow;
-        this.startCell = forceInfo.startCell;
-        this.endCell = forceInfo.endCell;
+    public void rollback() {
+        this.columnTitle = this.copy.columnTitle;
+        this.startRow = this.copy.startRow;
+        this.endRow = this.copy.endRow;
+        this.startCell = this.copy.startCell;
+        this.endCell = this.copy.endCell;
     }
 
     /**
@@ -60,5 +60,10 @@ public class ExcelForceInfo {
      * 结束列
      */
     private Integer endCell;
+
+    /**
+     * 副本
+     */
+    private ExcelForceInfo copy;
 
 }

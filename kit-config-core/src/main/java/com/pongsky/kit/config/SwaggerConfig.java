@@ -17,6 +17,7 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,9 +49,9 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build()
-                .securitySchemes(List.of(HttpAuthenticationScheme.JWT_BEARER_BUILDER.name(HttpHeaders.AUTHORIZATION).build()))
-                .securityContexts(List.of(SecurityContext.builder()
-                        .securityReferences(List.of(
+                .securitySchemes(Arrays.asList(HttpAuthenticationScheme.JWT_BEARER_BUILDER.name(HttpHeaders.AUTHORIZATION).build()))
+                .securityContexts(Arrays.asList(SecurityContext.builder()
+                        .securityReferences(Arrays.asList(
                                 SecurityReference.builder()
                                         .reference(HttpHeaders.AUTHORIZATION)
                                         .scopes(new AuthorizationScope[]{new AuthorizationScope("global", "accessAnything")})

@@ -8,6 +8,7 @@ import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.CreateBucketRequest;
 import com.aliyun.oss.model.PutObjectRequest;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -104,7 +105,7 @@ public class AliYunOssUtils implements StorageUtils {
      */
     @Override
     public String upload(String fileName, String contentType, InputStream inputStream) {
-        try (inputStream) {
+        try {
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, fileName, inputStream);
             client.putObject(putObjectRequest);
         } catch (OSSException e) {
@@ -113,6 +114,14 @@ public class AliYunOssUtils implements StorageUtils {
             throw new RuntimeException(e.getErrorMessage(), e);
         } catch (Exception e) {
             throw new RuntimeException(e.getLocalizedMessage(), e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return "/" + fileName;
     }

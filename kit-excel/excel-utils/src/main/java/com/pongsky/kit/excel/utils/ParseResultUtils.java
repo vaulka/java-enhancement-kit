@@ -82,9 +82,15 @@ public class ParseResultUtils {
         }
         Object val;
         try {
-            Field field = value.getClass().getDeclaredField(attr);
-            ParseType type = ParseType.getFieldType(field);
-            val = ParseResultUtils.getFieldValue(value, field);
+            ParseType type;
+            if (StringUtils.isNotBlank(attr)) {
+                Field field = value.getClass().getDeclaredField(attr);
+                type = ParseType.getFieldType(field);
+                val = ParseResultUtils.getFieldValue(value, field);
+            } else {
+                type = ParseType.getClassType(value);
+                val = value;
+            }
             if (index != null) {
                 switch (type) {
                     case MAP:
