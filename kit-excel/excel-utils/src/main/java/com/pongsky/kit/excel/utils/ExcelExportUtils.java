@@ -2,8 +2,9 @@ package com.pongsky.kit.excel.utils;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
 import com.pongsky.kit.excel.annotation.ExcelPropertys;
-import com.pongsky.kit.excel.annotation.style.ExcelContentStyle;
-import com.pongsky.kit.excel.annotation.style.ExcelHeadStyle;
+import com.pongsky.kit.excel.annotation.content.ExcelContentStyle;
+import com.pongsky.kit.excel.annotation.header.ExcelHeadAttr;
+import com.pongsky.kit.excel.annotation.header.ExcelHeadStyle;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import com.pongsky.kit.excel.entity.ExcelForceInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,7 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Hyperlink;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
@@ -27,10 +29,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -46,11 +50,19 @@ public class ExcelExportUtils {
     private final ExcelExportInfo info;
 
     public ExcelExportUtils(Class<?> clazz) {
-        info = new ExcelExportInfo();
+        this(clazz, null, null);
+    }
+
+    public ExcelExportUtils(Class<?> clazz, List<String> topHeadAttrs, List<String> leftHeadAttrs) {
+        info = new ExcelExportInfo()
+                .setRowMap(Collections.emptyMap())
+                .setTopHeadAttrs(topHeadAttrs != null ? topHeadAttrs : Collections.emptyList())
+                .setLeftHeadAttrs(leftHeadAttrs != null ? leftHeadAttrs : Collections.emptyList());
         List<Class<?>> classes = new ArrayList<>();
         this.getSuperclasses(classes, clazz);
         info.setFields(new ArrayList<>());
-        int titleMaxNum = 1;
+        int topHeadMaxNum = 1;
+        int leftHeadMaxNum = 1;
         for (Class<?> cla : classes) {
             List<Field> fieldList = Arrays.stream(cla.getDeclaredFields())
                     .filter(f -> f.isAnnotationPresent(ExcelProperty.class) || f.isAnnotationPresent(ExcelPropertys.class))
@@ -58,13 +70,15 @@ public class ExcelExportUtils {
             for (Field field : fieldList) {
                 ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
                 if (excelProperty != null) {
-                    titleMaxNum = Integer.max(titleMaxNum, excelProperty.yHead().length);
+                    topHeadMaxNum = Integer.max(topHeadMaxNum, excelProperty.topHeads().length);
+                    leftHeadMaxNum = Integer.max(leftHeadMaxNum, excelProperty.leftHeads().length);
                     info.getFields().add(Arrays.asList(field, excelProperty));
                 }
                 ExcelPropertys excelPropertys = field.getAnnotation(ExcelPropertys.class);
                 if (excelPropertys != null) {
                     for (ExcelProperty ex : excelPropertys.value()) {
-                        titleMaxNum = Integer.max(titleMaxNum, ex.yHead().length);
+                        topHeadMaxNum = Integer.max(topHeadMaxNum, ex.topHeads().length);
+                        leftHeadMaxNum = Integer.max(leftHeadMaxNum, ex.leftHeads().length);
                         info.getFields().add(Arrays.asList(field, ex));
                     }
                 }
@@ -72,8 +86,10 @@ public class ExcelExportUtils {
         }
         info.getFields().sort(Comparator.comparing(f -> (ExcelExportInfo.getExcel(f).sort())));
         info.setWidths(new HashMap<>(info.getFields().size() * 2));
-        titleMaxNum--;
-        info.setTitleMaxNum(titleMaxNum);
+        topHeadMaxNum--;
+        info.setTopHeadMaxNum(topHeadMaxNum);
+        leftHeadMaxNum--;
+        info.setLeftHeadMaxNum(leftHeadMaxNum);
     }
 
     /**
@@ -106,8 +122,10 @@ public class ExcelExportUtils {
         info.setSheet(info.getWorkbook().createSheet(sheetName));
         // 创建绘图器
         info.setDrawing(info.getSheet().createDrawingPatriarch());
-        // 构建 行名列表
-        this.buildColumnTitles();
+        // 构建 顶部 标题列表
+        this.buildTopHeads();
+        // 构建 左部 标题列表
+        this.buildLeftHeads();
         // 构建 数据列表
         this.buildResults();
         // 宽度自适应
@@ -251,44 +269,62 @@ public class ExcelExportUtils {
     }
 
     /**
-     * 构建 列名列表
+     * 构建 顶部 列名列表
      */
-    private void buildColumnTitles() {
+    private void buildTopHeads() {
         int maxX = 0;
         int maxY = 0;
         Map<String, String> coordinateMap
-                = new HashMap<>((info.getTitleMaxNum() + 1) * info.getFields().size() * 2);
+                = new HashMap<>((info.getTopHeadMaxNum() + 1) * info.getFields().size() * 2);
         // 循环 Y 轴
-        for (int y = 0; y <= info.getTitleMaxNum(); y++) {
-            info.setRow(info.getSheet().createRow(y));
+        for (int y = 0; y <= info.getTopHeadMaxNum(); y++) {
+            Row row = null;
             // 循环 X 轴
             for (int x = 0; x < info.getFields().size(); x++) {
-                info.setCell(info.getRow().createCell(x));
                 List<Object> fieldExcels = info.getFields().get(x);
                 Field field = ExcelExportInfo.getField(fieldExcels);
                 ExcelProperty excelProperty = ExcelExportInfo.getExcel(fieldExcels);
+                if (excelProperty.topHeads().length == 0) {
+                    break;
+                }
+                if (row == null) {
+                    row = info.getSheet().createRow(y);
+                    info.setRow(row);
+                }
+                info.setCell(info.getRow().createCell(x));
                 String columnName = field.getName();
-                for (int z = 0; z < excelProperty.yHead().length; z++) {
-                    if (StringUtils.isBlank(excelProperty.yHead()[z])) {
-                        continue;
-                    }
-                    columnName = excelProperty.yHead()[z];
+                int z = 0;
+                for (; z < excelProperty.topHeads().length; z++) {
+                    columnName = excelProperty.topHeads()[z];
                     // 如果 Y 轴 相等，就不再往下获取，退出循环
                     if (z == y) {
                         break;
                     }
                 }
+                if (excelProperty.topHeadAttrs().length > 0) {
+                    // 上面 for z 循环全走完最终会多 +1，进行去除
+                    final int zz = z == excelProperty.topHeads().length && z > 0
+                            ? z - 1
+                            : z;
+                    Optional<Integer> optional = Arrays.stream(excelProperty.topHeadAttrs())
+                            .filter(a -> a.headIndex() == zz)
+                            .map(ExcelHeadAttr::valueIndex)
+                            .findAny();
+                    if (optional.isPresent()) {
+                        columnName = info.getTopHeadAttrs().get(optional.get());
+                    }
+                }
                 // 设置样式
-                info.getCell().setCellStyle(this.getHeadCellStyle(excelProperty.yHeadStyle()));
+                info.getCell().setCellStyle(this.getHeadCellStyle(excelProperty.topHeadStyle()));
                 // 填充内容
                 info.getCell().setCellValue(new XSSFRichTextString(columnName));
                 // 添加超链接
-                if (StringUtils.isNotBlank(excelProperty.yHeadStyle().hyperlink())) {
-                    this.addHyperlink(info.getCell(), excelProperty.yHeadStyle().hyperlink());
+                if (StringUtils.isNotBlank(excelProperty.topHeadStyle().hyperlink())) {
+                    this.addHyperlink(info.getCell(), excelProperty.topHeadStyle().hyperlink());
                 }
                 // 添加批注
-                if (StringUtils.isNotBlank(excelProperty.yHeadStyle().comment())) {
-                    this.addComment(info.getCell(), excelProperty.yHeadStyle().comment());
+                if (StringUtils.isNotBlank(excelProperty.topHeadStyle().comment())) {
+                    this.addComment(info.getCell(), excelProperty.topHeadStyle().comment());
                 }
                 info.setTextWidth(x, columnName.length());
                 // 记录 X、Y 轴对应列名信息
@@ -296,10 +332,84 @@ public class ExcelExportUtils {
                 maxX = Integer.max(maxX, x);
                 maxY = Integer.max(maxY, y);
             }
-            info.rowNumPlusOne();
         }
+        info.setRowNum(info.getTopHeadMaxNum() + 1);
         // 合并单元格
-        this.forceCell(coordinateMap, maxX, maxY);
+        this.forceCell(coordinateMap, 0, maxX, maxY);
+    }
+
+    /**
+     * 构建 左部 列名列表
+     */
+    private void buildLeftHeads() {
+        if (0 == info.getLeftHeadMaxNum()) {
+            return;
+        }
+        int maxX = 0;
+        int maxY = 0;
+        Map<String, String> coordinateMap
+                = new HashMap<>((info.getLeftHeadMaxNum() + 1) * info.getFields().size() * 2);
+        info.setRowMap(new HashMap<>((info.getLeftHeadMaxNum() + 1) * info.getFields().size() * 2));
+        // 循环 X 轴
+        for (int y = info.getTopHeadMaxNum() + 1; y <= this.info.getFields().size() + info.getTopHeadMaxNum(); y++) {
+            Row row = null;
+            for (int x = 0; x <= info.getLeftHeadMaxNum(); x++) {
+                List<Object> fieldExcels = info.getFields().get(y - info.getTopHeadMaxNum() - 1);
+                Field field = ExcelExportInfo.getField(fieldExcels);
+                ExcelProperty excelProperty = ExcelExportInfo.getExcel(fieldExcels);
+                if (excelProperty.leftHeads().length == 0) {
+                    break;
+                }
+                if (row == null) {
+                    row = info.getSheet().createRow(y);
+                    info.setRow(row);
+                    info.getRowMap().put(y, info.getRow());
+                }
+                info.setCell(info.getRow().createCell(x));
+                String columnName = field.getName();
+                int z = 0;
+                for (; z < excelProperty.leftHeads().length; z++) {
+                    columnName = excelProperty.leftHeads()[z];
+                    // 如果 X 轴 相等，就不再往下获取，退出循环
+                    if (z == x) {
+                        break;
+                    }
+                }
+                if (excelProperty.leftHeadAttrs().length > 0) {
+                    // 上面 for z 循环全走完最终会多 +1，进行去除
+                    final int zz = z == excelProperty.leftHeads().length && z > 0
+                            ? z - 1
+                            : z;
+                    Optional<Integer> optional = Arrays.stream(excelProperty.leftHeadAttrs())
+                            .filter(a -> a.headIndex() == zz)
+                            .map(ExcelHeadAttr::valueIndex)
+                            .findAny();
+                    if (optional.isPresent()) {
+                        columnName = info.getLeftHeadAttrs().get(optional.get());
+                    }
+                }
+                // 设置样式
+                info.getCell().setCellStyle(this.getHeadCellStyle(excelProperty.leftHeadStyle()));
+                // 填充内容
+                info.getCell().setCellValue(new XSSFRichTextString(columnName));
+                // 添加超链接
+                if (StringUtils.isNotBlank(excelProperty.leftHeadStyle().hyperlink())) {
+                    this.addHyperlink(info.getCell(), excelProperty.leftHeadStyle().hyperlink());
+                }
+                // 添加批注
+                if (StringUtils.isNotBlank(excelProperty.leftHeadStyle().comment())) {
+                    this.addComment(info.getCell(), excelProperty.leftHeadStyle().comment());
+                }
+                info.setTextWidth(y, columnName.length());
+                // 记录 X、Y 轴对应列名信息
+                coordinateMap.put(this.buildCoordinateKey(x, y), columnName);
+                maxX = Integer.max(maxX, x);
+                maxY = Integer.max(maxY, y);
+            }
+        }
+        info.setCellNum(info.getLeftHeadMaxNum() + 1);
+        // 合并单元格
+        this.forceCell(coordinateMap, info.getTopHeadMaxNum() + 1, maxX, maxY);
     }
 
     /**
@@ -315,19 +425,19 @@ public class ExcelExportUtils {
      * 4、如果合并信息能覆盖其他合并信息，则将多个合并信息合成一条，删除多余合并信息
      *
      * @param coordinateMap 坐标 MAP
+     * @param startY        开始循环的 Y 轴 行数
      * @param maxX          X 轴 最大列数
      * @param maxY          Y 轴 最大行数
      */
-    private void forceCell(Map<String, String> coordinateMap, int maxX, int maxY) {
+    private void forceCell(Map<String, String> coordinateMap, int startY, int maxX, int maxY) {
         // 根据 X、Y 轴信息，分析出需要合并单元格的信息
         Map<String, ExcelForceInfo> forceInfoMap
-                = new HashMap<>((info.getTitleMaxNum() + 1) * info.getFields().size() * 2);
+                = new HashMap<>((info.getTopHeadMaxNum() + 1) * info.getFields().size() * 2);
         // 合并 Y 轴 单元格，并记录合并信息
         List<ExcelForceInfo> forceInfos = new ArrayList<>();
         for (int x = 0; x <= maxX; x++) {
-            ExcelForceInfo originalForceInfo = null;
             ExcelForceInfo forceInfo = null;
-            for (int y = 0; y <= maxY; y++) {
+            for (int y = startY; y <= maxY; y++) {
                 String last = coordinateMap.get(this.buildCoordinateKey(x, y));
                 int nextY = y + 1;
                 String next = coordinateMap.get(this.buildCoordinateKey(x, nextY));
@@ -335,7 +445,6 @@ public class ExcelExportUtils {
                     if (forceInfo != null) {
                         // 如果上一次有合并信息，还未添加，遇到不可合并的结果，则进行中止，开始下一轮循环
                         forceInfos.add(forceInfo);
-                        originalForceInfo = null;
                         forceInfo = null;
                     }
                     continue;
@@ -344,7 +453,7 @@ public class ExcelExportUtils {
                     // 可合并，创建合并信息
                     forceInfo = new ExcelForceInfo(next, y, nextY, x, x);
                     // 备份合并信息
-                    originalForceInfo = forceInfo.copy();
+                    forceInfo.copy();
                 } else {
                     forceInfo
                             .setColumnTitle(next)
@@ -356,7 +465,7 @@ public class ExcelExportUtils {
                 boolean isSuccess = this.validationForce(coordinateMap, forceInfoMap, forceInfo);
                 if (!isSuccess) {
                     // 不可合并，回滚合并信息
-                    forceInfo.rollback(originalForceInfo);
+                    forceInfo.rollback();
                 }
             }
             if (forceInfo != null) {
@@ -364,9 +473,8 @@ public class ExcelExportUtils {
                 forceInfos.add(forceInfo);
             }
         }
-        for (int y = 0; y <= maxY; y++) {
+        for (int y = startY; y <= maxY; y++) {
             boolean isNewForce = false;
-            ExcelForceInfo originalForceInfo;
             ExcelForceInfo forceInfo = null;
             for (int x = 0; x <= maxX; x++) {
                 String last = coordinateMap.get(this.buildCoordinateKey(x, y));
@@ -389,13 +497,13 @@ public class ExcelExportUtils {
                     // 可合并，创建合并信息
                     forceInfo = new ExcelForceInfo(next, y, y, x, nextX);
                     // // 备份合并信息
-                    originalForceInfo = forceInfo.copy();
+                    forceInfo.copy();
                     // 是新的合并信息
                     isNewForce = true;
                     // 合并信息初始化
                     initForce = true;
                 } else {
-                    originalForceInfo = forceInfo.copy();
+                    forceInfo.copy();
                     forceInfo
                             .setStartRow(Integer.min(forceInfo.getStartRow(), y))
                             .setEndRow(Integer.max(forceInfo.getEndRow(), y))
@@ -411,7 +519,7 @@ public class ExcelExportUtils {
                 }
                 boolean isSuccess = this.validationForce(coordinateMap, forceInfoMap, forceInfo);
                 if (!isSuccess) {
-                    forceInfo.rollback(originalForceInfo);
+                    forceInfo.rollback();
                     // 如果刚初始化完合并记录合并结果不通过，则放弃该合并记录
                     // 只有不是初始化并且是新合并记录才能添加进去
                     if (!initForce && isNewForce) {
@@ -476,14 +584,21 @@ public class ExcelExportUtils {
      */
     private void buildResults() {
         for (Object result : info.getResults()) {
-            info.setRow(info.getSheet().createRow(info.getRowNum()));
+            if (info.getRowMap().containsKey(info.getRowNum())) {
+                info.setRow(info.getRowMap().get(info.getRowNum()));
+            } else {
+                info.setRow(info.getSheet().createRow(info.getRowNum()));
+            }
             for (int i = 0; i < info.getFields().size(); i++) {
-                info.setCell(info.getRow().createCell(i));
                 List<Object> fieldExcels = info.getFields().get(i);
                 Field field = ExcelExportInfo.getField(fieldExcels);
                 ExcelProperty excelProperty = ExcelExportInfo.getExcel(fieldExcels);
+                if (!excelProperty.isExportData()) {
+                    continue;
+                }
+                info.setCell(info.getRow().createCell(i + info.getCellNum()));
                 info.getCell().setCellStyle(this.getContentCellStyle(excelProperty.contentStyle()));
-                Object fieldValue = ParseResultUtils.parseFieldValue(field, excelProperty.attrs(), result);
+                Object fieldValue = ParseResultUtils.parseFieldValue(field, excelProperty.attr(), result);
                 try {
                     excelProperty.exportHandler().getDeclaredConstructor().newInstance()
                             .exec(field, excelProperty, fieldValue, info);

@@ -1,4 +1,4 @@
-package com.pongsky.kit.excel.annotation.style;
+package com.pongsky.kit.excel.annotation.content;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -11,13 +11,40 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * excel 标题样式
+ * excel 内容样式
  *
  * @author pengsenhao
  **/
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExcelHeadStyle {
+public @interface ExcelContentStyle {
+
+    /**
+     * 默认值
+     * <p>
+     * 目前仅使用 {@link com.pongsky.kit.excel.handler.export.ExcelStringExportHandler} 处理器才生效
+     * 可自定义 handler 进行设置
+     * <p>
+     * 如果空数据，则显示默认值
+     *
+     * @return 默认值
+     */
+    String defaultValue() default "";
+
+    /**
+     * 后缀
+     * <p>
+     * 目前仅使用 {@link com.pongsky.kit.excel.handler.export.ExcelStringExportHandler} 处理器才生效
+     * 可自定义 handler 进行设置
+     * <p>
+     * 譬如：
+     * 数据 90，后缀 %
+     * <p>
+     * 90 &gt; 90%
+     *
+     * @return 后缀
+     */
+    String suffix() default "";
 
     /**
      * 数据格式
@@ -29,27 +56,11 @@ public @interface ExcelHeadStyle {
     String dataFormat() default "@";
 
     /**
-     * 超链接
-     * <p>
-     * 目前仅支持 URL 超链接
-     *
-     * @return 超链接
-     */
-    String hyperlink() default "";
-
-    /**
-     * 批注
-     *
-     * @return 批注
-     */
-    String comment() default "";
-
-    /**
      * 是否粗体
      *
      * @return 是否粗体
      */
-    boolean isBold() default true;
+    boolean isBold() default false;
 
     /**
      * 是否锁定
@@ -63,7 +74,7 @@ public @interface ExcelHeadStyle {
      *
      * @return 背景颜色
      */
-    IndexedColors backgroundColor() default IndexedColors.PALE_BLUE;
+    IndexedColors backgroundColor() default IndexedColors.WHITE;
 
     /**
      * 上边框样式

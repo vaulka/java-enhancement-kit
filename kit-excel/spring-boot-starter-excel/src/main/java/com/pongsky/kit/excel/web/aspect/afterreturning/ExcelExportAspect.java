@@ -36,6 +36,7 @@ public class ExcelExportAspect {
      */
     private static final String PARAM = "isExcelExport";
 
+    @SuppressWarnings({"unchecked"})
     @AfterReturning(pointcut = "(@within(org.springframework.stereotype.Controller) " +
             "|| @within(org.springframework.web.bind.annotation.RestController)) " +
             "&& (@annotation(org.springframework.web.bind.annotation.RequestMapping) " +
@@ -58,18 +59,44 @@ public class ExcelExportAspect {
             return;
         }
         ExcelExport excelExport = ((MethodSignature) point.getSignature()).getMethod().getAnnotation(ExcelExport.class);
-        result = ParseResultUtils.parseFieldValue(excelExport.attrs(), result);
-        ParseType type = ParseType.getClassType(result);
+        List<?> content = null;
+        List<String> topHeadAttr = null;
+        List<String> leftHeadAttr = null;
+        Object contentResult = ParseResultUtils.parseFieldValue(excelExport.attr(), result);
+        ParseType type = ParseType.getClassType(contentResult);
         if (type == ParseType.LIST) {
-            List<?> list = (List<?>) result;
-            SXSSFWorkbook workbook = new ExcelExportUtils(excelExport.value())
-                    .export(list, excelExport.sheetName());
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition",
-                    MessageFormat.format("attachment;filename={0}.xlsx", excelExport.fileName()));
-            workbook.write(response.getOutputStream());
-            workbook.dispose();
+            content = (List<?>) contentResult;
         }
+        if (StringUtils.isNotBlank(excelExport.topHeadAttr())) {
+            Object topHeadAttrResult = ParseResultUtils.parseFieldValue(excelExport.topHeadAttr(), result);
+            type = ParseType.getClassType(topHeadAttrResult);
+            if (type == ParseType.LIST) {
+                topHeadAttr = (List<String>) topHeadAttrResult;
+            }
+        }
+        if (StringUtils.isNotBlank(excelExport.leftHeadAttr())) {
+            Object leftHeadAttrResult = ParseResultUtils.parseFieldValue(excelExport.leftHeadAttr(), result);
+            type = ParseType.getClassType(leftHeadAttrResult);
+            if (type == ParseType.LIST) {
+                leftHeadAttr = (List<String>) leftHeadAttrResult;
+            }
+        }
+        if (content == null) {
+            return;
+        }
+        SXSSFWorkbook workbook;
+        if (topHeadAttr != null || leftHeadAttr != null) {
+            workbook = new ExcelExportUtils(excelExport.value(), topHeadAttr, leftHeadAttr)
+                    .export(content, excelExport.sheetName());
+        } else {
+            workbook = new ExcelExportUtils(excelExport.value())
+                    .export(content, excelExport.sheetName());
+        }
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition",
+                MessageFormat.format("attachment;filename={0}.xlsx", excelExport.fileName()));
+        workbook.write(response.getOutputStream());
+        workbook.dispose();
     }
 
 }

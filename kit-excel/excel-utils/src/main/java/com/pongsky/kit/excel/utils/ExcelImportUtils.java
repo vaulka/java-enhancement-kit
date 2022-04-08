@@ -69,13 +69,13 @@ public class ExcelImportUtils<T> {
             for (Field field : fieldList) {
                 ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
                 if (excelProperty != null) {
-                    titleMaxNum = Integer.max(titleMaxNum, excelProperty.yHead().length);
+                    titleMaxNum = Integer.max(titleMaxNum, excelProperty.topHeads().length);
                     info.getFields().add(Arrays.asList(field, excelProperty));
                 }
                 ExcelPropertys excelPropertys = field.getAnnotation(ExcelPropertys.class);
                 if (excelPropertys != null) {
                     for (ExcelProperty ex : excelPropertys.value()) {
-                        titleMaxNum = Integer.max(titleMaxNum, ex.yHead().length);
+                        titleMaxNum = Integer.max(titleMaxNum, ex.topHeads().length);
                         info.getFields().add(Arrays.asList(field, ex));
                     }
                 }

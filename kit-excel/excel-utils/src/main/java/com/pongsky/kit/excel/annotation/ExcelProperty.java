@@ -1,7 +1,8 @@
 package com.pongsky.kit.excel.annotation;
 
-import com.pongsky.kit.excel.annotation.style.ExcelContentStyle;
-import com.pongsky.kit.excel.annotation.style.ExcelHeadStyle;
+import com.pongsky.kit.excel.annotation.content.ExcelContentStyle;
+import com.pongsky.kit.excel.annotation.header.ExcelHeadAttr;
+import com.pongsky.kit.excel.annotation.header.ExcelHeadStyle;
 import com.pongsky.kit.excel.handler.export.ExcelAutoExportHandler;
 import com.pongsky.kit.excel.handler.export.ExcelExportHandler;
 import com.pongsky.kit.excel.handler.read.ExcelAutoImportHandler;
@@ -22,13 +23,43 @@ import java.lang.annotation.Target;
 public @interface ExcelProperty {
 
     /**
-     * Y轴 列名
+     * 是否导出数据
+     *
+     * @return 是否导出数据
+     */
+    boolean isExportData() default true;
+
+    /**
+     * 顶部 列名
      * <p>
      * 不填写则默认获取字段名
      *
-     * @return Y轴 列名
+     * @return 顶部 列名
      */
-    String[] yHead() default {};
+    String[] topHeads() default {};
+
+    /**
+     * 顶部 列名属性信息列表
+     *
+     * @return 顶部 列名属性信息列表
+     */
+    ExcelHeadAttr[] topHeadAttrs() default {};
+
+    /**
+     * 左部 列名
+     * <p>
+     * 不填写则默认获取字段名
+     *
+     * @return 左部 列名
+     */
+    String[] leftHeads() default {};
+
+    /**
+     * 左部 列名属性信息列表
+     *
+     * @return 左部 列名属性信息列表
+     */
+    ExcelHeadAttr[] leftHeadAttrs() default {};
 
     /**
      * 获取多层级属性名称
@@ -41,7 +72,7 @@ public @interface ExcelProperty {
      *
      * @return 枚举格式
      */
-    String attrs() default "";
+    String attr() default "";
 
     /**
      * 导出 列值处理器，默认根据字段类型自动选择转换器
@@ -71,18 +102,18 @@ public @interface ExcelProperty {
     int sort() default 0;
 
     /**
-     * 自定义 X轴 标题样式
+     * 顶部 标题样式
      *
-     * @return 自定义 X轴 标题样式
+     * @return 顶部 标题样式
      */
-    ExcelHeadStyle xHeadStyle() default @ExcelHeadStyle;
+    ExcelHeadStyle topHeadStyle() default @ExcelHeadStyle;
 
     /**
-     * 自定义 Y轴 标题样式
+     * 左部 标题样式
      *
-     * @return 自定义 Y轴 标题样式
+     * @return 左部 标题样式
      */
-    ExcelHeadStyle yHeadStyle() default @ExcelHeadStyle;
+    ExcelHeadStyle leftHeadStyle() default @ExcelHeadStyle;
 
     /**
      * 自定义 内容样式
