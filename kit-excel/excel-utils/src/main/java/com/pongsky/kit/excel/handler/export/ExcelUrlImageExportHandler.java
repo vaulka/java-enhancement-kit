@@ -16,7 +16,7 @@ import java.net.URL;
  *
  * @author pengsenhao
  **/
-public class ExcelUrlImageExportHandler extends ExcelBufferedImageExportHandler {
+public class ExcelUrlImageExportHandler extends BaseExcelBufferedImageExportHandler {
 
     @Override
     public void exec(Field field, ExcelProperty excelProperty, Object obj, ExcelExportInfo info) throws IOException {

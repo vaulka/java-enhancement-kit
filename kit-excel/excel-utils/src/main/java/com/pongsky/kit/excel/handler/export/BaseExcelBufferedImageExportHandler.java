@@ -22,7 +22,7 @@ import java.util.Iterator;
  * @author pengsenhao
  **/
 @Setter
-public abstract class ExcelBufferedImageExportHandler implements ExcelExportHandler {
+public abstract class BaseExcelBufferedImageExportHandler implements ExcelExportHandler {
 
     private BufferedImage bufferedImage = null;
     private String suffix = null;
@@ -40,9 +40,7 @@ public abstract class ExcelBufferedImageExportHandler implements ExcelExportHand
         try {
             info.getDrawing().createPicture(anchor, info.getWorkbook().addPicture(outputStream.toByteArray(), this.getPictureType(suffix)));
         } finally {
-            if (outputStream != null) {
-                outputStream.close();
-            }
+            outputStream.close();
         }
         info.setImageWidth(info.getCell().getColumnIndex(), bufferedImage.getWidth());
         info.setImageHeight(info.getRow().getRowNum(), bufferedImage.getHeight());

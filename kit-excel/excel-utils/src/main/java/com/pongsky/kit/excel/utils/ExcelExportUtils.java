@@ -132,13 +132,23 @@ public class ExcelExportUtils {
         this.buildResults();
         // 宽度自适应
         for (int i = 0; i < info.getWidths().size(); i++) {
-            info.getSheet().setColumnWidth(i, info.getWidths().get(i));
-        }
-        // 高度自适应
-        for (Map.Entry<Integer, Short> entry : info.getHeights().entrySet()) {
-            info.getSheet().getRow(entry.getKey()).setHeight(entry.getValue());
+            info.getSheet().setColumnWidth(i, info.getWidths().remove(i));
         }
         return info.getWorkbook();
+    }
+
+    /**
+     * 高度自适应
+     * <p>
+     * 由于超过一定行数，行数会从内存刷新到硬盘，后续就无法读取/操作该行，所以再结束操作前设置高度
+     *
+     * @param startRow 开始行
+     * @param endRow   结束行
+     */
+    private void autoSetHeight(int startRow, int endRow) {
+        for (int i = startRow; i <= endRow; i++) {
+            info.getSheet().getRow(i).setHeight(info.getHeights().get(i));
+        }
     }
 
     /**
@@ -336,6 +346,7 @@ public class ExcelExportUtils {
             }
         }
         info.setRowNum(info.getTopHeadMaxNum() + 1);
+        this.autoSetHeight(0, info.getTopHeadMaxNum());
         // 合并单元格
         this.forceCell(coordinateMap, 0, maxX, maxY);
     }
@@ -415,7 +426,7 @@ public class ExcelExportUtils {
     /**
      * 合并单元格
      * <p>
-     * 程序写的有点乱，在这里讲解下合并思路：
+     * 程序写地有点乱，在这里讲解下合并思路：
      * <p>
      * 首先自上而下合并 Y 轴数据，如果相同则进行合并，并记录合并信息
      * 合并完后，自左而右尝试合并 X 轴数据
@@ -502,7 +513,7 @@ public class ExcelExportUtils {
                     forceInfo = new ExcelForceInfo(next, y, y, x, nextX);
                     // // 备份合并信息
                     forceInfo.copy();
-                    // 是新的合并信息
+                    // 是新地合并信息
                     isNewForce = true;
                     // 合并信息初始化
                     initForce = true;
@@ -614,6 +625,7 @@ public class ExcelExportUtils {
                     throw new RuntimeException(e.getLocalizedMessage(), e);
                 }
             }
+            this.autoSetHeight(info.getRowNum(), info.getRowNum());
             info.rowNumPlusOne();
         }
     }

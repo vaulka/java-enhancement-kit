@@ -53,13 +53,14 @@
 
 > 版本号说明
 >
-> 版本由：`项目版本号`-`Spring Boot 版本`-`JDK 版本` 组成。
+> 版本由：`项目版本号`-`Spring Boot 版本` 组成。
 >
 > 最新版本请点击 [Maven Repository](https://mvnrepository.com/search?q=pongsky) 查阅
 
 ## Maven 依赖
 
 ```xml
+
 <dependency>
     <groupId>com.pongsky.kit</groupId>
     <artifactId>spring-boot-starter-captcha-input-math</artifactId>
@@ -72,6 +73,7 @@
 ```groovy
 implementation "com.pongsky.kit:spring-boot-starter-captcha-input-math:$latestVersion"
 ```
+
 # 其他功能特点
 
 * config-core
