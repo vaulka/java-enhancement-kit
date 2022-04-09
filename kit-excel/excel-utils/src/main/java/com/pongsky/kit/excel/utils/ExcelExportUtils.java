@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -602,8 +603,9 @@ public class ExcelExportUtils {
      */
     private void buildResults() {
         for (Object result : info.getResults()) {
-            if (info.getRowAccessWindowSize() > info.getRowNum()) {
-                info.setRow(info.getSheet().getRow(info.getRowNum()));
+            SXSSFRow row = info.getSheet().getRow(info.getRowNum());
+            if (row != null && info.getRowAccessWindowSize() > info.getRowNum()) {
+                info.setRow(row);
             } else {
                 info.setRow(info.getSheet().createRow(info.getRowNum()));
             }
