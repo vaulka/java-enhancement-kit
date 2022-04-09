@@ -147,7 +147,10 @@ public class ExcelExportUtils {
      */
     private void autoSetHeight(int startRow, int endRow) {
         for (int i = startRow; i <= endRow; i++) {
-            info.getSheet().getRow(i).setHeight(info.getHeights().get(i));
+            Short height = info.getHeights().get(i);
+            if (height != null) {
+                info.getSheet().getRow(i).setHeight(height);
+            }
         }
     }
 
