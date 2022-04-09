@@ -68,3 +68,9 @@ findProject(":storage:spring-boot-starter-storage-minio")?.name = "spring-boot-s
 
 include "storage:spring-boot-starter-storage-oss"
 findProject(":storage:spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
+
+include "kit-type-parser"
+findProject(":kit-type-parser")?.name = "type-parser"
+
+include "type-parser:type-parser-utils"
+findProject(":type-parser:type-parser-utils")?.name = "type-parser-utils"
