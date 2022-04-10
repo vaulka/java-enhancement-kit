@@ -3,11 +3,11 @@ package com.pongsky.kit.type.parser.utils;
 import java.lang.reflect.Field;
 
 /**
- * 数组 工具类
+ * 数组解析 工具类
  *
  * @author pengsenhao
  **/
-public class ArrayUtils {
+public class ArrayParserUtils {
 
     /**
      * 获取数组的元素类型

@@ -248,11 +248,21 @@ public enum ClassType {
     },
 
     /**
-     * 未知
+     * Null
+     */
+    NULL(Integer.MAX_VALUE) {
+        @Override
+        public boolean parser(Object obj) {
+            return obj == null;
+        }
+    },
+
+    /**
+     * Object
      * <p>
      * 兜底类型
      */
-    UNKNOWN(Integer.MAX_VALUE) {
+    OBJECT(Integer.MAX_VALUE) {
         @Override
         public boolean parser(Object obj) {
             return false;
@@ -293,7 +303,7 @@ public enum ClassType {
         return ALL.stream()
                 .filter(ct -> ct.parser(obj))
                 .findFirst()
-                .orElse(ClassType.UNKNOWN);
+                .orElse(ClassType.OBJECT);
     }
 
 }

@@ -69,6 +69,8 @@ signing {
 }
 
 dependencies {
+    api project(":type-parser:type-parser-utils")
+
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 

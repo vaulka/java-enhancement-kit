@@ -7,6 +7,7 @@ import com.pongsky.kit.excel.annotation.header.ExcelHeadAttr;
 import com.pongsky.kit.excel.annotation.header.ExcelHeadStyle;
 import com.pongsky.kit.excel.entity.ExcelExportInfo;
 import com.pongsky.kit.excel.entity.ExcelForceInfo;
+import com.pongsky.kit.type.parser.utils.FieldParserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,7 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * 导出 excel 工具类
@@ -58,29 +58,23 @@ public class ExcelExportUtils {
         info = new ExcelExportInfo()
                 .setTopHeadAttrs(topHeadAttrs != null ? topHeadAttrs : Collections.emptyList())
                 .setLeftHeadAttrs(leftHeadAttrs != null ? leftHeadAttrs : Collections.emptyList());
-        List<Class<?>> classes = new ArrayList<>();
-        this.getSuperclasses(classes, clazz);
         info.setFields(new ArrayList<>());
         int topHeadMaxNum = 1;
         int leftHeadMaxNum = 1;
-        for (Class<?> cla : classes) {
-            List<Field> fieldList = Arrays.stream(cla.getDeclaredFields())
-                    .filter(f -> f.isAnnotationPresent(ExcelProperty.class) || f.isAnnotationPresent(ExcelPropertys.class))
-                    .collect(Collectors.toList());
-            for (Field field : fieldList) {
-                ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
-                if (excelProperty != null) {
-                    topHeadMaxNum = Integer.max(topHeadMaxNum, excelProperty.topHeads().length);
-                    leftHeadMaxNum = Integer.max(leftHeadMaxNum, excelProperty.leftHeads().length);
-                    info.getFields().add(Arrays.asList(field, excelProperty));
-                }
-                ExcelPropertys excelPropertys = field.getAnnotation(ExcelPropertys.class);
-                if (excelPropertys != null) {
-                    for (ExcelProperty ex : excelPropertys.value()) {
-                        topHeadMaxNum = Integer.max(topHeadMaxNum, ex.topHeads().length);
-                        leftHeadMaxNum = Integer.max(leftHeadMaxNum, ex.leftHeads().length);
-                        info.getFields().add(Arrays.asList(field, ex));
-                    }
+        List<Field> fields = FieldParserUtils.getSuperFields(clazz);
+        for (Field field : fields) {
+            ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
+            if (excelProperty != null) {
+                topHeadMaxNum = Integer.max(topHeadMaxNum, excelProperty.topHeads().length);
+                leftHeadMaxNum = Integer.max(leftHeadMaxNum, excelProperty.leftHeads().length);
+                info.getFields().add(Arrays.asList(field, excelProperty));
+            }
+            ExcelPropertys excelPropertys = field.getAnnotation(ExcelPropertys.class);
+            if (excelPropertys != null) {
+                for (ExcelProperty ex : excelPropertys.value()) {
+                    topHeadMaxNum = Integer.max(topHeadMaxNum, ex.topHeads().length);
+                    leftHeadMaxNum = Integer.max(leftHeadMaxNum, ex.leftHeads().length);
+                    info.getFields().add(Arrays.asList(field, ex));
                 }
             }
         }
@@ -90,19 +84,6 @@ public class ExcelExportUtils {
         info.setTopHeadMaxNum(topHeadMaxNum);
         leftHeadMaxNum--;
         info.setLeftHeadMaxNum(leftHeadMaxNum);
-    }
-
-    /**
-     * 递归获取父 class 列表
-     *
-     * @param classes class 列表
-     * @param clazz   class
-     */
-    private void getSuperclasses(List<Class<?>> classes, Class<?> clazz) {
-        classes.add(clazz);
-        if (!clazz.getSuperclass().getName().equals(Object.class.getName())) {
-            this.getSuperclasses(classes, clazz.getSuperclass());
-        }
     }
 
     /**

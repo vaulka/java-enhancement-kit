@@ -4,11 +4,11 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * 集合 工具类
+ * 集合解析 工具类
  *
  * @author pengsenhao
  **/
-public class CollectionUtils {
+public class CollectionParserUtils {
 
     /**
      * 获取集合的元素类型
@@ -21,7 +21,7 @@ public class CollectionUtils {
             return null;
         }
         Object[] array = list.toArray();
-        return ArrayUtils.getElementType(array);
+        return ArrayParserUtils.getElementType(array);
     }
 
     /**

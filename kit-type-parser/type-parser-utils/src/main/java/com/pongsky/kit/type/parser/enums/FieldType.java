@@ -50,7 +50,7 @@ public enum FieldType {
             if (field == null) {
                 return false;
             }
-            return field.getType() == Byte.class;
+            return field.getType() == byte.class || field.getType() == Byte.class;
         }
     },
 
@@ -63,7 +63,7 @@ public enum FieldType {
             if (field == null) {
                 return false;
             }
-            return field.getType() == Short.class;
+            return field.getType() == short.class || field.getType() == Short.class;
         }
     },
 
@@ -76,7 +76,7 @@ public enum FieldType {
             if (field == null) {
                 return false;
             }
-            return field.getType() == Integer.class;
+            return field.getType() == int.class || field.getType() == Integer.class;
         }
     },
 
@@ -89,7 +89,7 @@ public enum FieldType {
             if (field == null) {
                 return false;
             }
-            return field.getType() == Long.class;
+            return field.getType() == long.class || field.getType() == Long.class;
         }
     },
 
@@ -102,7 +102,7 @@ public enum FieldType {
             if (field == null) {
                 return false;
             }
-            return field.getType() == Float.class;
+            return field.getType() == float.class || field.getType() == Float.class;
         }
     },
 
@@ -115,7 +115,7 @@ public enum FieldType {
             if (field == null) {
                 return false;
             }
-            return field.getType() == Double.class;
+            return field.getType() == double.class || field.getType() == Double.class;
         }
     },
 
@@ -128,7 +128,7 @@ public enum FieldType {
             if (field == null) {
                 return false;
             }
-            return field.getType() == Character.class;
+            return field.getType() == char.class || field.getType() == Character.class;
         }
     },
 
@@ -141,7 +141,7 @@ public enum FieldType {
             if (field == null) {
                 return false;
             }
-            return field.getType() == Boolean.class;
+            return field.getType() == boolean.class || field.getType() == Boolean.class;
         }
     },
 
@@ -315,11 +315,21 @@ public enum FieldType {
     },
 
     /**
-     * 未知
+     * Null
+     */
+    NULL(Integer.MAX_VALUE) {
+        @Override
+        public boolean parser(Field field) {
+            return field == null;
+        }
+    },
+
+    /**
+     * Object
      * <p>
      * 兜底类型
      */
-    UNKNOWN(Integer.MAX_VALUE) {
+    OBJECT(Integer.MAX_VALUE) {
         @Override
         public boolean parser(Field field) {
             return false;
@@ -360,7 +370,7 @@ public enum FieldType {
         return ALL.stream()
                 .filter(ft -> ft.parser(field))
                 .findFirst()
-                .orElse(FieldType.UNKNOWN);
+                .orElse(FieldType.OBJECT);
     }
 
 }

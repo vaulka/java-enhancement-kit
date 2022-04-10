@@ -81,6 +81,7 @@ signing {
 }
 
 dependencies {
+    api project(":type-parser:type-parser-utils")
     api project(":desensitization:desensitization-utils")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
