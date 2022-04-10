@@ -74,3 +74,9 @@ findProject(":kit-type-parser")?.name = "type-parser"
 
 include "type-parser:type-parser-utils"
 findProject(":type-parser:type-parser-utils")?.name = "type-parser-utils"
+
+include "kit-validation"
+findProject(":kit-validation")?.name = "validation"
+
+include "validation:validation-utils"
+findProject(":validation:validation-utils")?.name = "validation-utils"
