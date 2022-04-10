@@ -18,6 +18,7 @@ public class FieldParserUtils {
      * 递归获取父 字段 列表
      *
      * @param clazz class
+     * @return 递归获取父 字段 列表
      */
     public static List<Field> getSuperFields(Class<?> clazz) {
         List<Class<?>> classes = new ArrayList<>();
