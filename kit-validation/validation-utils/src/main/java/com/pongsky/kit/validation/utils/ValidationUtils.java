@@ -4,15 +4,24 @@ import com.pongsky.kit.type.parser.utils.CollectionParserUtils;
 import com.pongsky.kit.type.parser.utils.FieldParserUtils;
 import com.pongsky.kit.validation.annotation.PropertyName;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.internal.engine.messageinterpolation.DefaultLocaleResolver;
+import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.groups.Default;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -42,24 +51,35 @@ public class ValidationUtils {
             return sb.toString();
         }
         for (FieldError error : bindingResult.getFieldErrors()) {
-            List<Field> fields = new ArrayList<>();
-            Map<Field, String> indexMap = new HashMap<>(16);
-            ValidationUtils.getField(fields, indexMap, bindingResult.getTarget().getClass(), error.getField());
-            String field = fields.stream()
-                    .map(f -> {
-                        PropertyName propertyName = f.getAnnotation(PropertyName.class);
-                        String fieldName = propertyName != null && StringUtils.isNotBlank(propertyName.value())
-                                ? propertyName.value()
-                                : f.getName();
-                        String index = indexMap.get(f);
-                        if (index != null) {
-                            fieldName += index;
-                        }
-                        return fieldName;
-                    }).collect(Collectors.joining(POINT));
-            ValidationUtils.buildErrorMessage(sb, field, error.getDefaultMessage());
+            String fieldProperty = ValidationUtils.getFieldProperty(bindingResult.getTarget().getClass(), error.getField());
+            ValidationUtils.buildErrorMessage(sb, fieldProperty, error.getDefaultMessage());
         }
         return sb.toString();
+    }
+
+    /**
+     * 获取字段属性
+     *
+     * @param clazz clazz
+     * @param field 校验失败的字段
+     * @return 获取字段属性
+     */
+    private static String getFieldProperty(Class<?> clazz, String field) {
+        List<Field> fields = new ArrayList<>();
+        Map<Field, String> indexMap = new HashMap<>(16);
+        ValidationUtils.getField(fields, indexMap, clazz, field);
+        return fields.stream()
+                .map(f -> {
+                    PropertyName propertyName = f.getAnnotation(PropertyName.class);
+                    String fieldName = propertyName != null && StringUtils.isNotBlank(propertyName.value())
+                            ? propertyName.value()
+                            : f.getName();
+                    String index = indexMap.get(f);
+                    if (index != null) {
+                        fieldName += index;
+                    }
+                    return fieldName;
+                }).collect(Collectors.joining(POINT));
     }
 
     /**
@@ -162,6 +182,70 @@ public class ValidationUtils {
                         ValidationUtils.getField(fields, indexMap, elementType, subFieldName);
                     }
                 });
+    }
+
+    /**
+     * 对数据进行校验
+     *
+     * @param data 数据
+     * @param <T>  范型
+     * @return 错误信息
+     */
+    public static <T> String validation(T data) {
+        return ValidationUtils.validation(Locale.CHINA, data, Default.class);
+    }
+
+    /**
+     * 对数据进行校验
+     *
+     * @param data           数据
+     * @param <T>            范型
+     * @param validatorGroup 教研校验组组
+     * @return 错误信息
+     */
+    public static <T> String validation(T data, Class<?> validatorGroup) {
+        return ValidationUtils.validation(Locale.CHINA, data, validatorGroup);
+    }
+
+    /**
+     * 对数据进行校验
+     *
+     * @param locale 语言
+     * @param data   数据
+     * @param <T>    范型
+     * @return 错误信息
+     */
+    public static <T> String validation(Locale locale, T data) {
+        return ValidationUtils.validation(locale, data, Default.class);
+    }
+
+    /**
+     * 对数据进行校验
+     *
+     * @param locale         语言
+     * @param data           数据
+     * @param validatorGroup 校验组
+     * @param <T>            范型
+     * @return 错误信息
+     */
+    public static <T> String validation(Locale locale, T data, Class<?> validatorGroup) {
+        Validator validator = Validation.byDefaultProvider()
+                .configure()
+                .messageInterpolator(new ResourceBundleMessageInterpolator(Collections.emptySet(), locale,
+                        new DefaultLocaleResolver(), false))
+                .buildValidatorFactory()
+                .getValidator();
+        Set<ConstraintViolation<T>> validate = validator.validate(data, validatorGroup);
+        if (validate == null || validate.size() == 0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(MessageFormat.format(ERROR_COUNT_MSG, validate.size()));
+        for (ConstraintViolation<T> cv : validate) {
+            String fieldProperty = ValidationUtils.getFieldProperty(cv.getRootBeanClass(), cv.getPropertyPath().toString());
+            ValidationUtils.buildErrorMessage(sb, fieldProperty, cv.getMessage());
+        }
+        return sb.toString();
     }
 
 }

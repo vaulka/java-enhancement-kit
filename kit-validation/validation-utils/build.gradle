@@ -74,6 +74,8 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    api "org.glassfish:jakarta.el:$jakartaElVersion"
     api "org.springframework:spring-context:$springVersion"
     api "org.apache.commons:commons-lang3:$commonsLang3Version"
+    api "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion"
 }
