@@ -133,7 +133,10 @@ public class ExcelExportUtils {
         this.buildResults();
         // 宽度自适应
         for (int i = 0; i < info.getWidths().size(); i++) {
-            info.getSheet().setColumnWidth(i, info.getWidths().remove(i));
+            Integer width = info.getWidths().get(i);
+            if (width != null) {
+                info.getSheet().setColumnWidth(i, width);
+            }
         }
         return info.getWorkbook();
     }
