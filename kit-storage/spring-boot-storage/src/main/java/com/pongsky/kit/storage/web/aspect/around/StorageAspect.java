@@ -45,20 +45,26 @@ public class StorageAspect {
     public Object exec(ProceedingJoinPoint point) throws Throwable {
         Object result = point.proceed();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
-        return this.storageResource(method.getAnnotation(StorageResourceMark.class), result);
+        return this.storageResource(method.getAnnotation(StorageResourceMark.class), new ArrayList<>(), result);
     }
 
     /**
      * 云存储资源 uri 拼接
      *
-     * @param mark         数据脱敏注解
-     * @param originResult 原始 result
+     * @param mark          数据脱敏注解
+     * @param originResults 原始 result 列表（防止堆栈溢出）
+     * @param originResult  原始 result
      * @return 脱敏后的数据
      * @author pengsenhao
      */
     @SuppressWarnings({"unchecked"})
-    private Object storageResource(StorageResourceMark mark, Object originResult) {
+    private Object storageResource(StorageResourceMark mark, List<Object> originResults, Object originResult) {
         ClassType classType = ClassType.getType(originResult);
+        if (classType == ClassType.OBJECT
+                && originResults.contains(originResult)) {
+            // 如果存在，则退出递归，防止循环自己导致堆栈溢出
+            return originResult;
+        }
         switch (classType) {
             case STRING: {
                 return mark != null
@@ -69,7 +75,7 @@ public class StorageAspect {
                 Object[] array = (Object[]) originResult;
                 Object[] results = new Object[array.length];
                 for (int i = 0; i < array.length; i++) {
-                    results[i] = this.storageResource(null, array[i]);
+                    results[i] = this.storageResource(null, originResults, array[i]);
                 }
                 return results;
             }
@@ -77,7 +83,7 @@ public class StorageAspect {
                 List<Object> list = (List<Object>) originResult;
                 List<Object> results = new ArrayList<>(list.size());
                 for (Object result : list) {
-                    results.add(this.storageResource(null, result));
+                    results.add(this.storageResource(null, originResults, result));
                 }
                 return results;
             }
@@ -85,7 +91,7 @@ public class StorageAspect {
                 Set<Object> set = (Set<Object>) originResult;
                 Set<Object> results = new HashSet<>(set.size());
                 for (Object result : set) {
-                    results.add(this.storageResource(null, result));
+                    results.add(this.storageResource(null, originResults, result));
                 }
                 return results;
             }
@@ -115,7 +121,7 @@ public class StorageAspect {
                 case OBJECT: {
                     Object result = this.getValue(originResult, field);
                     if (result != null) {
-                        this.storageResource(null, result);
+                        this.storageResource(null, originResults, result);
                     }
                     break;
                 }
