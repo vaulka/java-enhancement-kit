@@ -15,6 +15,21 @@ import lombok.experimental.Accessors;
 public class Cpu {
 
     /**
+     * CPU 名称
+     */
+    private String name;
+
+    /**
+     * CPU 架构
+     */
+    private String microArchitecture;
+
+    /**
+     * CPU 内核总数
+     */
+    private Integer physicalProcessorCount;
+
+    /**
      * CPU 逻辑处理器总数
      */
     private Integer logicalProcessorCount;

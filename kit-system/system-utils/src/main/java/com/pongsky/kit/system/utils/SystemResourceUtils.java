@@ -97,6 +97,9 @@ public class SystemResourceUtils {
         long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
         long totalCpu = user + nice + system + idle + ioWait + irq + softIrq + steal;
         return new Cpu()
+                .setName(processor.getProcessorIdentifier().getName())
+                .setMicroArchitecture(processor.getProcessorIdentifier().getMicroarchitecture())
+                .setPhysicalProcessorCount(processor.getPhysicalProcessorCount())
                 .setLogicalProcessorCount(processor.getLogicalProcessorCount())
                 .setSystemUtilization(new DecimalFormat("#.##%").format(system * 1.0 / totalCpu))
                 .setUserUtilization(new DecimalFormat("#.##%").format(user * 1.0 / totalCpu))
