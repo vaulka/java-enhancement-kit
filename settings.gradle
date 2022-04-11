@@ -86,3 +86,9 @@ findProject(":kit-ip")?.name = "ip"
 
 include "ip:ip-utils"
 findProject(":ip:ip-utils")?.name = "ip-utils"
+
+include "kit-system"
+findProject(":kit-system")?.name = "system"
+
+include "system:system-utils"
+findProject(":system:system-utils")?.name = "system-utils"

@@ -23,6 +23,7 @@ ext {
     springDependencyManagementVersion = "1.0.11.RELEASE"
 
     poiVersion = "5.2.2"
+    oshiVersion = "6.1.6"
     druidVersion = "1.2.8"
     minioVersion = "7.1.4"
     okhttpVersion = "4.9.3"
@@ -43,7 +44,7 @@ allprojects {
     targetCompatibility = 8
 
     group "com.pongsky.kit"
-    version "3.2.2-2.4.13"
+    version "3.3.0-2.4.13"
 
     repositories {
         mavenLocal()
