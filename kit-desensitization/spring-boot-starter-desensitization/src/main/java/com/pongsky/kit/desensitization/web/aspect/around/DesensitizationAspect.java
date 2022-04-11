@@ -42,22 +42,29 @@ public class DesensitizationAspect {
     public Object exec(ProceedingJoinPoint point) throws Throwable {
         Object result = point.proceed();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
-        return this.desensitization(method.getAnnotation(DesensitizationMark.class), result);
+        return this.desensitization(method.getAnnotation(DesensitizationMark.class), new ArrayList<>(), result);
     }
 
     /**
      * 数据脱敏
      *
-     * @param mark         数据脱敏注解
-     * @param originResult 原始 result
+     * @param mark          数据脱敏注解
+     * @param originResults 原始 result 列表（防止堆栈溢出）
+     * @param originResult  原始 result
      * @return 脱敏后的数据
      * @author pengsenhao
      */
     @SuppressWarnings({"unchecked"})
-    private Object desensitization(DesensitizationMark mark, Object originResult)
+    private Object desensitization(DesensitizationMark mark, List<Object> originResults, Object originResult)
             throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        DesensitizationHandler handler = this.getHandler(mark);
         ClassType classType = ClassType.getType(originResult);
+        if (classType == ClassType.OBJECT
+                && originResults.contains(originResult)) {
+            // 如果存在，则退出递归，防止循环自己导致堆栈溢出
+            return originResult;
+        }
+        originResults.add(originResult);
+        DesensitizationHandler handler = this.getHandler(mark);
         switch (classType) {
             case STRING: {
                 return mark != null
@@ -68,7 +75,7 @@ public class DesensitizationAspect {
                 Object[] array = (Object[]) originResult;
                 Object[] results = new Object[array.length];
                 for (int i = 0; i < array.length; i++) {
-                    results[i] = this.desensitization(null, array[i]);
+                    results[i] = this.desensitization(null, originResults, array[i]);
                 }
                 return results;
             }
@@ -76,7 +83,7 @@ public class DesensitizationAspect {
                 List<Object> list = (List<Object>) originResult;
                 List<Object> results = new ArrayList<>(list.size());
                 for (Object result : list) {
-                    results.add(this.desensitization(null, result));
+                    results.add(this.desensitization(null, originResults, result));
                 }
                 return results;
             }
@@ -84,7 +91,7 @@ public class DesensitizationAspect {
                 Set<Object> set = (Set<Object>) originResult;
                 Set<Object> results = new HashSet<>(set.size());
                 for (Object result : set) {
-                    results.add(this.desensitization(null, result));
+                    results.add(this.desensitization(null, originResults, result));
                 }
                 return results;
             }
@@ -115,7 +122,7 @@ public class DesensitizationAspect {
                 case OBJECT: {
                     Object result = this.getValue(originResult, field);
                     if (result != null) {
-                        this.desensitization(null, result);
+                        this.desensitization(null, originResults, result);
                     }
                     break;
                 }
