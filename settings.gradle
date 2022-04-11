@@ -80,3 +80,9 @@ findProject(":kit-validation")?.name = "validation"
 
 include "validation:validation-utils"
 findProject(":validation:validation-utils")?.name = "validation-utils"
+
+include "kit-ip"
+findProject(":kit-ip")?.name = "ip"
+
+include "ip:ip-utils"
+findProject(":ip:ip-utils")?.name = "ip-utils"

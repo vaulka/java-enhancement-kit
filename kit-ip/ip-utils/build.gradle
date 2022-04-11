@@ -2,23 +2,10 @@ plugins {
     id "signing"
     id "java-library"
     id "maven-publish"
-    id "org.springframework.boot" version "$springBootVersion"
-    id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
 jar {
     enabled = true
-}
-
-bootJar {
-    enabled = false
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
-    }
 }
 
 task sourcesJar(type: Jar) {
@@ -48,14 +35,14 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "config-web"
+            artifactId "validation-utils"
             version version.toString()
-            description "Java 增强套件 之 config-web 模块"
+            description "Java 增强套件 之 IP utils 模块"
 
             pom {
-                name = "spring-cloud-enhancement-kit"
-                description = "Java 增强套件 之 config-web 模块"
-                url = "https://github.com/JarvisPongSky/spring-cloud-enhancement-kit"
+                name = "java-enhancement-kit"
+                description = "Java 增强套件 之 IP utils 模块"
+                url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
                         name = "GPL-v3.0 协议"
@@ -70,7 +57,7 @@ publishing {
                     }
                 }
                 scm {
-                    url = "https://github.com/JarvisPongSky/spring-cloud-enhancement-kit"
+                    url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 }
             }
         }
@@ -82,20 +69,10 @@ signing {
 }
 
 dependencies {
-    api project(":ip:ip-utils")
-    api project(":config-core")
-
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    compileOnly "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
-
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
-    compileOnly "org.springframework.boot:spring-boot-starter-web"
-    compileOnly "org.springframework.boot:spring-boot-starter-aop"
-    compileOnly "org.springframework.boot:spring-boot-starter-validation"
-    compileOnly "org.springframework.boot:spring-boot-starter-data-redis"
-
-    compileOnly "org.springframework.cloud:spring-cloud-starter-openfeign"
+    api "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    api "javax.servlet:javax.servlet-api:$servletVersion"
+    api "org.apache.commons:commons-lang3:$commonsLang3Version"
 }

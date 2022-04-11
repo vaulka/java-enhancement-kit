@@ -2,9 +2,9 @@ package com.pongsky.kit.web.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pongsky.kit.ip.utils.IpUtils;
 import com.pongsky.kit.response.GlobalResult;
 import com.pongsky.kit.response.enums.ResultCode;
-import com.pongsky.kit.utils.IpUtils;
 import com.pongsky.kit.web.request.RequestUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.RequiredArgsConstructor;
