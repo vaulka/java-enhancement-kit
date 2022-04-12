@@ -15,28 +15,23 @@ import lombok.experimental.Accessors;
 public class Jvm {
 
     /**
-     * JDK 版本
-     */
-    private String version;
-
-    /**
      * JVM 内存容量
      */
-    private String memoryCapacity;
+    private String capacity;
 
     /**
-     * JVM 已使用内存容量
+     * JVM 已使用容量
      */
-    private String usedMemoryCapacity;
+    private String usedCapacity;
 
     /**
-     * JVM 空闲内存容量
+     * JVM 空闲容量
      */
-    private String freeMemoryCapacity;
+    private String freeCapacity;
 
     /**
-     * JVM 内存使用率
+     * JVM 使用率
      */
-    private String memoryUtilization;
+    private String usage;
 
 }

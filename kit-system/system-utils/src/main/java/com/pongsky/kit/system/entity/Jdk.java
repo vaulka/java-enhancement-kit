@@ -5,33 +5,33 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * MEM 指标信息
+ * JDK 信息
  *
  * @author pengsenhao
  **/
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-public class Mem {
+public class Jdk {
 
     /**
-     * 主机 容量
+     * JDK 名称
      */
-    private String capacity;
+    private String name;
 
     /**
-     * 主机 已使用容量
+     * JDK 版本
      */
-    private String usedCapacity;
+    private String version;
 
     /**
-     * 主机 空闲容量
+     * JDK 路径
      */
-    private String freeCapacity;
+    private String home;
 
     /**
-     * 主机 使用率
+     * 项目启动路径
      */
-    private String usage;
+    private String runHome;
 
 }

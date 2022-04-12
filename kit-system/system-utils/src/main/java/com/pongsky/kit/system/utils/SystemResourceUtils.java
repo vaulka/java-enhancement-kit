@@ -1,6 +1,8 @@
 package com.pongsky.kit.system.utils;
 
 import com.pongsky.kit.system.entity.Cpu;
+import com.pongsky.kit.system.entity.Disk;
+import com.pongsky.kit.system.entity.Jdk;
 import com.pongsky.kit.system.entity.Jvm;
 import com.pongsky.kit.system.entity.Mem;
 import com.pongsky.kit.system.entity.Os;
@@ -8,10 +10,16 @@ import com.pongsky.kit.system.entity.SystemResource;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
+import oshi.software.os.FileSystem;
+import oshi.software.os.OSFileStore;
 
+import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -31,12 +39,16 @@ public class SystemResourceUtils {
         Os os = SystemResourceUtils.readOs();
         Cpu cpu = SystemResourceUtils.readCpu();
         Mem mem = SystemResourceUtils.readMem();
+        Jdk jdk = SystemResourceUtils.readJdk();
         Jvm jvm = SystemResourceUtils.readJvm();
+        List<Disk> disks = SystemResourceUtils.readDisks();
         return new SystemResource()
                 .setOs(os)
                 .setCpu(cpu)
                 .setMem(mem)
-                .setJvm(jvm);
+                .setJdk(jdk)
+                .setJvm(jvm)
+                .setDisks(disks);
     }
 
     /**
@@ -97,14 +109,14 @@ public class SystemResourceUtils {
         long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
         long totalCpu = user + nice + system + idle + ioWait + irq + softIrq + steal;
         return new Cpu()
-                .setName(processor.getProcessorIdentifier().getName())
+                .setModel(processor.getProcessorIdentifier().getName())
                 .setMicroArchitecture(processor.getProcessorIdentifier().getMicroarchitecture())
                 .setPhysicalProcessorCount(processor.getPhysicalProcessorCount())
                 .setLogicalProcessorCount(processor.getLogicalProcessorCount())
-                .setSystemUtilization(new DecimalFormat("#.##%").format(system * 1.0 / totalCpu))
-                .setUserUtilization(new DecimalFormat("#.##%").format(user * 1.0 / totalCpu))
-                .setIoWaitRate(new DecimalFormat("#.##%").format(ioWait * 1.0 / totalCpu))
-                .setTotalUtilization(new DecimalFormat("#.##%").format(1.0 - (idle * 1.0 / totalCpu)));
+                .setSystemUsage(SystemResourceUtils.formatUsage(system * 1.0 / totalCpu))
+                .setUserUsage(SystemResourceUtils.formatUsage(user * 1.0 / totalCpu))
+                .setIoWaitUsage(SystemResourceUtils.formatUsage(ioWait * 1.0 / totalCpu))
+                .setTotalUsage(SystemResourceUtils.formatUsage(1.0 - (idle * 1.0 / totalCpu)));
     }
 
     /**
@@ -116,16 +128,31 @@ public class SystemResourceUtils {
         GlobalMemory memory = SYSTEM_INFO.getHardware().getMemory();
         long totalByte = memory.getTotal();
         long availableByte = memory.getAvailable();
-        String memoryCapacity = SystemResourceUtils.formatByte(totalByte);
-        String usedMemoryCapacity = SystemResourceUtils.formatByte(totalByte - availableByte);
-        String freeMemoryCapacity = SystemResourceUtils.formatByte(availableByte);
-        String memoryUtilization = new DecimalFormat("#.##%")
-                .format((totalByte - availableByte) * 1.0 / totalByte);
+        String capacity = SystemResourceUtils.formatByte(totalByte);
+        String usedCapacity = SystemResourceUtils.formatByte(totalByte - availableByte);
+        String freeCapacity = SystemResourceUtils.formatByte(availableByte);
         return new Mem()
-                .setMemoryCapacity(memoryCapacity)
-                .setUsedMemoryCapacity(usedMemoryCapacity)
-                .setFreeMemoryCapacity(freeMemoryCapacity)
-                .setMemoryUtilization(memoryUtilization);
+                .setCapacity(capacity)
+                .setUsedCapacity(usedCapacity)
+                .setFreeCapacity(freeCapacity)
+                .setUsage(SystemResourceUtils.formatUsage((totalByte - availableByte) * 1.0 / totalByte));
+    }
+
+    /**
+     * 获取 JDK 信息
+     *
+     * @return 获取 JDK 信息
+     */
+    public static Jdk readJdk() {
+        String name = ManagementFactory.getRuntimeMXBean().getVmName();
+        String version = PROPS.getProperty("java.version");
+        String home = PROPS.getProperty("java.home");
+        String runHome = PROPS.getProperty("user.dir");
+        return new Jdk()
+                .setName(name)
+                .setVersion(version)
+                .setHome(home)
+                .setRunHome(runHome);
     }
 
     /**
@@ -135,20 +162,64 @@ public class SystemResourceUtils {
      */
     public static Jvm readJvm() {
         Runtime runtime = Runtime.getRuntime();
-        String version = PROPS.getProperty("java.version");
         long jvmTotalMemoryByte = runtime.totalMemory();
         long jvmFreeMemoryByte = runtime.freeMemory();
-        String memoryCapacity = SystemResourceUtils.formatByte(jvmTotalMemoryByte);
-        String usedMemoryCapacity = SystemResourceUtils.formatByte(jvmTotalMemoryByte - jvmFreeMemoryByte);
-        String freeMemoryCapacity = SystemResourceUtils.formatByte(jvmFreeMemoryByte);
-        String memoryUtilization = new DecimalFormat("#.##%")
-                .format((jvmTotalMemoryByte - jvmFreeMemoryByte) * 1.0 / jvmTotalMemoryByte);
+        String capacity = SystemResourceUtils.formatByte(jvmTotalMemoryByte);
+        String usedCapacity = SystemResourceUtils.formatByte(jvmTotalMemoryByte - jvmFreeMemoryByte);
+        String freeCapacity = SystemResourceUtils.formatByte(jvmFreeMemoryByte);
         return new Jvm()
-                .setVersion(version)
-                .setMemoryCapacity(memoryCapacity)
-                .setUsedMemoryCapacity(usedMemoryCapacity)
-                .setFreeMemoryCapacity(freeMemoryCapacity)
-                .setMemoryUtilization(memoryUtilization);
+                .setCapacity(capacity)
+                .setUsedCapacity(usedCapacity)
+                .setFreeCapacity(freeCapacity)
+                .setUsage(SystemResourceUtils.formatUsage((jvmTotalMemoryByte - jvmFreeMemoryByte) * 1.0 / jvmTotalMemoryByte));
+    }
+
+    /**
+     * 获取 Disk 指标信息
+     *
+     * @return 获取 Disk 指标信息
+     */
+    private static List<Disk> readDisks() {
+        FileSystem fileSystem = SYSTEM_INFO.getOperatingSystem().getFileSystem();
+        List<OSFileStore> fileStores = fileSystem.getFileStores();
+        if (fileStores.size() == 0) {
+            return Collections.emptyList();
+        }
+        List<Disk> disks = new ArrayList<>(fileStores.size());
+        for (OSFileStore fileStore : fileStores) {
+            String mount = fileStore.getMount();
+            String type = fileStore.getType();
+            String name = fileStore.getName();
+            long free = fileStore.getUsableSpace();
+            long total = fileStore.getTotalSpace();
+            long used = total - free;
+            String capacity = SystemResourceUtils.formatByte(total);
+            String usedCapacity = SystemResourceUtils.formatByte(used);
+            String freeCapacity = SystemResourceUtils.formatByte(free);
+            Disk disk = new Disk()
+                    .setMount(mount)
+                    .setType(type)
+                    .setName(name)
+                    .setCapacity(capacity)
+                    .setUsedCapacity(usedCapacity)
+                    .setFreeCapacity(freeCapacity)
+                    .setUsage(SystemResourceUtils.formatUsage(used * 1.0 / total));
+            disks.add(disk);
+        }
+        return disks;
+    }
+
+    /**
+     * 格式化使用率
+     *
+     * @param number 数值
+     * @return 格式化使用率
+     */
+    private static String formatUsage(Double number) {
+        if (number.equals(Double.NaN)) {
+            return "";
+        }
+        return new DecimalFormat("#.##%").format(number);
     }
 
     /**
@@ -178,5 +249,6 @@ public class SystemResourceUtils {
         double tbNumber = gbNumber / FORMAT;
         return new DecimalFormat("#.##TB").format(tbNumber);
     }
+
 
 }

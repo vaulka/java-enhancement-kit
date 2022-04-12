@@ -5,32 +5,47 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * MEM 指标信息
+ * Disk 指标信息
  *
  * @author pengsenhao
  **/
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-public class Mem {
+public class Disk {
 
     /**
-     * 主机 容量
+     * Disk 挂载盘符
+     */
+    private String mount;
+
+    /**
+     * Disk 类型
+     */
+    private String type;
+
+    /**
+     * Disk 名称
+     */
+    private String name;
+
+    /**
+     * Disk 容量
      */
     private String capacity;
 
     /**
-     * 主机 已使用容量
+     * Disk 已使用容量
      */
     private String usedCapacity;
 
     /**
-     * 主机 空闲容量
+     * Disk 空闲容量
      */
     private String freeCapacity;
 
     /**
-     * 主机 使用率
+     * Disk 使用率
      */
     private String usage;
 

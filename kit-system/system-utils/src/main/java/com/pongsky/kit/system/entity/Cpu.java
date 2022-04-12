@@ -17,7 +17,7 @@ public class Cpu {
     /**
      * CPU 名称
      */
-    private String name;
+    private String model;
 
     /**
      * CPU 架构
@@ -37,21 +37,21 @@ public class Cpu {
     /**
      * CPU 系统使用率
      */
-    private String systemUtilization;
+    private String systemUsage;
 
     /**
      * CPU 用户使用率
      */
-    private String userUtilization;
+    private String userUsage;
 
     /**
      * CPU 等待率
      */
-    private String ioWaitRate;
+    private String ioWaitUsage;
 
     /**
      * CPU 总使用率
      */
-    private String totalUtilization;
+    private String totalUsage;
 
 }
