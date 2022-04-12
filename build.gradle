@@ -44,7 +44,7 @@ allprojects {
     targetCompatibility = 8
 
     group "com.pongsky.kit"
-    version "3.3.0-2.4.13"
+    version "3.3.1-2.4.13"
 
     repositories {
         mavenLocal()
