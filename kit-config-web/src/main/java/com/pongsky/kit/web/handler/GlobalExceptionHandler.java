@@ -341,7 +341,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                     Optional.ofNullable(request.getQueryString()).orElse(""),
                     Optional.ofNullable(RequestUtils.getBody(request)).orElse(""));
             log.error("exception message: [{}]", result.getMessage());
-            Arrays.asList(exception.getStackTrace()).forEach(stackTrace -> log.error(stackTrace.toString()));
+            exception.printStackTrace();
         } else {
             log.error("exception message: [{}]", result.getMessage());
         }
