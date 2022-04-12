@@ -68,3 +68,27 @@ findProject(":storage:spring-boot-starter-storage-minio")?.name = "spring-boot-s
 
 include "storage:spring-boot-starter-storage-oss"
 findProject(":storage:spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
+
+include "kit-type-parser"
+findProject(":kit-type-parser")?.name = "type-parser"
+
+include "type-parser:type-parser-utils"
+findProject(":type-parser:type-parser-utils")?.name = "type-parser-utils"
+
+include "kit-validation"
+findProject(":kit-validation")?.name = "validation"
+
+include "validation:validation-utils"
+findProject(":validation:validation-utils")?.name = "validation-utils"
+
+include "kit-ip"
+findProject(":kit-ip")?.name = "ip"
+
+include "ip:ip-utils"
+findProject(":ip:ip-utils")?.name = "ip-utils"
+
+include "kit-system"
+findProject(":kit-system")?.name = "system"
+
+include "system:system-utils"
+findProject(":system:system-utils")?.name = "system-utils"

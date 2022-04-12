@@ -2,6 +2,9 @@ package com.pongsky.kit.storage.web.aspect.around;
 
 import com.pongsky.kit.storage.annotation.StorageResourceMark;
 import com.pongsky.kit.storage.config.StorageProperties;
+import com.pongsky.kit.type.parser.enums.ClassType;
+import com.pongsky.kit.type.parser.enums.FieldType;
+import com.pongsky.kit.type.parser.utils.FieldParserUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,19 +16,10 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 云存储自动添加 uri
@@ -51,120 +45,91 @@ public class StorageAspect {
     public Object exec(ProceedingJoinPoint point) throws Throwable {
         Object result = point.proceed();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
-        return this.storageResource(method.getAnnotation(StorageResourceMark.class), result);
+        return this.storageResource(method.getAnnotation(StorageResourceMark.class), new ArrayList<>(), result);
     }
 
     /**
      * 云存储资源 uri 拼接
      *
-     * @param mark         数据脱敏注解
-     * @param originResult 原始 result
+     * @param mark          数据脱敏注解
+     * @param originResults 原始 result 列表（防止堆栈溢出）
+     * @param originResult  原始 result
      * @return 脱敏后的数据
      * @author pengsenhao
      */
     @SuppressWarnings({"unchecked"})
-    private Object storageResource(StorageResourceMark mark, Object originResult) {
-        if (this.isBasicDataType(originResult)) {
+    private Object storageResource(StorageResourceMark mark, List<Object> originResults, Object originResult) {
+        ClassType classType = ClassType.getType(originResult);
+        if (classType == ClassType.OBJECT
+                && originResults.contains(originResult)) {
+            // 如果存在，则退出递归，防止循环自己导致堆栈溢出
             return originResult;
-        } else if (originResult instanceof String
-                && mark != null) {
-            return storageProperties.getBaseUri() + originResult;
-        } else if (originResult instanceof List) {
-            List<Object> list = (List<Object>) originResult;
-            List<Object> results = new ArrayList<>(list.size());
-            for (Object result : list) {
-                results.add(this.storageResource(null, result));
-            }
-            return results;
-        } else if (originResult instanceof Set) {
-            Set<Object> set = (Set<Object>) originResult;
-            Set<Object> results = new HashSet<>(set.size());
-            for (Object result : set) {
-                results.add(this.storageResource(null, result));
-            }
-            return results;
         }
-        List<Field> fields = Arrays.stream(originResult.getClass().getDeclaredFields())
-                .filter(this::unisBasicFieldDataType)
-                .collect(Collectors.toList());
+        switch (classType) {
+            case STRING: {
+                return mark != null
+                        ? storageProperties.getBaseUri() + originResult
+                        : originResult;
+            }
+            case ARRAY: {
+                Object[] array = (Object[]) originResult;
+                Object[] results = new Object[array.length];
+                for (int i = 0; i < array.length; i++) {
+                    results[i] = this.storageResource(null, originResults, array[i]);
+                }
+                return results;
+            }
+            case LIST: {
+                List<Object> list = (List<Object>) originResult;
+                List<Object> results = new ArrayList<>(list.size());
+                for (Object result : list) {
+                    results.add(this.storageResource(null, originResults, result));
+                }
+                return results;
+            }
+            case SET: {
+                Set<Object> set = (Set<Object>) originResult;
+                Set<Object> results = new HashSet<>(set.size());
+                for (Object result : set) {
+                    results.add(this.storageResource(null, originResults, result));
+                }
+                return results;
+            }
+            case OBJECT:
+                break;
+            default:
+                return originResult;
+        }
+        List<Field> fields = FieldParserUtils.getSuperFields(originResult.getClass());
         for (Field field : fields) {
-            if (field.getType().toString().equals(String.class.toString())) {
-                mark = field.getAnnotation(StorageResourceMark.class);
-                if (mark == null) {
-                    continue;
+            FieldType fieldType = FieldType.getType(field);
+            switch (fieldType) {
+                case STRING: {
+                    mark = field.getAnnotation(StorageResourceMark.class);
+                    if (mark == null) {
+                        break;
+                    }
+                    Object result = this.getValue(originResult, field);
+                    if (result != null) {
+                        this.setValue(originResult, field, storageProperties.getBaseUri() + result);
+                    }
+                    break;
                 }
-                Object result = this.getValue(originResult, field);
-                if (result != null) {
-                    this.setValue(originResult, field, storageProperties.getBaseUri() + result);
+                case ARRAY:
+                case LIST:
+                case SET:
+                case OBJECT: {
+                    Object result = this.getValue(originResult, field);
+                    if (result != null) {
+                        this.storageResource(null, originResults, result);
+                    }
+                    break;
                 }
-            } else {
-                Object result = this.getValue(originResult, field);
-                if (result != null) {
-                    this.storageResource(null, result);
-                }
+                default:
+                    break;
             }
         }
         return originResult;
-    }
-
-    /**
-     * 返回值是否是基础数据类型
-     * <p>
-     * 除了 String 类型
-     *
-     * @param originResult 返回值
-     * @return 返回值是否是基础数据类型
-     * @author pengsenhao
-     */
-    private boolean isBasicDataType(Object originResult) {
-        return originResult == null
-                || originResult instanceof Enum
-                || originResult instanceof Byte
-                || originResult instanceof Short
-                || originResult instanceof Integer
-                || originResult instanceof Long
-                || originResult instanceof Float
-                || originResult instanceof Double
-                || originResult instanceof Character
-                || originResult instanceof Boolean
-                || originResult instanceof Map
-                || originResult instanceof BigInteger
-                || originResult instanceof BigDecimal
-                || originResult instanceof Date
-                || originResult instanceof LocalDate
-                || originResult instanceof LocalTime
-                || originResult instanceof LocalDateTime;
-    }
-
-    /**
-     * 字段是否不是基础数据类型 / 常量
-     * <p>
-     * 除了 String 类型
-     *
-     * @param field 字段
-     * @return 字段是否是基础数据类型 / 常量
-     * @author pengsenhao
-     */
-    private boolean unisBasicFieldDataType(Field field) {
-        return field != null
-                && !field.toString().contains("final")
-                && field.getType().getPackage() != null
-                && field.getType().getEnumConstants() == null
-                && !field.getType().toString().equals(Byte.class.toString())
-                && !field.getType().toString().equals(Short.class.toString())
-                && !field.getType().toString().equals(Integer.class.toString())
-                && !field.getType().toString().equals(Long.class.toString())
-                && !field.getType().toString().equals(Float.class.toString())
-                && !field.getType().toString().equals(Double.class.toString())
-                && !field.getType().toString().equals(Character.class.toString())
-                && !field.getType().toString().equals(Boolean.class.toString())
-                && !field.getType().toString().equals(Map.class.toString())
-                && !field.getType().toString().equals(BigInteger.class.toString())
-                && !field.getType().toString().equals(BigDecimal.class.toString())
-                && !field.getType().toString().equals(Date.class.toString())
-                && !field.getType().toString().equals(LocalDate.class.toString())
-                && !field.getType().toString().equals(LocalTime.class.toString())
-                && !field.getType().toString().equals(LocalDateTime.class.toString());
     }
 
     /**

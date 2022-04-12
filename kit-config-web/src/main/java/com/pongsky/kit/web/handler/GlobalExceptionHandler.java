@@ -2,9 +2,9 @@ package com.pongsky.kit.web.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pongsky.kit.ip.utils.IpUtils;
 import com.pongsky.kit.response.GlobalResult;
 import com.pongsky.kit.response.enums.ResultCode;
-import com.pongsky.kit.utils.IpUtils;
 import com.pongsky.kit.web.request.RequestUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.RequiredArgsConstructor;
@@ -341,7 +341,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                     Optional.ofNullable(request.getQueryString()).orElse(""),
                     Optional.ofNullable(RequestUtils.getBody(request)).orElse(""));
             log.error("exception message: [{}]", result.getMessage());
-            Arrays.asList(exception.getStackTrace()).forEach(stackTrace -> log.error(stackTrace.toString()));
+            exception.printStackTrace();
         } else {
             log.error("exception message: [{}]", result.getMessage());
         }

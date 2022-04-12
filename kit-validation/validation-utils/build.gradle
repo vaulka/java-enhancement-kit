@@ -2,22 +2,10 @@ plugins {
     id "signing"
     id "java-library"
     id "maven-publish"
-    id "org.springframework.boot" version "$springBootVersion"
-    id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
 jar {
     enabled = true
-}
-
-bootJar {
-    enabled = false
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
-    }
 }
 
 task sourcesJar(type: Jar) {
@@ -47,13 +35,13 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-starter-desensitization"
+            artifactId "validation-utils"
             version version.toString()
-            description "Java 增强套件 之 数据脱敏 Spring Boot Starter 模块"
+            description "Java 增强套件 之 校验 utils 模块"
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件 之 数据脱敏 Spring Boot Starter 模块"
+                description = "Java 增强套件 之 校验 utils 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
@@ -82,13 +70,12 @@ signing {
 
 dependencies {
     api project(":type-parser:type-parser-utils")
-    api project(":desensitization:desensitization-utils")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
-    api "org.springframework.boot:spring-boot-starter-web"
-    api "org.springframework.boot:spring-boot-starter-aop"
+    api "org.glassfish:jakarta.el:$jakartaElVersion"
+    api "org.springframework:spring-context:$springVersion"
+    api "org.apache.commons:commons-lang3:$commonsLang3Version"
+    api "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion"
 }

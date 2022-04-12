@@ -1,4 +1,4 @@
-package com.pongsky.kit.utils.validator;
+package com.pongsky.kit.validation.group;
 
 /**
  * 搜索校验组

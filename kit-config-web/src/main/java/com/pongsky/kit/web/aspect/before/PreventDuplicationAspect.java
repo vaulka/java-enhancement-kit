@@ -3,7 +3,7 @@ package com.pongsky.kit.web.aspect.before;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pongsky.kit.exception.FrequencyException;
-import com.pongsky.kit.utils.IpUtils;
+import com.pongsky.kit.ip.utils.IpUtils;
 import com.pongsky.kit.utils.trace.DiyHeader;
 import com.pongsky.kit.web.request.RequestUtils;
 import lombok.Data;

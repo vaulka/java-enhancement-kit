@@ -1,7 +1,7 @@
 package com.pongsky.kit.web.aspect.around;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pongsky.kit.utils.IpUtils;
+import com.pongsky.kit.ip.utils.IpUtils;
 import com.pongsky.kit.web.request.RequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

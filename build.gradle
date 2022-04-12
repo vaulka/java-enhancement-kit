@@ -6,11 +6,14 @@ ext {
     lombokVersion = "1.18.22"
 
     springBootVersion = "2.4.13"
+    springVersion = "5.3.13"
     servletVersion = "4.0.1"
     springfoxVersion = "3.0.0"
     mybatisPlusVersion = "3.5.1"
 
     // 需要兼容 org.springframework.boot:spring-boot-starter-validation 下的版本
+    // org.glassfish:jakarta.el
+    jakartaElVersion = "3.0.4"
     // org.hibernate.validator:hibernate-validator
     hibernateValidatorVersion = "6.1.7.Final"
 
@@ -20,8 +23,10 @@ ext {
     springDependencyManagementVersion = "1.0.11.RELEASE"
 
     poiVersion = "5.2.2"
+    oshiVersion = "6.1.6"
     druidVersion = "1.2.8"
     minioVersion = "7.1.4"
+    okhttpVersion = "4.9.3"
     commonsTextVersion = "1.9"
     fastjsonVersion = "1.2.79"
     commonsCodecVersion = "1.15"
@@ -39,7 +44,7 @@ allprojects {
     targetCompatibility = 8
 
     group "com.pongsky.kit"
-    version "3.1.0-2.4.13"
+    version "3.3.1-2.4.13"
 
     repositories {
         mavenLocal()
