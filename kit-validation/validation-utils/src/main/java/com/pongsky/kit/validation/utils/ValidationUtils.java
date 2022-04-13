@@ -2,7 +2,7 @@ package com.pongsky.kit.validation.utils;
 
 import com.pongsky.kit.type.parser.utils.CollectionParserUtils;
 import com.pongsky.kit.type.parser.utils.FieldParserUtils;
-import com.pongsky.kit.validation.annotation.PropertyName;
+import com.pongsky.kit.validation.annotation.Property;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.messageinterpolation.DefaultLocaleResolver;
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
@@ -70,9 +70,9 @@ public class ValidationUtils {
         ValidationUtils.getField(fields, indexMap, clazz, field);
         return fields.stream()
                 .map(f -> {
-                    PropertyName propertyName = f.getAnnotation(PropertyName.class);
-                    String fieldName = propertyName != null && StringUtils.isNotBlank(propertyName.value())
-                            ? propertyName.value()
+                    Property property = f.getAnnotation(Property.class);
+                    String fieldName = property != null && StringUtils.isNotBlank(property.value())
+                            ? property.value()
                             : f.getName();
                     String index = indexMap.get(f);
                     if (index != null) {

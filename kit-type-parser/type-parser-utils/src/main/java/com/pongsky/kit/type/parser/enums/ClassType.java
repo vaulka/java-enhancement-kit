@@ -30,7 +30,7 @@ public enum ClassType {
     /**
      * String
      */
-    STRING(0) {
+    STRING("String", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof String;
@@ -40,7 +40,7 @@ public enum ClassType {
     /**
      * Byte
      */
-    BYTE(0) {
+    BYTE("Byte", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Byte;
@@ -50,7 +50,7 @@ public enum ClassType {
     /**
      * Short
      */
-    SHORT(0) {
+    SHORT("Short", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Short;
@@ -60,7 +60,7 @@ public enum ClassType {
     /**
      * Integer
      */
-    INTEGER(0) {
+    INTEGER("Integer", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Integer;
@@ -70,7 +70,7 @@ public enum ClassType {
     /**
      * Long
      */
-    LONG(0) {
+    LONG("Long", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Long;
@@ -80,7 +80,7 @@ public enum ClassType {
     /**
      * Float
      */
-    FLOAT(0) {
+    FLOAT("Float", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Float;
@@ -90,7 +90,7 @@ public enum ClassType {
     /**
      * Double
      */
-    DOUBLE(0) {
+    DOUBLE("Double", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Double;
@@ -100,7 +100,7 @@ public enum ClassType {
     /**
      * Character
      */
-    CHARACTER(0) {
+    CHARACTER("Character", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Character;
@@ -110,7 +110,7 @@ public enum ClassType {
     /**
      * Boolean
      */
-    BOOLEAN(0) {
+    BOOLEAN("Boolean", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Boolean;
@@ -120,7 +120,7 @@ public enum ClassType {
     /**
      * Array
      */
-    ARRAY(0) {
+    ARRAY("Array", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Object[];
@@ -130,7 +130,7 @@ public enum ClassType {
     /**
      * List
      */
-    LIST(0) {
+    LIST("List", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof List;
@@ -140,7 +140,7 @@ public enum ClassType {
     /**
      * Set
      */
-    SET(0) {
+    SET("Set", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Set;
@@ -150,7 +150,7 @@ public enum ClassType {
     /**
      * Map
      */
-    MAP(0) {
+    MAP("Map", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Map;
@@ -160,7 +160,7 @@ public enum ClassType {
     /**
      * BigInteger
      */
-    BIG_INTEGER(0) {
+    BIG_INTEGER("BigInteger", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof BigInteger;
@@ -170,7 +170,7 @@ public enum ClassType {
     /**
      * BigDecimal
      */
-    BIG_DECIMAL(0) {
+    BIG_DECIMAL("BigDecimal", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof BigDecimal;
@@ -180,7 +180,7 @@ public enum ClassType {
     /**
      * Date
      */
-    DATE(0) {
+    DATE("Date", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Date;
@@ -190,7 +190,7 @@ public enum ClassType {
     /**
      * LocalDate
      */
-    LOCAL_DATE(0) {
+    LOCAL_DATE("LocalDate", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof LocalDate;
@@ -200,7 +200,7 @@ public enum ClassType {
     /**
      * LocalTime
      */
-    LOCAL_TIME(0) {
+    LOCAL_TIME("LocalTime", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof LocalTime;
@@ -210,7 +210,7 @@ public enum ClassType {
     /**
      * LocalDateTime
      */
-    LOCAL_DATE_TIME(0) {
+    LOCAL_DATE_TIME("LocalDateTime", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof LocalDateTime;
@@ -220,7 +220,7 @@ public enum ClassType {
     /**
      * DayOfWeek
      */
-    DAY_OF_WEEK(0) {
+    DAY_OF_WEEK("DayOfWeek", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof DayOfWeek;
@@ -228,9 +228,9 @@ public enum ClassType {
     },
 
     /**
-     * MONTH
+     * Month
      */
-    MONTH(0) {
+    MONTH("Month", 0) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Month;
@@ -240,7 +240,7 @@ public enum ClassType {
     /**
      * Enum
      */
-    ENUM(Integer.MAX_VALUE) {
+    ENUM("Enum", Integer.MAX_VALUE) {
         @Override
         public boolean parser(Object obj) {
             return obj instanceof Enum;
@@ -250,7 +250,7 @@ public enum ClassType {
     /**
      * Null
      */
-    NULL(Integer.MAX_VALUE) {
+    NULL("Null", Integer.MAX_VALUE) {
         @Override
         public boolean parser(Object obj) {
             return obj == null;
@@ -262,7 +262,7 @@ public enum ClassType {
      * <p>
      * 兜底类型
      */
-    OBJECT(Integer.MAX_VALUE) {
+    OBJECT("Object", Integer.MAX_VALUE) {
         @Override
         public boolean parser(Object obj) {
             return false;
@@ -270,6 +270,11 @@ public enum ClassType {
     },
 
     ;
+
+    /**
+     * 类类型
+     */
+    private final String type;
 
     /**
      * 类解析顺序

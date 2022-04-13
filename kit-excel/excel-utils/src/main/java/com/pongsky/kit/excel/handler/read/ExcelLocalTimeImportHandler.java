@@ -1,6 +1,7 @@
 package com.pongsky.kit.excel.handler.read;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
+import com.pongsky.kit.type.parser.utils.ReflectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
@@ -20,7 +21,7 @@ public class ExcelLocalTimeImportHandler implements ExcelImportHandler {
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
         if (obj instanceof LocalTime) {
             // 如果是日期类型，则直接处理
-            this.setValue(result, field, obj);
+            ReflectUtils.setValue(result, field, obj);
             return;
         }
         // 如果不是日期类型，则默认按照字符串类型处理
@@ -31,7 +32,7 @@ public class ExcelLocalTimeImportHandler implements ExcelImportHandler {
             return;
         }
         LocalTime value = LocalTime.parse(str, FORMAT);
-        this.setValue(result, field, value);
+        ReflectUtils.setValue(result, field, value);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.pongsky.kit.excel.utils;
 
 import com.pongsky.kit.excel.enums.ParseType;
+import com.pongsky.kit.type.parser.utils.ReflectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
@@ -25,7 +26,7 @@ public class ParseResultUtils {
      * @return 解析数据
      */
     public static Object parseFieldValue(Field field, String attrs, Object result) {
-        Object fieldValue = ParseResultUtils.getFieldValue(result, field);
+        Object fieldValue = ReflectUtils.getValue(result, field);
         return ParseResultUtils.parseFieldValue(attrs, fieldValue);
     }
 
@@ -86,7 +87,7 @@ public class ParseResultUtils {
             if (StringUtils.isNotBlank(attr)) {
                 Field field = value.getClass().getDeclaredField(attr);
                 type = ParseType.getFieldType(field);
-                val = ParseResultUtils.getFieldValue(value, field);
+                val = ReflectUtils.getValue(value, field);
             } else {
                 type = ParseType.getClassType(value);
                 val = value;
@@ -116,27 +117,6 @@ public class ParseResultUtils {
                     attr, e.getLocalizedMessage()),
                     e);
         }
-    }
-
-    /**
-     * 获取属性值
-     *
-     * @param obj   obj
-     * @param field field
-     * @return 获取属性值
-     */
-    private static Object getFieldValue(Object obj, Field field) {
-        field.setAccessible(true);
-        Object result;
-        try {
-            result = field.get(obj);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(MessageFormat.format(
-                    "{0}.{1} 属性值获取失败：{2}",
-                    obj.getClass().getName(), field.getName(), e.getLocalizedMessage()),
-                    e);
-        }
-        return result;
     }
 
 }
