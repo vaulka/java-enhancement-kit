@@ -121,7 +121,7 @@ public class StartTimeAndEndTimeValidator implements ConstraintValidator<StartTi
                 break;
             }
             default:
-                this.setErrorMessage(context, MessageFormat.format("不支持 {0} 时间类型", startTimeType));
+                this.setErrorMessage(context, MessageFormat.format("校验时间不支持 {0} 数据类型", startTimeType.getType()));
                 return false;
         }
         if (!canBeEquals && isEquals) {
