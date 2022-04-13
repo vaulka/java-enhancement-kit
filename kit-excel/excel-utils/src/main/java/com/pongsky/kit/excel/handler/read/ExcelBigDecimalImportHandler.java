@@ -1,6 +1,7 @@
 package com.pongsky.kit.excel.handler.read;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
+import com.pongsky.kit.type.parser.utils.ReflectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
@@ -26,7 +27,7 @@ public class ExcelBigDecimalImportHandler implements ExcelImportHandler {
             return;
         }
         BigDecimal value = new BigDecimal(str);
-        this.setValue(result, field, value);
+        ReflectUtils.setValue(result, field, value);
     }
 
 }

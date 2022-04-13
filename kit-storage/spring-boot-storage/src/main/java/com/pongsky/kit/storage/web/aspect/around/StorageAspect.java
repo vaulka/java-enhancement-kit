@@ -5,6 +5,7 @@ import com.pongsky.kit.storage.config.StorageProperties;
 import com.pongsky.kit.type.parser.enums.ClassType;
 import com.pongsky.kit.type.parser.enums.FieldType;
 import com.pongsky.kit.type.parser.utils.FieldParserUtils;
+import com.pongsky.kit.type.parser.utils.ReflectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -109,9 +110,9 @@ public class StorageAspect {
                     if (mark == null) {
                         break;
                     }
-                    Object result = this.getValue(originResult, field);
+                    Object result = ReflectUtils.getValue(originResult, field);
                     if (result != null) {
-                        this.setValue(originResult, field, storageProperties.getBaseUri() + result);
+                        ReflectUtils.setValue(originResult, field, storageProperties.getBaseUri() + result);
                     }
                     break;
                 }
@@ -119,7 +120,7 @@ public class StorageAspect {
                 case LIST:
                 case SET:
                 case OBJECT: {
-                    Object result = this.getValue(originResult, field);
+                    Object result = ReflectUtils.getValue(originResult, field);
                     if (result != null) {
                         this.storageResource(null, originResults, result);
                     }
@@ -130,42 +131,6 @@ public class StorageAspect {
             }
         }
         return originResult;
-    }
-
-    /**
-     * 获取属性值
-     *
-     * @param obj   obj
-     * @param field 字段
-     * @return 获取属性值
-     * @author pengsenhao
-     */
-    private Object getValue(Object obj, Field field) {
-        field.setAccessible(true);
-        Object result = null;
-        try {
-            result = field.get(obj);
-        } catch (IllegalAccessException e) {
-            log.error(e.getLocalizedMessage());
-        }
-        return result;
-    }
-
-    /**
-     * 设置属性值
-     *
-     * @param obj    obj
-     * @param field  字段
-     * @param result 值
-     * @author pengsenhao
-     */
-    private void setValue(Object obj, Field field, Object result) {
-        field.setAccessible(true);
-        try {
-            field.set(obj, result);
-        } catch (IllegalAccessException e) {
-            log.error(e.getLocalizedMessage());
-        }
     }
 
 }

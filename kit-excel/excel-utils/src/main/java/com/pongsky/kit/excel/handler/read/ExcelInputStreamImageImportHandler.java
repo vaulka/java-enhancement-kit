@@ -1,6 +1,7 @@
 package com.pongsky.kit.excel.handler.read;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
+import com.pongsky.kit.type.parser.utils.ReflectUtils;
 import org.apache.poi.ss.usermodel.PictureData;
 
 import java.io.ByteArrayInputStream;
@@ -20,7 +21,7 @@ public class ExcelInputStreamImageImportHandler implements ExcelImportHandler {
             return;
         }
         PictureData pictureData = (PictureData) obj;
-        this.setValue(result, field, new ByteArrayInputStream(pictureData.getData()));
+        ReflectUtils.setValue(result, field, new ByteArrayInputStream(pictureData.getData()));
     }
 
 }

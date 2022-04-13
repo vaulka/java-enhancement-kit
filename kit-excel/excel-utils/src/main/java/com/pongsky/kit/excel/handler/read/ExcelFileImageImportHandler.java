@@ -1,6 +1,7 @@
 package com.pongsky.kit.excel.handler.read;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
+import com.pongsky.kit.type.parser.utils.ReflectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.ss.usermodel.PictureData;
 
@@ -41,7 +42,7 @@ public class ExcelFileImageImportHandler implements ExcelImportHandler {
         try (OutputStream os = new FileOutputStream(file)) {
             os.write(pictureData.getData());
         }
-        this.setValue(result, field, file);
+        ReflectUtils.setValue(result, field, file);
     }
 
 }

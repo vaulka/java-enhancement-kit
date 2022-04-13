@@ -1,6 +1,4 @@
-package com.pongsky.kit.utils;
-
-import lombok.extern.slf4j.Slf4j;
+package com.pongsky.kit.type.parser.utils;
 
 import java.lang.reflect.Field;
 
@@ -9,7 +7,6 @@ import java.lang.reflect.Field;
  *
  * @author pengsenhao
  */
-@Slf4j
 public class ReflectUtils {
 
     /**
@@ -22,11 +19,11 @@ public class ReflectUtils {
      */
     public static Object getValue(Object obj, Field field) {
         field.setAccessible(true);
-        Object result = null;
+        Object result;
         try {
             result = field.get(obj);
         } catch (IllegalAccessException e) {
-            log.error(e.getLocalizedMessage());
+            throw new RuntimeException(e.getLocalizedMessage(), e);
         }
         return result;
     }
@@ -44,7 +41,7 @@ public class ReflectUtils {
         try {
             field.set(obj, result);
         } catch (IllegalAccessException e) {
-            log.error(e.getLocalizedMessage());
+            throw new RuntimeException(e.getLocalizedMessage(), e);
         }
     }
 

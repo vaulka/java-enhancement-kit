@@ -24,18 +24,4 @@ public interface ExcelImportHandler {
      */
     void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IOException, ReflectiveOperationException;
 
-    /**
-     * 设置属性值
-     *
-     * @param obj    obj
-     * @param field  字段
-     * @param result 值
-     * @throws IllegalAccessException IllegalAccessException
-     * @author pengsenhao
-     */
-    default void setValue(Object obj, Field field, Object result) throws IllegalAccessException {
-        field.setAccessible(true);
-        field.set(obj, result);
-    }
-
 }

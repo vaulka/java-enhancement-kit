@@ -31,7 +31,7 @@ public enum FieldType {
     /**
      * String
      */
-    STRING(0) {
+    STRING("String", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -44,7 +44,7 @@ public enum FieldType {
     /**
      * Byte
      */
-    BYTE(0) {
+    BYTE("Byte", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -57,7 +57,7 @@ public enum FieldType {
     /**
      * Short
      */
-    SHORT(0) {
+    SHORT("Short", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -70,7 +70,7 @@ public enum FieldType {
     /**
      * Integer
      */
-    INTEGER(0) {
+    INTEGER("Integer", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -83,7 +83,7 @@ public enum FieldType {
     /**
      * Long
      */
-    LONG(0) {
+    LONG("Long", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -96,7 +96,7 @@ public enum FieldType {
     /**
      * Float
      */
-    FLOAT(0) {
+    FLOAT("Float", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -109,7 +109,7 @@ public enum FieldType {
     /**
      * Double
      */
-    DOUBLE(0) {
+    DOUBLE("Double", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -122,7 +122,7 @@ public enum FieldType {
     /**
      * Character
      */
-    CHARACTER(0) {
+    CHARACTER("Character", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -135,7 +135,7 @@ public enum FieldType {
     /**
      * Boolean
      */
-    BOOLEAN(0) {
+    BOOLEAN("Boolean", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -148,7 +148,7 @@ public enum FieldType {
     /**
      * Array
      */
-    ARRAY(0) {
+    ARRAY("Array", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -161,7 +161,7 @@ public enum FieldType {
     /**
      * List
      */
-    LIST(0) {
+    LIST("List", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -174,7 +174,7 @@ public enum FieldType {
     /**
      * Set
      */
-    SET(0) {
+    SET("Set", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -187,7 +187,7 @@ public enum FieldType {
     /**
      * Map
      */
-    MAP(0) {
+    MAP("Map", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -200,7 +200,7 @@ public enum FieldType {
     /**
      * BigInteger
      */
-    BIG_INTEGER(0) {
+    BIG_INTEGER("BigInteger", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -213,7 +213,7 @@ public enum FieldType {
     /**
      * BigDecimal
      */
-    BIG_DECIMAL(0) {
+    BIG_DECIMAL("BigDecimal", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -226,7 +226,7 @@ public enum FieldType {
     /**
      * Date
      */
-    DATE(0) {
+    DATE("Date", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -239,7 +239,7 @@ public enum FieldType {
     /**
      * LocalDate
      */
-    LOCAL_DATE(0) {
+    LOCAL_DATE("LocalDate", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -252,7 +252,7 @@ public enum FieldType {
     /**
      * LocalTime
      */
-    LOCAL_TIME(0) {
+    LOCAL_TIME("LocalTime", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -265,7 +265,7 @@ public enum FieldType {
     /**
      * LocalDateTime
      */
-    LOCAL_DATE_TIME(0) {
+    LOCAL_DATE_TIME("LocalDateTime", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -278,7 +278,7 @@ public enum FieldType {
     /**
      * DayOfWeek
      */
-    DAY_OF_WEEK(0) {
+    DAY_OF_WEEK("DayOfWeek", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -289,9 +289,9 @@ public enum FieldType {
     },
 
     /**
-     * MONTH
+     * Month
      */
-    MONTH(0) {
+    MONTH("Month", 0) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -304,7 +304,7 @@ public enum FieldType {
     /**
      * Enum
      */
-    ENUM(Integer.MAX_VALUE) {
+    ENUM("Enum", Integer.MAX_VALUE) {
         @Override
         public boolean parser(Field field) {
             if (field == null) {
@@ -317,7 +317,7 @@ public enum FieldType {
     /**
      * Null
      */
-    NULL(Integer.MAX_VALUE) {
+    NULL("Null", Integer.MAX_VALUE) {
         @Override
         public boolean parser(Field field) {
             return field == null;
@@ -329,7 +329,7 @@ public enum FieldType {
      * <p>
      * 兜底类型
      */
-    OBJECT(Integer.MAX_VALUE) {
+    OBJECT("Object", Integer.MAX_VALUE) {
         @Override
         public boolean parser(Field field) {
             return false;
@@ -337,6 +337,11 @@ public enum FieldType {
     },
 
     ;
+
+    /**
+     * 字段类型
+     */
+    private final String type;
 
     /**
      * 字段解析顺序

@@ -1,6 +1,7 @@
 package com.pongsky.kit.excel.handler.read;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
+import com.pongsky.kit.type.parser.utils.ReflectUtils;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class ExcelIntegerWeekImportHandler implements ExcelImportHandler {
         if (value == null) {
             return;
         }
-        this.setValue(result, field, value);
+        ReflectUtils.setValue(result, field, value);
     }
 
 }

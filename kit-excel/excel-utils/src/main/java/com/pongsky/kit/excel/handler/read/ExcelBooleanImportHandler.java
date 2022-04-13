@@ -1,6 +1,7 @@
 package com.pongsky.kit.excel.handler.read;
 
 import com.pongsky.kit.excel.annotation.ExcelProperty;
+import com.pongsky.kit.type.parser.utils.ReflectUtils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class ExcelBooleanImportHandler implements ExcelImportHandler {
     public void exec(Object result, Field field, ExcelProperty excelProperty, Object obj) throws IllegalAccessException {
         if (obj instanceof Boolean) {
             // 如果是布尔类型，则直接处理
-            this.setValue(result, field, obj);
+            ReflectUtils.setValue(result, field, obj);
             return;
         }
         // 如果不是布尔类型，则默认按照字符串类型处理
@@ -35,7 +36,7 @@ public class ExcelBooleanImportHandler implements ExcelImportHandler {
         if (value == null) {
             return;
         }
-        this.setValue(result, field, value);
+        ReflectUtils.setValue(result, field, value);
     }
 
 }
