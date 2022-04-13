@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pongsky.kit.ip.utils.IpUtils;
 import com.pongsky.kit.response.GlobalResult;
 import com.pongsky.kit.response.enums.ResultCode;
+import com.pongsky.kit.validation.utils.ValidationUtils;
 import com.pongsky.kit.web.request.RequestUtils;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -28,8 +27,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -61,7 +58,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                          @Nonnull WebRequest request) {
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
                 (RequestContextHolder.currentRequestAttributes())).getRequest();
-        Object result = this.getResult(ResultCode.BindException, this.getFieldMessages(ex.getBindingResult()),
+        Object result = this.getResult(ResultCode.BindException, ValidationUtils.getErrorMessage(ex.getBindingResult()),
                 ex, httpServletRequest);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -105,82 +102,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
                 (RequestContextHolder.currentRequestAttributes())).getRequest();
         Object result = this.getResult(ResultCode.MethodArgumentNotValidException,
-                this.getFieldMessages(ex.getBindingResult()), ex, httpServletRequest);
+                ValidationUtils.getErrorMessage(ex.getBindingResult()), ex, httpServletRequest);
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 获取字段错误信息
-     *
-     * @param bindingResult bindingResult
-     * @return 字段错误信息
-     */
-    private String getFieldMessages(BindingResult bindingResult) {
-        String escapeInterval = "\\.";
-        String interval = ".";
-        String listStart = "java.util.List<";
-        StringBuilder stringBuilder = new StringBuilder("[ ");
-        if (bindingResult.getTarget() == null) {
-            bindingResult.getFieldErrors().forEach(error -> appendErrorMessage(stringBuilder,
-                    error.getField(), error.getDefaultMessage()));
-        } else {
-            bindingResult.getFieldErrors().forEach(error -> {
-                String filedName = error.getField();
-                Field field = Arrays.stream(bindingResult.getTarget().getClass().getDeclaredFields())
-                        .filter(f -> f.getName().equals(error.getField()))
-                        .findFirst()
-                        .orElse(null);
-                if (field == null) {
-                    appendErrorMessage(stringBuilder, filedName, error.getDefaultMessage());
-                    return;
-                }
-                ApiModelProperty meaning = field.getAnnotation(ApiModelProperty.class);
-                if (meaning != null) {
-                    filedName = meaning.value();
-                }
-                if (!(filedName.split(escapeInterval).length > 1 && meaning != null)) {
-                    appendErrorMessage(stringBuilder, filedName, error.getDefaultMessage());
-                    return;
-                }
-                int i = filedName.lastIndexOf(interval, (filedName.lastIndexOf(interval) - 1)) + 1;
-                String[] split = filedName.substring(i).split(escapeInterval);
-                filedName = split[0].substring(0, filedName.lastIndexOf("["));
-                String typeName = field.getGenericType().getTypeName();
-                if (!(typeName.startsWith(listStart))) {
-                    appendErrorMessage(stringBuilder, filedName, error.getDefaultMessage());
-                    return;
-                }
-                typeName = typeName.substring(listStart.length(), typeName.lastIndexOf(">"));
-                try {
-                    Optional<ApiModelProperty> optionalMeaning = Arrays.stream(Class.forName(typeName).getDeclaredFields())
-                            .filter(f -> f.getName().equals(split[1]))
-                            .map(f -> f.getAnnotation(ApiModelProperty.class))
-                            .findFirst();
-                    if (optionalMeaning.isPresent()) {
-                        filedName += optionalMeaning.get().value();
-                    }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                appendErrorMessage(stringBuilder, filedName, error.getDefaultMessage());
-            });
-        }
-        return stringBuilder.append("]").toString();
-    }
-
-    /**
-     * 追加错误字段信息
-     *
-     * @param stringBuilder 全部错误信息
-     * @param filedName     字段名称
-     * @param message       字段错误信息
-     */
-    private void appendErrorMessage(StringBuilder stringBuilder, String filedName, String message) {
-        stringBuilder
-                .append(filedName)
-                .append(" ")
-                .append(message)
-                .append("; ");
     }
 
     /**
