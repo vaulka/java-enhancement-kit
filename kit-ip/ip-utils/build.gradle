@@ -35,7 +35,7 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "validation-utils"
+            artifactId "ip-utils"
             version version.toString()
             description "Java 增强套件 之 IP utils 模块"
 
