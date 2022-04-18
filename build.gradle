@@ -26,6 +26,7 @@ ext {
     oshiVersion = "6.1.6"
     druidVersion = "1.2.8"
     minioVersion = "7.1.4"
+    jolCoreVersion = "0.16"
     okhttpVersion = "4.9.3"
     commonsTextVersion = "1.9"
     fastjsonVersion = "1.2.79"
