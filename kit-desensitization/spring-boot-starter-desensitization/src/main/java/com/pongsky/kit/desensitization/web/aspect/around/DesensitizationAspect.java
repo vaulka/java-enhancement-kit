@@ -103,7 +103,7 @@ public class DesensitizationAspect {
             default:
                 return originResult;
         }
-        List<Field> fields = FieldParserUtils.getSuperFields(originResult.getClass());
+        List<Field> fields = FieldParserUtils.getSuperFields(originResult.getClass(), true);
         for (Field field : fields) {
             FieldType fieldType = FieldType.getType(field);
             switch (fieldType) {

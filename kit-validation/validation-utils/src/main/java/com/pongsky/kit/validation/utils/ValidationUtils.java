@@ -120,7 +120,7 @@ public class ValidationUtils {
                                  Map<Field, String> indexMap,
                                  Class<?> clazz,
                                  String fieldName) {
-        List<Field> rootFields = FieldParserUtils.getSuperFields(clazz);
+        List<Field> rootFields = FieldParserUtils.getSuperFields(clazz, true);
         String baseFieldName = fieldName.contains(POINT)
                 ? fieldName.substring(0, fieldName.indexOf(POINT))
                 : "",

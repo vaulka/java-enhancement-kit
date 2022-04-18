@@ -61,7 +61,7 @@ public class ExcelExportUtils {
         info.setFields(new ArrayList<>());
         int topHeadMaxNum = 1;
         int leftHeadMaxNum = 1;
-        List<Field> fields = FieldParserUtils.getSuperFields(clazz);
+        List<Field> fields = FieldParserUtils.getSuperFields(clazz, true);
         for (Field field : fields) {
             ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
             if (excelProperty != null) {
