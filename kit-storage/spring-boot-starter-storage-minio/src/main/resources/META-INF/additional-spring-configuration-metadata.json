@@ -9,25 +9,25 @@
         {
             "name": "minio.endpoint",
             "type": "java.lang.String",
-            "sourceType": "com.pongsky.kit.storage.config.MinioProperties",
+            "sourceType": "com.pongsky.kit.storage.properties.MinioProperties",
             "description": "endpoint."
         },
         {
             "name": "minio.bucket",
             "type": "java.lang.String",
-            "sourceType": "com.pongsky.kit.storage.config.MinioProperties",
+            "sourceType": "com.pongsky.kit.storage.properties.MinioProperties",
             "description": "bucket."
         },
         {
             "name": "minio.accessKey",
             "type": "java.lang.String",
-            "sourceType": "com.pongsky.kit.storage.config.MinioProperties",
+            "sourceType": "com.pongsky.kit.storage.properties.MinioProperties",
             "description": "accessKey."
         },
         {
             "name": "minio.secretKey",
             "type": "java.lang.String",
-            "sourceType": "com.pongsky.kit.storage.config.MinioProperties",
+            "sourceType": "com.pongsky.kit.storage.properties.MinioProperties",
             "description": "secretKey."
         }
     ],

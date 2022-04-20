@@ -1,11 +1,11 @@
-package com.pongsky.kit.captcha.config;
+package com.pongsky.kit.captcha.properties;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 输入型算数 验证码 参数配置
+ * 输入型字符 验证码 参数配置
  *
  * @author pengsenhao
  */
@@ -15,14 +15,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class KaptchaProperties {
 
     /**
-     * 最小验证码数值
+     * 验证码数量
      */
-    private int minCode = 10;
-
-    /**
-     * 最大验证码数值
-     */
-    private int maxCode = 99;
+    private int codeNum = 5;
 
     /**
      * 每个验证码宽度间距

@@ -1,6 +1,8 @@
-package com.pongsky.kit.storage.config;
+package com.pongsky.kit.storage.autoconfigure;
 
 import com.aliyun.oss.OSS;
+import com.pongsky.kit.storage.properties.OssProperties;
+import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.storage.utils.AliYunOssUtils;
 import com.pongsky.kit.storage.utils.StorageUtils;
 import com.pongsky.kit.storage.web.aspect.around.StorageAspect;

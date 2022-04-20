@@ -1,4 +1,4 @@
-package com.pongsky.kit.excel.config;
+package com.pongsky.kit.excel.autoconfigure;
 
 import com.pongsky.kit.excel.web.aspect.afterreturning.ExcelExportAspect;
 import org.springframework.context.annotation.Configuration;

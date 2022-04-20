@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.storage.config.OssAutoConfiguration
+com.pongsky.kit.storage.autoconfigure.OssAutoConfiguration

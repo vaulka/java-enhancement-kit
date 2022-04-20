@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.excel.config.ExcelAutoConfiguration
+com.pongsky.kit.excel.autoconfigure.ExcelAutoConfiguration

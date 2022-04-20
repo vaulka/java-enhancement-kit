@@ -9,25 +9,25 @@
         {
             "name": "aliyun.oss.endpoint",
             "type": "java.lang.String",
-            "sourceType": "com.pongsky.kit.storage.config.OssProperties",
+            "sourceType": "com.pongsky.kit.storage.properties.OssProperties",
             "description": "endpoint."
         },
         {
             "name": "aliyun.oss.bucket",
             "type": "java.lang.String",
-            "sourceType": "com.pongsky.kit.storage.config.OssProperties",
+            "sourceType": "com.pongsky.kit.storage.properties.OssProperties",
             "description": "bucket."
         },
         {
             "name": "aliyun.oss.access-key-id",
             "type": "java.lang.String",
-            "sourceType": "com.pongsky.kit.storage.config.OssProperties",
+            "sourceType": "com.pongsky.kit.storage.properties.OssProperties",
             "description": "accessKeyId."
         },
         {
             "name": "aliyun.oss.secret-access-key",
             "type": "java.lang.String",
-            "sourceType": "com.pongsky.kit.storage.config.OssProperties",
+            "sourceType": "com.pongsky.kit.storage.properties.OssProperties",
             "description": "secretAccessKey."
         }
     ],

@@ -1,4 +1,4 @@
-package com.pongsky.kit.storage.config;
+package com.pongsky.kit.storage.properties;
 
 import lombok.Getter;
 import lombok.Setter;

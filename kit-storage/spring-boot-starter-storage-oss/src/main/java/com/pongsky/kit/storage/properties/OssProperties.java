@@ -1,18 +1,18 @@
-package com.pongsky.kit.storage.config;
+package com.pongsky.kit.storage.properties;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * MinIO 配置
+ * 阿里云 OSS 配置
  *
  * @author pengsenhao
  */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "minio")
-public class MinioProperties {
+@ConfigurationProperties("aliyun.oss")
+public class OssProperties {
 
     /**
      * endpoint
@@ -25,13 +25,13 @@ public class MinioProperties {
     private String bucket;
 
     /**
-     * accessKey
+     * accessKeyId
      */
-    private String accessKey;
+    private String accessKeyId;
 
     /**
-     * secretKey
+     * secretAccessKey
      */
-    private String secretKey;
+    private String secretAccessKey;
 
 }

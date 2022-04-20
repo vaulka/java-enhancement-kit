@@ -1,15 +1,20 @@
-package com.pongsky.kit.captcha.config;
+package com.pongsky.kit.captcha.autoconfigure;
 
+import com.pongsky.kit.captcha.properties.KaptchaProperties;
 import com.pongsky.kit.captcha.utils.KaptchaUtils;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 
 /**
- * 输入型字符 验证码 配置
+ * 输入型字符 验证码 自动装配
  *
  * @author pengsenhao
  */
-public class KaptchaConfiguration {
+@Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties({KaptchaProperties.class})
+public class KaptchaAutoConfiguration {
 
     /**
      * 创建验证码工具类

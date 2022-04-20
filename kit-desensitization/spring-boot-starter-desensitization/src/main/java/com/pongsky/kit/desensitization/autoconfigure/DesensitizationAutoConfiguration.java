@@ -1,4 +1,4 @@
-package com.pongsky.kit.desensitization.config;
+package com.pongsky.kit.desensitization.autoconfigure;
 
 import com.pongsky.kit.desensitization.web.aspect.around.DesensitizationAspect;
 import org.springframework.context.annotation.Configuration;

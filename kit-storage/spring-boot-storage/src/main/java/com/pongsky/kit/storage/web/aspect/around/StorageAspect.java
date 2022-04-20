@@ -1,7 +1,7 @@
 package com.pongsky.kit.storage.web.aspect.around;
 
 import com.pongsky.kit.storage.annotation.StorageResourceMark;
-import com.pongsky.kit.storage.config.StorageProperties;
+import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.type.parser.enums.ClassType;
 import com.pongsky.kit.type.parser.enums.FieldType;
 import com.pongsky.kit.type.parser.utils.FieldParserUtils;
