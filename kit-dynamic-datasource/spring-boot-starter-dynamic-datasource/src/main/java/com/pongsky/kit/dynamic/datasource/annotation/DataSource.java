@@ -23,7 +23,7 @@ public @interface DataSource {
      * <p>
      * 可填写数据源名称或组名，填写规则详情见 {@link MultiDataSourceProperties#multiDatasets}
      * <p>
-     * 不填写则使用默认数据源
+     * 未填写则使用默认数据源
      *
      * @return 数据源名称
      */

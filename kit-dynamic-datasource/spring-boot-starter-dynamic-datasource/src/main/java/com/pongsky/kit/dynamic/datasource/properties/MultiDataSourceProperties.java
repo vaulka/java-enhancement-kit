@@ -31,22 +31,28 @@ public class MultiDataSourceProperties {
     public static class DataSourceProperties {
 
         /**
-         * 数据库驱动程序
-         */
-        private String driverClassName;
-
-        /**
          * 数据库 URL
          */
         private String url;
 
         /**
+         * 数据库驱动程序
+         * <p>
+         * 未填写则复用默认配置数据库配置信息
+         */
+        private String driverClassName;
+
+        /**
          * 数据库账号
+         * <p>
+         * 未填写则复用默认配置数据库配置信息
          */
         private String username;
 
         /**
          * 数据库密码
+         * <p>
+         * 未填写则复用默认配置数据库配置信息
          */
         private String password;
 
