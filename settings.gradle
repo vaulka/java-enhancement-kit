@@ -92,3 +92,9 @@ findProject(":kit-system")?.name = "system"
 
 include "system:system-utils"
 findProject(":system:system-utils")?.name = "system-utils"
+
+include "kit-dynamic-datasource"
+findProject(":kit-dynamic-datasource")?.name = "dynamic-datasource"
+
+include "dynamic-datasource:spring-boot-starter-dynamic-datasource"
+findProject(":dynamic-datasource:spring-boot-starter-dynamic-datasource")?.name = "spring-boot-starter-dynamic-datasource"

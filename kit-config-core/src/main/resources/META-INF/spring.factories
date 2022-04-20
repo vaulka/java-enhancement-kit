@@ -1,7 +1,6 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
 com.pongsky.kit.config.property.InstancePropertySourceEnvironmentPostProcessor
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.config.DruidConfig,\
 com.pongsky.kit.config.redis.RedisConfig,\
 com.pongsky.kit.config.FeignConfig,\
 com.pongsky.kit.config.JacksonConfig,\

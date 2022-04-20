@@ -9,7 +9,10 @@ ext {
     springVersion = "5.3.13"
     servletVersion = "4.0.1"
     springfoxVersion = "3.0.0"
-    mybatisPlusVersion = "3.5.1"
+
+    // 需要兼容 org.springframework.boot:spring-boot-starter-tomcat 下的版本
+    // org.apache.tomcat.embed:tomcat-embed-core
+    tomcatVersion = "9.0.55"
 
     // 需要兼容 org.springframework.boot:spring-boot-starter-validation 下的版本
     // org.glassfish:jakarta.el
@@ -30,6 +33,7 @@ ext {
     okhttpVersion = "4.9.3"
     commonsTextVersion = "1.9"
     fastjsonVersion = "1.2.79"
+    mybatisPlusVersion = "3.5.1"
     commonsCodecVersion = "1.15"
     aliyunSdkOssVersion = "3.14.0"
     commonsLang3Version = "3.12.0"
