@@ -1,5 +1,6 @@
 package com.pongsky.kit.dynamic.datasource.annotation;
 
+import com.pongsky.kit.dynamic.datasource.core.DynamicDataSourceContextHolder;
 import com.pongsky.kit.dynamic.datasource.properties.MultiDataSourceProperties;
 
 import java.lang.annotation.ElementType;
@@ -27,6 +28,6 @@ public @interface DataSource {
      *
      * @return 数据源名称
      */
-    String value() default "";
+    String value() default DynamicDataSourceContextHolder.DEFAULT_DATA_SOURCE_NAME;
 
 }

@@ -84,6 +84,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    runtimeOnly "mysql:mysql-connector-java:$mysqlVersion"
     api "org.apache.commons:commons-lang3:$commonsLang3Version"
     compileOnly "org.apache.tomcat.embed:tomcat-embed-core:$tomcatVersion"
 
