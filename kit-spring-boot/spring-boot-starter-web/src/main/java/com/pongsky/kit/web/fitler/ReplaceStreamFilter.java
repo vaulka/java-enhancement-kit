@@ -1,8 +1,4 @@
-package com.pongsky.kit.web.filter;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
+package com.pongsky.kit.web.fitler;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,12 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 替换 HttpServletRequest，实现 body 数据多次读取
+ * 替换 HttpServletRequest，实现 request body 数据多次读取
  *
  * @author pengsenhao
  */
-@Slf4j
-@Configuration
 public class ReplaceStreamFilter implements Filter {
 
     @Override
@@ -29,26 +23,33 @@ public class ReplaceStreamFilter implements Filter {
     }
 
     /**
-     * 上传文件请求头
+     * 上传文件请求头列表
      */
-    private static final List<String> UPLOAD_FILE_CONTENT_TYPE = Arrays.asList(
-            MediaType.IMAGE_GIF_VALUE,
-            MediaType.IMAGE_JPEG_VALUE,
-            MediaType.IMAGE_PNG_VALUE,
-            MediaType.MULTIPART_FORM_DATA_VALUE
+    private static final List<String> UPLOAD_FILE_CONTENT_TYPES = Arrays.asList(
+            "image/bmp",
+            "image/gif",
+            "image/jpg",
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/tiff",
+            "image/webp",
+            "multipart/form-data",
+            "multipart/mixed",
+            "multipart/related"
     );
 
     /**
-     * 判断是否切换 request
+     * 判断是否缓存 request body
      *
      * @param request request
-     * @return 判断是否切换 request
+     * @return 判断是否缓存 request body
      */
-    public boolean isCheckRequest(ServletRequest request) {
+    public boolean isCacheRequestBody(ServletRequest request) {
         if (request.getContentType() == null) {
             return false;
         }
-        return UPLOAD_FILE_CONTENT_TYPE.stream()
+        return UPLOAD_FILE_CONTENT_TYPES.stream()
                 .noneMatch(contentType -> request.getContentType().contains(contentType));
     }
 
@@ -56,7 +57,7 @@ public class ReplaceStreamFilter implements Filter {
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        if (isCheckRequest(request)) {
+        if (this.isCacheRequestBody(request)) {
             chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
         } else {
             chain.doFilter(request, response);

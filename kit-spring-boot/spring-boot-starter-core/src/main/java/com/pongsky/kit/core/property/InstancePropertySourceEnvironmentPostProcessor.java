@@ -1,4 +1,4 @@
-package com.pongsky.kit.config.property;
+package com.pongsky.kit.core.property;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;

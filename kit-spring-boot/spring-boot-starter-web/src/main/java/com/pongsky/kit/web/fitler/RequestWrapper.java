@@ -1,7 +1,5 @@
-package com.pongsky.kit.web.filter;
+package com.pongsky.kit.web.fitler;
 
-
-import feign.form.ContentType;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -11,18 +9,18 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 /**
- * 替换 HttpServletRequest，实现 body 数据多次读取
+ * 替换 HttpServletRequest，实现 request body 数据多次读取
  *
  * @author pengsenhao
  */
 public class RequestWrapper extends HttpServletRequestWrapper {
 
     /**
-     * 存储body数据的容器
+     * 存储 request body 数据的容器
      */
     private final byte[] body;
 
@@ -31,9 +29,11 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         body = readBody(request);
     }
 
+    private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
+
     public byte[] readBody(HttpServletRequest request) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (request.getContentType().contains(ContentType.URLENCODED.getHeader())) {
+        if (request.getContentType().contains(CONTENT_TYPE)) {
             request.getParameterMap().forEach((k, v) -> {
                 if (v == null) {
                     return;
@@ -45,7 +45,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             }
         } else {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(),
-                    Charset.defaultCharset()))) {
+                    StandardCharsets.UTF_8))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     stringBuilder.append(line);
@@ -54,7 +54,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
                 throw new RuntimeException(e.getLocalizedMessage(), e);
             }
         }
-        return stringBuilder.toString().getBytes(Charset.defaultCharset());
+        return stringBuilder.toString().getBytes(StandardCharsets.UTF_8);
     }
 
     @Override

@@ -14,7 +14,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.openjdk.jol.vm.VM;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -30,7 +29,6 @@ import java.util.Set;
  */
 @Slf4j
 @Aspect
-@Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(value = "storage.is-enable-resource-mark", havingValue = "true", matchIfMissing = true)
 public class StorageAspect {

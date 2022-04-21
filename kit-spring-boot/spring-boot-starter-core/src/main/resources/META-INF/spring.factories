@@ -1,0 +1,4 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.pongsky.kit.core.property.InstancePropertySourceEnvironmentPostProcessor
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.pongsky.kit.core.autoconfigure.CoreAutoConfiguration

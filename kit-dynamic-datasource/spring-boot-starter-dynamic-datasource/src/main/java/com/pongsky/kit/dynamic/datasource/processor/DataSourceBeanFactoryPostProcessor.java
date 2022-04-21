@@ -1,5 +1,6 @@
 package com.pongsky.kit.dynamic.datasource.processor;
 
+import lombok.NonNull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -26,7 +27,7 @@ public class DataSourceBeanFactoryPostProcessor implements BeanDefinitionRegistr
     }
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
     }
 
 }

@@ -1,4 +1,4 @@
-package com.pongsky.kit.config.property;
+package com.pongsky.kit.core.property;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -16,7 +16,6 @@ public class Instance {
      * 获取实例ID
      *
      * @return 实例ID
-     * @author pengsenhao
      */
     public String getId() {
         InetAddress address;
@@ -24,19 +23,19 @@ public class Instance {
             address = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            throw new Error("获取本地IP失败");
+            throw new RuntimeException("获取本地IP失败");
         }
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            throw new Error(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
         // Use specified byte update digest.
         md.update(address.getHostName().getBytes());
         md.update(address.getHostAddress().getBytes());
-        //Get cipher text
+        // Get cipher text
         byte[] b = md.digest();
         // The cipher text converted to hexadecimal string
         StringBuilder su = new StringBuilder();

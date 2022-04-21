@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author pengsenhao
  **/
 @Aspect
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE + 1)
 public class DataSourceAspect {
 
     @Around("@within(com.pongsky.kit.dynamic.datasource.annotation.DataSource) " +
