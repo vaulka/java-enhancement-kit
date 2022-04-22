@@ -142,6 +142,12 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         Class<?> methodReturnType = Objects.requireNonNull(returnType.getMethod()).getReturnType();
         if (methodReturnType == ResponseEntity.class && returnType.getContainingClass() == GlobalExceptionHandler.class) {
             // 已在全局异常处理过了，直接返回
+            try {
+                log.error("FAIL RESPONSE result: [{}]", jsonMapper.writeValueAsString(Optional.ofNullable(body).orElse("")));
+            } catch (JsonProcessingException e) {
+                log.error(e.getLocalizedMessage());
+                log.error("FAIL RESPONSE result: [{}]", Optional.ofNullable(body).orElse(""));
+            }
             return body;
         }
         Object exception;
@@ -201,6 +207,13 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         if (response != null) {
             response.setStatus(processor.httpStatus().value());
         }
+        result = result != null ? result : exception.getLocalizedMessage();
+        try {
+            log.error("FAIL RESPONSE result: [{}]", jsonMapper.writeValueAsString(Optional.ofNullable(result).orElse("")));
+        } catch (JsonProcessingException e) {
+            log.error(e.getLocalizedMessage());
+            log.error("FAIL RESPONSE result: [{}]", Optional.ofNullable(result).orElse(""));
+        }
         return result;
     }
 
@@ -226,21 +239,27 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         Optional<BaseSuccessProcessor> opProcessor = SUCCESS_PROCESSORS.stream()
                 .filter(p -> p.isHitProcessor(request, APPLICATION_CONTEXT))
                 .findFirst();
-        if (!opProcessor.isPresent()) {
-            return result != null ? result : body;
+        if (opProcessor.isPresent()) {
+            BaseSuccessProcessor processor = opProcessor.get();
+            if (result == null) {
+                result = processor.execBefore(body, request, APPLICATION_CONTEXT);
+            }
+            if (result == null) {
+                result = processor.exec(body, request, APPLICATION_CONTEXT);
+            }
+            processor.execAfter(request, request, APPLICATION_CONTEXT);
+            if (response != null) {
+                response.setStatus(processor.httpStatus().value());
+            }
         }
-        BaseSuccessProcessor processor = opProcessor.get();
-        if (result == null) {
-            result = processor.execBefore(body, request, APPLICATION_CONTEXT);
+        result = result != null ? result : body;
+        try {
+            log.info("SUCCESS RESPONSE result: [{}]", jsonMapper.writeValueAsString(Optional.ofNullable(result).orElse("")));
+        } catch (JsonProcessingException e) {
+            log.error(e.getLocalizedMessage());
+            log.info("SUCCESS RESPONSE result: [{}]", Optional.ofNullable(result).orElse(""));
         }
-        if (result == null) {
-            result = processor.exec(body, request, APPLICATION_CONTEXT);
-        }
-        processor.execAfter(request, request, APPLICATION_CONTEXT);
-        if (response != null) {
-            response.setStatus(processor.httpStatus().value());
-        }
-        return result != null ? result : body;
+        return result;
     }
 
 }

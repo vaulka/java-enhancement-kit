@@ -138,7 +138,7 @@ public class ControllerAspect {
      */
     @AfterThrowing(value = "com.pongsky.kit.web.aspect.ControllerAspect.point()", throwing = "exception")
     public void exec(Throwable exception) {
-        log.error("FAIL RESPONSE: [{}]", exception.getLocalizedMessage());
+        log.error("FAIL RESPONSE: [{}]", Optional.ofNullable(exception.getLocalizedMessage()).orElse(""));
     }
 
 }

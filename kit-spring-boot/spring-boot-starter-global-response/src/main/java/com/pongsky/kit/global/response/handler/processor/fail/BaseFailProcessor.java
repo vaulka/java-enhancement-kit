@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * 【失败】全局响应处理器
@@ -90,7 +91,7 @@ public interface BaseFailProcessor {
     default void log(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
         LOG.error("");
         LOG.error("========================= Started EXCEPTION =========================");
-        LOG.error("EXCEPTION message: [{}]", exception.getLocalizedMessage() != null ? exception.getLocalizedMessage() : exception.getMessage());
+        LOG.error("EXCEPTION message: [{}]", Optional.ofNullable(exception.getLocalizedMessage()).orElse(exception.getMessage()));
         if (isSprintStackTrace()) {
             exception.printStackTrace();
         }
