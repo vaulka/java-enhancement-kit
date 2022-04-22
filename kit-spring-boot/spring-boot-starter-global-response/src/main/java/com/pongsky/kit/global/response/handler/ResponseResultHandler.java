@@ -8,7 +8,6 @@ import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.DefaultFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessAroundProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessProcessor;
-import com.pongsky.kit.global.response.handler.processor.success.impl.DefaultSuccessProcessor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -89,11 +89,6 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     private static final List<BaseSuccessProcessor> SUCCESS_PROCESSORS = new CopyOnWriteArrayList<>();
 
     /**
-     * 【成功】默认响应处理器
-     */
-    private static BaseSuccessProcessor DEFAULT_SUCCESS_PROCESSOR = null;
-
-    /**
      * 应用上下文
      */
     private static ApplicationContext APPLICATION_CONTEXT = null;
@@ -106,7 +101,6 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         APPLICATION_CONTEXT = SpringUtils.getApplicationContext();
         SUCCESS_AROUND_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseSuccessAroundProcessor.class).values());
         SUCCESS_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseSuccessProcessor.class).values());
-        DEFAULT_SUCCESS_PROCESSOR = APPLICATION_CONTEXT.getBean(DefaultSuccessProcessor.class);
 
         FAIL_AROUND_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseFailAroundProcessor.class).values());
         FAIL_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseFailProcessor.class).values());
@@ -155,7 +149,7 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
             exception = new NoHandlerFoundException(httpServletRequest.getMethod(), httpServletRequest.getRequestURI(),
                     new ServletServerHttpRequest(httpServletRequest).getHeaders());
         } else {
-            exception = httpServletRequest.getAttribute(GlobalExceptionHandler.class.getSimpleName());
+            exception = httpServletRequest.getAttribute(GlobalExceptionHandler.class.getName());
         }
         Object result;
         if (exception != null) {
@@ -229,10 +223,13 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
             }
         }
         // 其次匹配处理器
-        BaseSuccessProcessor processor = SUCCESS_PROCESSORS.stream()
+        Optional<BaseSuccessProcessor> opProcessor = SUCCESS_PROCESSORS.stream()
                 .filter(p -> p.isHitProcessor(request, APPLICATION_CONTEXT))
-                .findFirst()
-                .orElse(DEFAULT_SUCCESS_PROCESSOR);
+                .findFirst();
+        if (!opProcessor.isPresent()) {
+            return result != null ? result : body;
+        }
+        BaseSuccessProcessor processor = opProcessor.get();
         if (result == null) {
             result = processor.execBefore(body, request, APPLICATION_CONTEXT);
         }
@@ -243,7 +240,7 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         if (response != null) {
             response.setStatus(processor.httpStatus().value());
         }
-        return result;
+        return result != null ? result : body;
     }
 
 }

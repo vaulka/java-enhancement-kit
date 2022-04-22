@@ -16,13 +16,12 @@ public class DataSourceBeanFactoryPostProcessor implements BeanDefinitionRegistr
     /**
      * 数据源初始化后置执行器
      */
-    private static final String DATA_SOURCE_INITIALIZER_POST_PROCESSOR = "dataSourceInitializerPostProcessor";
+    private static final String BEAN_NAME = "dataSourceInitializerPostProcessor";
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        if (registry.containsBeanDefinition(DATA_SOURCE_INITIALIZER_POST_PROCESSOR)) {
-            // 将数据源初始化后置执行器进行删除
-            registry.removeBeanDefinition(DATA_SOURCE_INITIALIZER_POST_PROCESSOR);
+        if (registry.containsBeanDefinition(BEAN_NAME)) {
+            registry.removeBeanDefinition(BEAN_NAME);
         }
     }
 

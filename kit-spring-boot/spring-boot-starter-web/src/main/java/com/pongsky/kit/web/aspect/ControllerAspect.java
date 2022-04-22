@@ -64,15 +64,13 @@ public class ControllerAspect {
             return;
         }
         HttpServletRequest request = attributes.getRequest();
+        for (Annotation annotation : point.getTarget().getClass().getAnnotations()) {
+            request.setAttribute(annotation.annotationType().getName(), annotation);
+        }
         MethodSignature sign = (MethodSignature) point.getSignature();
         Method method = sign.getMethod();
         for (Annotation annotation : method.getAnnotations()) {
-            String simpleName = annotation.annotationType().getSimpleName();
-            request.setAttribute(simpleName, simpleName);
-        }
-        for (Annotation annotation : point.getTarget().getClass().getAnnotations()) {
-            String simpleName = annotation.annotationType().getSimpleName();
-            request.setAttribute(simpleName, simpleName);
+            request.setAttribute(annotation.annotationType().getName(), annotation);
         }
     }
 
