@@ -22,7 +22,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -79,11 +78,9 @@ public class ControllerAspect {
 
     /**
      * controller 请求日志打印
-     *
-     * @throws IOException IOException
      */
     @Before("com.pongsky.kit.web.aspect.ControllerAspect.point()")
-    public void exec() throws IOException {
+    public void exec() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes == null) {
             return;
@@ -121,7 +118,7 @@ public class ControllerAspect {
             return point.proceed();
         } finally {
             log.info("REQUEST cost: [{}] ms", System.currentTimeMillis() - start);
-            log.info("========================= Ended REQUEST =========================");
+            log.info("========================== Ended REQUEST ==========================");
         }
     }
 

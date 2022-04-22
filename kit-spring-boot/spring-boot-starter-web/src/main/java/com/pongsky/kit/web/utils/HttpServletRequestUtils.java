@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
-import java.io.IOException;
 
 /**
  * httpServletRequest 工具类
@@ -18,14 +17,16 @@ public class HttpServletRequestUtils {
      *
      * @param request request
      * @return 获取 request body 数据
-     * @throws IOException IOException
      */
-    public static String getBody(HttpServletRequest request) throws IOException {
+    public static String getBody(HttpServletRequest request) {
         StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader br = request.getReader();
-        String str;
-        while ((str = br.readLine()) != null) {
-            stringBuilder.append(str);
+        try {
+            BufferedReader br = request.getReader();
+            String str;
+            while ((str = br.readLine()) != null) {
+                stringBuilder.append(str);
+            }
+        } catch (Exception ignored) {
         }
         return StringUtils.isNotBlank(stringBuilder.toString())
                 ? stringBuilder.toString()

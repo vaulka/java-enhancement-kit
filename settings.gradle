@@ -107,3 +107,9 @@ findProject(":spring-boot:spring-boot-starter-core")?.name = "spring-boot-starte
 
 include "spring-boot:spring-boot-starter-web"
 findProject(":spring-boot:spring-boot-starter-web")?.name = "spring-boot-starter-web"
+
+include "spring-boot:spring-boot-common"
+findProject(":spring-boot:spring-boot-common")?.name = "spring-boot-common"
+
+include "spring-boot:spring-boot-starter-global-response"
+findProject(":spring-boot:spring-boot-starter-global-response")?.name = "spring-boot-starter-global-response"

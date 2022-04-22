@@ -8,7 +8,9 @@ ext {
     springBootVersion = "2.4.13"
     springVersion = "5.3.13"
     servletVersion = "4.0.1"
+
     springfoxVersion = "3.0.0"
+    swaggerAnnotationVersion = "1.5.20"
 
     // 需要兼容 org.springframework.boot:spring-boot-starter-tomcat 下的版本
     // org.apache.tomcat.embed:tomcat-embed-core

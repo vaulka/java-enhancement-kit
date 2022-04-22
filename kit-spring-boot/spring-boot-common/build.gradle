@@ -35,13 +35,13 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "system-utils"
+            artifactId "spring-boot-common"
             version version.toString()
-            description "Java 增强套件 之 系统 utils 模块"
+            description "Java 增强套件 之 公共 Spring Boot 模块"
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件 之 系统 utils 模块"
+                description = "Java 增强套件 之 公共 Spring Boot 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
@@ -72,6 +72,5 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    api "com.github.oshi:oshi-core:$oshiVersion"
     compileOnly "io.swagger:swagger-annotations:$swaggerAnnotationVersion"
 }

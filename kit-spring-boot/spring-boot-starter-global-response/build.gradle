@@ -2,10 +2,22 @@ plugins {
     id "signing"
     id "java-library"
     id "maven-publish"
+    id "org.springframework.boot" version "$springBootVersion"
+    id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
 jar {
     enabled = true
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+    }
 }
 
 task sourcesJar(type: Jar) {
@@ -35,13 +47,13 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "system-utils"
+            artifactId "spring-boot-starter-global-response"
             version version.toString()
-            description "Java 增强套件 之 系统 utils 模块"
+            description "Java 增强套件 之 全局响应 Spring Boot Starter 模块"
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件 之 系统 utils 模块"
+                description = "Java 增强套件 之 全局响应 Spring Boot Starter 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
@@ -69,9 +81,16 @@ signing {
 }
 
 dependencies {
+    api project(":validation:validation-utils")
+    api project(":spring-boot:spring-boot-common")
+    api project(":spring-boot:spring-boot-starter-web")
+    api project(":spring-boot:spring-boot-starter-core")
+
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    api "com.github.oshi:oshi-core:$oshiVersion"
-    compileOnly "io.swagger:swagger-annotations:$swaggerAnnotationVersion"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    api "org.springframework.boot:spring-boot-starter-validation"
+    compileOnly "org.springframework.boot:spring-boot-starter-security"
 }
