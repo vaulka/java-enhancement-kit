@@ -52,7 +52,6 @@ public class DesensitizationAspect {
      * @param originResults 原始 result 列表（防止堆栈溢出）
      * @param originResult  原始 result
      * @return 脱敏后的数据
-     * @author pengsenhao
      */
     @SuppressWarnings({"unchecked"})
     private Object desensitization(DesensitizationMark mark, List<Object> originResults, Object originResult)

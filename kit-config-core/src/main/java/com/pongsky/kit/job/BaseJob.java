@@ -25,8 +25,6 @@ public abstract class BaseJob implements Job {
 
     /**
      * 执行任务
-     *
-     * @author pengsenhao
      */
     @Override
     public void execute(JobExecutionContext context) {
@@ -44,7 +42,6 @@ public abstract class BaseJob implements Job {
      * 执行任务
      *
      * @param context job context
-     * @author pengsenhao
      */
     protected abstract void exec(JobExecutionContext context);
 

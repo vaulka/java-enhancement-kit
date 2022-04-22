@@ -27,7 +27,6 @@ public @interface DesensitizationMark {
      * 脱敏处理器
      *
      * @return 脱敏处理器
-     * @author pengsenhao
      */
     Class<? extends DesensitizationHandler> handler();
 

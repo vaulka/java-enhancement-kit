@@ -56,16 +56,13 @@ public class AliYunOssUtils implements StorageUtils {
      * 创建 client
      *
      * @return 创建 client
-     * @author pengsenhao
      */
     private OSS getClient() {
         return new OSSClientBuilder().build(endpoint, accessKeyId, secretAccessKey);
     }
 
-    /***
-     *  创建 bucket（如果不存在，则自动创建）
-     *
-     * @author pengsenhao
+    /**
+     * 创建 bucket（如果不存在，则自动创建）
      */
     @Override
     public void createBucket() {
@@ -101,7 +98,6 @@ public class AliYunOssUtils implements StorageUtils {
      * @param contentType 文件类型
      * @param inputStream input 流
      * @return 文件访问路径
-     * @author pengsenhao
      */
     @Override
     public String upload(String fileName, String contentType, InputStream inputStream) {

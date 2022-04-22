@@ -15,7 +15,6 @@ public class ReflectUtils {
      * @param obj   obj
      * @param field 字段
      * @return 获取属性值
-     * @author pengsenhao
      */
     public static Object getValue(Object obj, Field field) {
         field.setAccessible(true);
@@ -34,7 +33,6 @@ public class ReflectUtils {
      * @param obj    obj
      * @param field  字段
      * @param result 值
-     * @author pengsenhao
      */
     public static void setValue(Object obj, Field field, Object result) {
         field.setAccessible(true);

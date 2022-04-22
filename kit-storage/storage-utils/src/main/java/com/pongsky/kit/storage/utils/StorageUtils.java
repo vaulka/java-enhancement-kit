@@ -22,7 +22,6 @@ public interface StorageUtils {
      * @param fileName 文件名称
      * @param args     参数列表
      * @return 文件访问路径
-     * @author pengsenhao
      */
     default String buildFileName(String fileName, String... args) {
         StringBuilder sb = new StringBuilder();

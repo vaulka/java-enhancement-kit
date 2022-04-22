@@ -135,7 +135,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @param status  status
      * @param request request
      * @return 接口不存在异常
-     * @author pengsenhao
      */
     @Nonnull
     @Override
@@ -158,7 +157,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @param status  status
      * @param request request
      * @return 方法不存在异常
-     * @author pengsenhao
      */
     @Nonnull
     @Override

@@ -48,7 +48,6 @@ public class RequestUtils {
      *
      * @param annotations 注解列表
      * @return 获取请求方法
-     * @author pengsenhao
      */
     public static RequestMethod getMethod(Annotation[] annotations) {
         return Arrays.stream(annotations)
@@ -74,7 +73,6 @@ public class RequestUtils {
      *
      * @param annotations 注解列表
      * @return 获取请求 uri
-     * @author pengsenhao
      */
     public static String getUri(Annotation[] annotations) {
         return Arrays.stream(annotations)

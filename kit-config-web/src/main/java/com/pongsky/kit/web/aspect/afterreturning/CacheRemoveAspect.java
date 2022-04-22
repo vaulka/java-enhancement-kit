@@ -66,7 +66,6 @@ public class CacheRemoveAspect {
      * 模糊删除key
      *
      * @param key key
-     * @author pengsenhao
      */
     private void removeKey(String key) {
         Set<String> deleteKeys = redisTemplate.keys(key);
@@ -82,7 +81,6 @@ public class CacheRemoveAspect {
      * @param method 方法
      * @param args   参数列表
      * @return 解析后的 key
-     * @author pengsenhao
      */
     private String parseKey(String key, Method method, Object[] args) {
         LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
