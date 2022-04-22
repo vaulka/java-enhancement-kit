@@ -12,6 +12,7 @@ import com.pongsky.kit.global.response.handler.processor.success.impl.DefaultSuc
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -19,10 +20,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -114,6 +118,23 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         return true;
     }
 
+    /**
+     * 统一处理响应数据体
+     * <p>
+     * 包含特殊业务请求、成功请求、失败请求
+     * <p>
+     * {@link org.springframework.boot.autoconfigure.web.WebProperties.Resources.addMappings} 参数设置为 {@link Boolean#TRUE} 时
+     * <p>
+     * 就不会走 {@link ResponseEntityExceptionHandler#handleNoHandlerFoundException(org.springframework.web.servlet.NoHandlerFoundException, org.springframework.http.HttpHeaders, org.springframework.http.HttpStatus, org.springframework.web.context.request.WebRequest)} 异常处理方法，统一该异常响应数据格式需要再额外判断下
+     *
+     * @param body                  body
+     * @param returnType            returnType
+     * @param selectedContentType   selectedContentType
+     * @param selectedConverterType selectedConverterType
+     * @param request               request
+     * @param response              response
+     * @return 响应数据体
+     */
     @Override
     public Object beforeBodyWrite(Object body,
                                   @NonNull MethodParameter returnType,
@@ -125,11 +146,17 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         HttpServletRequest httpServletRequest = attributes.getRequest();
         HttpServletResponse httpServletResponse = attributes.getResponse();
         Class<?> methodReturnType = Objects.requireNonNull(returnType.getMethod()).getReturnType();
-        if (methodReturnType == ResponseEntity.class) {
+        if (methodReturnType == ResponseEntity.class && returnType.getContainingClass() == GlobalExceptionHandler.class) {
             // 已在全局异常处理过了，直接返回
             return body;
         }
-        Object exception = httpServletRequest.getAttribute(GlobalExceptionHandler.class.getSimpleName());
+        Object exception;
+        if (methodReturnType == ResponseEntity.class && returnType.getContainingClass() == BasicErrorController.class) {
+            exception = new NoHandlerFoundException(httpServletRequest.getMethod(), httpServletRequest.getRequestURI(),
+                    new ServletServerHttpRequest(httpServletRequest).getHeaders());
+        } else {
+            exception = httpServletRequest.getAttribute(GlobalExceptionHandler.class.getSimpleName());
+        }
         Object result;
         if (exception != null) {
             result = this.processFail((Throwable) exception, httpServletRequest, httpServletResponse);

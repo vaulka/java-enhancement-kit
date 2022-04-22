@@ -28,7 +28,7 @@ public interface BaseSuccessProcessor {
      * @return 返回的 code
      */
     default Integer code() {
-        return 0;
+        return GlobalResult.SUCCESS_CODE;
     }
 
     /**

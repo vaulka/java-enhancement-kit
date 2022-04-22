@@ -16,7 +16,7 @@ public class BindExceptionFailProcessor implements BaseFailProcessor {
 
     @Override
     public Integer code() {
-        return 108;
+        return 109;
     }
 
     @Override
@@ -26,8 +26,8 @@ public class BindExceptionFailProcessor implements BaseFailProcessor {
 
     @Override
     public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        String errorMessage = ValidationUtils.getErrorMessage(((BindException) exception).getBindingResult());
-        return this.buildResult(errorMessage, exception, request);
+        String message = ValidationUtils.getErrorMessage(((BindException) exception).getBindingResult());
+        return this.buildResult(message, exception, request);
     }
 
 }

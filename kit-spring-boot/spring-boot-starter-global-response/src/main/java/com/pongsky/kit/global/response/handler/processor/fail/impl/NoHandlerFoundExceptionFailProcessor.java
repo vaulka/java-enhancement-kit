@@ -25,7 +25,7 @@ public class NoHandlerFoundExceptionFailProcessor implements BaseFailProcessor {
 
     @Override
     public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        return this.buildResult(request.getMethod() + " 接口不存在", exception, request);
+        return this.buildResult(request.getRequestURI() + " 接口不存在", exception, request);
     }
 
 }

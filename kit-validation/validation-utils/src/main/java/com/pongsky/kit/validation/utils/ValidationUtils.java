@@ -85,12 +85,12 @@ public class ValidationUtils {
     /**
      * 构建错误信息详情
      *
-     * @param sb           sb
-     * @param fieldName    字段名称
-     * @param errorMessage 错误信息
+     * @param sb        sb
+     * @param fieldName 字段名称
+     * @param message   错误信息
      */
-    private static void buildErrorMessage(StringBuilder sb, String fieldName, String errorMessage) {
-        sb.append(" ").append(fieldName).append(" ").append(errorMessage).append(";");
+    private static void buildErrorMessage(StringBuilder sb, String fieldName, String message) {
+        sb.append(" ").append(fieldName).append(" ").append(message).append(";");
     }
 
     /**

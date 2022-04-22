@@ -22,6 +22,7 @@ import com.pongsky.kit.global.response.handler.processor.fail.impl.MultipartExce
 import com.pongsky.kit.global.response.handler.processor.fail.impl.NoHandlerFoundExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.NullPointerExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.RuntimeExceptionFailProcessor;
+import com.pongsky.kit.global.response.handler.processor.fail.impl.TypeMismatchExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.UpdateExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.ValidationExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.impl.DefaultSuccessProcessor;
@@ -49,7 +50,8 @@ import org.springframework.context.annotation.Import;
         ValidationExceptionFailProcessor.class, NullPointerExceptionFailProcessor.class,
         NoHandlerFoundExceptionFailProcessor.class, HttpRequestMethodNotSupportedExceptionFailProcessor.class,
         HttpMessageNotReadableExceptionFailProcessor.class, MethodArgumentNotValidExceptionFailProcessor.class,
-        MissingServletRequestParameterExceptionFailProcessor.class, BindExceptionFailProcessor.class
+        MissingServletRequestParameterExceptionFailProcessor.class, BindExceptionFailProcessor.class,
+        TypeMismatchExceptionFailProcessor.class
 })
 public class GlobalResponseAutoConfiguration {
 

@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
 
 /**
  * param 数据校验异常处理器
@@ -25,7 +26,9 @@ public class MissingServletRequestParameterExceptionFailProcessor implements Bas
 
     @Override
     public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        return this.buildResult(exception.getLocalizedMessage(), exception, request);
+        String message = MessageFormat.format("参数校验失败，一共有 1 处错误，详情如下： {0} 不能为 null",
+                ((MissingServletRequestParameterException) exception).getParameterName());
+        return this.buildResult(message, exception, request);
     }
 
 }

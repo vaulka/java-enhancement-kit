@@ -7,7 +7,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * JSON 数据转换异常处理器
+ * request body 数据转换异常处理器
  *
  * @author pengsenhao
  */
@@ -25,7 +25,7 @@ public class HttpMessageNotReadableExceptionFailProcessor implements BaseFailPro
 
     @Override
     public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        return this.buildResult("JSON 数据转换异常", exception, request);
+        return this.buildResult("request body 数据转换异常", exception, request);
     }
 
 }

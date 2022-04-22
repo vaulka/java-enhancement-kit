@@ -22,6 +22,11 @@ public class GlobalResult<T> implements Serializable {
     private static final long serialVersionUID = -8691252594451970912L;
 
     /**
+     * 成功 code
+     */
+    public static final int SUCCESS_CODE = 0;
+
+    /**
      * 接口响应结果标识码
      * <p>
      * 有数据的情况：成功、失败

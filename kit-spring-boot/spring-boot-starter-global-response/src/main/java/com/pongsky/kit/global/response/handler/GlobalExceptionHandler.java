@@ -7,8 +7,10 @@ import com.pongsky.kit.global.response.handler.processor.fail.impl.HttpRequestMe
 import com.pongsky.kit.global.response.handler.processor.fail.impl.MethodArgumentNotValidExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.MissingServletRequestParameterExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.NoHandlerFoundExceptionFailProcessor;
+import com.pongsky.kit.global.response.handler.processor.fail.impl.TypeMismatchExceptionFailProcessor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * param 数据校验异常
+     * <p>
+     * {@link org.springframework.validation.annotation.Validated} 参数校验未通过
      *
      * @param ex      ex
      * @param headers headers
@@ -61,6 +65,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * param 数据校验异常
+     * <p>
+     * {@link org.springframework.web.bind.annotation.RequestParam} 参数校验未通过
      *
      * @param ex      ex
      * @param headers headers
@@ -84,6 +90,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * request body 数据校验异常
+     * <p>
+     * {@link org.springframework.validation.annotation.Validated} + {@link org.springframework.web.bind.annotation.RequestBody} 参数校验未通过
      *
      * @param ex      ex
      * @param headers headers
@@ -106,13 +114,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * JSON 数据转换异常
+     * request body 数据转换异常
+     * <p>
+     * request body 数据转换异常 {@link org.springframework.web.bind.annotation.RequestBody} 所标注的数据类型
      *
      * @param ex      ex
      * @param headers headers
      * @param status  status
      * @param request request
-     * @return JSON 数据转换异常
+     * @return request body 数据转换异常
      */
     @NonNull
     @Override
@@ -175,6 +185,31 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * 数据类型转换异常
+     * <p>
+     * 譬如：query 请求参数是 Integer 类型，数据传 String 类型
+     *
+     * @param ex      ex
+     * @param headers headers
+     * @param status  stats
+     * @param request request
+     * @return 数据类型转换异常
+     */
+    @NonNull
+    @Override
+    protected ResponseEntity<Object> handleTypeMismatch(@NonNull TypeMismatchException ex,
+                                                        @NonNull HttpHeaders headers,
+                                                        @NonNull HttpStatus status,
+                                                        @NonNull WebRequest request) {
+        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
+                (RequestContextHolder.currentRequestAttributes())).getRequest();
+        TypeMismatchExceptionFailProcessor processor = SpringUtils.getApplicationContext()
+                .getBean(TypeMismatchExceptionFailProcessor.class);
+        Object result = processor.exec(ex, httpServletRequest, SpringUtils.getApplicationContext());
+        return new ResponseEntity<>(result, processor.httpStatus());
+    }
+
+    /**
      * 全局异常处理器
      *
      * @param exception 异常
@@ -186,6 +221,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         request.setAttribute(GlobalExceptionHandler.class.getSimpleName(), exception);
         return exception.getLocalizedMessage();
     }
-
 
 }
