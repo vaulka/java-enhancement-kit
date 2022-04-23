@@ -26,6 +26,10 @@ import com.pongsky.kit.global.response.handler.processor.fail.impl.TypeMismatchE
 import com.pongsky.kit.global.response.handler.processor.fail.impl.UpdateExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.ValidationExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.impl.DefaultSuccessProcessor;
+import com.pongsky.kit.global.response.handler.processor.supports.impl.actuator.ActuatorReturnTypeProcessor;
+import com.pongsky.kit.global.response.handler.processor.supports.impl.springfox.ApiResourceControllerSupportsReturnTypeProcessor;
+import com.pongsky.kit.global.response.handler.processor.supports.impl.springfox.OpenApiControllerWebMvcSupportsReturnTypeProcessor;
+import com.pongsky.kit.global.response.handler.processor.supports.impl.springfox.Swagger2ControllerWebMvcSupportsReturnTypeProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -51,7 +55,10 @@ import org.springframework.context.annotation.Import;
         ValidationExceptionFailProcessor.class, NullPointerExceptionFailProcessor.class,
         NoHandlerFoundExceptionFailProcessor.class, HttpRequestMethodNotSupportedExceptionFailProcessor.class,
         HttpMessageNotReadableExceptionFailProcessor.class, BindExceptionFailProcessor.class,
-        MissingServletRequestParameterExceptionFailProcessor.class, TypeMismatchExceptionFailProcessor.class
+        MissingServletRequestParameterExceptionFailProcessor.class, TypeMismatchExceptionFailProcessor.class,
+        // 是否执行全局响应处理器
+        ApiResourceControllerSupportsReturnTypeProcessor.class, OpenApiControllerWebMvcSupportsReturnTypeProcessor.class,
+        Swagger2ControllerWebMvcSupportsReturnTypeProcessor.class, ActuatorReturnTypeProcessor.class
 })
 public class GlobalResponseAutoConfiguration {
 

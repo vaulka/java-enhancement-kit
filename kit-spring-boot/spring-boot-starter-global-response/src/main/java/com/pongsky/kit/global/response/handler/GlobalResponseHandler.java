@@ -6,6 +6,7 @@ import com.pongsky.kit.global.response.handler.processor.fail.BaseFailAroundProc
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessAroundProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessProcessor;
+import com.pongsky.kit.global.response.handler.processor.supports.BaseSupportsReturnTypeProcessor;
 import com.pongsky.kit.web.utils.SpringUtils;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -71,10 +73,10 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
         return supportsReturnType(returnType);
     }
 
-    @Override
-    public boolean supportsReturnType(@NonNull MethodParameter returnType) {
-        return super.supportsReturnType(returnType);
-    }
+    /**
+     * 是否执行全局响应处理器列表
+     */
+    private static final List<BaseSupportsReturnTypeProcessor> SUPPORTS_RETURN_TYPE_PROCESSORS = new CopyOnWriteArrayList<>();
 
     /**
      * 【失败】全局响应环绕处理器列表
@@ -104,11 +106,36 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
     public void syncProcessors() {
         ApplicationContext applicationContext = SpringUtils.getApplicationContext();
 
+        SUPPORTS_RETURN_TYPE_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseSupportsReturnTypeProcessor.class).values());
+
         SUCCESS_AROUND_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseSuccessAroundProcessor.class).values());
+        SUCCESS_AROUND_PROCESSORS.sort(Comparator.comparing(BaseSuccessAroundProcessor::order));
         SUCCESS_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseSuccessProcessor.class).values());
 
         FAIL_AROUND_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseFailAroundProcessor.class).values());
+        FAIL_AROUND_PROCESSORS.sort(Comparator.comparing(BaseFailAroundProcessor::order));
         FAIL_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseFailProcessor.class).values());
+    }
+
+    /**
+     * 是否执行全局响应
+     * <p>
+     * 可自定义一些请求进行放行
+     * <p>
+     * 返回 true 则为放行
+     *
+     * @param returnType returnType
+     * @return 是否执行全局响应
+     */
+    @Override
+    public boolean supportsReturnType(@NonNull MethodParameter returnType) {
+        for (BaseSupportsReturnTypeProcessor processor : SUPPORTS_RETURN_TYPE_PROCESSORS) {
+            boolean result = processor.supportsReturnType(returnType);
+            if (result) {
+                return false;
+            }
+        }
+        return super.supportsReturnType(returnType);
     }
 
     /**
@@ -145,7 +172,7 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
         Object result = returnValue;
         Class<?> methodReturnType = Objects.requireNonNull(returnType.getMethod()).getReturnType();
         try {
-            if (methodReturnType == ResponseEntity.class) {
+            if (result.getClass() == ResponseEntity.class || methodReturnType == ResponseEntity.class) {
                 if (returnType.getContainingClass() == GlobalExceptionHandler.class) {
                     // 已在全局异常处理过了，直接返回
                     result = this.getResponseEntityBody(false, result);

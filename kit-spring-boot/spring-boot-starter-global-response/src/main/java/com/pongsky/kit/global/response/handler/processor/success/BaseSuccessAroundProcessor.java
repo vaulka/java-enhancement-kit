@@ -16,6 +16,17 @@ public interface BaseSuccessAroundProcessor {
     boolean isHitProcessor(Object body);
 
     /**
+     * 处理器选择顺序
+     * <p>
+     * 从小到大排序，只取符合 {@link BaseSuccessAroundProcessor#isHitProcessor(java.lang.Object)} 条件的第一个处理器
+     *
+     * @return 处理器选择顺序
+     */
+    default Integer order() {
+        return Integer.MAX_VALUE;
+    }
+
+    /**
      * 执行 {@link BaseSuccessProcessor#exec(Object)} 前的前置操作
      * 如果返回为 null，则执行 {@link BaseSuccessProcessor#exec(Object)} 并返回该方法的结果
      * 如果不为 null，则不执行 {@link BaseSuccessProcessor#exec(Object)}

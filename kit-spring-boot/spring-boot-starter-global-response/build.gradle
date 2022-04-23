@@ -89,8 +89,11 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    compileOnly "io.springfox:springfox-boot-starter:$springfoxVersion"
+
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     api "org.springframework.boot:spring-boot-starter-validation"
+    compileOnly "org.springframework.boot:spring-boot-starter-actuator"
     compileOnly "org.springframework.boot:spring-boot-starter-security"
 }
