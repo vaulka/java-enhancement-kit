@@ -15,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ExcelIntegerWeekImportHandler implements ExcelImportHandler {
 
     private static final Map<String, Integer> MAP = new ConcurrentHashMap<String, Integer>(10) {
+        private static final long serialVersionUID = 4828824878326543059L;
+
         {
             put("星期一", 1);
             put("星期二", 2);

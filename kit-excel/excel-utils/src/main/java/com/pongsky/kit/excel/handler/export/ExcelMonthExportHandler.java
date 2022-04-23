@@ -17,6 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ExcelMonthExportHandler implements ExcelExportHandler {
 
     private static final Map<Month, String> MAP = new ConcurrentHashMap<Month, String>(16) {
+        private static final long serialVersionUID = 8041391710067287553L;
+
         {
             put(Month.JANUARY, "一月");
             put(Month.FEBRUARY, "二月");
