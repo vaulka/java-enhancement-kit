@@ -96,6 +96,8 @@ public class ControllerAspect {
 
     /**
      * Controller 请求日志打印
+     *
+     * @param result 响应结果
      */
     @AfterReturning(value = "com.pongsky.kit.web.aspect.ControllerAspect.point()", returning = "result")
     public void exec(Object result) {
@@ -109,6 +111,8 @@ public class ControllerAspect {
 
     /**
      * Controller 请求日志打印
+     *
+     * @param exception 异常
      */
     @AfterThrowing(value = "com.pongsky.kit.web.aspect.ControllerAspect.point()", throwing = "exception")
     public void exec(Throwable exception) {

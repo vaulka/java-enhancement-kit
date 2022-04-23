@@ -41,7 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * <p>
  * code 标识如下：
  * <p>
- * 0：接口请求成功， > 0 接口请求失败
+ * 0：接口请求成功， gt; 0 接口请求失败
  * <p>
  * 101 ~ 199：Java、Spring MVC 内置异常
  * <p>
@@ -145,17 +145,14 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
      * <p>
      * 在 {@link RequestResponseBodyMethodProcessor#handleReturnValue(java.lang.Object, org.springframework.core.MethodParameter, org.springframework.web.method.support.ModelAndViewContainer, org.springframework.web.context.request.NativeWebRequest)} 执行业务处理前，替换 returnValue 值，替换完后再接着走对应的业务处理
      * <p>
-     * <p>
      * 不使用 implements {@link org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice#beforeBodyWrite(java.lang.Object, org.springframework.core.MethodParameter, org.springframework.http.MediaType, java.lang.Class, org.springframework.http.server.ServerHttpRequest, org.springframework.http.server.ServerHttpResponse)} 方式去实现替换值的原因如下：
      * <p>
      * 在执行 {@link org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice#beforeBodyWrite(java.lang.Object, org.springframework.core.MethodParameter, org.springframework.http.MediaType, java.lang.Class, org.springframework.http.server.ServerHttpRequest, org.springframework.http.server.ServerHttpResponse)} 之前已经确认好 {@link org.springframework.http.MediaType}、{@link HttpMessageConverter} ，
      * 在上层逻辑无法进行动态的修改这两个参数（这块都是 Spring 提供的，要修改源码破坏性太大，以及有一个其他办法。那就是自定义 {@link HttpMessageConverter} ，但是自带的就能用，没必要专门写一个 99% 重复代码率的类，只差在范型以及对应接收的请求头类型参数上）
      * <p>
-     * <p>
-     * <p>
      * 目前理论上能拦截所有请求进行封装，但是有一个漏网之鱼
      * <p>
-     * 那就是 {@link org.springframework.boot.autoconfigure.web.WebProperties.Resources.addMappings} 参数设置为 {@link Boolean#TRUE} 时，请求不存在的接口时会报 404 Not Found。
+     * 那就是 {link org.springframework.boot.autoconfigure.web.WebProperties.Resources.addMappings} 参数设置为 {@link Boolean#TRUE} 时，请求不存在的接口时会报 404 Not Found。
      *
      * @param returnValue  returnValue
      * @param returnType   returnType
