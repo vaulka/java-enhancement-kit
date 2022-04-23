@@ -1,8 +1,8 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
 import com.pongsky.kit.common.response.annotation.ResponseResult;
+import com.pongsky.kit.web.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +21,16 @@ public class NoHandlerFoundExceptionFailProcessor implements BaseFailProcessor<N
     }
 
     @Override
-    public boolean isHitProcessor(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public boolean isHitProcessor(Throwable exception) {
         return exception.getClass() == NoHandlerFoundException.class;
     }
 
     @Override
-    public Object exec(NoHandlerFoundException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public Object exec(NoHandlerFoundException exception) {
+        HttpServletRequest request = SpringUtils.getHttpServletRequest();
+        if (request == null) {
+            return exception.getLocalizedMessage();
+        }
         String message = MessageFormat.format("{0} 接口不存在", request.getRequestURI());
         boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
         return isGlobalResult ? this.buildResult(message, exception, request) : message;

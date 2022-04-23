@@ -1,8 +1,8 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
 import com.pongsky.kit.common.response.annotation.ResponseResult;
+import com.pongsky.kit.web.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.multipart.MultipartException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class MultipartExceptionFailProcessor implements BaseFailProcessor<Multip
     }
 
     @Override
-    public boolean isHitProcessor(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public boolean isHitProcessor(Throwable exception) {
         return exception.getClass() == MultipartException.class;
     }
 
@@ -30,7 +30,11 @@ public class MultipartExceptionFailProcessor implements BaseFailProcessor<Multip
     private static final String MESSAGE = "请选择文件进行上传";
 
     @Override
-    public Object exec(MultipartException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public Object exec(MultipartException exception) {
+        HttpServletRequest request = SpringUtils.getHttpServletRequest();
+        if (request == null) {
+            return MESSAGE;
+        }
         boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
         return isGlobalResult ? this.buildResult(MESSAGE, exception, request) : MESSAGE;
     }

@@ -1,8 +1,8 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
 import com.pongsky.kit.common.response.annotation.ResponseResult;
+import com.pongsky.kit.web.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class MaxUploadSizeExceededExceptionFailProcessor implements BaseFailProc
     }
 
     @Override
-    public boolean isHitProcessor(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public boolean isHitProcessor(Throwable exception) {
         return exception.getClass() == MaxUploadSizeExceededException.class;
     }
 
@@ -30,7 +30,11 @@ public class MaxUploadSizeExceededExceptionFailProcessor implements BaseFailProc
     private static final String MESSAGE = "上传的文件体积超过限制，请缩小文件后重试";
 
     @Override
-    public Object exec(MaxUploadSizeExceededException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public Object exec(MaxUploadSizeExceededException exception) {
+        HttpServletRequest request = SpringUtils.getHttpServletRequest();
+        if (request == null) {
+            return MESSAGE;
+        }
         boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
         return isGlobalResult ? this.buildResult(MESSAGE, exception, request) : MESSAGE;
     }

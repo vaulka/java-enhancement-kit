@@ -1,4 +1,4 @@
-package com.pongsky.kit.core.utils;
+package com.pongsky.kit.web.utils;
 
 import lombok.NonNull;
 import org.springframework.beans.BeansException;
@@ -6,6 +6,10 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Spring 工具类
@@ -50,6 +54,19 @@ public class SpringUtils implements BeanFactoryPostProcessor, ApplicationContext
      */
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
+    }
+
+    /**
+     * 获取 Http Servlet Request
+     *
+     * @return 获取 Http Servlet Request
+     */
+    public static HttpServletRequest getHttpServletRequest() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes == null) {
+            return null;
+        }
+        return attributes.getRequest();
     }
 
 }

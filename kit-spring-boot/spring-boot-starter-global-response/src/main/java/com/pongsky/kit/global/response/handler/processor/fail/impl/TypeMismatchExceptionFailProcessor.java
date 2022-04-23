@@ -1,9 +1,9 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
 import com.pongsky.kit.common.response.annotation.ResponseResult;
+import com.pongsky.kit.web.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.context.ApplicationContext;
 import org.springframework.util.ClassUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,15 +22,19 @@ public class TypeMismatchExceptionFailProcessor implements BaseFailProcessor<Typ
     }
 
     @Override
-    public boolean isHitProcessor(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public boolean isHitProcessor(Throwable exception) {
         return exception.getClass() == TypeMismatchException.class;
     }
 
     @Override
-    public Object exec(TypeMismatchException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public Object exec(TypeMismatchException exception) {
         String message = MessageFormat.format("无法将 \"{0}\" 值从 \"{1}\" 类型 转换为 \"{2}\" 类型",
                 exception.getValue(), ClassUtils.getDescriptiveType(exception.getValue()),
                 ClassUtils.getDescriptiveType(exception.getRequiredType()));
+        HttpServletRequest request = SpringUtils.getHttpServletRequest();
+        if (request == null) {
+            return message;
+        }
         boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
         return isGlobalResult ? this.buildResult(message, exception, request) : message;
     }

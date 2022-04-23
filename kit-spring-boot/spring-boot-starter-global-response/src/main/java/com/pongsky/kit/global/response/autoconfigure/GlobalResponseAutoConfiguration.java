@@ -16,7 +16,6 @@ import com.pongsky.kit.global.response.handler.processor.fail.impl.HttpRequestMe
 import com.pongsky.kit.global.response.handler.processor.fail.impl.IllegalArgumentExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.InsertExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.MaxUploadSizeExceededExceptionFailProcessor;
-import com.pongsky.kit.global.response.handler.processor.fail.impl.MethodArgumentNotValidExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.MissingServletRequestParameterExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.MultipartExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.NoHandlerFoundExceptionFailProcessor;
@@ -49,9 +48,8 @@ import org.springframework.context.annotation.Import;
         RuntimeExceptionFailProcessor.class, UpdateExceptionFailProcessor.class,
         ValidationExceptionFailProcessor.class, NullPointerExceptionFailProcessor.class,
         NoHandlerFoundExceptionFailProcessor.class, HttpRequestMethodNotSupportedExceptionFailProcessor.class,
-        HttpMessageNotReadableExceptionFailProcessor.class, MethodArgumentNotValidExceptionFailProcessor.class,
-        MissingServletRequestParameterExceptionFailProcessor.class, BindExceptionFailProcessor.class,
-        TypeMismatchExceptionFailProcessor.class
+        HttpMessageNotReadableExceptionFailProcessor.class, BindExceptionFailProcessor.class,
+        MissingServletRequestParameterExceptionFailProcessor.class, TypeMismatchExceptionFailProcessor.class
 })
 public class GlobalResponseAutoConfiguration {
 

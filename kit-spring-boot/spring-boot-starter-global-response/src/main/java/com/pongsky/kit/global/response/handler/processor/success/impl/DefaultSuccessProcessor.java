@@ -2,7 +2,7 @@ package com.pongsky.kit.global.response.handler.processor.success.impl;
 
 import com.pongsky.kit.common.response.annotation.ResponseResult;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessProcessor;
-import org.springframework.context.ApplicationContext;
+import com.pongsky.kit.web.utils.SpringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,12 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 public class DefaultSuccessProcessor implements BaseSuccessProcessor {
 
     @Override
-    public boolean isHitProcessor(HttpServletRequest request, ApplicationContext applicationContext) {
+    public boolean isHitProcessor() {
+        HttpServletRequest request = SpringUtils.getHttpServletRequest();
+        if (request == null) {
+            return false;
+        }
         return request.getAttribute(ResponseResult.class.getName()) != null;
     }
 
     @Override
-    public Object exec(Object body, HttpServletRequest request, ApplicationContext applicationContext) {
+    public Object exec(Object body) {
         return this.buildResult(body);
     }
 

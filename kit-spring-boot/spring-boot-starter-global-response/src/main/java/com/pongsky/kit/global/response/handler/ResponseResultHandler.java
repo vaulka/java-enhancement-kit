@@ -2,11 +2,11 @@ package com.pongsky.kit.global.response.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pongsky.kit.core.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailAroundProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessAroundProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessProcessor;
+import com.pongsky.kit.web.utils.SpringUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,22 +84,17 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     private static final List<BaseSuccessProcessor> SUCCESS_PROCESSORS = new CopyOnWriteArrayList<>();
 
     /**
-     * 应用上下文
-     */
-    private static ApplicationContext APPLICATION_CONTEXT = null;
-
-    /**
      * 添加所有的异常环绕处理器列表、异常处理器列表
      */
     @PostConstruct
     public void syncProcessors() {
-        APPLICATION_CONTEXT = SpringUtils.getApplicationContext();
+        ApplicationContext applicationContext = SpringUtils.getApplicationContext();
 
-        SUCCESS_AROUND_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseSuccessAroundProcessor.class).values());
-        SUCCESS_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseSuccessProcessor.class).values());
+        SUCCESS_AROUND_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseSuccessAroundProcessor.class).values());
+        SUCCESS_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseSuccessProcessor.class).values());
 
-        FAIL_AROUND_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseFailAroundProcessor.class).values());
-        FAIL_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseFailProcessor.class).values());
+        FAIL_AROUND_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseFailAroundProcessor.class).values());
+        FAIL_PROCESSORS.addAll(applicationContext.getBeansOfType(BaseFailProcessor.class).values());
     }
 
     /**
@@ -190,23 +185,23 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         Object result = null;
         // 首先执行环绕处理器
         for (BaseFailAroundProcessor aroundProcessor : FAIL_AROUND_PROCESSORS) {
-            result = aroundProcessor.execBefore(exception, request, APPLICATION_CONTEXT);
+            result = aroundProcessor.execBefore(exception);
             if (result != null) {
-                aroundProcessor.execAfter(exception, request, APPLICATION_CONTEXT);
+                aroundProcessor.execAfter(exception);
                 break;
             }
         }
         // 其次匹配处理器
         Optional<BaseFailProcessor> opProcessor = FAIL_PROCESSORS.stream()
-                .filter(p -> p.isHitProcessor(exception, request, APPLICATION_CONTEXT))
+                .filter(p -> p.isHitProcessor(exception))
                 .findFirst();
         if (opProcessor.isPresent()) {
             BaseFailProcessor processor = opProcessor.get();
             if (result == null) {
-                result = processor.exec(exception, request, APPLICATION_CONTEXT);
+                result = processor.exec(exception);
             }
-            processor.log(exception, request, APPLICATION_CONTEXT);
-            processor.execAfter(exception, request, APPLICATION_CONTEXT);
+            processor.log(exception);
+            processor.execAfter(exception);
             if (response != null) {
                 response.setStatus(processor.httpStatus().value());
             }
@@ -233,22 +228,22 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         Object result = null;
         // 首先执行环绕处理器
         for (BaseSuccessAroundProcessor aroundProcessor : SUCCESS_AROUND_PROCESSORS) {
-            result = aroundProcessor.execBefore(body, request, APPLICATION_CONTEXT);
+            result = aroundProcessor.execBefore(body);
             if (result != null) {
-                aroundProcessor.execAfter(result, request, APPLICATION_CONTEXT);
+                aroundProcessor.execAfter(result);
                 break;
             }
         }
         // 其次匹配处理器
         Optional<BaseSuccessProcessor> opProcessor = SUCCESS_PROCESSORS.stream()
-                .filter(p -> p.isHitProcessor(request, APPLICATION_CONTEXT))
+                .filter(BaseSuccessProcessor::isHitProcessor)
                 .findFirst();
         if (opProcessor.isPresent()) {
             BaseSuccessProcessor processor = opProcessor.get();
             if (result == null) {
-                result = processor.exec(body, request, APPLICATION_CONTEXT);
+                result = processor.exec(body);
             }
-            processor.execAfter(request, request, APPLICATION_CONTEXT);
+            processor.execAfter(result);
             if (response != null) {
                 response.setStatus(processor.httpStatus().value());
             }

@@ -1,16 +1,16 @@
 package com.pongsky.kit.global.response.handler;
 
-import com.pongsky.kit.core.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.BindExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.HttpMessageNotReadableExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.HttpRequestMethodNotSupportedExceptionFailProcessor;
-import com.pongsky.kit.global.response.handler.processor.fail.impl.MethodArgumentNotValidExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.MissingServletRequestParameterExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.NoHandlerFoundExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.TypeMismatchExceptionFailProcessor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -36,7 +34,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private final ApplicationContext applicationContext;
 
     /**
      * param 数据校验异常
@@ -55,11 +56,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                          @NonNull HttpHeaders headers,
                                                          @NonNull HttpStatus status,
                                                          @NonNull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        BindExceptionFailProcessor processor = SpringUtils.getApplicationContext()
+        BindExceptionFailProcessor processor = applicationContext
                 .getBean(BindExceptionFailProcessor.class);
-        Object result = processor.exec(ex, httpServletRequest, SpringUtils.getApplicationContext());
+        Object result = processor.exec(ex);
         return new ResponseEntity<>(result, processor.httpStatus());
     }
 
@@ -80,11 +79,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                           @NonNull HttpHeaders headers,
                                                                           @NonNull HttpStatus status,
                                                                           @NonNull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        MissingServletRequestParameterExceptionFailProcessor processor = SpringUtils.getApplicationContext()
+        MissingServletRequestParameterExceptionFailProcessor processor = applicationContext
                 .getBean(MissingServletRequestParameterExceptionFailProcessor.class);
-        Object result = processor.exec(ex, httpServletRequest, SpringUtils.getApplicationContext());
+        Object result = processor.exec(ex);
         return new ResponseEntity<>(result, processor.httpStatus());
     }
 
@@ -105,11 +102,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   @NonNull HttpHeaders headers,
                                                                   @NonNull HttpStatus status,
                                                                   @NonNull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        MethodArgumentNotValidExceptionFailProcessor processor = SpringUtils.getApplicationContext()
-                .getBean(MethodArgumentNotValidExceptionFailProcessor.class);
-        Object result = processor.exec(ex, httpServletRequest, SpringUtils.getApplicationContext());
+        BindExceptionFailProcessor processor = applicationContext
+                .getBean(BindExceptionFailProcessor.class);
+        Object result = processor.exec(ex);
         return new ResponseEntity<>(result, processor.httpStatus());
     }
 
@@ -130,11 +125,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   @NonNull HttpHeaders headers,
                                                                   @NonNull HttpStatus status,
                                                                   @NonNull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        HttpMessageNotReadableExceptionFailProcessor processor = SpringUtils.getApplicationContext()
+        HttpMessageNotReadableExceptionFailProcessor processor = applicationContext
                 .getBean(HttpMessageNotReadableExceptionFailProcessor.class);
-        Object result = processor.exec(ex, httpServletRequest, SpringUtils.getApplicationContext());
+        Object result = processor.exec(ex);
         return new ResponseEntity<>(result, processor.httpStatus());
     }
 
@@ -153,11 +146,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                    @NonNull HttpHeaders headers,
                                                                    @NonNull HttpStatus status,
                                                                    @NonNull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        NoHandlerFoundExceptionFailProcessor processor = SpringUtils.getApplicationContext()
+        NoHandlerFoundExceptionFailProcessor processor = applicationContext
                 .getBean(NoHandlerFoundExceptionFailProcessor.class);
-        Object result = processor.exec(ex, httpServletRequest, SpringUtils.getApplicationContext());
+        Object result = processor.exec(ex);
         return new ResponseEntity<>(result, processor.httpStatus());
     }
 
@@ -176,11 +167,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                          @NonNull HttpHeaders headers,
                                                                          @NonNull HttpStatus status,
                                                                          @NonNull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        HttpRequestMethodNotSupportedExceptionFailProcessor processor = SpringUtils.getApplicationContext()
+        HttpRequestMethodNotSupportedExceptionFailProcessor processor = applicationContext
                 .getBean(HttpRequestMethodNotSupportedExceptionFailProcessor.class);
-        Object result = processor.exec(ex, httpServletRequest, SpringUtils.getApplicationContext());
+        Object result = processor.exec(ex);
         return new ResponseEntity<>(result, processor.httpStatus());
     }
 
@@ -201,11 +190,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                         @NonNull HttpHeaders headers,
                                                         @NonNull HttpStatus status,
                                                         @NonNull WebRequest request) {
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes)
-                (RequestContextHolder.currentRequestAttributes())).getRequest();
-        TypeMismatchExceptionFailProcessor processor = SpringUtils.getApplicationContext()
+        TypeMismatchExceptionFailProcessor processor = applicationContext
                 .getBean(TypeMismatchExceptionFailProcessor.class);
-        Object result = processor.exec(ex, httpServletRequest, SpringUtils.getApplicationContext());
+        Object result = processor.exec(ex);
         return new ResponseEntity<>(result, processor.httpStatus());
     }
 

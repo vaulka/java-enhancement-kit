@@ -1,10 +1,7 @@
 package com.pongsky.kit.global.response.handler.processor.success;
 
 import com.pongsky.kit.common.response.GlobalResult;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 【成功】全局响应处理器
@@ -34,33 +31,29 @@ public interface BaseSuccessProcessor {
     /**
      * 判断是否命中处理器
      *
-     * @param request            request
-     * @param applicationContext 应用上下文
      * @return 判断是否命中处理器
      */
-    boolean isHitProcessor(HttpServletRequest request, ApplicationContext applicationContext);
+    boolean isHitProcessor();
 
     /**
      * 返回的响应结果
      *
-     * @param body               body
-     * @param request            request
-     * @param applicationContext 应用上下文
+     * @param body body
      * @return 返回的响应结果
      */
-    Object exec(Object body, HttpServletRequest request, ApplicationContext applicationContext);
+    default Object exec(Object body) {
+        return this.buildResult(body);
+    }
 
     /**
-     * 执行 {@link BaseSuccessProcessor#exec(Object, HttpServletRequest, ApplicationContext)} 后的后置操作
+     * 执行 {@link BaseSuccessProcessor#exec(Object)} 后的后置操作
      * <p>
      * 应用场景：
      * 执行完业务后，进行邮箱告警等...
      *
-     * @param body               body
-     * @param request            request
-     * @param applicationContext 应用上下文
+     * @param body body
      */
-    default void execAfter(Object body, HttpServletRequest request, ApplicationContext applicationContext) {
+    default void execAfter(Object body) {
     }
 
     /**

@@ -2,8 +2,8 @@ package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
 import com.pongsky.kit.common.exception.CircuitBreakerException;
 import com.pongsky.kit.common.response.annotation.ResponseResult;
+import com.pongsky.kit.web.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
-import org.springframework.context.ApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +20,7 @@ public class CircuitBreakerExceptionFailProcessor implements BaseFailProcessor<C
     }
 
     @Override
-    public boolean isHitProcessor(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public boolean isHitProcessor(Throwable exception) {
         return exception.getClass() == CircuitBreakerException.class;
     }
 
@@ -30,7 +30,11 @@ public class CircuitBreakerExceptionFailProcessor implements BaseFailProcessor<C
     private static final String MESSAGE = "服务器出了点小差，请稍后再试";
 
     @Override
-    public Object exec(CircuitBreakerException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public Object exec(CircuitBreakerException exception) {
+        HttpServletRequest request = SpringUtils.getHttpServletRequest();
+        if (request == null) {
+            return MESSAGE;
+        }
         boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
         return isGlobalResult ? this.buildResult(MESSAGE, exception, request) : MESSAGE;
     }

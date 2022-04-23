@@ -1,8 +1,8 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
 import com.pongsky.kit.common.response.annotation.ResponseResult;
+import com.pongsky.kit.web.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +21,17 @@ public class MissingServletRequestParameterExceptionFailProcessor implements Bas
     }
 
     @Override
-    public boolean isHitProcessor(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public boolean isHitProcessor(Throwable exception) {
         return exception.getClass() == MissingServletRequestParameterException.class;
     }
 
     @Override
-    public Object exec(MissingServletRequestParameterException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    public Object exec(MissingServletRequestParameterException exception) {
         String message = MessageFormat.format("参数校验失败，一共有 1 处错误，详情如下： {0} 不能为 null", exception.getParameterName());
+        HttpServletRequest request = SpringUtils.getHttpServletRequest();
+        if (request == null) {
+            return message;
+        }
         boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
         return isGlobalResult ? this.buildResult(message, exception, request) : message;
     }
