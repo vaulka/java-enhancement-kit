@@ -217,7 +217,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return 响应结果
      */
     @ExceptionHandler(value = Throwable.class)
-    public Object exceptionHandler(Throwable exception, HttpServletRequest request) {
+    public String exceptionHandler(Throwable exception, HttpServletRequest request) {
         request.setAttribute(GlobalExceptionHandler.class.getName(), exception);
         return exception.getLocalizedMessage();
     }

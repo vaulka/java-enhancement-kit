@@ -102,8 +102,16 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         FAIL_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseFailProcessor.class).values());
     }
 
+    /**
+     * 判断请求是否拦截处理
+     *
+     * @param returnType    returnType
+     * @param converterType converterType
+     * @return 判断请求是否拦截处理
+     */
     @Override
     public boolean supports(@NonNull MethodParameter returnType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
+        // 默认拦截所有请求，后续考虑放行一些系统/框架内置接口
         return true;
     }
 
@@ -158,8 +166,9 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
         } else {
             result = this.processSuccess(body, httpServletRequest, httpServletResponse);
         }
-        if (body.getClass() == String.class || methodReturnType == String.class) {
-            // Jackson 序列化 String 时，会使用 StringHttpMessageConverter 来处理返回体，进而导致类型转换异常
+        if (methodReturnType == String.class && result.getClass() != String.class) {
+            // Jackson 序列化 String 时，会使用 StringHttpMessageConverter 来处理返回体
+            // 原本数据是 String 数据类型，响应体经过业务处理/封装后不是 String 数据类型时，直接返回会导致类型转换异常
             try {
                 return jsonMapper.writeValueAsString(result);
             } catch (JsonProcessingException ignored) {
