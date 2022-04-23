@@ -247,7 +247,7 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
             if (!aroundProcessor.isHitProcessor(exception)) {
                 continue;
             }
-            result = aroundProcessor.execBefore(exception);
+            result = aroundProcessor.exec(exception);
             aroundProcessor.execAfter(exception);
             isHitAroundProcessor = true;
             break;
@@ -289,7 +289,7 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
             if (!aroundProcessor.isHitProcessor(body)) {
                 continue;
             }
-            result = aroundProcessor.execBefore(body);
+            result = aroundProcessor.exec(body);
             aroundProcessor.execAfter(result);
             isHitAroundProcessor = true;
             break;

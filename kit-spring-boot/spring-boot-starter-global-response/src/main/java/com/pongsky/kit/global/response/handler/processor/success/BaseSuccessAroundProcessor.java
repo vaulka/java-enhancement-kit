@@ -9,6 +9,8 @@ public interface BaseSuccessAroundProcessor {
 
     /**
      * 判断是否命中处理器
+     * <p>
+     * 如果命中，则不会执行 {@link BaseSuccessProcessor} 处理器相关业务处理
      *
      * @param body body
      * @return 判断是否命中处理器
@@ -27,19 +29,15 @@ public interface BaseSuccessAroundProcessor {
     }
 
     /**
-     * 执行 {@link BaseSuccessProcessor#exec(Object)} 前的前置操作
-     * 如果返回为 null，则执行 {@link BaseSuccessProcessor#exec(Object)} 并返回该方法的结果
-     * 如果不为 null，则不执行 {@link BaseSuccessProcessor#exec(Object)}
+     * 返回的响应结果
      * <p>
      * 应用场景：
-     * 譬如对接某第三方系统需要返回特定的响应数据格式，如果成功，也要返回特定的响应数据格式
+     * 譬如对接某第三方系统，成功后，也要返回特定的响应结果格式等...
      *
      * @param body body
      * @return 返回的响应结果
      */
-    default Object execBefore(Object body) {
-        return null;
-    }
+    Object exec(Object body);
 
     /**
      * 执行 {@link BaseSuccessProcessor#exec(Object)} 后的后置操作
