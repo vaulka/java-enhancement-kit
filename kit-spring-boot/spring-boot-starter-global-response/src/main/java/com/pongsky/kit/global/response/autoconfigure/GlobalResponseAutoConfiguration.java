@@ -1,7 +1,8 @@
 package com.pongsky.kit.global.response.autoconfigure;
 
+import com.pongsky.kit.global.response.config.GlobalResponseWebMvcConfigurer;
 import com.pongsky.kit.global.response.handler.GlobalExceptionHandler;
-import com.pongsky.kit.global.response.handler.ResponseResultHandler;
+import com.pongsky.kit.global.response.handler.GlobalResponseHandler;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.AccessDeniedExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.BindExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.CircuitBreakerExceptionFailProcessor;
@@ -35,7 +36,8 @@ import org.springframework.context.annotation.Import;
  **/
 @Configuration(proxyBeanMethods = false)
 @Import({
-        GlobalExceptionHandler.class, ResponseResultHandler.class,
+        GlobalResponseWebMvcConfigurer.class,
+        GlobalExceptionHandler.class, GlobalResponseHandler.class,
         // 成功请求处理器
         DefaultSuccessProcessor.class,
         // 失败请求处理器

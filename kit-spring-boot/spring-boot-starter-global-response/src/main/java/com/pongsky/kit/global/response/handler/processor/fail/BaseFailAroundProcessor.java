@@ -8,6 +8,14 @@ package com.pongsky.kit.global.response.handler.processor.fail;
 public interface BaseFailAroundProcessor {
 
     /**
+     * 判断是否命中处理器
+     *
+     * @param exception 异常
+     * @return 判断是否命中处理器
+     */
+    boolean isHitProcessor(Throwable exception);
+
+    /**
      * 执行 {@link {@link BaseFailProcessor#exec(Throwable)} 前的前置操作
      * 如果返回为 null，则执行 {@link BaseFailProcessor#exec(Throwable)} 并返回该方法的结果
      * 如果不为 null，则不执行 {@link BaseFailProcessor#exec(Throwable)}

@@ -6,7 +6,6 @@ import com.pongsky.kit.ip.utils.IpUtils;
 import com.pongsky.kit.web.utils.HttpServletRequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -14,7 +13,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -22,12 +20,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.Optional;
 
 /**
- * controller 注解加入 request.attribute、controller 请求日志打印
+ * Controller 请求日志打印
  *
  * @author pengsenhao
  */
@@ -40,7 +36,7 @@ public class ControllerAspect {
     private final ObjectMapper jsonMapper;
 
     /**
-     * controller 切入点
+     * Controller 切入点
      */
     @Pointcut("(@within(org.springframework.stereotype.Controller) " +
             "|| @within(org.springframework.web.bind.annotation.RestController)) " +
@@ -53,29 +49,7 @@ public class ControllerAspect {
     }
 
     /**
-     * controller 注解加入 request.attribute
-     *
-     * @param point point
-     */
-    @Before(value = "com.pongsky.kit.web.aspect.ControllerAspect.point()")
-    public void exec(JoinPoint point) {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes == null) {
-            return;
-        }
-        HttpServletRequest request = attributes.getRequest();
-        for (Annotation annotation : point.getTarget().getClass().getAnnotations()) {
-            request.setAttribute(annotation.annotationType().getName(), annotation);
-        }
-        MethodSignature sign = (MethodSignature) point.getSignature();
-        Method method = sign.getMethod();
-        for (Annotation annotation : method.getAnnotations()) {
-            request.setAttribute(annotation.annotationType().getName(), annotation);
-        }
-    }
-
-    /**
-     * controller 请求日志打印
+     * Controller 请求日志打印
      */
     @Before("com.pongsky.kit.web.aspect.ControllerAspect.point()")
     public void exec() {
@@ -99,7 +73,7 @@ public class ControllerAspect {
     }
 
     /**
-     * controller 请求日志打印
+     * Controller 请求日志打印
      *
      * @param point point
      * @return 响应数据
@@ -121,7 +95,7 @@ public class ControllerAspect {
     }
 
     /**
-     * controller 请求日志打印
+     * Controller 请求日志打印
      */
     @AfterReturning(value = "com.pongsky.kit.web.aspect.ControllerAspect.point()", returning = "result")
     public void exec(Object result) {
@@ -134,7 +108,7 @@ public class ControllerAspect {
     }
 
     /**
-     * controller 请求日志打印
+     * Controller 请求日志打印
      */
     @AfterThrowing(value = "com.pongsky.kit.web.aspect.ControllerAspect.point()", throwing = "exception")
     public void exec(Throwable exception) {

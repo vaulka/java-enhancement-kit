@@ -8,6 +8,14 @@ package com.pongsky.kit.global.response.handler.processor.success;
 public interface BaseSuccessAroundProcessor {
 
     /**
+     * 判断是否命中处理器
+     *
+     * @param body body
+     * @return 判断是否命中处理器
+     */
+    boolean isHitProcessor(Object body);
+
+    /**
      * 执行 {@link BaseSuccessProcessor#exec(Object)} 前的前置操作
      * 如果返回为 null，则执行 {@link BaseSuccessProcessor#exec(Object)} 并返回该方法的结果
      * 如果不为 null，则不执行 {@link BaseSuccessProcessor#exec(Object)}

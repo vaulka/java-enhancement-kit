@@ -10,6 +10,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Spring 工具类
@@ -57,9 +58,9 @@ public class SpringUtils implements BeanFactoryPostProcessor, ApplicationContext
     }
 
     /**
-     * 获取 Http Servlet Request
+     * 获取 HttpServletRequest
      *
-     * @return 获取 Http Servlet Request
+     * @return 获取 HttpServletRequest
      */
     public static HttpServletRequest getHttpServletRequest() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -67,6 +68,19 @@ public class SpringUtils implements BeanFactoryPostProcessor, ApplicationContext
             return null;
         }
         return attributes.getRequest();
+    }
+
+    /**
+     * 获取 HttpServletResponse
+     *
+     * @return 获取 HttpServletResponse
+     */
+    public static HttpServletResponse getHttpServletResponse() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes == null) {
+            return null;
+        }
+        return attributes.getResponse();
     }
 
 }
