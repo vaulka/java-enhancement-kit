@@ -1,17 +1,19 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
+import com.pongsky.kit.common.response.annotation.ResponseResult;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
 
 /**
  * 方法不存在异常处理器
  *
  * @author pengsenhao
  */
-public class HttpRequestMethodNotSupportedExceptionFailProcessor implements BaseFailProcessor {
+public class HttpRequestMethodNotSupportedExceptionFailProcessor implements BaseFailProcessor<HttpRequestMethodNotSupportedException> {
 
     @Override
     public Integer code() {
@@ -24,8 +26,10 @@ public class HttpRequestMethodNotSupportedExceptionFailProcessor implements Base
     }
 
     @Override
-    public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        return this.buildResult(request.getRequestURI() + " 方法不存在", exception, request);
+    public Object exec(HttpRequestMethodNotSupportedException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+        String message = MessageFormat.format("{0} 方法不存在", request.getRequestURI());
+        boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
+        return isGlobalResult ? this.buildResult(message, exception, request) : message;
     }
 
 }

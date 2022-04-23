@@ -1,5 +1,6 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
+import com.pongsky.kit.common.response.annotation.ResponseResult;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.ApplicationContext;
@@ -13,7 +14,7 @@ import java.text.MessageFormat;
  *
  * @author pengsenhao
  */
-public class TypeMismatchExceptionFailProcessor implements BaseFailProcessor {
+public class TypeMismatchExceptionFailProcessor implements BaseFailProcessor<TypeMismatchException> {
 
     @Override
     public Integer code() {
@@ -26,11 +27,12 @@ public class TypeMismatchExceptionFailProcessor implements BaseFailProcessor {
     }
 
     @Override
-    public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        TypeMismatchException ex = (TypeMismatchException) exception;
+    public Object exec(TypeMismatchException exception, HttpServletRequest request, ApplicationContext applicationContext) {
         String message = MessageFormat.format("无法将 \"{0}\" 值从 \"{1}\" 类型 转换为 \"{2}\" 类型",
-                ex.getValue(), ClassUtils.getDescriptiveType(ex.getValue()), ClassUtils.getDescriptiveType(ex.getRequiredType()));
-        return this.buildResult(message, exception, request);
+                exception.getValue(), ClassUtils.getDescriptiveType(exception.getValue()),
+                ClassUtils.getDescriptiveType(exception.getRequiredType()));
+        boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
+        return isGlobalResult ? this.buildResult(message, exception, request) : message;
     }
 
 }

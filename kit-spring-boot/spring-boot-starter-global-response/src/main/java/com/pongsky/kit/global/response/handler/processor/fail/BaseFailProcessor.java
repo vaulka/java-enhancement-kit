@@ -15,7 +15,7 @@ import java.util.Optional;
  *
  * @author pengsenhao
  */
-public interface BaseFailProcessor {
+public interface BaseFailProcessor<T extends Throwable> {
 
     Logger LOG = LoggerFactory.getLogger(BaseFailProcessor.class);
 
@@ -46,23 +46,6 @@ public interface BaseFailProcessor {
     boolean isHitProcessor(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext);
 
     /**
-     * 执行 {@link BaseFailProcessor#exec(Throwable, HttpServletRequest, ApplicationContext)} 前的前置操作
-     * 如果返回为 null，则执行 {@link BaseFailProcessor#exec(Throwable, HttpServletRequest, ApplicationContext)} 并返回该方法的结果
-     * 如果不为 null，则不执行 {@link BaseFailProcessor#exec(Throwable, HttpServletRequest, ApplicationContext)}
-     * <p>
-     * 应用场景：
-     * 譬如对接某第三方系统需要返回特定的响应数据格式，如果异常后，也要返回特定的响应数据格式
-     *
-     * @param exception          异常
-     * @param request            request
-     * @param applicationContext 应用上下文
-     * @return 返回的响应结果
-     */
-    default Object execBefore(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        return null;
-    }
-
-    /**
      * 返回的响应结果
      *
      * @param exception          异常
@@ -70,7 +53,7 @@ public interface BaseFailProcessor {
      * @param applicationContext 应用上下文
      * @return 返回的响应结果
      */
-    Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext);
+    Object exec(T exception, HttpServletRequest request, ApplicationContext applicationContext);
 
     /**
      * 是否打印异常堆栈信息
@@ -88,7 +71,7 @@ public interface BaseFailProcessor {
      * @param request            request
      * @param applicationContext 应用上下文
      */
-    default void log(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    default void log(T exception, HttpServletRequest request, ApplicationContext applicationContext) {
         LOG.error("");
         LOG.error("========================= Started EXCEPTION =========================");
         LOG.error("EXCEPTION message: [{}]", Optional.ofNullable(exception.getLocalizedMessage()).orElse(exception.getMessage()));
@@ -102,13 +85,13 @@ public interface BaseFailProcessor {
      * 执行 {@link BaseFailProcessor#exec(Throwable, HttpServletRequest, ApplicationContext)} 后的后置操作
      * <p>
      * 应用场景：
-     * 出现异常后，进行邮箱告警等...
+     * 失败后，进行邮箱告警等...
      *
      * @param exception          异常
      * @param request            request
      * @param applicationContext 应用上下文
      */
-    default void execAfter(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
+    default void execAfter(T exception, HttpServletRequest request, ApplicationContext applicationContext) {
     }
 
     /**
@@ -119,7 +102,7 @@ public interface BaseFailProcessor {
      * @param request   request
      * @return 构建全局响应数据
      */
-    default GlobalResult<Void> buildResult(String message, Throwable exception, HttpServletRequest request) {
+    default GlobalResult<Void> buildResult(String message, T exception, HttpServletRequest request) {
         return new GlobalResult<Void>()
                 .setCode(code())
                 .setMessage(message)

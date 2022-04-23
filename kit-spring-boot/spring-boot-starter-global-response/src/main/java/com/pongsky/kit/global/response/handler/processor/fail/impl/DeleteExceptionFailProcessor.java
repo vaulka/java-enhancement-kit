@@ -1,6 +1,7 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
 import com.pongsky.kit.common.exception.DeleteException;
+import com.pongsky.kit.common.response.annotation.ResponseResult;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import org.springframework.context.ApplicationContext;
 
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author pengsenhao
  */
-public class DeleteExceptionFailProcessor implements BaseFailProcessor {
+public class DeleteExceptionFailProcessor implements BaseFailProcessor<DeleteException> {
 
     @Override
     public Integer code() {
@@ -24,8 +25,10 @@ public class DeleteExceptionFailProcessor implements BaseFailProcessor {
     }
 
     @Override
-    public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        return this.buildResult(exception.getLocalizedMessage(), exception, request);
+    public Object exec(DeleteException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+        String message = exception.getLocalizedMessage();
+        boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
+        return isGlobalResult ? this.buildResult(message, exception, request) : message;
     }
 
 }

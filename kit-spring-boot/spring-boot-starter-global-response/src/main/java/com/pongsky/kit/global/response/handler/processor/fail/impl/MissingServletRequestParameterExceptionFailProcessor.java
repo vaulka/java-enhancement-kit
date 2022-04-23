@@ -1,5 +1,6 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
+import com.pongsky.kit.common.response.annotation.ResponseResult;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -12,7 +13,7 @@ import java.text.MessageFormat;
  *
  * @author pengsenhao
  */
-public class MissingServletRequestParameterExceptionFailProcessor implements BaseFailProcessor {
+public class MissingServletRequestParameterExceptionFailProcessor implements BaseFailProcessor<MissingServletRequestParameterException> {
 
     @Override
     public Integer code() {
@@ -25,10 +26,10 @@ public class MissingServletRequestParameterExceptionFailProcessor implements Bas
     }
 
     @Override
-    public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        String message = MessageFormat.format("参数校验失败，一共有 1 处错误，详情如下： {0} 不能为 null",
-                ((MissingServletRequestParameterException) exception).getParameterName());
-        return this.buildResult(message, exception, request);
+    public Object exec(MissingServletRequestParameterException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+        String message = MessageFormat.format("参数校验失败，一共有 1 处错误，详情如下： {0} 不能为 null", exception.getParameterName());
+        boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
+        return isGlobalResult ? this.buildResult(message, exception, request) : message;
     }
 
 }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pongsky.kit.core.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailAroundProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
-import com.pongsky.kit.global.response.handler.processor.fail.impl.DefaultFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessAroundProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessProcessor;
 import lombok.NonNull;
@@ -71,12 +70,8 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     /**
      * 【失败】全局响应处理器列表
      */
+    @SuppressWarnings({"rawtypes"})
     private static final List<BaseFailProcessor> FAIL_PROCESSORS = new CopyOnWriteArrayList<>();
-
-    /**
-     * 【失败】默认响应处理器
-     */
-    private static BaseFailProcessor DEFAULT_FAIL_PROCESSOR = null;
 
     /**
      * 【成功】全局响应环绕处理器列表
@@ -99,12 +94,12 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     @PostConstruct
     public void syncProcessors() {
         APPLICATION_CONTEXT = SpringUtils.getApplicationContext();
+
         SUCCESS_AROUND_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseSuccessAroundProcessor.class).values());
         SUCCESS_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseSuccessProcessor.class).values());
 
         FAIL_AROUND_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseFailAroundProcessor.class).values());
         FAIL_PROCESSORS.addAll(APPLICATION_CONTEXT.getBeansOfType(BaseFailProcessor.class).values());
-        DEFAULT_FAIL_PROCESSOR = APPLICATION_CONTEXT.getBean(DefaultFailProcessor.class);
     }
 
     @Override
@@ -181,6 +176,7 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
      * @param response  response
      * @return 响应数据体
      */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private Object processFail(Throwable exception, HttpServletRequest request, HttpServletResponse response) {
         Object result = null;
         // 首先执行环绕处理器
@@ -192,20 +188,19 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
             }
         }
         // 其次匹配处理器
-        BaseFailProcessor processor = FAIL_PROCESSORS.stream()
+        Optional<BaseFailProcessor> opProcessor = FAIL_PROCESSORS.stream()
                 .filter(p -> p.isHitProcessor(exception, request, APPLICATION_CONTEXT))
-                .findFirst()
-                .orElse(DEFAULT_FAIL_PROCESSOR);
-        if (result == null) {
-            result = processor.execBefore(exception, request, APPLICATION_CONTEXT);
-        }
-        if (result == null) {
-            result = processor.exec(exception, request, APPLICATION_CONTEXT);
-        }
-        processor.log(exception, request, APPLICATION_CONTEXT);
-        processor.execAfter(exception, request, APPLICATION_CONTEXT);
-        if (response != null) {
-            response.setStatus(processor.httpStatus().value());
+                .findFirst();
+        if (opProcessor.isPresent()) {
+            BaseFailProcessor processor = opProcessor.get();
+            if (result == null) {
+                result = processor.exec(exception, request, APPLICATION_CONTEXT);
+            }
+            processor.log(exception, request, APPLICATION_CONTEXT);
+            processor.execAfter(exception, request, APPLICATION_CONTEXT);
+            if (response != null) {
+                response.setStatus(processor.httpStatus().value());
+            }
         }
         result = result != null ? result : exception.getLocalizedMessage();
         try {
@@ -241,9 +236,6 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
                 .findFirst();
         if (opProcessor.isPresent()) {
             BaseSuccessProcessor processor = opProcessor.get();
-            if (result == null) {
-                result = processor.execBefore(body, request, APPLICATION_CONTEXT);
-            }
             if (result == null) {
                 result = processor.exec(body, request, APPLICATION_CONTEXT);
             }

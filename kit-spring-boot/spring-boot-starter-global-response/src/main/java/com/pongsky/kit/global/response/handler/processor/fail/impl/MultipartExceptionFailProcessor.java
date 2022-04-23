@@ -1,5 +1,6 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
+import com.pongsky.kit.common.response.annotation.ResponseResult;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.multipart.MultipartException;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author pengsenhao
  */
-public class MultipartExceptionFailProcessor implements BaseFailProcessor {
+public class MultipartExceptionFailProcessor implements BaseFailProcessor<MultipartException> {
 
     @Override
     public Integer code() {
@@ -23,9 +24,15 @@ public class MultipartExceptionFailProcessor implements BaseFailProcessor {
         return exception.getClass() == MultipartException.class;
     }
 
+    /**
+     * 默认错误信息
+     */
+    private static final String MESSAGE = "请选择文件进行上传";
+
     @Override
-    public Object exec(Throwable exception, HttpServletRequest request, ApplicationContext applicationContext) {
-        return this.buildResult("请选择文件进行上传", exception, request);
+    public Object exec(MultipartException exception, HttpServletRequest request, ApplicationContext applicationContext) {
+        boolean isGlobalResult = request.getAttribute(ResponseResult.class.getName()) != null;
+        return isGlobalResult ? this.buildResult(MESSAGE, exception, request) : MESSAGE;
     }
 
 }
