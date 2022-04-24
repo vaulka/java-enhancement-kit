@@ -18,7 +18,7 @@ import java.util.Random;
  *
  * @author pengsenhao
  */
-public class KaptchaUtils {
+public class CaptchaUtils {
 
     /**
      * 验证码数量
@@ -45,7 +45,7 @@ public class KaptchaUtils {
      */
     private final int lineWidth;
 
-    public KaptchaUtils(int codeNum,
+    public CaptchaUtils(int codeNum,
                         int imageWidth, int imageHeight,
                         int drawCount, int lineWidth) {
         this.codeNum = codeNum;
@@ -134,7 +134,7 @@ public class KaptchaUtils {
     /**
      * 图片格式类型
      */
-    private static final String FORMAT_NAME = "jpg";
+    private static final String FORMAT_NAME = "jpeg";
 
     /**
      * 创建图像验证码 Stream 流

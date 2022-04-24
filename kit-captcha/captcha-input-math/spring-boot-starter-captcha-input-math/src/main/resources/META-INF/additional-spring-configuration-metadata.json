@@ -1,45 +1,45 @@
 {
     "groups": [
         {
-            "name": "kaptcha",
+            "name": "captcha",
             "description": "输入型算数 验证码 相关信息."
         }
     ],
     "properties": [
         {
-            "name": "kaptcha.minCode",
+            "name": "captcha.minCode",
             "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.KaptchaProperties",
+            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
             "description": "最小验证码数值."
         },
         {
-            "name": "kaptcha.maxCode",
+            "name": "captcha.maxCode",
             "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.KaptchaProperties",
+            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
             "description": "最大验证码数值."
         },
         {
-            "name": "kaptcha.codeWidthSpace",
+            "name": "captcha.codeWidthSpace",
             "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.KaptchaProperties",
+            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
             "description": "每个验证码宽度间距."
         },
         {
-            "name": "kaptcha.imageHeight",
+            "name": "captcha.imageHeight",
             "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.KaptchaProperties",
+            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
             "description": "图像宽度."
         },
         {
-            "name": "kaptcha.drawCount",
+            "name": "captcha.drawCount",
             "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.KaptchaProperties",
+            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
             "description": "干扰线数量."
         },
         {
-            "name": "kaptcha.lineWidth",
+            "name": "captcha.lineWidth",
             "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.KaptchaProperties",
+            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
             "description": "干扰线长度."
         }
     ],

@@ -21,7 +21,7 @@ import java.util.Random;
  *
  * @author pengsenhao
  */
-public class KaptchaUtils {
+public class CaptchaUtils {
 
     /**
      * 最小验证码数值
@@ -55,7 +55,7 @@ public class KaptchaUtils {
      */
     private final int lineWidth;
 
-    public KaptchaUtils(int minCode, int maxCode,
+    public CaptchaUtils(int minCode, int maxCode,
                         int imageWidth, int imageHeight,
                         int drawCount, int lineWidth) {
         this.minCode = minCode;
@@ -219,9 +219,7 @@ public class KaptchaUtils {
         try {
             ImageIO.write(image, FORMAT_NAME, outputStream);
         } finally {
-            if (outputStream != null) {
-                outputStream.close();
-            }
+            outputStream.close();
         }
         return outputStream;
     }
