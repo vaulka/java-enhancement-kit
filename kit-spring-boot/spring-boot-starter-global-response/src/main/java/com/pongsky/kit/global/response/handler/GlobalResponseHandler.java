@@ -237,7 +237,7 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     private Object processFail(Throwable exception) {
-        Object result = null;
+        Object result = exception.getLocalizedMessage();
         boolean isHitAroundProcessor = false;
         // 首先执行环绕处理器
         for (BaseFailAroundProcessor aroundProcessor : FAIL_AROUND_PROCESSORS) {
@@ -279,7 +279,7 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
      * @return 响应数据体
      */
     private Object processSuccess(Object body) {
-        Object result = null;
+        Object result = body;
         boolean isHitAroundProcessor = false;
         // 首先执行环绕处理器
         for (BaseSuccessAroundProcessor aroundProcessor : SUCCESS_AROUND_PROCESSORS) {
