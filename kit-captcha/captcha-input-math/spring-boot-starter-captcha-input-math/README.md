@@ -2,7 +2,8 @@
 
 > 输入型算数 验证码 Spring Boot Starter 模块
 >
-> 该模块依赖 [captcha-input-math-utils](../captcha-input-math-utils/README.md) 模块
+> 该模块依赖 
+> * [captcha-input-math-utils](../captcha-input-math-utils/README.md) 模块
 
 ## 使用
 

@@ -2,7 +2,8 @@
 
 > 输入型字符 验证码 Spring Boot Starter 模块
 >
-> 该模块依赖 [captcha-input-char-utils](../captcha-input-char-utils/README.md) 模块
+> 该模块依赖
+> * [captcha-input-char-utils](../captcha-input-char-utils/README.md) 模块
 
 ## 使用
 
