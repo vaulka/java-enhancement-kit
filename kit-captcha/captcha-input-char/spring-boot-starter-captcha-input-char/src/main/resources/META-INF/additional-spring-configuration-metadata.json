@@ -5,37 +5,6 @@
             "description": "输入型字符 验证码 相关信息."
         }
     ],
-    "properties": [
-        {
-            "name": "captcha.codeNum",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
-            "description": "验证码数量."
-        },
-        {
-            "name": "captcha.codeWidthSpace",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
-            "description": "每个验证码宽度间距."
-        },
-        {
-            "name": "captcha.imageHeight",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
-            "description": "图像宽度."
-        },
-        {
-            "name": "captcha.drawCount",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
-            "description": "干扰线数量."
-        },
-        {
-            "name": "captcha.lineWidth",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.properties.CaptchaProperties",
-            "description": "干扰线长度."
-        }
-    ],
+    "properties": [],
     "hints": []
 }
