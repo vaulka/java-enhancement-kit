@@ -1,4 +1,4 @@
-package com.pongsky.kit.web.utils;
+package com.pongsky.kit.web.core.utils;
 
 import lombok.NonNull;
 import org.springframework.beans.BeansException;

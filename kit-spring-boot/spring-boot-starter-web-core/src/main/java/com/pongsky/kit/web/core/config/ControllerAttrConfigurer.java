@@ -1,6 +1,6 @@
-package com.pongsky.kit.web.config;
+package com.pongsky.kit.web.core.config;
 
-import com.pongsky.kit.web.interceptor.ControllerAttrInterceptor;
+import com.pongsky.kit.web.core.interceptor.ControllerAttrInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

@@ -7,7 +7,7 @@ import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessAroundProcessor;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessProcessor;
 import com.pongsky.kit.global.response.handler.processor.supports.BaseSupportsReturnTypeProcessor;
-import com.pongsky.kit.web.utils.SpringUtils;
+import com.pongsky.kit.web.core.utils.SpringUtils;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;

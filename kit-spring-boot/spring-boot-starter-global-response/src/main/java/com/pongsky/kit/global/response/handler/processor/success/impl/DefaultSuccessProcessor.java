@@ -2,7 +2,7 @@ package com.pongsky.kit.global.response.handler.processor.success.impl;
 
 import com.pongsky.kit.common.response.annotation.ResponseResult;
 import com.pongsky.kit.global.response.handler.processor.success.BaseSuccessProcessor;
-import com.pongsky.kit.web.utils.SpringUtils;
+import com.pongsky.kit.web.core.utils.SpringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 

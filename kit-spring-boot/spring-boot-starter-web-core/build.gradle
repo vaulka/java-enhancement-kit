@@ -47,13 +47,13 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-starter-web"
+            artifactId "spring-boot-starter-web-core"
             version version.toString()
-            description "Java 增强套件 之 Web Spring Boot Starter 模块"
+            description "Java 增强套件 之 Web Core Spring Boot Starter 模块"
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件 之 Web Spring Boot Starter 模块"
+                description = "Java 增强套件 之 Web Core Spring Boot Starter 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
@@ -81,12 +81,15 @@ signing {
 }
 
 dependencies {
-    api project(":spring-boot:spring-boot-starter-core")
-    api project(":spring-boot:spring-boot-starter-web-core")
-    api project(":spring-boot:spring-boot-starter-global-response")
+    api project(":ip:ip-utils")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    api "org.apache.commons:commons-lang3:$commonsLang3Version"
+
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    api "org.springframework.boot:spring-boot-starter-web"
+    api "org.springframework.boot:spring-boot-starter-aop"
 }

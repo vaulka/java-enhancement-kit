@@ -2,8 +2,8 @@ package com.pongsky.kit.global.response.handler.processor.fail;
 
 import com.pongsky.kit.common.response.GlobalResult;
 import com.pongsky.kit.common.response.annotation.ResponseResult;
-import com.pongsky.kit.web.utils.SpringUtils;
 import com.pongsky.kit.ip.utils.IpUtils;
+import com.pongsky.kit.web.core.utils.SpringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

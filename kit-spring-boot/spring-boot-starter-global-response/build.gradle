@@ -83,8 +83,7 @@ signing {
 dependencies {
     api project(":validation:validation-utils")
     api project(":spring-boot:spring-boot-common")
-    api project(":spring-boot:spring-boot-starter-web")
-    api project(":spring-boot:spring-boot-starter-core")
+    api project(":spring-boot:spring-boot-starter-web-core")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"

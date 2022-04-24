@@ -1,9 +1,9 @@
 package com.pongsky.kit.global.response.handler.processor.fail.impl;
 
 import com.pongsky.kit.common.response.annotation.ResponseResult;
-import com.pongsky.kit.web.utils.SpringUtils;
 import com.pongsky.kit.global.response.handler.processor.fail.BaseFailProcessor;
 import com.pongsky.kit.validation.utils.ValidationUtils;
+import com.pongsky.kit.web.core.utils.SpringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 

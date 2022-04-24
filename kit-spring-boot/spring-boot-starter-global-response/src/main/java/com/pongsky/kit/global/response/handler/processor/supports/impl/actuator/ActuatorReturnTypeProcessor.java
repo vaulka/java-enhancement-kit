@@ -1,7 +1,7 @@
 package com.pongsky.kit.global.response.handler.processor.supports.impl.actuator;
 
 import com.pongsky.kit.global.response.handler.processor.supports.BaseSupportsReturnTypeProcessor;
-import com.pongsky.kit.web.utils.SpringUtils;
+import com.pongsky.kit.web.core.utils.SpringUtils;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.MethodParameter;

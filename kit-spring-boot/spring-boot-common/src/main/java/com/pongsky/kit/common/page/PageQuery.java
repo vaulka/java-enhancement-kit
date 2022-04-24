@@ -49,12 +49,12 @@ public class PageQuery {
     /**
      * 最大 pageSize
      */
-    private static final int MAX_PAGE_SIZE = 200;
+    private static final int MAX_PAGE_SIZE = 100;
 
     /**
      * 一页数量
      */
-    @ApiModelProperty("一页数量 最小 1 最大 200")
+    @ApiModelProperty("一页数量 最小 1 最大 100")
     private Integer pageSize;
 
     public Integer getPageSize() {

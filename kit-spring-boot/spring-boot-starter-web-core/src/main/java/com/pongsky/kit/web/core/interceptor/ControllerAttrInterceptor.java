@@ -1,4 +1,4 @@
-package com.pongsky.kit.web.interceptor;
+package com.pongsky.kit.web.core.interceptor;
 
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
