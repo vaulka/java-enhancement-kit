@@ -18,7 +18,10 @@ public class MultiDataSourceProperties {
 
     /**
      * 多数据源配置
-     * K：数据源名称/组名，组名根据 - 符号间隔开，譬如：master-1
+     * K：数据源名称。
+     * 可进行解析组名，组名根据 - 符号间隔开，取 - 符号前的字符串。
+     * 譬如：master-1，名称为 master-1，组名为 master
+     * <p>
      * V：数据源配置
      */
     private Map<String, DataSourceProperties> multiDatasets;
