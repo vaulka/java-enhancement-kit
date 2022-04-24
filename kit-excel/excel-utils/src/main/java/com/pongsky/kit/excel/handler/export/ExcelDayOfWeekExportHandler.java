@@ -6,8 +6,8 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.lang.reflect.Field;
 import java.time.DayOfWeek;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * DayOfWeek 处理器
@@ -16,7 +16,9 @@ import java.util.Map;
  **/
 public class ExcelDayOfWeekExportHandler implements ExcelExportHandler {
 
-    private static final Map<DayOfWeek, String> MAP = new HashMap<DayOfWeek, String>(10) {
+    private static final Map<DayOfWeek, String> MAP = new ConcurrentHashMap<DayOfWeek, String>(10) {
+        private static final long serialVersionUID = 5142425809684309512L;
+
         {
             put(DayOfWeek.MONDAY, "星期一");
             put(DayOfWeek.TUESDAY, "星期二");

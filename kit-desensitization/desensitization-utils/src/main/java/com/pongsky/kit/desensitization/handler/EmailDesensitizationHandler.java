@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 邮箱脱敏
  * <p>
- * 示例：k****@vip.qq.com
+ * 示例：ke***@vip.qq.com
  *
  * @author pengsenhao
  */
@@ -17,7 +17,7 @@ public class EmailDesensitizationHandler implements DesensitizationHandler {
         if (StringUtils.isBlank(str)) {
             return str;
         }
-        return DesensitizationUtils.desensitization(str, 1, str.lastIndexOf("@"));
+        return DesensitizationUtils.desensitization(str, 2, str.length() - str.indexOf("@"));
     }
 
 }

@@ -5,8 +5,8 @@ import com.pongsky.kit.type.parser.utils.ReflectUtils;
 
 import java.lang.reflect.Field;
 import java.time.DayOfWeek;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * DayOfWeek 处理器
@@ -15,7 +15,9 @@ import java.util.Map;
  **/
 public class ExcelDayOfWeekImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, DayOfWeek> MAP = new HashMap<String, DayOfWeek>(10) {
+    private static final Map<String, DayOfWeek> MAP = new ConcurrentHashMap<String, DayOfWeek>(10) {
+        private static final long serialVersionUID = -1539757981111008963L;
+
         {
             put("星期一", DayOfWeek.MONDAY);
             put("星期二", DayOfWeek.TUESDAY);

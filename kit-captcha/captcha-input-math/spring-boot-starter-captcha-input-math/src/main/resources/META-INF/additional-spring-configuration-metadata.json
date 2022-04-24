@@ -1,47 +1,10 @@
 {
     "groups": [
         {
-            "name": "kaptcha",
+            "name": "captcha",
             "description": "输入型算数 验证码 相关信息."
         }
     ],
-    "properties": [
-        {
-            "name": "kaptcha.minCode",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.minCode",
-            "description": "最小验证码数值."
-        },
-        {
-            "name": "kaptcha.maxCode",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.maxCode",
-            "description": "最大验证码数值."
-        },
-        {
-            "name": "kaptcha.codeWidthSpace",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.codeWidthSpace",
-            "description": "每个验证码宽度间距."
-        },
-        {
-            "name": "kaptcha.imageHeight",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.imageHeight",
-            "description": "图像宽度."
-        },
-        {
-            "name": "kaptcha.drawCount",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.drawCount",
-            "description": "干扰线数量."
-        },
-        {
-            "name": "kaptcha.lineWidth",
-            "type": "java.lang.Integer",
-            "sourceType": "com.pongsky.kit.captcha.config.KaptchaProperties.lineWidth",
-            "description": "干扰线长度."
-        }
-    ],
+    "properties": [],
     "hints": []
 }

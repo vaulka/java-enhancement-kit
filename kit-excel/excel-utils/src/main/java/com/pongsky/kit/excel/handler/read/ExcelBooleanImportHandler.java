@@ -6,6 +6,7 @@ import com.pongsky.kit.type.parser.utils.ReflectUtils;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Boolean 处理器
@@ -14,7 +15,9 @@ import java.util.Map;
  **/
 public class ExcelBooleanImportHandler implements ExcelImportHandler {
 
-    private static final Map<String, Boolean> MAP = new HashMap<String, Boolean>(4) {
+    private static final Map<String, Boolean> MAP = new ConcurrentHashMap<String, Boolean>(4) {
+        private static final long serialVersionUID = 7779455080979782948L;
+
         {
             put("是", Boolean.TRUE);
             put("否", Boolean.FALSE);

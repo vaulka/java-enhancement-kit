@@ -32,7 +32,7 @@ public @interface ExcelProperty {
     /**
      * 顶部 列名
      * <p>
-     * 不填写则默认获取字段名
+     * 未填写则默认获取字段名
      *
      * @return 顶部 列名
      */
@@ -48,7 +48,7 @@ public @interface ExcelProperty {
     /**
      * 左部 列名
      * <p>
-     * 不填写则默认获取字段名
+     * 未填写则默认获取字段名
      *
      * @return 左部 列名
      */

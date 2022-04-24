@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.storage.config.MinioAutoConfiguration
+com.pongsky.kit.storage.autoconfigure.MinioAutoConfiguration

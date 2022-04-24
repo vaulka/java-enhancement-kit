@@ -1,7 +1,7 @@
 package com.pongsky.kit.storage.web.aspect.around;
 
 import com.pongsky.kit.storage.annotation.StorageResourceMark;
-import com.pongsky.kit.storage.config.StorageProperties;
+import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.type.parser.enums.ClassType;
 import com.pongsky.kit.type.parser.enums.FieldType;
 import com.pongsky.kit.type.parser.utils.FieldParserUtils;
@@ -12,8 +12,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.openjdk.jol.vm.VM;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -29,7 +29,6 @@ import java.util.Set;
  */
 @Slf4j
 @Aspect
-@Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(value = "storage.is-enable-resource-mark", havingValue = "true", matchIfMissing = true)
 public class StorageAspect {
@@ -59,13 +58,15 @@ public class StorageAspect {
      * @author pengsenhao
      */
     @SuppressWarnings({"unchecked"})
-    private Object storageResource(StorageResourceMark mark, List<Object> originResults, Object originResult) {
+    private Object storageResource(StorageResourceMark mark, List<Long> originResults, Object originResult) {
         ClassType classType = ClassType.getType(originResult);
-        if (classType == ClassType.OBJECT
-                && originResults.contains(originResult)) {
-            // 如果存在，则退出递归，防止循环自己导致堆栈溢出
+        if (originResults.contains(VM.current().addressOf(originResult))) {
+            // 如果内存地址是常量池，则会导致后续的常量都进不来，但是常量基本都是数值类型，该问题可忽略不计
+            // 如果内存地址值存在，则退出递归，防止循环自己导致堆栈溢出
             return originResult;
         }
+        // 添加内存地址值
+        originResults.add(VM.current().addressOf(originResult));
         switch (classType) {
             case STRING: {
                 return mark != null
@@ -101,7 +102,7 @@ public class StorageAspect {
             default:
                 return originResult;
         }
-        List<Field> fields = FieldParserUtils.getSuperFields(originResult.getClass());
+        List<Field> fields = FieldParserUtils.getSuperFields(originResult.getClass(), true);
         for (Field field : fields) {
             FieldType fieldType = FieldType.getType(field);
             switch (fieldType) {

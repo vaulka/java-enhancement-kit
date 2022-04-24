@@ -12,19 +12,6 @@ public class ArrayParserUtils {
     /**
      * 获取数组的元素类型
      *
-     * @param array 数组列表
-     * @return 获取数组的元素类型
-     */
-    public static Class<?> getElementType(Object[] array) {
-        if (array == null) {
-            return null;
-        }
-        return array.getClass().getComponentType();
-    }
-
-    /**
-     * 获取数组的元素类型
-     *
      * @param field 字段
      * @return 获取数组的元素类型
      */

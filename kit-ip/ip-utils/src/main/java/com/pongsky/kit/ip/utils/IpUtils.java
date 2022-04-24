@@ -101,7 +101,7 @@ public class IpUtils {
             ResponseBody body = response.body();
             return body == null
                     ? null
-                    : body.string();
+                    : body.string().replace("\n", "");
         } catch (IOException e) {
             throw new RuntimeException(e.getLocalizedMessage(), e);
         }

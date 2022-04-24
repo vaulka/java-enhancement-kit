@@ -14,40 +14,80 @@
 
 |模块|介绍|
 |---|---|
-|captcha-input-char-utils|输入型字符 验证码 Utils 模块|
-|spring-boot-starter-captcha-input-char|输入型字符 验证码 Spring Boot Starter 模块|
+|[captcha-input-char-utils](kit-captcha/captcha-input-char/captcha-input-char-utils/README.md)|输入型字符 验证码 Utils 模块|
+|[spring-boot-starter-captcha-input-char](kit-captcha/captcha-input-char/spring-boot-starter-captcha-input-char/README.md)|输入型字符 验证码 Spring Boot Starter 模块|
 
 ### captcha-input-math 输入型算数 字符验证码模块
 
 |模块|介绍|
 |---|---|
-|captcha-input-math-utils|输入型算数 验证码 Utils 模块|
-|spring-boot-starter-captcha-input-math|输入型算数 验证码 Spring Boot Starter 模块|
+|[captcha-input-math-utils](kit-captcha/captcha-input-math/captcha-input-math-utils/README.md)|输入型算数 验证码 Utils 模块|
+|[spring-boot-starter-captcha-input-math](kit-captcha/captcha-input-math/spring-boot-starter-captcha-input-math/README.md)|输入型算数 验证码 Spring Boot Starter 模块|
 
 ## kit-desensitization 数据脱敏模块
 
 |模块|介绍|
 |---|---|
-|desensitization-annotation|数据脱敏 Annotation 模块|
-|desensitization-utils|数据脱敏 Utils 模块|
-|spring-boot-starter-desensitization|数据脱敏 Spring Boot Starter 模块|
+|[desensitization-annotation](kit-desensitization/desensitization-annotation/README.md)|数据脱敏 Annotation 模块|
+|[desensitization-utils](kit-desensitization/desensitization-utils/README.md)|数据脱敏 Utils 模块|
+|[spring-boot-starter-desensitization](kit-desensitization/spring-boot-starter-desensitization/README.md)|数据脱敏 Spring Boot Starter 模块|
 
-## kit-excel 读/写 Excel 模块
+## kit-dynamic-datasource 动态数据源模块
 
 |模块|介绍|
 |---|---|
-|excel-utils|Excel Utils 模块|
-|spring-boot-starter-excel|Excel Spring Boot Starter 模块|
+|[spring-boot-starter-dynamic-datasource](kit-dynamic-datasource/spring-boot-starter-dynamic-datasource/README.md)|动态数据源 Spring Boot Starter 模块|
+
+## kit-excel 导入/导出 Excel 模块
+
+|模块|介绍|
+|---|---|
+|[excel-utils](kit-excel/excel-utils/README.md)|Excel Utils 模块|
+|[spring-boot-starter-excel](kit-excel/spring-boot-starter-excel/README.md)|Excel Spring Boot Starter 模块|
+
+## kit-ip IP 模块
+
+|模块|介绍|
+|---|---|
+|[ip-utils](kit-ip/ip-utils/README.md)|IP Utils 模块|
+
+## kit-spring-boot Spring Boot 增强模块
+
+|模块|介绍|
+|---|---|
+|[spring-boot-common](kit-spring-boot/spring-boot-common/README.md)|公共 Spring Boot 模块|
+|[spring-boot-starter-core](kit-spring-boot/spring-boot-starter-core/README.md)|Core Spring Boot Starter 模块|
+|[spring-boot-starter-global-response](kit-spring-boot/spring-boot-starter-global-response/README.md)|全局响应 Spring Boot Starter 模块|
+|[spring-boot-starter-web](kit-spring-boot/spring-boot-starter-web/README.md)|Web Spring Boot Starter 模块|
+|[spring-boot-starter-web-core](kit-spring-boot/spring-boot-starter-web-core/README.md)|Web Core Spring Boot Starter 模块|
 
 ## kit-storage 云存储模块
 
 |模块|介绍|
 |---|---|
-|storage-annotation|云存储 Annotation 模块|
-|storage-utils|云存储 Utils 模块|
-|spring-boot-storage|云存储 Spring Boot 模块|
-|spring-boot-starter-storage-oss|云存储 阿里云 OSS Spring Boot Starter 模块|
-|spring-boot-starter-storage-minio|云存储 MinIO Spring Boot Starter 模块|
+|[storage-annotation](kit-storage/storage-annotation/README.md)|云存储 Annotation 模块|
+|[storage-utils](kit-storage/storage-utils/README.md)|云存储 Utils 模块|
+|[spring-boot-storage](kit-storage/spring-boot-storage/README.md)|云存储 Spring Boot 模块|
+|[spring-boot-starter-storage-oss](kit-storage/spring-boot-starter-storage-oss/README.md)|云存储 阿里云 OSS Spring Boot Starter 模块|
+|[spring-boot-starter-storage-minio](kit-storage/spring-boot-starter-storage-minio/README.md)|云存储 MinIO Spring Boot Starter 模块|
+
+## kit-system 系统模块
+
+|模块|介绍|
+|---|---|
+|[system-utils](kit-system/system-utils/README.md)|系统 Utils 模块|
+
+## kit-type-parser 类型解析模块
+
+|模块|介绍|
+|---|---|
+|[type-parser-utils](kit-type-parser/type-parser-utils/README.md)|类型解析 Utils 模块|
+
+## kit-validation 校验模块
+
+|模块|介绍|
+|---|---|
+|[validation-utils](kit-validation/validation-utils/README.md)|校验 Utils 模块|
 
 # 使用
 
@@ -74,7 +114,7 @@
 implementation "com.pongsky.kit:spring-boot-starter-captcha-input-math:$latestVersion"
 ```
 
-# 其他功能特点
+# 其他功能特点（TODO，后续功能将拆模块移除优化）
 
 * config-core
     * 全局实例ID（自动装配）
@@ -83,14 +123,11 @@ implementation "com.pongsky.kit:spring-boot-starter-captcha-input-math:$latestVe
     * 全局日志链路追踪（需配合 bootstrap.yml）
     * 异步配置（增强日志链路追踪）
     * Quartz 配置（增强日志链路追踪）
-    * 定义异常以及全局响应信息
 
 * config-web
     * Redis 模糊删除 Key
     * Feign 调用日志打印
-    * Controller 调用统一日志打印
     * 接口防重校验
-    * 可重复读取 Request Body
 
 ## 前置条件
 
@@ -124,27 +161,6 @@ implementation "com.pongsky.kit:spring-boot-starter-captcha-input-math:$latestVe
 @Import({RedisConfig.class})
 ```
 
-## 云存储配置
-
-配置是否启用云存储，以及采用哪种云存储类型，详情查看 `additional-spring-configuration-metadata.json` 配置信息。
-
-```yml
-storage:
-  type: aliyun # 云存储类型
-  base-uri: https://storage.pongsky.com # 上传文件后，返回的路径自动拼接此URI
-aliyun:
-  oss:
-    endpoint: oss-cn-shanghai-internal.aliyuncs.com # endpoint
-    bucket: bucket # bucket
-    access-key-id: key # access key
-    access-key-secret: secret # access secret
-minio:
-  endpoint: minio.pongsky.com # endpoint
-  bucket: bucket # bucket
-  access-key: key # access key
-  secret-key: secret # access secret
-```
-
 ## 全局日志链路追踪
 
 日志打印信息需添加打印 `X-Trace-Id` 参数。
@@ -165,22 +181,6 @@ logging:
         "'MIHOYO::'+#rule.userId+':*'"
 })
 ```
-
-## 数据脱敏
-
-在字段上/方法上添加 `@DesensitizationMark` 使用，详情用法请查看该注解。
-
-> WARN
->
-> field type（字段类型）/ method returnType（方法返回值类型）必须为 String / Class
-
-## 云存储URL自动添加显示前缀
-
-在字段上/方法上添加 `@StorageResourceMark` 使用。
-
-> WARN
->
-> field type（字段类型）/ method returnType（方法返回值类型）必须为 String / Class
 
 ## 接口防重校验
 

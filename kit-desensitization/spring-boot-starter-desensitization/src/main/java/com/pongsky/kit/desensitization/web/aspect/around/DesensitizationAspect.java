@@ -11,7 +11,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.stereotype.Component;
+import org.openjdk.jol.vm.VM;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -30,7 +30,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 @Aspect
-@Component
 public class DesensitizationAspect {
 
     @Around("(@within(org.springframework.stereotype.Controller) " +
@@ -53,18 +52,18 @@ public class DesensitizationAspect {
      * @param originResults 原始 result 列表（防止堆栈溢出）
      * @param originResult  原始 result
      * @return 脱敏后的数据
-     * @author pengsenhao
      */
     @SuppressWarnings({"unchecked"})
     private Object desensitization(DesensitizationMark mark, List<Object> originResults, Object originResult)
             throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         ClassType classType = ClassType.getType(originResult);
-        if (classType == ClassType.OBJECT
-                && originResults.contains(originResult)) {
-            // 如果存在，则退出递归，防止循环自己导致堆栈溢出
+        if (originResults.contains(VM.current().addressOf(originResult))) {
+            // 如果内存地址是常量池，则会导致后续的常量都进不来，但是常量基本都是数值类型，该问题可忽略不计
+            // 如果内存地址值存在，则退出递归，防止循环自己导致堆栈溢出
             return originResult;
         }
-        originResults.add(originResult);
+        // 添加内存地址值
+        originResults.add(VM.current().addressOf(originResult));
         DesensitizationHandler handler = this.getHandler(mark);
         switch (classType) {
             case STRING: {
@@ -101,7 +100,7 @@ public class DesensitizationAspect {
             default:
                 return originResult;
         }
-        List<Field> fields = FieldParserUtils.getSuperFields(originResult.getClass());
+        List<Field> fields = FieldParserUtils.getSuperFields(originResult.getClass(), true);
         for (Field field : fields) {
             FieldType fieldType = FieldType.getType(field);
             switch (fieldType) {

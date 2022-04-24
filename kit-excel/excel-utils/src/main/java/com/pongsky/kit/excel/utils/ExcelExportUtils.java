@@ -61,7 +61,7 @@ public class ExcelExportUtils {
         info.setFields(new ArrayList<>());
         int topHeadMaxNum = 1;
         int leftHeadMaxNum = 1;
-        List<Field> fields = FieldParserUtils.getSuperFields(clazz);
+        List<Field> fields = FieldParserUtils.getSuperFields(clazz, true);
         for (Field field : fields) {
             ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
             if (excelProperty != null) {
@@ -85,6 +85,11 @@ public class ExcelExportUtils {
         leftHeadMaxNum--;
         info.setLeftHeadMaxNum(leftHeadMaxNum);
     }
+
+    /**
+     * 列最大宽度
+     */
+    private static final int MAX_WIDTH = 255 * 256;
 
     /**
      * 导出 excel
@@ -116,7 +121,8 @@ public class ExcelExportUtils {
         for (int i = 0; i < info.getWidths().size(); i++) {
             Integer width = info.getWidths().get(i);
             if (width != null) {
-                info.getSheet().setColumnWidth(i, width);
+                // 设置列宽有最大限度限制，如果超过最大限度时，则设置为最大限度
+                info.getSheet().setColumnWidth(i, Integer.min(width, MAX_WIDTH));
             }
         }
         return info.getWorkbook();

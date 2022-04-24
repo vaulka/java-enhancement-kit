@@ -1,0 +1,17 @@
+{
+    "groups": [
+        {
+            "name": "spring.multi-datasets",
+            "description": "多数据源相关信息."
+        }
+    ],
+    "properties": [
+        {
+            "name": "spring.multi-datasets",
+            "type": "java.util.Map",
+            "sourceType": "com.pongsky.kit.dynamic.datasource.properties.MultiDataSourceProperties",
+            "description": "数据源配置信息（具体配置请查看配置类）."
+        }
+    ],
+    "hints": []
+}

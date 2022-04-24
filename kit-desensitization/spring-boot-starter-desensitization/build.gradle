@@ -87,6 +87,8 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    api "org.openjdk.jol:jol-core:$jolCoreVersion"
+
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     api "org.springframework.boot:spring-boot-starter-web"
