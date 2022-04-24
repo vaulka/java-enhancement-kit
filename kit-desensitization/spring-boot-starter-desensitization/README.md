@@ -6,6 +6,10 @@
 > * [desensitization-annotation](../desensitization-annotation/README.md) 模块
 > * [desensitization-utils](../desensitization-utils/README.md) 模块
 
+## 功能说明
+
+* 标记哪些字段需要数据脱敏处理，在返回结果时自动将明文数据进行脱敏。
+
 ## 约定
 
 1. 在需要数据脱敏的字段上加 `DesensitizationMark` 注解。

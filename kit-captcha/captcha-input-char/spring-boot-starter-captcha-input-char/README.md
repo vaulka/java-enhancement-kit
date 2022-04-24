@@ -5,6 +5,10 @@
 > 该模块依赖
 > * [captcha-input-char-utils](../captcha-input-char-utils/README.md) 模块
 
+## 功能说明
+
+* 生成输入型字符 验证码图片 / Base64 字符串。
+
 ## 配置验证码参数
 
 在 `yml` 配置验证码信息，参数如下：

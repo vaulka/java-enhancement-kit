@@ -5,6 +5,10 @@
 > 该模块依赖 
 > * [desensitization-annotation](../desensitization-annotation/README.md) 模块
 
+## 功能说明
+
+* 将明文数据进行数据脱敏。
+
 ## 约定
 
 1. 默认提供以下内置数据脱敏实现
@@ -64,6 +68,7 @@ public class DesensitizationUtilsTest {
 数据脱敏效果图如下：
 
 ```log
+
 bankCard desensitization：6217***********7807
 
 email desensitization：ke***@vip.qq.com
@@ -75,4 +80,5 @@ name desensitization:彭*豪
 password desensitization:******
 
 phone desensitization:157****8879
+
 ```

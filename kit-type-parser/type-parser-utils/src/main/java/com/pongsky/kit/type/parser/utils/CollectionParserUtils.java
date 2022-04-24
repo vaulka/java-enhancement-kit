@@ -1,7 +1,6 @@
 package com.pongsky.kit.type.parser.utils;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
 /**
  * 集合解析 工具类
@@ -9,20 +8,6 @@ import java.util.List;
  * @author pengsenhao
  **/
 public class CollectionParserUtils {
-
-    /**
-     * 获取集合的元素类型
-     *
-     * @param list 集合列表
-     * @return 获取集合的元素类型
-     */
-    public static Class<?> getElementType(List<?> list) {
-        if (list == null) {
-            return null;
-        }
-        Object[] array = list.toArray();
-        return ArrayParserUtils.getElementType(array);
-    }
 
     /**
      * 左尖括号

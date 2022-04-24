@@ -74,4 +74,6 @@ dependencies {
 
     api "com.github.oshi:oshi-core:$oshiVersion"
     compileOnly "io.swagger:swagger-annotations:$swaggerAnnotationVersion"
+
+    testImplementation "com.alibaba:fastjson:$fastjsonVersion"
 }

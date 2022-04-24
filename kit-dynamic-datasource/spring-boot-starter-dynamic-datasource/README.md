@@ -2,6 +2,11 @@
 
 > 动态数据源 Spring Boot Starter 模块
 
+## 功能说明
+
+* 无侵入式 Starter。
+* 动态切换数据源，支持填写名称、组名。
+
 ## 约定
 
 1. 目前只适配了 `MySQL` 数据库动态数据源。
@@ -86,4 +91,4 @@ public class AccountServiceImpl {
 
 ## 强大的对手
 
-* [多数据源 - MyBatis-Plus](https://gitee.com/baomidou/dynamic-datasource-spring-boot-starter#https://gitee.com/link?target=https%3A%2F%2Fwww.kancloud.cn%2Ftracy5546%2Fdynamic-datasource%2F2264611)
+* [多数据源 - MyBatis-Plus](https://www.mybatis-plus.com/guide/dynamic-datasource.html#%E6%96%87%E6%A1%A3-documentation)
