@@ -169,7 +169,7 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
         Object result = returnValue;
         Class<?> methodReturnType = Objects.requireNonNull(returnType.getMethod()).getReturnType();
         try {
-            if (result.getClass() == ResponseEntity.class || methodReturnType == ResponseEntity.class) {
+            if (result != null && result.getClass() == ResponseEntity.class || methodReturnType == ResponseEntity.class) {
                 if (returnType.getContainingClass() == GlobalExceptionHandler.class) {
                     // 已在全局异常处理过了，直接返回
                     result = this.getResponseEntityBody(false, result);
