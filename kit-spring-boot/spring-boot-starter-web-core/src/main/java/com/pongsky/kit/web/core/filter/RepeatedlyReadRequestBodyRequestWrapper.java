@@ -1,4 +1,4 @@
-package com.pongsky.kit.web.core.fitler;
+package com.pongsky.kit.web.core.filter;
 
 
 import javax.servlet.ReadListener;
@@ -7,39 +7,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 替换 HttpServletRequest，实现 request body 数据多次读取
+ * 实现 Request Body 数据多次读取
  *
  * @author pengsenhao
  */
-public class RepeatedlyReadRequestBodyRequestWrapper extends HttpServletRequestWrapper {
+public class RepeatedlyReadRequestBodyRequestWrapper extends HttpServletRequestWrapper implements ReadRequestBodyRequestWrapper {
 
     /**
-     * 存储 request body 数据的容器
+     * Request Body 数据
      */
-    private final byte[] body;
+    private final String requestBody;
 
     public RepeatedlyReadRequestBodyRequestWrapper(HttpServletRequest request) {
         super(request);
-        body = readBody(request);
-    }
-
-    public byte[] readBody(HttpServletRequest request) {
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(),
-                StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
-        }
-        return stringBuilder.toString().getBytes(StandardCharsets.UTF_8);
+        requestBody = this.readRequestBody(request);
     }
 
     @Override
@@ -49,9 +34,7 @@ public class RepeatedlyReadRequestBodyRequestWrapper extends HttpServletRequestW
 
     @Override
     public ServletInputStream getInputStream() {
-
-        final ByteArrayInputStream inputStream = new ByteArrayInputStream(body);
-
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(requestBody.getBytes(StandardCharsets.UTF_8));
         return new ServletInputStream() {
             @Override
             public int read() {

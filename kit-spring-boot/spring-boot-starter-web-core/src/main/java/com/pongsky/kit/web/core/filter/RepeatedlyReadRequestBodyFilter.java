@@ -1,6 +1,6 @@
-package com.pongsky.kit.web.core.fitler;
+package com.pongsky.kit.web.core.filter;
 
-import org.springframework.core.annotation.Order;
+import org.springframework.http.MediaType;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -10,47 +10,27 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
- * 替换 HttpServletRequest，实现 request body 数据多次读取
+ * Request Body 数据多次读取
  *
  * @author pengsenhao
  */
-@Order
 public class RepeatedlyReadRequestBodyFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
     }
 
-    /**
-     * 上传文件请求头列表
-     */
-    private static final List<String> UPLOAD_FILE_CONTENT_TYPES = Arrays.asList(
-            "image/bmp",
-            "image/gif",
-            "image/jpg",
-            "image/jpeg",
-            "image/png",
-            "image/svg+xml",
-            "image/tiff",
-            "image/webp",
-            "multipart/form-data",
-            "multipart/mixed",
-            "multipart/related"
-    );
-
     @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        boolean isRepeatedlyReadRequestBody = request.getContentType() == null
-                || UPLOAD_FILE_CONTENT_TYPES.stream()
-                .noneMatch(ct -> request.getContentType().contains(ct));
+        String contentType = request.getContentType();
         ServletRequest servletRequest = request;
-        if (isRepeatedlyReadRequestBody) {
+        if (contentType == null
+                || contentType.contains(MediaType.APPLICATION_JSON_VALUE)
+                || contentType.contains(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
             servletRequest = new RepeatedlyReadRequestBodyRequestWrapper((HttpServletRequest) request);
         }
         chain.doFilter(servletRequest, response);
