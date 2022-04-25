@@ -1,5 +1,7 @@
 package com.pongsky.kit.web.core.fitler;
 
+import org.springframework.core.annotation.Order;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -16,7 +18,8 @@ import java.util.List;
  *
  * @author pengsenhao
  */
-public class ReplaceStreamFilter implements Filter {
+@Order
+public class RepeatedlyReadRequestBodyFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -39,29 +42,18 @@ public class ReplaceStreamFilter implements Filter {
             "multipart/related"
     );
 
-    /**
-     * 判断是否缓存 request body
-     *
-     * @param request request
-     * @return 判断是否缓存 request body
-     */
-    public boolean isCacheRequestBody(ServletRequest request) {
-        if (request.getContentType() == null) {
-            return false;
-        }
-        return UPLOAD_FILE_CONTENT_TYPES.stream()
-                .noneMatch(contentType -> request.getContentType().contains(contentType));
-    }
-
     @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        if (this.isCacheRequestBody(request)) {
-            chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
-        } else {
-            chain.doFilter(request, response);
+        boolean isRepeatedlyReadRequestBody = request.getContentType() == null
+                || UPLOAD_FILE_CONTENT_TYPES.stream()
+                .noneMatch(ct -> request.getContentType().contains(ct));
+        ServletRequest servletRequest = request;
+        if (isRepeatedlyReadRequestBody) {
+            servletRequest = new RepeatedlyReadRequestBodyRequestWrapper((HttpServletRequest) request);
         }
+        chain.doFilter(servletRequest, response);
     }
 
     @Override
