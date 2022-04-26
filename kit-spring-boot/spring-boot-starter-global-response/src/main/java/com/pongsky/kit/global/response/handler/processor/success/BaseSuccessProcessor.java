@@ -42,7 +42,7 @@ public interface BaseSuccessProcessor {
      * @return 返回的响应结果
      */
     default Object exec(Object body) {
-        return this.buildResult(body);
+        return this.buildResult(body, GlobalResult.SUCCESS_MESSAGE);
     }
 
     /**
@@ -59,13 +59,15 @@ public interface BaseSuccessProcessor {
     /**
      * 构建【成功】的全局响应数据
      *
-     * @param <T> T
-     * @param obj obj
+     * @param <T>     T
+     * @param obj     obj
+     * @param message message
      * @return 构建【成功】的全局响应数据
      */
-    default <T> GlobalResult<T> buildResult(T obj) {
+    default <T> GlobalResult<T> buildResult(T obj, String message) {
         return new GlobalResult<T>()
-                .setCode(code())
+                .setCode(this.code())
+                .setMessage(message)
                 .setData(obj);
     }
 

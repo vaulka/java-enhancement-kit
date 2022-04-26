@@ -27,6 +27,11 @@ public class GlobalResult<T> implements Serializable {
     public static final int SUCCESS_CODE = 0;
 
     /**
+     * 成功 message
+     */
+    public static final String SUCCESS_MESSAGE = "成功";
+
+    /**
      * 接口响应结果标识码
      * <p>
      * 有数据的情况：成功、失败

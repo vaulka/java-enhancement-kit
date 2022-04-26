@@ -22,9 +22,4 @@ public class DefaultSuccessProcessor implements BaseSuccessProcessor {
         return request.getAttribute(ResponseResult.class.getName()) != null;
     }
 
-    @Override
-    public Object exec(Object body) {
-        return this.buildResult(body);
-    }
-
 }

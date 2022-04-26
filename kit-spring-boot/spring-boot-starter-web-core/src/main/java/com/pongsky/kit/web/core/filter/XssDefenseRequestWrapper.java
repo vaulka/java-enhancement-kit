@@ -98,6 +98,9 @@ public class XssDefenseRequestWrapper extends HttpServletRequestWrapper implemen
     @Override
     public String getQueryString() {
         String queryString = super.getQueryString();
+        if (StringUtils.isBlank(queryString)) {
+            return queryString;
+        }
         String[] querySplit = queryString.split("&");
         if (querySplit.length == 0) {
             return queryString;
