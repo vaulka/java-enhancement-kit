@@ -21,74 +21,18 @@ public enum ResultCode {
 
     // 100 ~ 199 区间表示参数错误
 
-    DoesNotExistException("不存在异常", 100,
-            Arrays.asList(com.pongsky.kit.exception.DoesNotExistException.class)),
-
-    ValidationException("校验异常", 101,
-            Arrays.asList(com.pongsky.kit.exception.ValidationException.class,
-                    javax.validation.ConstraintViolationException.class)),
-
-    BindException("param 参数异常", 102),
-
-    MethodArgumentNotValidException("body 参数异常", 103),
-
-    MultipartException("空文件上传异常", 104, "请选择文件进行上传",
-            Arrays.asList(org.springframework.web.multipart.MultipartException.class)),
-
-    HttpMessageNotReadableException("JSON 数据错误异常", 105, "JSON 数据错误异常"),
-
-    ExistException("存在异常", 106,
-            Arrays.asList(com.pongsky.kit.exception.ExistException.class)),
-
-    MaxUploadSizeExceededException("文件上传大小异常", 107, "上传的文件体积超过限制，请缩小文件后重试",
-            Arrays.asList(org.springframework.web.multipart.MaxUploadSizeExceededException.class)),
-
-    IllegalArgumentException("非法参数异常", 108,
-            Arrays.asList(IllegalArgumentException.class)),
-
-    NoHandlerFoundException("API 接口不存在异常", 109),
-
-    HttpRequestMethodNotSupportedException("API 接口方法不存在异常", 110),
-
-    HttpException("HTTP 请求异常", 113,
-            Arrays.asList(com.pongsky.kit.exception.HttpException.class)),
-
     GatewayException("网关拦截异常", 114),
 
     // 200 ~ 299 区间表示用户错误
 
-    UserOperateException("用户操作异常", 201),
-
-    FrequencyException("频率异常", 202,
-            Arrays.asList(com.pongsky.kit.exception.FrequencyException.class)),
-
     // 400 ~ 499 区间表示登录态异常
 
-    /**
-     * 权限不足，禁止调无权限接口
-     */
-    AccessDeniedException("访问权限异常", 403, "访问凭证已过期，请重新登录",
-            Arrays.asList(org.springframework.security.access.AccessDeniedException.class)),
-
     // 500 ~ 599 区间表示接口异常
-
-    RuntimeException("运行时异常", 500,
-            Arrays.asList(java.lang.RuntimeException.class)),
 
     RemoteCallException("远程调用异常", 501, "远程调用服务失败",
             Arrays.asList(com.pongsky.kit.exception.RemoteCallException.class), true),
 
     CircuitBreakerException("断路异常", 502, "服务器出了点小差，请稍后再试"),
-
-    InsertException("保存异常", 503,
-            Arrays.asList(com.pongsky.kit.exception.InsertException.class)),
-
-    UpdateException("修改异常", 504,
-            Arrays.asList(com.pongsky.kit.exception.UpdateException.class)),
-
-    DeleteException("删除异常", 505,
-            Arrays.asList(com.pongsky.kit.exception.DeleteException.class)),
-
 
     //1000 表示系统异常
 
