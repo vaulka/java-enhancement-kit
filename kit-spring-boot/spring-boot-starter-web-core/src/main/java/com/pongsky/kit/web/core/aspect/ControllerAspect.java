@@ -6,6 +6,7 @@ import com.pongsky.kit.ip.utils.IpUtils;
 import com.pongsky.kit.web.core.utils.HttpServletRequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -61,12 +62,16 @@ public class ControllerAspect {
         String ip = IpUtils.getIp(request);
         String userAgent = Optional.ofNullable(request.getHeader(HttpHeaders.USER_AGENT)).orElse("");
         String referer = Optional.ofNullable(request.getHeader(HttpHeaders.REFERER)).orElse("");
+        String authorization = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION)).orElse("");
         log.info("");
         log.info("========================= Started REQUEST =========================");
         log.info("REQUEST IP: [{}]", ip);
-        log.info("REQUEST userAgent: [{}]", userAgent);
-        log.info("REQUEST referer: [{}]", referer);
-        log.info("REQUEST uri: [{}]", request.getRequestURI());
+        log.info("REQUEST User-Agent: [{}]", userAgent);
+        log.info("REQUEST Referer: [{}]", referer);
+        if (StringUtils.isNotBlank(authorization)) {
+            log.info("REQUEST Authorization: [{}]", authorization);
+        }
+        log.info("REQUEST URI: [{}]", request.getRequestURI());
         log.info("REQUEST method: [{}]", request.getMethod());
         log.info("REQUEST params: [{}]", Optional.ofNullable(request.getQueryString()).orElse(""));
         log.info("REQUEST body: [{}]", Optional.ofNullable(HttpServletRequestUtils.getBody(request)).orElse(""));
