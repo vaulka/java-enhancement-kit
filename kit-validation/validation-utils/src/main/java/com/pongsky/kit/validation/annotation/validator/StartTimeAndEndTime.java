@@ -17,11 +17,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 校验开始时间和结束时间
  * <p>
  * 适用于以下时间类型：
- *
+ * <ul>
  * <li>{@link java.util.Date}</li>
  * <li>{@link java.time.LocalDate}</li>
  * <li>{@link java.time.LocalTime}</li>
  * <li>{@link java.time.LocalDateTime}</li>
+ * </ul>
  *
  * @author pengsenhao
  **/
