@@ -73,9 +73,9 @@ public class StartTimeAndEndTimeValidator implements ConstraintValidator<StartTi
         Object startTime, endTime;
         try {
             startTimeField = this.getField(value, startTimeFieldName, startTimeName);
-            startTime = this.getTime(value, startTimeField, startTimeName);
-            endTimeField = this.getField(value, endTimeFieldName, startTimeName);
-            endTime = this.getTime(value, endTimeField, endTimeName);
+            startTime = this.getFieldValue(value, startTimeField, startTimeName);
+            endTimeField = this.getField(value, endTimeFieldName, endTimeName);
+            endTime = this.getFieldValue(value, endTimeField, endTimeName);
         } catch (ValidationException e) {
             this.setErrorMessage(context, e.getLocalizedMessage());
             return false;
@@ -89,34 +89,30 @@ public class StartTimeAndEndTimeValidator implements ConstraintValidator<StartTi
             this.setErrorMessage(context, MessageFormat.format("{0} 与 {1} 的时间类型不一致", startTimeName, endTimeName));
             return false;
         }
-        boolean isEquals;
+        boolean isEquals = startTime.equals(endTime);
         int compareTo;
         switch (startTimeType) {
             case DATE: {
                 Date start = (Date) startTime;
                 Date end = (Date) endTime;
-                isEquals = start.equals(end);
                 compareTo = start.compareTo(end);
                 break;
             }
             case LOCAL_DATE: {
                 LocalDate start = (LocalDate) startTime;
                 LocalDate end = (LocalDate) endTime;
-                isEquals = start.equals(end);
                 compareTo = start.compareTo(end);
                 break;
             }
             case LOCAL_TIME: {
                 LocalTime start = (LocalTime) startTime;
                 LocalTime end = (LocalTime) endTime;
-                isEquals = start.equals(end);
                 compareTo = start.compareTo(end);
                 break;
             }
             case LOCAL_DATE_TIME: {
                 LocalDateTime start = (LocalDateTime) startTime;
                 LocalDateTime end = (LocalDateTime) endTime;
-                isEquals = start.equals(end);
                 compareTo = start.compareTo(end);
                 break;
             }
@@ -136,12 +132,12 @@ public class StartTimeAndEndTimeValidator implements ConstraintValidator<StartTi
     }
 
     /**
-     * 获取时间
+     * 获取字段
      *
      * @param value     对象
      * @param fieldName 字段名称
      * @param name      名称
-     * @return 获取时间
+     * @return 获取字段
      * @throws ValidationException 校验异常
      */
     private Field getField(Object value, String fieldName, String name) {
@@ -156,20 +152,20 @@ public class StartTimeAndEndTimeValidator implements ConstraintValidator<StartTi
     }
 
     /**
-     * 获取时间
+     * 获取字段值
      *
      * @param value 对象
      * @param field 字段
      * @param name  名称
-     * @return 获取时间
+     * @return 获取字段值
      * @throws ValidationException 校验异常
      */
-    private Object getTime(Object value, Field field, String name) {
-        Object time = ReflectUtils.getValue(value, field);
-        if (time == null && !canBeNull) {
+    private Object getFieldValue(Object value, Field field, String name) {
+        Object fieldValue = ReflectUtils.getValue(value, field);
+        if (fieldValue == null && !canBeNull) {
             throw new ValidationException(MessageFormat.format("{0} 不能为空", name));
         }
-        return time;
+        return fieldValue;
     }
 
     /**

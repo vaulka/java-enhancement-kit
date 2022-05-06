@@ -14,51 +14,55 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 校验开始时间和结束时间
+ * 校验最小数值以及最大数值
  * <p>
- * 适用于以下时间类型：
+ * 适用于以下数值类型：
  *
- * <li>{@link java.util.Date}</li>
- * <li>{@link java.time.LocalDate}</li>
- * <li>{@link java.time.LocalTime}</li>
- * <li>{@link java.time.LocalDateTime}</li>
+ * <li>{@link java.lang.Float}</li>
+ * <li>{@link java.lang.Double}</li>
+ * <li>{@link java.lang.Byte}</li>
+ * <li>{@link java.lang.Short}</li>
+ * <li>{@link java.lang.Integer}</li>
+ * <li>{@link java.lang.Long}</li>
+ * <li>{@link java.math.BigInteger}</li>
+ * <li>{@link java.math.BigDecimal}</li>
  *
  * @author pengsenhao
  **/
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Repeatable(StartTimeAndEndTime.List.class)
+@Repeatable(MinNumAndMaxNum.List.class)
 @Constraint(validatedBy = StartTimeAndEndTimeValidator.class)
-public @interface StartTimeAndEndTime {
+public @interface MinNumAndMaxNum {
 
     /**
-     * 开始时间字段名称
+     * 最小数值字段名称
      *
-     * @return 开始时间字段名称
+     * @return 最小数值字段名称
      */
-    String startTimeFieldName() default "startTime";
+    String minNumFieldName() default "minNum";
 
     /**
-     * 开始时间名称
+     * 最小数值名称
      *
-     * @return 开始时间名称
+     * @return 最小数值名称
      */
-    String startTimeName() default "开始时间";
+    String minNumName() default "最小数值";
 
     /**
-     * 结束时间字段名称
+     * 最大数值字段名称
      *
-     * @return 结束时间字段名称
+     * @return 最大数值字段名称
      */
-    String endTimeFieldName() default "endTime";
+    String maxNumFieldName() default "maxNum";
 
     /**
-     * 结束时间名称
+     * 最大数值名称
      *
-     * @return 结束时间名称
+     * @return 最大数值名称
      */
-    String endTimeName() default "结束时间";
+    String maxNumName() default "最大数值名称";
 
     /**
      * 是否可以相等
@@ -101,11 +105,11 @@ public @interface StartTimeAndEndTime {
     @interface List {
 
         /**
-         * 校验开始时间和结束时间列表
+         * 校验最小数值以及最大数值列表
          *
-         * @return 校验开始时间和结束时间列表
+         * @return 校验最小数值以及最大数值列表
          */
-        StartTimeAndEndTime[] value();
+        MinNumAndMaxNum[] value();
 
     }
 
