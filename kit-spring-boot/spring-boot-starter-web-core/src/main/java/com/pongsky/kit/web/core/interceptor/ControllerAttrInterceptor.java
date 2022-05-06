@@ -4,7 +4,6 @@ import lombok.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,20 +32,6 @@ public class ControllerAttrInterceptor implements HandlerInterceptor {
             }
         }
         return true;
-    }
-
-    @Override
-    public void postHandle(@NonNull HttpServletRequest request,
-                           @NonNull HttpServletResponse response,
-                           @NonNull Object handler,
-                           ModelAndView modelAndView) {
-    }
-
-    @Override
-    public void afterCompletion(@NonNull HttpServletRequest request,
-                                @NonNull HttpServletResponse response,
-                                @NonNull Object handler,
-                                Exception ex) {
     }
 
 }
