@@ -19,10 +19,6 @@ import java.io.IOException;
 public class RepeatedlyReadRequestBodyFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) {
-    }
-
-    @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
@@ -34,10 +30,6 @@ public class RepeatedlyReadRequestBodyFilter implements Filter {
             servletRequest = new RepeatedlyReadRequestBodyRequestWrapper((HttpServletRequest) request);
         }
         chain.doFilter(servletRequest, response);
-    }
-
-    @Override
-    public void destroy() {
     }
 
 }
