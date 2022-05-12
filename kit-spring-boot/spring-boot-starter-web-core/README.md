@@ -6,4 +6,6 @@
 
 * 统一 Controller 日志打印。
 * 将调用接口的注解信息存放于 HttpServletRequest Attr。
-* 可重复读取 Response Body。
+* Request Body 数据多次读取。
+* 跨域访问。
+* XSS 防御。

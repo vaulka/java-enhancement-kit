@@ -1,6 +1,6 @@
 package com.pongsky.kit.validation.annotation.validator;
 
-import com.pongsky.kit.validation.validator.StartTimeAndEndTimeValidator;
+import com.pongsky.kit.validation.validator.MinNumAndMaxNumValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 校验最小数值以及最大数值
  * <p>
  * 适用于以下数值类型：
- *
+ * <ul>
  * <li>{@link java.lang.Float}</li>
  * <li>{@link java.lang.Double}</li>
  * <li>{@link java.lang.Byte}</li>
@@ -26,6 +26,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <li>{@link java.lang.Long}</li>
  * <li>{@link java.math.BigInteger}</li>
  * <li>{@link java.math.BigDecimal}</li>
+ * </ul>
  *
  * @author pengsenhao
  **/
@@ -33,7 +34,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(MinNumAndMaxNum.List.class)
-@Constraint(validatedBy = StartTimeAndEndTimeValidator.class)
+@Constraint(validatedBy = MinNumAndMaxNumValidator.class)
 public @interface MinNumAndMaxNum {
 
     /**

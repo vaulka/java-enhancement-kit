@@ -116,3 +116,9 @@ findProject(":spring-boot:spring-boot-starter-global-response")?.name = "spring-
 
 include "spring-boot:spring-boot-starter-web-core"
 findProject(":spring-boot:spring-boot-starter-web-core")?.name = "spring-boot-starter-web-core"
+
+include "kit-tree"
+findProject(":kit-tree")?.name = "tree"
+
+include "tree:tree-utils"
+findProject(":stree:tree-utils")?.name = "tree-utils"

@@ -77,6 +77,12 @@
 |---|---|
 |[system-utils](kit-system/system-utils/README.md)|系统 Utils 模块|
 
+## kit-tree 树形结构模块
+
+|模块|介绍|
+|---|---|
+|[tree-utils](kit-tree/tree-utils/README.md)|树形结构 Utils 模块|
+
 ## kit-type-parser 类型解析模块
 
 |模块|介绍|

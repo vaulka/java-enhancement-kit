@@ -41,16 +41,17 @@ public class JacksonConfig {
      * 补充 Jackson 序列化、反序列化
      * <p>
      * 兼容 Feign 序列化、反序列化
-     *
+     * <ul>
      * <li>Long to String（防止前端 js 精度丢失）</li>
      * <li>Double to String（防止前端 js 精度丢失）</li>
-     * <p>
+     * </ul>
      * 统一时间格式：
-     *
+     * <ul>
      * <li>Date to yyyy-MM-dd HH:mm:ss</li>
      * <li>LocalDateTime to yyyy-MM-dd HH:mm:ss</li>
      * <li>LocalDate to yyyy-MM-dd</li>
      * <li>LocalTime to HH:mm:ss</li>
+     * </ul>
      *
      * @return JavaTimeModule
      * @author pengsenhao
