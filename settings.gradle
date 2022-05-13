@@ -122,3 +122,9 @@ findProject(":kit-tree")?.name = "tree"
 
 include "tree:tree-utils"
 findProject(":stree:tree-utils")?.name = "tree-utils"
+
+include "kit-cache"
+findProject(":kit-cache")?.name = "cache"
+
+include "cache:spring-boot-starter-cache-redis"
+findProject(":cache:spring-boot-starter-cache-redis")?.name = "spring-boot-starter-cache-redis"
