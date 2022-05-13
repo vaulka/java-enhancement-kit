@@ -32,12 +32,6 @@
 |[desensitization-utils](kit-desensitization/desensitization-utils/README.md)|数据脱敏 Utils 模块|
 |[spring-boot-starter-desensitization](kit-desensitization/spring-boot-starter-desensitization/README.md)|数据脱敏 Spring Boot Starter 模块|
 
-## kit-dynamic-datasource 动态数据源模块
-
-|模块|介绍|
-|---|---|
-|[spring-boot-starter-dynamic-datasource](kit-dynamic-datasource/spring-boot-starter-dynamic-datasource/README.md)|动态数据源 Spring Boot Starter 模块|
-
 ## kit-excel 导入/导出 Excel 模块
 
 |模块|介绍|
@@ -56,7 +50,9 @@
 |模块|介绍|
 |---|---|
 |[spring-boot-common](kit-spring-boot/spring-boot-common/README.md)|公共 Spring Boot 模块|
+|[spring-boot-starter-cache-redis](kit-spring-boot/spring-boot-starter-cache-redis/README.md)|Redis 缓存 Spring Boot Starter 模块|
 |[spring-boot-starter-core](kit-spring-boot/spring-boot-starter-core/README.md)|Core Spring Boot Starter 模块|
+|[spring-boot-starter-dynamic-datasource](kit-spring-boot/spring-boot-starter-dynamic-datasource/README.md)|动态数据源 Spring Boot Starter 模块|
 |[spring-boot-starter-global-response](kit-spring-boot/spring-boot-starter-global-response/README.md)|全局响应 Spring Boot Starter 模块|
 |[spring-boot-starter-web](kit-spring-boot/spring-boot-starter-web/README.md)|Web Spring Boot Starter 模块|
 |[spring-boot-starter-web-core](kit-spring-boot/spring-boot-starter-web-core/README.md)|Web Core Spring Boot Starter 模块|
