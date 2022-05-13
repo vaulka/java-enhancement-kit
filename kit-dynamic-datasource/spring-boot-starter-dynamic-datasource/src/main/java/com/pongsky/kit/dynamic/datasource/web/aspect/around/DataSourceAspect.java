@@ -24,8 +24,7 @@ import java.util.Optional;
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
 public class DataSourceAspect {
 
-    @Around("@within(com.pongsky.kit.dynamic.datasource.annotation.DataSource) " +
-            "|| (@annotation(com.pongsky.kit.dynamic.datasource.annotation.DataSource)) ")
+    @Around("@annotation(com.pongsky.kit.dynamic.datasource.annotation.DataSource) ")
     public Object exec(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         // 先在方法上寻找该注解

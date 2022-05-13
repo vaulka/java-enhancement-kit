@@ -39,8 +39,8 @@ public class ControllerAspect {
     /**
      * Controller 切入点
      */
-    @Pointcut("(@within(org.springframework.stereotype.Controller) " +
-            "|| @within(org.springframework.web.bind.annotation.RestController)) " +
+    @Pointcut("(@annotation(org.springframework.stereotype.Controller) " +
+            "|| @annotation(org.springframework.web.bind.annotation.RestController)) " +
             "&& (@annotation(org.springframework.web.bind.annotation.RequestMapping) " +
             "|| @annotation(org.springframework.web.bind.annotation.GetMapping) " +
             "|| @annotation(org.springframework.web.bind.annotation.PutMapping) " +

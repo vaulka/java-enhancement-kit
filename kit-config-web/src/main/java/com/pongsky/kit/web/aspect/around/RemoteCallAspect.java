@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
 public class RemoteCallAspect {
 
     @SuppressWarnings({"unchecked"})
-    @Around("@within(org.springframework.cloud.openfeign.FeignClient) " +
+    @Around("@annotation(org.springframework.cloud.openfeign.FeignClient) " +
             "&& (@annotation(org.springframework.web.bind.annotation.RequestMapping) " +
             "|| @annotation(org.springframework.web.bind.annotation.GetMapping) " +
             "|| @annotation(org.springframework.web.bind.annotation.PutMapping) " +
