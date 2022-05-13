@@ -111,6 +111,9 @@ findProject(":spring-boot:spring-boot-starter-web")?.name = "spring-boot-starter
 include "spring-boot:spring-boot-common"
 findProject(":spring-boot:spring-boot-common")?.name = "spring-boot-common"
 
+include "spring-boot:spring-boot-starter-cache-redis"
+findProject(":spring-boot:spring-boot-starter-cache-redis")?.name = "spring-boot-starter-cache-redis"
+
 include "spring-boot:spring-boot-starter-global-response"
 findProject(":spring-boot:spring-boot-starter-global-response")?.name = "spring-boot-starter-global-response"
 
@@ -122,9 +125,3 @@ findProject(":kit-tree")?.name = "tree"
 
 include "tree:tree-utils"
 findProject(":stree:tree-utils")?.name = "tree-utils"
-
-include "kit-cache"
-findProject(":kit-cache")?.name = "cache"
-
-include "cache:spring-boot-starter-cache-redis"
-findProject(":cache:spring-boot-starter-cache-redis")?.name = "spring-boot-starter-cache-redis"

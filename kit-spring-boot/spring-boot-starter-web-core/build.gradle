@@ -82,6 +82,7 @@ signing {
 
 dependencies {
     api project(":ip:ip-utils")
+    api project(":spring-boot:spring-boot-common")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
