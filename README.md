@@ -32,12 +32,6 @@
 |[desensitization-utils](kit-desensitization/desensitization-utils/README.md)|数据脱敏 Utils 模块|
 |[spring-boot-starter-desensitization](kit-desensitization/spring-boot-starter-desensitization/README.md)|数据脱敏 Spring Boot Starter 模块|
 
-## kit-dynamic-datasource 动态数据源模块
-
-|模块|介绍|
-|---|---|
-|[spring-boot-starter-dynamic-datasource](kit-dynamic-datasource/spring-boot-starter-dynamic-datasource/README.md)|动态数据源 Spring Boot Starter 模块|
-
 ## kit-excel 导入/导出 Excel 模块
 
 |模块|介绍|
@@ -56,7 +50,9 @@
 |模块|介绍|
 |---|---|
 |[spring-boot-common](kit-spring-boot/spring-boot-common/README.md)|公共 Spring Boot 模块|
+|[spring-boot-starter-cache-redis](kit-spring-boot/spring-boot-starter-cache-redis/README.md)|Redis 缓存 Spring Boot Starter 模块|
 |[spring-boot-starter-core](kit-spring-boot/spring-boot-starter-core/README.md)|Core Spring Boot Starter 模块|
+|[spring-boot-starter-dynamic-datasource](kit-spring-boot/spring-boot-starter-dynamic-datasource/README.md)|动态数据源 Spring Boot Starter 模块|
 |[spring-boot-starter-global-response](kit-spring-boot/spring-boot-starter-global-response/README.md)|全局响应 Spring Boot Starter 模块|
 |[spring-boot-starter-web](kit-spring-boot/spring-boot-starter-web/README.md)|Web Spring Boot Starter 模块|
 |[spring-boot-starter-web-core](kit-spring-boot/spring-boot-starter-web-core/README.md)|Web Core Spring Boot Starter 模块|
@@ -123,17 +119,13 @@ implementation "com.pongsky.kit:spring-boot-starter-captcha-input-math:$latestVe
 # 其他功能特点（TODO，后续功能将拆模块移除优化）
 
 * config-core
-    * 全局实例ID（自动装配）
-    * Redis 统一前缀以及配置（需手动引入）
     * Swagger 配置（自动装配）
     * 全局日志链路追踪（需配合 bootstrap.yml）
     * 异步配置（增强日志链路追踪）
     * Quartz 配置（增强日志链路追踪）
 
 * config-web
-    * Redis 模糊删除 Key
     * Feign 调用日志打印
-    * 接口防重校验
 
 ## 前置条件
 
@@ -159,14 +151,6 @@ implementation "com.pongsky.kit:spring-boot-starter-captcha-input-math:$latestVe
 >
 > 该场景适用于容器部署，每个实例的 HostName、HostAddress 组成唯一。
 
-## Redis 统一前缀以及配置
-
-防止与 `spring-boot-starter-data-redis` 自动装配冲突，请手动导入该 Bean。
-
-```java
-@Import({RedisConfig.class})
-```
-
 ## 全局日志链路追踪
 
 日志打印信息需添加打印 `X-Trace-Id` 参数。
@@ -176,21 +160,6 @@ logging:
   pattern:
     console: ${CONSOLE_LOG_PATTERN:%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}  %-5.5L{5}){cyan} %clr([%39X{X-Trace-Id}]){yellow} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}} # 控制台日志打印格式
 ```
-
-## Redis 模糊删除 Key
-
-在方法上添加 `@CacheRemove` 使用。
-
-```java
-    @CacheRemove(keys = {
-        "'MIHOYO::'+#rule.id+':*'",
-        "'MIHOYO::'+#rule.userId+':*'"
-})
-```
-
-## 接口防重校验
-
-在方法上添加 `@PreventDuplication` 使用，详情用法请查看该注解。
 
 # 模块建议
 

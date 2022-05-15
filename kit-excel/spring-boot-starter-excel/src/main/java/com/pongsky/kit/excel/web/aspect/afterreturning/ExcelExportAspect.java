@@ -42,7 +42,7 @@ public class ExcelExportAspect {
             "|| @annotation(org.springframework.web.bind.annotation.PutMapping) " +
             "|| @annotation(org.springframework.web.bind.annotation.PostMapping) " +
             "|| @annotation(org.springframework.web.bind.annotation.DeleteMapping)) " +
-            "&& @annotation(com.pongsky.kit.excel.annotation.ExcelExport)", returning = "result")
+            "&& @annotation(com.pongsky.kit.excel.annotation.ExcelExport) ", returning = "result")
     public void exec(JoinPoint point, Object result) throws IOException {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes == null) {

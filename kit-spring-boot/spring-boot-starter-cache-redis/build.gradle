@@ -47,13 +47,13 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-starter-global-response"
+            artifactId "spring-boot-starter-cache-redis"
             version version.toString()
-            description "Java 增强套件 之 全局响应 Spring Boot Starter 模块"
+            description "Java 增强套件 之 Redis 缓存 Spring Boot Starter 模块"
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件 之 全局响应 Spring Boot Starter 模块"
+                description = "Java 增强套件 之 Redis 缓存 Spring Boot Starter 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
@@ -81,17 +81,18 @@ signing {
 }
 
 dependencies {
-    api project(":validation:validation-utils")
     api project(":spring-boot:spring-boot-starter-web-core")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    compileOnly "io.springfox:springfox-boot-starter:$springfoxVersion"
+    api "commons-codec:commons-codec:$commonsCodecVersion"
+    api "org.apache.commons:commons-lang3:$commonsLang3Version"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    api "org.springframework.boot:spring-boot-starter-validation"
-    compileOnly "org.springframework.boot:spring-boot-starter-actuator"
-    compileOnly "org.springframework.boot:spring-boot-starter-security"
+    api "org.springframework.boot:spring-boot-starter-json"
+    api "org.springframework.boot:spring-boot-starter-cache"
+    api "org.springframework.boot:spring-boot-starter-data-redis"
+    compileOnly "org.springframework.boot:spring-boot-starter-jdbc"
 }
