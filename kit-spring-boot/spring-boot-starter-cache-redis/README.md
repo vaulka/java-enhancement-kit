@@ -11,6 +11,7 @@
 * 设置 @Cacheable 缓存过期时间。 
 * 模糊删除 key。
 * 防重检测。
+* 令牌桶限流。
 
 ## 约定
 
@@ -26,6 +27,11 @@
 |spring.cache.enable-transaction-support|true|是否开启事务支持 <br> 需引入 spring-boot-starter-jdbc，配合 JDBC 事务时，才能生效|false|
 |spring.cache.time|true|{@link org.springframework.cache.annotation.Cacheable} 缓存时长|30|
 |spring.cache.time-unit|true|{@link org.springframework.cache.annotation.Cacheable} 缓存时长单位 <br> 仅支持 DAYS、HOURS|DAYS|
+|spring.cache.prevent-duplication.enabled|true|防重检测是否启用|true|
+|spring.cache.rate-limit.enabled|true|令牌桶限流是否启用|true|
+|spring.cache.rate-limit.bucket-rate|true|令牌每秒恢复个数|500|
+|spring.cache.rate-limit.bucket-max|true|令牌桶大小|30000|
+
 
 示例如下：
 
@@ -37,13 +43,20 @@ spring:
     enable-transaction-support: true
     time: 7
     time-unit: days
+    prevent-duplication:
+      enabled: true
+    rate-limit:
+      enabled: true
+      bucket-rate: 500
+      bucket-max: 30000
 
 ```
 
 ## 使用
 
+### 模糊删除 key
+
 1. 在需要清理缓存的方法上加 `CacheRemove` 或 `RemoveCaching` 注解。
-2. 配置好 Redis 缓存相关参数信息。
 
 ```java
 
@@ -79,3 +92,17 @@ public class TestService {
 }
 
 ```
+
+### 防重检测
+
+1. 配置好 Redis 缓存相关参数信息。
+2. 如需放行接口，请实现 `PreventDuplicationHandler` 类并注册 bean。
+
+> 详情请查阅 `com.pongsky.kit.cache.redis.web.aspect.before.PreventDuplicationAspect` 代码实现。
+
+### 令牌桶限流
+
+1. 配置好 Redis 缓存相关参数信息。
+2. 如需放行接口、自定义限流 key 生成、自定义 QPS，请实现 `RateLimitHandler` 类并注册 bean。
+
+> 详情请查阅 `com.pongsky.kit.cache.redis.web.aspect.before.RateLimitAspect` 代码实现。
