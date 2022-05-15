@@ -14,6 +14,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,8 +25,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -35,10 +34,11 @@ import java.util.concurrent.TimeUnit;
  * @author pengsenhao
  */
 @Aspect
+@ConditionalOnProperty(name = "spring.cache.prevent-duplication.enabled", havingValue = "true", matchIfMissing = true)
 public class PreventDuplicationAspect {
 
     private final ObjectMapper jsonMapper;
-    private final List<PreventDuplicationHandler> handlers;
+    private final PreventDuplicationHandler handler;
     private final RedisTemplate<String, Object> redisTemplate;
 
     public PreventDuplicationAspect(ObjectMapper jsonMapper,
@@ -46,7 +46,9 @@ public class PreventDuplicationAspect {
                                     ApplicationContext applicationContext) {
         this.jsonMapper = jsonMapper;
         this.redisTemplate = redisTemplate;
-        handlers = new ArrayList<>(applicationContext.getBeansOfType(PreventDuplicationHandler.class).values());
+        this.handler = applicationContext.getBeansOfType(PreventDuplicationHandler.class).values().stream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -54,7 +56,7 @@ public class PreventDuplicationAspect {
      * <p>
      * ip:sign
      */
-    private static final String PREVENT_DUPLICATION = "PREVENT-DUPLICATION:{0}:{1}";
+    private static final String PREVENT_DUPLICATION_KEY = "PREVENT-DUPLICATION:{0}:{1}";
 
     @Before("(@within(org.springframework.stereotype.Controller) " +
             "|| @within(org.springframework.web.bind.annotation.RestController)) " +
@@ -69,15 +71,13 @@ public class PreventDuplicationAspect {
             return;
         }
         HttpServletRequest request = attributes.getRequest();
-        for (PreventDuplicationHandler handler : handlers) {
-            // 判断是否放行
-            boolean result = handler.exec(request);
-            if (result) {
-                return;
-            }
-        }
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
+        // 判断是否放行
+        boolean result = handler.release(request, signature, method);
+        if (result) {
+            return;
+        }
         // 先在方法上寻找该注解
         PreventDuplication preventDuplication = Optional.ofNullable(AnnotationUtils.findAnnotation(method, PreventDuplication.class))
                 // 方法上没有的话，则再类上寻找该注解
@@ -92,9 +92,9 @@ public class PreventDuplicationAspect {
                 .setQuery(Optional.ofNullable(request.getQueryString()).orElse(""))
                 .setRequestBody(Optional.ofNullable(HttpServletRequestUtils.getBody(request)).orElse(""));
         String sign = DigestUtils.sha1DigestAsHex(jsonMapper.writeValueAsString(requestInfo));
-        String key = MessageFormat.format(PREVENT_DUPLICATION, ip, sign);
+        String key = MessageFormat.format(PREVENT_DUPLICATION_KEY, ip, sign);
         if (Boolean.TRUE.equals(redisTemplate.hasKey(key))) {
-            throw new FrequencyException("当前请求过于频繁，请稍后再试");
+            throw new FrequencyException("当前重复请求过于频繁，请稍后再试");
         }
         redisTemplate.opsForValue().set(key, "", frequency, unit);
     }

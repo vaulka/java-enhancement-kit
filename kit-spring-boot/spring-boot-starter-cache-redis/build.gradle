@@ -86,6 +86,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    api "commons-codec:commons-codec:$commonsCodecVersion"
     api "org.apache.commons:commons-lang3:$commonsLang3Version"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
