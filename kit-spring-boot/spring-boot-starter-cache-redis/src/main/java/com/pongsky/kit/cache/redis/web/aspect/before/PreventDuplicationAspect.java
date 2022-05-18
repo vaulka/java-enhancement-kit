@@ -74,7 +74,7 @@ public class PreventDuplicationAspect {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
         // 判断是否放行
-        boolean result = handler.release(request, signature, method);
+        boolean result = handler != null && handler.release(request, signature, method);
         if (result) {
             return;
         }
