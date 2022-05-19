@@ -2,17 +2,14 @@ package com.pongsky.kit.cache.redis.web.aspect.afterreturning;
 
 import com.pongsky.kit.cache.redis.annotation.CacheRemove;
 import com.pongsky.kit.cache.redis.annotation.RemoveCaching;
+import com.pongsky.kit.cache.redis.utils.SpElUtils;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
@@ -44,8 +41,10 @@ public class CacheRemoveAspect {
      */
     private static final String HASHTAG = "#";
 
-    @AfterReturning("@annotation(com.pongsky.kit.cache.redis.annotation.RemoveCaching) " +
-            "|| @annotation(com.pongsky.kit.cache.redis.annotation.CacheRemove) ")
+    @AfterReturning("(@within(com.pongsky.kit.cache.redis.annotation.RemoveCaching)" +
+            "|| @annotation(com.pongsky.kit.cache.redis.annotation.RemoveCaching)) " +
+            "|| (@within(com.pongsky.kit.cache.redis.annotation.CacheRemove)" +
+            "|| @annotation(com.pongsky.kit.cache.redis.annotation.CacheRemove)) ")
     public void exec(JoinPoint point) {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
@@ -66,7 +65,7 @@ public class CacheRemoveAspect {
         }
         for (CacheRemove cache : cacheRemoves) {
             String key = cache.key();
-            key = key.contains(HASHTAG) ? this.parseKey(key, method, point.getArgs()) : key;
+            key = key.contains(HASHTAG) ? SpElUtils.parse(key, method, point.getArgs()) : key;
             this.removeKey(MessageFormat.format("{0}{1}{2}", cache.cacheNames(), COLON, key));
         }
     }
@@ -82,27 +81,6 @@ public class CacheRemoveAspect {
             return;
         }
         redisTemplate.delete(keys);
-    }
-
-    /**
-     * 解析 SpEL 参数
-     *
-     * @param key    key
-     * @param method 方法
-     * @param args   参数列表
-     * @return 解析后的 key
-     */
-    private String parseKey(String key, Method method, Object[] args) {
-        LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
-        String[] paraNameArr = discoverer.getParameterNames(method);
-        StandardEvaluationContext context = new StandardEvaluationContext();
-        if (paraNameArr != null) {
-            for (int i = 0; i < paraNameArr.length; i++) {
-                context.setVariable(paraNameArr[i], args[i]);
-            }
-        }
-        ExpressionParser parser = new SpelExpressionParser();
-        return parser.parseExpression(key).getValue(context, String.class);
     }
 
 }
