@@ -7,6 +7,8 @@ package com.pongsky.kit.common.exception;
  */
 public class DoesNotExistException extends RuntimeException {
 
+    private static final long serialVersionUID = -1875633352439939019L;
+
     public DoesNotExistException(String message) {
         super(message);
     }

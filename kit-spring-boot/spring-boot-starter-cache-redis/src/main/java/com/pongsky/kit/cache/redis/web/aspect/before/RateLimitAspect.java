@@ -45,7 +45,7 @@ public class RateLimitAspect {
      * <p>
      * ip:method:uri
      */
-    private static final String DEFAULT_RATE_LIMIT_KEY = "RATE-LIMIT:{0}:{1}:{2}";
+    private static final String DEFAULT_RATE_LIMIT_KEY = "rate-limit:{0}:{1}:{2}";
 
     @Before("(@within(org.springframework.stereotype.Controller) " +
             "|| @within(org.springframework.web.bind.annotation.RestController)) " +

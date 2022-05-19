@@ -12,6 +12,7 @@
 * 模糊删除 key。
 * 防重检测。
 * 令牌桶限流。
+* 分布式锁。
 
 ## 约定
 
@@ -31,6 +32,8 @@
 |spring.cache.rate-limit.enabled|true|令牌桶限流是否启用|true|
 |spring.cache.rate-limit.bucket-rate|true|令牌每秒恢复个数|500|
 |spring.cache.rate-limit.bucket-max|true|令牌桶大小|30000|
+|spring.cache.distributed-lock.prefix|true|Redis 分布式锁缓存前缀|distributed-lock|
+|spring.cache.distributed-lock.expire|true|锁过期时间，单位毫秒|60000|
 
 
 示例如下：
@@ -49,6 +52,9 @@ spring:
       enabled: true
       bucket-rate: 500
       bucket-max: 30000
+    distributed-lock:
+      prefix: lock
+      expire: 5000
 
 ```
 
@@ -106,3 +112,35 @@ public class TestService {
 2. 如需放行接口、自定义限流 key 生成、自定义 QPS，请实现 `RateLimitHandler` 类并注册 bean。
 
 > 详情请查阅 `com.pongsky.kit.cache.redis.web.aspect.before.RateLimitAspect` 代码实现。
+
+### 分布式锁
+
+1. 在需要分布式锁限制的方法上加 `DistributedLock` 注解。
+2. 在需要分布式锁限制的代码块使用 `RedisLockRegistry` 进行获取锁。
+
+```java
+
+@Service
+@RequiredArgsConstructor
+public class TestService {
+
+    private final TestRepository testRepository;
+    private final RedisLockRegistry redisLockRegistry;
+
+    private static final String DEFAULT_KEY = "pongsky";
+
+    @DistributedLock(value = "#projectId")
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(String projectId) {
+        Lock lock = redisLockRegistry.obtain(projectId);
+        lock.lock();
+        try {
+            // exec
+        } finally {
+            lock.unlock();
+        }
+    }
+
+}
+
+```

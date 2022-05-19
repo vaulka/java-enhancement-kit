@@ -22,6 +22,10 @@ ext {
     // org.hibernate.validator:hibernate-validator
     hibernateValidatorVersion = "6.1.7.Final"
 
+    // 需要兼容 org.springframework.boot:spring-boot-starter-json 下的版本
+    // com.fasterxml.jackson.core:jackson-databind
+    jacksonVersion = "2.11.4"
+
     // 需要兼容 org.springframework.boot:spring-boot-starter 版本
     springCloudVersion = "2020.0.5"
 
@@ -53,7 +57,7 @@ allprojects {
     targetCompatibility = 8
 
     group "com.pongsky.kit"
-    version "3.9.0-2.4.13"
+    version "3.9.1-2.4.13"
 
     repositories {
         mavenLocal()

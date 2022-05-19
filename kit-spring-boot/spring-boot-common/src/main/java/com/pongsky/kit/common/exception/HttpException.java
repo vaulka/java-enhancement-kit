@@ -7,6 +7,8 @@ package com.pongsky.kit.common.exception;
  */
 public class HttpException extends RuntimeException {
 
+    private static final long serialVersionUID = -5701953556548839172L;
+
     public HttpException(String message, Exception e) {
         super(message, e);
     }

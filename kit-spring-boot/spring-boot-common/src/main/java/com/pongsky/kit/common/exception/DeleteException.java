@@ -7,6 +7,8 @@ package com.pongsky.kit.common.exception;
  */
 public class DeleteException extends RuntimeException {
 
+    private static final long serialVersionUID = 8412329462247258183L;
+
     public DeleteException(String message) {
         super(message);
     }
