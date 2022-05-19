@@ -6,9 +6,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 /**
  * 分布式锁
+ * <p>
+ * 错误示范：如无特殊情况请勿将注解作用于 controller，如业务代码调用 service 后续 {@link Lock#unlock()} 抛出异常后无法进行事务回滚。
+ * 正解：应作用于 service 或 其他业务方法。
  *
  * @author pengsenhao
  */
@@ -29,7 +33,7 @@ public @interface DistributedLock {
      *
      * @return 获取锁的方式
      */
-    GetLockMethod getLockMethod() default GetLockMethod.tryLock;
+    GetLockMethod getLockMethod() default GetLockMethod.lock;
 
     /**
      * {@link java.util.concurrent.locks.Lock#tryLock(long, java.util.concurrent.TimeUnit)} 其中的 time 参数
@@ -63,7 +67,7 @@ public @interface DistributedLock {
         /**
          * {@link java.util.concurrent.locks.Lock#tryLock(long, java.util.concurrent.TimeUnit)}
          */
-        tryLockTime;
+        tryLockTime
 
     }
 }
