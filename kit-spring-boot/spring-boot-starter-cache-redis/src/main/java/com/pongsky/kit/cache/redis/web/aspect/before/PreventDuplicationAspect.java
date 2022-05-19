@@ -56,7 +56,7 @@ public class PreventDuplicationAspect {
      * <p>
      * ip:sign
      */
-    private static final String PREVENT_DUPLICATION_KEY = "PREVENT-DUPLICATION:{0}:{1}";
+    private static final String PREVENT_DUPLICATION_KEY = "prevent-duplication:{0}:{1}";
 
     @Before("(@within(org.springframework.stereotype.Controller) " +
             "|| @within(org.springframework.web.bind.annotation.RestController)) " +

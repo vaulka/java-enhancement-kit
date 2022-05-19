@@ -7,6 +7,8 @@ package com.pongsky.kit.common.exception;
  */
 public class InsertException extends RuntimeException {
 
+    private static final long serialVersionUID = -4776662733913410838L;
+
     public InsertException(String message) {
         super(message);
     }

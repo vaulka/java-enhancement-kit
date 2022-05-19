@@ -7,6 +7,8 @@ package com.pongsky.kit.common.exception;
  */
 public class UpdateException extends RuntimeException {
 
+    private static final long serialVersionUID = 5688016478526820394L;
+
     public UpdateException(String message) {
         super(message);
     }

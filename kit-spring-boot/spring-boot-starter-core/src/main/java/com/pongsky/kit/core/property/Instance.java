@@ -23,14 +23,14 @@ public class Instance {
             address = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            throw new RuntimeException("获取本地IP失败");
+            throw new RuntimeException("获取本地IP失败", e);
         }
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
         // Use specified byte update digest.
         md.update(address.getHostName().getBytes());
