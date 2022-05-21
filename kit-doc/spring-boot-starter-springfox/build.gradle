@@ -86,6 +86,6 @@ dependencies {
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    api "io.springfox:springfox-boot-starter:${springFoxVersion}"
+    api "io.springfox:springfox-boot-starter:$springFoxVersion"
     api "org.springframework.boot:spring-boot-starter:$springBootVersion"
 }

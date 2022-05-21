@@ -89,5 +89,5 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     api "org.springframework.boot:spring-boot-starter:$springBootVersion"
-    api "com.github.xiaoymin:knife4j-spring-boot-starter:${knife4jVersion}"
+    api "com.github.xiaoymin:knife4j-spring-boot-starter:$knife4jVersion"
 }
