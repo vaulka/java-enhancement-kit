@@ -122,3 +122,12 @@ findProject(":kit-tree")?.name = "tree"
 
 include "tree:tree-utils"
 findProject(":stree:tree-utils")?.name = "tree-utils"
+
+include "kit-doc"
+findProject(":kit-doc")?.name = "doc"
+
+include "doc:spring-boot-starter-knife4j"
+findProject(":doc:spring-boot-starter-knife4j")?.name = "spring-boot-starter-knife4j"
+
+include "doc:spring-boot-starter-springfox"
+findProject(":doc:spring-boot-starter-springfox")?.name = "spring-boot-starter-springfox"
