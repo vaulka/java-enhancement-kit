@@ -1,5 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.config.redis.RedisConfig,\
 com.pongsky.kit.config.FeignConfig,\
-com.pongsky.kit.config.SwaggerConfig,\
 com.pongsky.kit.config.SystemConfig
