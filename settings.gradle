@@ -129,5 +129,8 @@ findProject(":kit-doc")?.name = "doc"
 include "doc:spring-boot-starter-knife4j"
 findProject(":doc:spring-boot-starter-knife4j")?.name = "spring-boot-starter-knife4j"
 
+include "doc:spring-boot-starter-springdoc"
+findProject(":doc:spring-boot-starter-springdoc")?.name = "spring-boot-starter-springdoc"
+
 include "doc:spring-boot-starter-springfox"
 findProject(":doc:spring-boot-starter-springfox")?.name = "spring-boot-starter-springfox"

@@ -40,6 +40,7 @@ ext {
     mysqlVersion = "8.0.26"
     okhttpVersion = "4.9.3"
     knife4jVersion = "3.0.3"
+    springDocVersion = "1.6.8"
     commonsTextVersion = "1.9"
     fastjsonVersion = "1.2.79"
     springFoxVersion = "3.0.0"
