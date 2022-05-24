@@ -47,13 +47,13 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-starter-springdoc"
+            artifactId "spring-boot-starter-webflux-springdoc-knife4j"
             version version.toString()
-            description "Java 增强套件 之 SpringDoc Spring Boot Starter 模块"
+            description "Java 增强套件 之 WebFlux SpringDoc Knife4j Spring Boot Starter 模块"
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件 之 SpringDoc Spring Boot Starter 模块"
+                description = "Java 增强套件 之 WebFlux SpringDoc Knife4j Spring Boot Starter 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
@@ -81,11 +81,12 @@ signing {
 }
 
 dependencies {
+    api project(":doc:springdoc:spring-boot-starter-webflux-springdoc")
+
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    api "org.springdoc:springdoc-openapi-ui:$springDocVersion"
-    api "org.springframework.boot:spring-boot-starter:$springBootVersion"
+    api "com.github.xiaoymin:knife4j-springdoc-ui:$knife4jVersion"
 }

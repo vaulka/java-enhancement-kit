@@ -126,11 +126,30 @@ findProject(":stree:tree-utils")?.name = "tree-utils"
 include "kit-doc"
 findProject(":kit-doc")?.name = "doc"
 
-include "doc:spring-boot-starter-knife4j"
-findProject(":doc:spring-boot-starter-knife4j")?.name = "spring-boot-starter-knife4j"
+include "doc:springdoc"
+findProject(":doc:springdoc")?.name = "springdoc"
 
-include "doc:spring-boot-starter-springdoc"
-findProject(":doc:spring-boot-starter-springdoc")?.name = "spring-boot-starter-springdoc"
+include "doc:springdoc:spring-boot-springdoc-common"
+findProject(":doc:springdoc:spring-boot-springdoc-common")?.name = "spring-boot-springdoc-common"
 
-include "doc:spring-boot-starter-springfox"
-findProject(":doc:spring-boot-starter-springfox")?.name = "spring-boot-starter-springfox"
+include "doc:springdoc:spring-boot-starter-springdoc"
+findProject(":doc:springdoc:spring-boot-starter-springdoc")?.name = "spring-boot-starter-springdoc"
+
+include "doc:springdoc:spring-boot-starter-springdoc-knife4j"
+findProject(":doc:springdoc:spring-boot-starter-springdoc-knife4j")?.name = "spring-boot-starter-springdoc-knife4j"
+
+include "doc:springdoc:spring-boot-starter-webflux-springdoc"
+findProject(":doc:springdoc:spring-boot-starter-webflux-springdoc")?.name = "spring-boot-starter-webflux-springdoc"
+
+include "doc:springdoc:spring-boot-starter-webflux-springdoc-knife4j"
+findProject(":doc:springdoc:spring-boot-starter-webflux-springdoc-knife4j")?.name = "spring-boot-starter-webflux-springdoc-knife4j"
+
+include "doc:springfox"
+findProject(":doc:springfox")?.name = "springfox"
+
+include "doc:springfox:spring-boot-starter-springfox"
+findProject(":doc:springfox:spring-boot-starter-springfox")?.name = "spring-boot-starter-springfox"
+
+include "doc:springfox:spring-boot-starter-springfox-knife4j"
+findProject(":doc:springfox:spring-boot-starter-springfox-knife4j")?.name = "spring-boot-starter-springfox-knife4j"
+

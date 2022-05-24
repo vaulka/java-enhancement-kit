@@ -22,12 +22,12 @@ dependencyManagement {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
-    classifier 'sources'
+    classifier "sources"
 }
 
 task javadocJar(type: Jar) {
     from javadoc
-    classifier 'javadoc'
+    classifier "javadoc"
 }
 
 publishing {
@@ -47,13 +47,13 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-starter-knife4j"
+            artifactId "spring-boot-starter-springdoc"
             version version.toString()
-            description "Java 增强套件 之 Knife4j Spring Boot Starter 模块"
+            description "Java 增强套件 之 SpringDoc Spring Boot Starter 模块"
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件 之 Knife4j Spring Boot Starter 模块"
+                description = "Java 增强套件 之 SpringDoc Spring Boot Starter 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
@@ -81,13 +81,12 @@ signing {
 }
 
 dependencies {
-    api project(":doc:spring-boot-starter-springfox")
+    api project(":doc:springdoc:spring-boot-springdoc-common")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    api "org.springframework.boot:spring-boot-starter:$springBootVersion"
-    api "com.github.xiaoymin:knife4j-spring-boot-starter:$knife4jVersion"
+    api "org.springdoc:springdoc-openapi-ui:$springDocVersion"
 }

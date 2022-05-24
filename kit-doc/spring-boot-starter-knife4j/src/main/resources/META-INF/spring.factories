@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.knife4j.autoconfigure.Knife4jAutoConfiguration
