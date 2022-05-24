@@ -7,10 +7,16 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.GroupedOpenApi;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -24,6 +30,7 @@ import java.util.stream.Collectors;
 public class SpringDocConfig {
 
     private final SpringDocProperties properties;
+    private final ApplicationContext applicationContext;
 
     /**
      * 创建 Swagger 配置信息
@@ -52,6 +59,49 @@ public class SpringDocConfig {
                         .version(properties.getVersion()))
                 .components(new Components().securitySchemes(securitySchemes))
                 .addSecurityItem(securityRequirement);
+    }
+
+    @Bean
+    public GroupedOpenApi defaultGroupedOpenApi() {
+        if (properties.getGroups().size() == 0) {
+            // 未填写组别则会有一个默认分组
+            // 兼容 Knife4j 源码，没有分组则会报错
+            return SpringDocProperties.DEFAULT_GROUPED_OPEN_API.build();
+        }
+        List<String> displayNames = properties.getGroups().stream()
+                .map(SpringDocProperties.GroupOpenApi::getDisplayName)
+                .collect(Collectors.groupingBy(v -> v, Collectors.counting()))
+                .entrySet().stream()
+                .filter(e -> e.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+        if (displayNames.size() > 0) {
+            throw new IllegalArgumentException(MessageFormat.format("组别名称 displayName {0} 出现重复",
+                    displayNames));
+        }
+        List<String> groups = properties.getGroups().stream()
+                .map(SpringDocProperties.GroupOpenApi::getGroup)
+                .collect(Collectors.groupingBy(v -> v, Collectors.counting()))
+                .entrySet().stream()
+                .filter(e -> e.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+        if (groups.size() > 0) {
+            throw new IllegalArgumentException(MessageFormat.format("组别路径 group {0} 出现重复",
+                    groups));
+        }
+        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory)
+                ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
+        GroupedOpenApi defaultGroupedOpenApi = null;
+        for (int i = 0; i < properties.getGroups().size(); i++) {
+            GroupedOpenApi groupedOpenApi = properties.getGroups().get(i).build();
+            if (i == 0) {
+                defaultGroupedOpenApi = groupedOpenApi;
+                continue;
+            }
+            beanFactory.registerSingleton(MessageFormat.format("{0}-GroupedOpenAPI", groupedOpenApi.getDisplayName()), groupedOpenApi);
+        }
+        return defaultGroupedOpenApi;
     }
 
 }
