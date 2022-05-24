@@ -1,6 +1,6 @@
-# spring-boot-springdoc-common 模块说明
+# spring-boot-starter-springfox 模块说明
 
-> SpringDoc Common Spring Boot 模块
+> SpringFox Spring Boot Starter 模块
 
 ## 功能说明
 
@@ -10,9 +10,10 @@
 
 ## 约定
 
-1. 仅支持 openAPI 3.0 规范。
+1. 支持 Swagger 2 规范。
+2. openAPI 3.0 规范尚有缺陷，使用 `@Tag` 注解会出现 API 文档错误。</br> 相关 <a href="https://github.com/springfox/springfox/issues/3668">issues</a> PR 至 3.0.1 version，等待官方发版。
 
-## 配置 SpringDoc 参数
+## 配置 SpringFox 参数
 
 在 `yml` 配置 SpringDoc 信息，参数如下：
 

@@ -1,7 +1,9 @@
 package com.pongsky.kit.springfox.properties;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Collections;
@@ -44,7 +46,7 @@ public class SpringFoxProperties {
      * key: 鉴权参数存放位置
      * value：参数名称列表
      */
-    private Map<AuthIn, List<String>> requestParameter = Collections.emptyMap();
+    private Map<AuthIn, List<String>> requestParameters = Collections.emptyMap();
 
     /**
      * 鉴权参数存放位置
@@ -65,6 +67,31 @@ public class SpringFoxProperties {
          * cookie
          */
         cookie
+
+    }
+
+    /**
+     * 组别列表
+     * <p>
+     * 未填写则会有一个默认分组
+     */
+    private List<GroupOpenApi> groups = Collections.emptyList();
+
+    @Getter
+    @Setter
+    @Accessors(chain = true)
+    @EqualsAndHashCode(callSuper = false)
+    public static class GroupOpenApi {
+
+        /**
+         * The Display name.
+         */
+        private String displayName;
+
+        /**
+         * The Group.
+         */
+        private String group;
 
     }
 
