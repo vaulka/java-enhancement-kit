@@ -1,6 +1,9 @@
 # validation-utils 模块说明
 
 > 校验 utils 模块
+> 
+> 该模块依赖
+> * [type-parser-utils](../../kit-type-parser/type-parser-utils/README.md) 模块
 
 ## 功能说明
 

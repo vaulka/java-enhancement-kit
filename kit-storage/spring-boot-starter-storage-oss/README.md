@@ -3,7 +3,7 @@
 > 云存储 阿里云 OSS Spring Boot Starter 模块
 >
 > 该模块依赖
-> * [storage-annotation](../storage-annotation/README.md) 模块
+> * [spring-boot-storage](../spring-boot-storage/README.md) 模块
 
 ## 功能说明
 

@@ -3,8 +3,6 @@
 > 全局响应 Spring Boot Starter 模块
 >
 > 该模块依赖
-> * [validation-utils](../../kit-validation/validation-utils/README.md) 模块
-> * [spring-boot-common](../spring-boot-common/README.md) 模块
 > * [spring-boot-starter-web-core](../spring-boot-starter-web-core/README.md) 模块
 
 ## 功能说明
