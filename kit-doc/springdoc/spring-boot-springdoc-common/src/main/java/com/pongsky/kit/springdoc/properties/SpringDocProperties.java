@@ -57,21 +57,14 @@ public class SpringDocProperties {
      * key: 鉴权参数存放位置
      * value：参数名称列表
      */
-    private Map<SecurityScheme.In, List<String>> requestParameter = Collections.emptyMap();
+    private Map<SecurityScheme.In, List<String>> requestParameters = Collections.emptyMap();
 
     /**
-     * 组别
+     * 组别列表
      * <p>
      * 未填写则会有一个默认分组
      */
     private List<GroupOpenApi> groups = Collections.emptyList();
-
-    /**
-     * 默认分组
-     */
-    public static final GroupOpenApi DEFAULT_GROUPED_OPEN_API = new GroupOpenApi()
-            .setDisplayName("default")
-            .setGroup("");
 
     /**
      * {@link org.springdoc.core.GroupedOpenApi}

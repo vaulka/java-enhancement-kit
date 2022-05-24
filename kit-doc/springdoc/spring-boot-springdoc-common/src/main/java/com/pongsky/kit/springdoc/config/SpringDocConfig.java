@@ -33,13 +33,13 @@ public class SpringDocConfig {
     private final ApplicationContext applicationContext;
 
     /**
-     * 创建 Swagger 配置信息
+     * 创建 Swagger 文档信息
      *
-     * @return 创建 Swagger 配置信息
+     * @return 创建 Swagger 文档信息
      */
     @Bean
     public OpenAPI defaultOpenApi() {
-        Map<String, SecurityScheme> securitySchemes = properties.getRequestParameter().entrySet().stream()
+        Map<String, SecurityScheme> securitySchemes = properties.getRequestParameters().entrySet().stream()
                 .map(e -> e.getValue().stream()
                         .map(v -> new SecurityScheme()
                                 .name(v)
@@ -49,7 +49,7 @@ public class SpringDocConfig {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toMap(SecurityScheme::getName, v -> v));
         SecurityRequirement securityRequirement = new SecurityRequirement();
-        properties.getRequestParameter().values().stream()
+        properties.getRequestParameters().values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()).forEach(securityRequirement::addList);
         return new OpenAPI()
@@ -61,12 +61,24 @@ public class SpringDocConfig {
                 .addSecurityItem(securityRequirement);
     }
 
+    /**
+     * 默认分组
+     */
+    private static final SpringDocProperties.GroupOpenApi DEFAULT_GROUPED_OPEN_API = new SpringDocProperties.GroupOpenApi()
+            .setDisplayName("default")
+            .setGroup("");
+
+    /**
+     * 创建 Swagger 组别信息
+     *
+     * @return 创建 Swagger 组别信息
+     */
     @Bean
     public GroupedOpenApi defaultGroupedOpenApi() {
         if (properties.getGroups().size() == 0) {
             // 未填写组别则会有一个默认分组
             // 兼容 Knife4j 源码，没有分组则会报错
-            return SpringDocProperties.DEFAULT_GROUPED_OPEN_API.build();
+            return DEFAULT_GROUPED_OPEN_API.build();
         }
         List<String> displayNames = properties.getGroups().stream()
                 .map(SpringDocProperties.GroupOpenApi::getDisplayName)
