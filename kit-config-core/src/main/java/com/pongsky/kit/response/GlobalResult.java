@@ -4,7 +4,7 @@ import com.pongsky.kit.exception.CircuitBreakerException;
 import com.pongsky.kit.exception.RemoteCallException;
 import com.pongsky.kit.response.enums.ResultCode;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,6 @@ import lombok.experimental.Accessors;
  *
  * @author pengsenhao
  */
-@ApiOperation("响应数据体")
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
@@ -135,6 +134,7 @@ public class GlobalResult<T> {
      * 有数据的情况：成功、失败
      */
     @ApiModelProperty("接口响应结果标识码")
+    @Schema(description = "接口响应结果标识码")
     private Integer code;
 
     /**
@@ -143,6 +143,7 @@ public class GlobalResult<T> {
      * 有数据的情况：失败
      */
     @ApiModelProperty("客户端 IP 地址")
+    @Schema(description = "客户端 IP 地址")
     private String ip;
 
     /**
@@ -151,6 +152,7 @@ public class GlobalResult<T> {
      * 有数据的情况：失败
      */
     @ApiModelProperty("异常详细信息")
+    @Schema(description = "异常详细信息")
     private String details;
 
     /**
@@ -159,6 +161,7 @@ public class GlobalResult<T> {
      * 有数据的情况：成功、失败
      */
     @ApiModelProperty("接口响应结果信息")
+    @Schema(description = "接口响应结果信息")
     private String message;
 
     /**
@@ -167,6 +170,7 @@ public class GlobalResult<T> {
      * 有数据的情况：成功
      */
     @ApiModelProperty("接口响应数据体")
+    @Schema(description = "接口响应数据体")
     private T data;
 
     /**
@@ -175,6 +179,7 @@ public class GlobalResult<T> {
      * 有数据的情况：失败
      */
     @ApiModelProperty("调用接口路径地址")
+    @Schema(description = "调用接口路径地址")
     private String path;
 
     /**
@@ -183,6 +188,7 @@ public class GlobalResult<T> {
      * 有数据的情况：失败
      */
     @ApiModelProperty("异常类型信息")
+    @Schema(description = "异常类型信息")
     private String exception;
 
     /**
@@ -191,6 +197,7 @@ public class GlobalResult<T> {
      * 有数据的情况：失败
      */
     @ApiModelProperty("时间戳")
+    @Schema(description = "时间戳")
     private Long timestamp;
 
 }

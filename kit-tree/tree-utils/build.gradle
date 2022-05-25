@@ -72,6 +72,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    compileOnly "io.swagger.core.v3:swagger-annotations:${swaggerVersion}"
     compileOnly "io.swagger:swagger-annotations:$swaggerAnnotationVersion"
 
     testImplementation "com.alibaba:fastjson:$fastjsonVersion"
