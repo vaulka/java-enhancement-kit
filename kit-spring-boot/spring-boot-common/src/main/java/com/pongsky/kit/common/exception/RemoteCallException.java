@@ -1,6 +1,6 @@
-package com.pongsky.kit.exception;
+package com.pongsky.kit.common.exception;
 
-import com.pongsky.kit.response.GlobalResult;
+import com.pongsky.kit.common.response.GlobalResult;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 

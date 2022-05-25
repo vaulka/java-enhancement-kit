@@ -1,7 +1,6 @@
 package com.pongsky.kit.response;
 
 import com.pongsky.kit.exception.CircuitBreakerException;
-import com.pongsky.kit.exception.RemoteCallException;
 import com.pongsky.kit.response.enums.ResultCode;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -117,15 +116,6 @@ public class GlobalResult<T> {
     public static GlobalResult<Void> circuitBreakerExceptionResult() {
         return new GlobalResult<>(null, ResultCode.CircuitBreakerException, null,
                 CircuitBreakerException.class);
-    }
-
-    /**
-     * 校验feign响应数据体是否异常
-     */
-    public void feignValidation() {
-        if (!ResultCode.Success.getCode().equals(code)) {
-            throw new RemoteCallException(this);
-        }
     }
 
     /**

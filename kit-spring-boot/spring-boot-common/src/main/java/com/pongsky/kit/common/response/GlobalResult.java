@@ -1,5 +1,6 @@
 package com.pongsky.kit.common.response;
 
+import com.pongsky.kit.common.exception.RemoteCallException;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -101,5 +102,14 @@ public class GlobalResult<T> implements Serializable {
     @ApiModelProperty("时间戳")
     @Schema(description = "时间戳")
     private Long timestamp;
+
+    /**
+     * 校验 Feign 远程调用时，响应数据体是否异常
+     */
+    public void feignValidation() {
+        if (code == null || !code.equals(SUCCESS_CODE)) {
+            throw new RemoteCallException(this);
+        }
+    }
 
 }

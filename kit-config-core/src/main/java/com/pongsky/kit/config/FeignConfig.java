@@ -46,28 +46,4 @@ public class FeignConfig implements RequestInterceptor {
         }
     }
 
-    @Bean
-    public Decoder feignDecoder(ObjectFactory<HttpMessageConverters> messageConverters) {
-        return new MyDecoder(new OptionalDecoder(new ResponseEntityDecoder(new SpringDecoder(messageConverters))));
-    }
-
-    public static class MyDecoder implements Decoder {
-
-        private final Decoder decoder;
-
-        public MyDecoder(Decoder decoder) {
-            this.decoder = decoder;
-        }
-
-        @Override
-        public Object decode(Response response, Type type) throws IOException, FeignException {
-            Object decode = decoder.decode(response, type);
-            if (decode instanceof GlobalResult) {
-                GlobalResult<?> result = (GlobalResult<?>) decode;
-                result.feignValidation();
-            }
-            return decode;
-        }
-    }
-
 }

@@ -3,6 +3,7 @@ package com.pongsky.kit.global.response.autoconfigure;
 import com.pongsky.kit.global.response.config.GlobalResponseWebMvcConfigurer;
 import com.pongsky.kit.global.response.handler.GlobalExceptionHandler;
 import com.pongsky.kit.global.response.handler.GlobalResponseHandler;
+import com.pongsky.kit.global.response.handler.GlobalResultFeignDecoderHandler;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.AccessDeniedExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.BindExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.CircuitBreakerExceptionFailProcessor;
@@ -21,6 +22,7 @@ import com.pongsky.kit.global.response.handler.processor.fail.impl.MissingServle
 import com.pongsky.kit.global.response.handler.processor.fail.impl.MultipartExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.NoHandlerFoundExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.NullPointerExceptionFailProcessor;
+import com.pongsky.kit.global.response.handler.processor.fail.impl.RemoteCallExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.RuntimeExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.TypeMismatchExceptionFailProcessor;
 import com.pongsky.kit.global.response.handler.processor.fail.impl.UpdateExceptionFailProcessor;
@@ -42,7 +44,7 @@ import org.springframework.context.annotation.Import;
 @Configuration(proxyBeanMethods = false)
 @Import({
         GlobalResponseWebMvcConfigurer.class,
-        GlobalExceptionHandler.class, GlobalResponseHandler.class,
+        GlobalExceptionHandler.class, GlobalResponseHandler.class, GlobalResultFeignDecoderHandler.class,
         // 成功请求处理器
         DefaultSuccessProcessor.class,
         // 失败请求处理器
@@ -57,6 +59,7 @@ import org.springframework.context.annotation.Import;
         NoHandlerFoundExceptionFailProcessor.class, HttpRequestMethodNotSupportedExceptionFailProcessor.class,
         HttpMessageNotReadableExceptionFailProcessor.class, BindExceptionFailProcessor.class,
         MissingServletRequestParameterExceptionFailProcessor.class, TypeMismatchExceptionFailProcessor.class,
+        RemoteCallExceptionFailProcessor.class,
         // 是否执行全局响应处理器
         ApiResourceControllerSupportsReturnTypeProcessor.class, OpenApiControllerWebMvcSupportsReturnTypeProcessor.class,
         Swagger2ControllerWebMvcSupportsReturnTypeProcessor.class, ActuatorReturnTypeProcessor.class,

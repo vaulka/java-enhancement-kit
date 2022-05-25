@@ -29,9 +29,6 @@ public enum ResultCode {
 
     // 500 ~ 599 区间表示接口异常
 
-    RemoteCallException("远程调用异常", 501, "远程调用服务失败",
-            Arrays.asList(com.pongsky.kit.exception.RemoteCallException.class), true),
-
     CircuitBreakerException("断路异常", 502, "服务器出了点小差，请稍后再试"),
 
     //1000 表示系统异常

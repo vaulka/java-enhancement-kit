@@ -2,10 +2,23 @@ plugins {
     id "signing"
     id "java-library"
     id "maven-publish"
+    id "org.springframework.boot" version "$springBootVersion"
+    id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
 jar {
     enabled = true
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
 }
 
 task sourcesJar(type: Jar) {
@@ -74,4 +87,6 @@ dependencies {
 
     compileOnly "io.swagger.core.v3:swagger-annotations:$swaggerVersion"
     compileOnly "io.swagger:swagger-annotations:$swaggerAnnotationVersion"
+
+    compileOnly "org.springframework.cloud:spring-cloud-starter-openfeign"
 }

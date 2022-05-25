@@ -17,6 +17,7 @@ bootJar {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
     }
 }
 
@@ -94,4 +95,6 @@ dependencies {
     api "org.springframework.boot:spring-boot-starter-validation"
     compileOnly "org.springframework.boot:spring-boot-starter-actuator"
     compileOnly "org.springframework.boot:spring-boot-starter-security"
+
+    compileOnly "org.springframework.cloud:spring-cloud-starter-openfeign"
 }

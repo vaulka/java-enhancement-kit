@@ -44,8 +44,8 @@ public class QuartzUtils {
                                                   JobDataMap jobDataMap,
                                                   Date startTime,
                                                   Class<T> clazz) throws SchedulerException {
-        checkExists(name, group);
-        // 构建job信息
+        this.checkExists(name, group);
+        // 构建 JOB 信息
         JobDetail jobDetail = JobBuilder.newJob(clazz)
                 .withIdentity(name, group)
                 .withDescription(description)
@@ -80,8 +80,8 @@ public class QuartzUtils {
                                               JobDataMap jobDataMap,
                                               String cron,
                                               Class<T> t) throws SchedulerException {
-        checkExists(name, group);
-        // 构建job信息
+        this.checkExists(name, group);
+        // 构建 JOB 信息
         JobDetail jobDetail = JobBuilder.newJob(t)
                 .withIdentity(name, group)
                 .withDescription(description)
@@ -95,7 +95,6 @@ public class QuartzUtils {
                 .startNow()
                 .build();
         scheduler.scheduleJob(jobDetail, trigger);
-//        scheduler.start();
     }
 
     /**
@@ -140,4 +139,5 @@ public class QuartzUtils {
             throw new RuntimeException("该任务名称和任务组已存在");
         }
     }
+
 }
