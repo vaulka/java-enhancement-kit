@@ -37,6 +37,11 @@ public class SpringDocProperties {
     private boolean enabled = true;
 
     /**
+     * Swagger 网关路由定位器 是否启用
+     */
+    private boolean gatewayRouteEnabled = false;
+
+    /**
      * 文档标题
      */
     private String title = "API Docs";
