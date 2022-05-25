@@ -10,8 +10,11 @@
 
 ## 约定
 
-1. 支持 Swagger 2 规范。
-2. openAPI 3.0 规范尚有缺陷，使用 `@Tag` 注解会出现 API 文档错误。</br> 相关 <a href="https://github.com/springfox/springfox/issues/3668">
+* 支持 Swagger 2 规范。
+
+## 缺陷
+
+* openAPI 3.0 规范尚有缺陷，使用 `@Tag` 注解会出现 API 文档错误。</br> 相关 <a href="https://github.com/springfox/springfox/issues/3668">
    issues</a> PR 至 3.0.1 version，等待官方发版。
 
 ## 配置 SpringFox 参数
