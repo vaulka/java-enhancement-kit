@@ -180,6 +180,26 @@ logging:
     console: ${CONSOLE_LOG_PATTERN:%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}  %-5.5L{5}){cyan} %clr([%39X{X-Trace-Id}]){yellow} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}} # 控制台日志打印格式
 ```
 
+## Feign 日志打印
+
+```java
+    @Bean
+    public feign.Logger logger() {
+        return new Slf4jLogger();
+    }
+```
+
+```yml
+logging:
+  level:
+    feign.Logger: debug # Feign 日志打印
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: basic # Feign 日志打印等级
+```
+
 # 模块建议
 
 > 按照此信息进行分模块，配合此套件能获得最佳的体验～
@@ -301,6 +321,8 @@ spring:
 logging:
   pattern:
     console: ${CONSOLE_LOG_PATTERN:%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}  %-5.5L{5}){cyan} %clr([%39X{X-Trace-Id}]){yellow} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}} # 控制台日志打印格式
+  level:
+    feign.Logger: debug # Feign 日志打印
 server:
   shutdown: graceful # 优雅关机
 management:
@@ -316,6 +338,12 @@ mybatis-plus:
     banner: false # 关闭 mybatis-plus banner 打印
     db-config:
       id-type: input # 主键策略
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: basic # Feign 日志打印等级
+
 ```
 
 ## `${project}`-config-web
