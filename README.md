@@ -32,6 +32,25 @@
 |[desensitization-utils](kit-desensitization/desensitization-utils/README.md)|数据脱敏 Utils 模块|
 |[spring-boot-starter-desensitization](kit-desensitization/spring-boot-starter-desensitization/README.md)|数据脱敏 Spring Boot Starter 模块|
 
+## kit-doc 文档模块
+
+### springdoc SringDoc 模块
+
+|模块|介绍|
+|---|---|
+|[spring-boot-springdoc-common](kit-doc/springdoc/spring-boot-springdoc-common/README.md)|SpringDoc Common Spring Boot 模块|
+|[spring-boot-starter-springdoc](kit-doc/springdoc/spring-boot-starter-springdoc/README.md)|SpringDoc Spring Boot Starter 模块|
+|[spring-boot-starter-springdoc-knife4j](kit-doc/springdoc/spring-boot-starter-springdoc-knife4j/README.md)|SpringDoc Knife4j Spring Boot Starter 模块|
+|[spring-boot-starter-webflux-springdoc](kit-doc/springdoc/spring-boot-starter-webflux-springdoc/README.md)|WebFlux SpringDoc Spring Boot Starter 模块|
+|[spring-boot-starter-webflux-springdoc-knife4j](kit-doc/springdoc/spring-boot-starter-webflux-springdoc-knife4j/README.md)|WebFlux SpringDoc Knife4j Spring Boot Starter 模块|
+
+### springfox SpringFox 模块
+
+|模块|介绍|
+|---|---|
+|[spring-boot-starter-springfox](kit-doc/springfox/spring-boot-starter-springfox/README.md)|SpringDoc Spring Boot Starter 模块|
+|[spring-boot-starter-springfox-knife4j](kit-doc/springfox/spring-boot-starter-springfox-knife4j/README.md)|SpringDoc Knife4j Spring Boot Starter 模块|
+
 ## kit-excel 导入/导出 Excel 模块
 
 |模块|介绍|
