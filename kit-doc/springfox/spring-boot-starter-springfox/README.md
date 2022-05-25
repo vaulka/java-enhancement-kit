@@ -11,7 +11,8 @@
 ## 约定
 
 1. 支持 Swagger 2 规范。
-2. openAPI 3.0 规范尚有缺陷，使用 `@Tag` 注解会出现 API 文档错误。</br> 相关 <a href="https://github.com/springfox/springfox/issues/3668">issues</a> PR 至 3.0.1 version，等待官方发版。
+2. openAPI 3.0 规范尚有缺陷，使用 `@Tag` 注解会出现 API 文档错误。</br> 相关 <a href="https://github.com/springfox/springfox/issues/3668">
+   issues</a> PR 至 3.0.1 version，等待官方发版。
 
 ## 配置 SpringFox 参数
 
@@ -20,6 +21,7 @@
 |参数|是否可空|描述|默认值|
 |---|---|---|---|
 |doc.enabled|true|是否启用|true|
+|doc.gateway-route-enabled|true|Swagger 网关路由定位器 是否启用|false|
 |doc.title|true|文档标题|API Docs|
 |doc.description|true|文档描述||
 |doc.version|true|文档版本号||
@@ -100,10 +102,12 @@ doc:
 1. 定义 Swagger 资源请求信息，到网关进行处理。
 
 > 将 URL 以 `/v3/api-docs` 开头的请求进行路径重写并重定向。
-> 
+>
 > 路径重写：`/v3/api-docs/**` -> `/**/v3/api-docs`，重定向请求到网关进行后续处理。
-> 
+>
 > 譬如这里定义的 Swagger 组别以及路径为 `/doc/mihoyo`，则完整 URL 为 `/v3/api-docs/doc/mihoyo`，路径重写为 `/doc/mihoyo/v3/api-docs`。
+>
+> 注：routes 可启用 `doc.gateway-route-enabled` 完成自动配置。
 
 ```yml
 
