@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 /**
  * SpringFox Swagger 配置
  * <p>
- * TODO 使用 openAPI 3.0 {@link io.swagger.v3.oas.annotations.tags.Tag} 注解会出现 API 文档错误。</br> 相关 <a href="https://github.com/springfox/springfox/issues/3668">issues</a> PR 至 3.0.1 version，等待官方发版
+ * TODO <p>使用 openAPI 3.0 {@link io.swagger.v3.oas.annotations.tags.Tag} 注解会出现 API 文档错误。相关 <a href="https://github.com/springfox/springfox/issues/3668">issues</a> PR 至 3.0.1 version，等待官方发版</p>
  *
  * @author pengsenhao
  **/
