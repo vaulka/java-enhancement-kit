@@ -2,7 +2,7 @@ package com.pongsky.kit.global.response.handler.processor.supports.impl.springdo
 
 import com.pongsky.kit.global.response.handler.processor.supports.BaseSupportsReturnTypeProcessor;
 import org.springdoc.webmvc.api.OpenApiWebMvcResource;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.MethodParameter;
 
 /**
@@ -10,7 +10,7 @@ import org.springframework.core.MethodParameter;
  *
  * @author pengsenhao
  */
-@ConditionalOnBean(OpenApiWebMvcResource.class)
+@ConditionalOnClass(OpenApiWebMvcResource.class)
 public class OpenApiWebMvcResourceSupportsReturnTypeProcessor implements BaseSupportsReturnTypeProcessor {
 
     @Override
