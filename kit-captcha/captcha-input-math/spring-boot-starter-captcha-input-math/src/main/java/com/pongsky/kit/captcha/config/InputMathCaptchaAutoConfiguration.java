@@ -1,7 +1,7 @@
 package com.pongsky.kit.captcha.config;
 
-import com.pongsky.kit.captcha.properties.CaptchaProperties;
-import com.pongsky.kit.captcha.utils.CaptchaUtils;
+import com.pongsky.kit.captcha.properties.InputMathCaptchaProperties;
+import com.pongsky.kit.captcha.utils.InputMathCaptchaUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
  * @author pengsenhao
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties({CaptchaProperties.class})
-public class CaptchaAutoConfiguration {
+@EnableConfigurationProperties({InputMathCaptchaProperties.class})
+public class InputMathCaptchaAutoConfiguration {
 
     /**
      * 创建验证码工具类
@@ -23,8 +23,8 @@ public class CaptchaAutoConfiguration {
      * @return 验证码工具类
      */
     @Bean
-    public CaptchaUtils captchaUtils(CaptchaProperties properties) {
-        return new CaptchaUtils(properties.getMinCode(), properties.getMaxCode(),
+    public InputMathCaptchaUtils captchaUtils(InputMathCaptchaProperties properties) {
+        return new InputMathCaptchaUtils(properties.getMinCode(), properties.getMaxCode(),
                 (String.valueOf(properties.getMaxCode()).length() + 3)
                         * properties.getCodeWidthSpace(),
                 properties.getImageHeight(),

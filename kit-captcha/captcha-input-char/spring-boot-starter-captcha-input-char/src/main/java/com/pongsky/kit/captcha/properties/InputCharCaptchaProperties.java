@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties("captcha")
-public class CaptchaProperties {
+public class InputCharCaptchaProperties {
 
     /**
      * 验证码数量

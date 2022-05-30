@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.captcha.autoconfigure.CaptchaAutoConfiguration
+com.pongsky.kit.captcha.autoconfigure.InputCharCaptchaAutoConfiguration

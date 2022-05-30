@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties("captcha")
-public class CaptchaProperties {
+public class InputMathCaptchaProperties {
 
     /**
      * 最小验证码数值

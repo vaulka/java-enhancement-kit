@@ -38,7 +38,7 @@ captcha:
 
 ## 使用
 
-可直接注入 `CaptchaUtils` 进行调用相关方法。
+可直接注入 `InputMathCaptchaUtils` 进行调用相关方法。
 
 ```java
 
@@ -47,7 +47,7 @@ captcha:
 @RequestMapping(value = "/captcha", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CaptchaController {
 
-    private final CaptchaUtils captchaUtils;
+    private final InputMathCaptchaUtils captchaUtils;
 
     @GetMapping
     public String captchaByBase64() throws IOException {

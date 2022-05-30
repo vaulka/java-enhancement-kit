@@ -22,7 +22,7 @@ public class TraceFilterConfig {
      * @return 追踪链路
      */
     @Bean
-    public FilterRegistrationBean<TraceFilter> xssDefenseFilterRegistrationBean() {
+    public FilterRegistrationBean<TraceFilter> traceFilterRegistrationBean() {
         FilterRegistrationBean<TraceFilter> registration = new FilterRegistrationBean<>();
         TraceFilter filter = new TraceFilter(applicationProperties);
         registration.setFilter(filter);
