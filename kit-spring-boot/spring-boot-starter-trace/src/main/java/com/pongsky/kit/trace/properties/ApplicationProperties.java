@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -15,6 +17,7 @@ import java.net.UnknownHostException;
  */
 @Getter
 @Setter
+@Validated
 @ConfigurationProperties(prefix = "application")
 public class ApplicationProperties {
 
@@ -32,11 +35,13 @@ public class ApplicationProperties {
     /**
      * 应用名称
      */
+    @NotBlank
     private String name;
 
     /**
      * 版本号
      */
+    @NotBlank
     private String version;
 
     /**

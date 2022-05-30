@@ -5,7 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,7 @@ import java.util.Map;
  **/
 @Getter
 @Setter
+@Validated
 @ConfigurationProperties(prefix = "doc")
 public class SpringFoxProperties {
 
@@ -80,6 +85,7 @@ public class SpringFoxProperties {
      * <p>
      * 未填写则会有一个默认分组
      */
+    @Valid
     private List<GroupOpenApi> groups = Collections.emptyList();
 
     @Getter
@@ -91,11 +97,13 @@ public class SpringFoxProperties {
         /**
          * The Display name.
          */
+        @NotBlank
         private String displayName;
 
         /**
          * The Group.
          */
+        @NotNull
         private String group;
 
     }

@@ -12,7 +12,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.util.Assert;
 
 /**
  * 阿里云 OSS 自动装配
@@ -34,10 +33,6 @@ public class OssAutoConfiguration {
      */
     @Bean
     public StorageUtils storageUtils(OssProperties properties) {
-        Assert.notNull(properties.getEndpoint(), "yml 配置 aliyun.oss.endpoint 不能为空");
-        Assert.notNull(properties.getBucket(), "yml 配置 aliyun.oss.bucket 不能为空");
-        Assert.notNull(properties.getAccessKeyId(), "yml 配置 aliyun.oss.accessKeyId 不能为空");
-        Assert.notNull(properties.getSecretAccessKey(), "yml 配置 aliyun.oss.secretAccessKey 不能为空");
         return new AliYunOssUtils(properties.getEndpoint(), properties.getBucket(),
                 properties.getAccessKeyId(), properties.getSecretAccessKey());
     }

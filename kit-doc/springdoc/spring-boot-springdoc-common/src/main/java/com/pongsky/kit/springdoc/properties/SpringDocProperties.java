@@ -12,7 +12,11 @@ import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springdoc.core.filters.OpenApiMethodFilter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +32,7 @@ import static org.springdoc.core.Constants.GROUP_NAME_NOT_NULL;
  **/
 @Getter
 @Setter
+@Validated
 @ConfigurationProperties(prefix = "doc")
 public class SpringDocProperties {
 
@@ -69,6 +74,7 @@ public class SpringDocProperties {
      * <p>
      * 未填写则会有一个默认分组
      */
+    @Valid
     private List<GroupOpenApi> groups = Collections.emptyList();
 
     /**
@@ -83,11 +89,13 @@ public class SpringDocProperties {
         /**
          * The Display name.
          */
+        @NotBlank
         private String displayName;
 
         /**
          * The Group.
          */
+        @NotNull
         private String group;
 
         /**

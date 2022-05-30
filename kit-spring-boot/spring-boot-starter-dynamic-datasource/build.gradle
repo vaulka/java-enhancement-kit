@@ -90,8 +90,9 @@ dependencies {
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
+    api "com.alibaba:druid-spring-boot-starter:$druidVersion"
+
     api "org.springframework.boot:spring-boot-starter-aop"
     api "org.springframework.boot:spring-boot-starter-jdbc"
-
-    api "com.alibaba:druid-spring-boot-starter:$druidVersion"
+    api "org.springframework.boot:spring-boot-starter-validation"
 }

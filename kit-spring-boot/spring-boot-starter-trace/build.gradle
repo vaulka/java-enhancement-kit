@@ -94,6 +94,7 @@ dependencies {
 
     api "org.springframework.boot:spring-boot-starter-web"
     api "org.springframework.boot:spring-boot-starter-aop"
+    api "org.springframework.boot:spring-boot-starter-validation"
     compileOnly "org.springframework.boot:spring-boot-starter-quartz"
 
     compileOnly "org.springframework.cloud:spring-cloud-starter-openfeign"
