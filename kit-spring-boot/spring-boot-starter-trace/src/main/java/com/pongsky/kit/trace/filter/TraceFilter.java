@@ -5,7 +5,6 @@ import com.pongsky.kit.common.trace.TraceInfo;
 import com.pongsky.kit.common.trace.TraceThreadLocal;
 import com.pongsky.kit.trace.properties.ApplicationProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
 
@@ -26,7 +25,6 @@ import java.util.Map;
  *
  * @author pengsenhao
  */
-@Slf4j
 @RequiredArgsConstructor
 public class TraceFilter implements Filter {
 
@@ -38,6 +36,13 @@ public class TraceFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String traceId = TraceThreadLocal.buildTraceId(httpServletRequest);
+        // 设置响应头
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setHeader(TraceConstants.X_TRACE_ID, traceId);
+        httpServletResponse.setHeader(TraceConstants.X_HOSTNAME, properties.getHostName());
+        httpServletResponse.setHeader(TraceConstants.X_INSTANCE_ID, properties.getInstanceId());
+        httpServletResponse.setHeader(TraceConstants.X_BACKEND_VERSION, properties.getVersion());
+        // 设置链路信息
         MDC.put(TraceConstants.X_TRACE_ID, traceId);
         Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
         Map<String, String> requestHeaders = new HashMap<>(16);
@@ -57,12 +62,6 @@ public class TraceFilter implements Filter {
         } finally {
             MDC.clear();
             TraceThreadLocal.delTraceInfo();
-            // 设置响应头
-            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-            httpServletResponse.setHeader(TraceConstants.X_HOSTNAME, properties.getHostName());
-            httpServletResponse.setHeader(TraceConstants.X_INSTANCE_ID, properties.getInstanceId());
-            httpServletResponse.setHeader(TraceConstants.X_TRACE_ID, traceId);
-            httpServletResponse.setHeader(TraceConstants.X_BACKEND_VERSION, properties.getVersion());
         }
     }
 

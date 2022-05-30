@@ -32,7 +32,7 @@ public class ApplicationProperties {
     /**
      * 应用名称
      */
-    private String applicationName;
+    private String name;
 
     /**
      * 版本号
