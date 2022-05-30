@@ -48,13 +48,13 @@ publishing {
             artifact javadocJar
 
             groupId group.toString()
-            artifactId "spring-boot-common"
+            artifactId "spring-boot-starter-trace"
             version version.toString()
-            description "Java 增强套件 之 公共 Spring Boot 模块"
+            description "Java 增强套件 之 链路 Spring Boot Starter 模块"
 
             pom {
                 name = "java-enhancement-kit"
-                description = "Java 增强套件 之 公共 Spring Boot 模块"
+                description = "Java 增强套件 之 链路 Spring Boot Starter 模块"
                 url = "https://github.com/JarvisPongSky/java-enhancement-kit"
                 licenses {
                     license {
@@ -82,15 +82,19 @@ signing {
 }
 
 dependencies {
+    api project(":spring-boot:spring-boot-common")
+
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     api "org.apache.commons:commons-lang3:$commonsLang3Version"
+    compileOnly "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
 
-    compileOnly "io.swagger.core.v3:swagger-annotations:$swaggerVersion"
-    compileOnly "io.swagger:swagger-annotations:$swaggerAnnotationVersion"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    compileOnly "org.springframework.boot:spring-boot-starter-web"
+    api "org.springframework.boot:spring-boot-starter-web"
+    api "org.springframework.boot:spring-boot-starter-aop"
+    compileOnly "org.springframework.boot:spring-boot-starter-quartz"
 
     compileOnly "org.springframework.cloud:spring-cloud-starter-openfeign"
 }

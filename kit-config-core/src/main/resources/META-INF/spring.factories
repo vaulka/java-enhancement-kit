@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.config.FeignConfig,\
-com.pongsky.kit.config.SystemConfig
