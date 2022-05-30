@@ -14,7 +14,7 @@ import org.springframework.http.HttpHeaders;
  * @author pengsenhao
  */
 @ConditionalOnClass(RequestInterceptor.class)
-public class FeignConfig implements RequestInterceptor {
+public class TraceFeignConfig implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {

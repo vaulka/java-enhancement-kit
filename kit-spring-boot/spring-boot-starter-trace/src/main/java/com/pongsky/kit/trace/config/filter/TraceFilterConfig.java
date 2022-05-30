@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
  * @author pengsenhao
  **/
 @RequiredArgsConstructor
-public class FilterConfig {
+public class TraceFilterConfig {
 
     private final ApplicationProperties applicationProperties;
 

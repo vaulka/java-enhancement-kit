@@ -1,8 +1,8 @@
 package com.pongsky.kit.trace.autoconfigure;
 
-import com.pongsky.kit.trace.config.async.AsyncConfig;
-import com.pongsky.kit.trace.config.feign.FeignConfig;
-import com.pongsky.kit.trace.config.filter.FilterConfig;
+import com.pongsky.kit.trace.config.async.TraceAsyncConfig;
+import com.pongsky.kit.trace.config.feign.TraceFeignConfig;
+import com.pongsky.kit.trace.config.filter.TraceFilterConfig;
 import com.pongsky.kit.trace.properties.ApplicationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Import;
  **/
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(ApplicationProperties.class)
-@Import({AsyncConfig.class, FeignConfig.class, FilterConfig.class})
+@Import({TraceAsyncConfig.class, TraceFeignConfig.class, TraceFilterConfig.class})
 public class TraceAutoConfiguration {
 
 

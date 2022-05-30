@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author pengsenhao
  **/
 @EnableAsync
-public class AsyncConfig {
+public class TraceAsyncConfig {
 
     /**
      * 异步标识
