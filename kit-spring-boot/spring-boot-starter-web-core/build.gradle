@@ -22,12 +22,12 @@ dependencyManagement {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
-    classifier 'sources'
+    classifier "sources"
 }
 
 task javadocJar(type: Jar) {
     from javadoc
-    classifier 'javadoc'
+    classifier "javadoc"
 }
 
 publishing {
@@ -82,6 +82,7 @@ signing {
 
 dependencies {
     api project(":ip:ip-utils")
+    api project(":validation:validation-utils")
     api project(":spring-boot:spring-boot-common")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"

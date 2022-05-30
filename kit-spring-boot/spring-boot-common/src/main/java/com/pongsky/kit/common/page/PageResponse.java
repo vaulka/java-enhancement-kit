@@ -1,6 +1,7 @@
 package com.pongsky.kit.common.page;
 
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,30 +30,35 @@ public class PageResponse<T> {
      * 数据集合
      */
     @ApiModelProperty("数据集合")
+    @Schema(description = "数据集合")
     private List<T> content;
 
     /**
      * 总页数
      */
     @ApiModelProperty("总页数")
+    @Schema(description = "总页数")
     private Long totalPages;
 
     /**
      * 总数量
      */
     @ApiModelProperty("总数量")
+    @Schema(description = "总数量")
     private Long totalElements;
 
     /**
      * 当前页码
      */
     @ApiModelProperty("当前页码")
+    @Schema(description = "当前页码")
     private Integer pageNumber;
 
     /**
      * 页数量
      */
     @ApiModelProperty("页数量")
+    @Schema(description = "页数量")
     private Integer pageSize;
 
 }

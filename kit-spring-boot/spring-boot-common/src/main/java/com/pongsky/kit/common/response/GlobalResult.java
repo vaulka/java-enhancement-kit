@@ -1,7 +1,8 @@
 package com.pongsky.kit.common.response;
 
+import com.pongsky.kit.common.exception.RemoteCallException;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -13,7 +14,6 @@ import java.io.Serializable;
  *
  * @author pengsenhao
  */
-@ApiOperation("响应数据体")
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
@@ -37,6 +37,7 @@ public class GlobalResult<T> implements Serializable {
      * 有数据的情况：成功、失败
      */
     @ApiModelProperty("接口响应结果标识码")
+    @Schema(description = "接口响应结果标识码")
     private Integer code;
 
     /**
@@ -45,6 +46,7 @@ public class GlobalResult<T> implements Serializable {
      * 有数据的情况：成功、失败
      */
     @ApiModelProperty("接口响应结果信息")
+    @Schema(description = "接口响应结果信息")
     private String message;
 
     /**
@@ -53,6 +55,7 @@ public class GlobalResult<T> implements Serializable {
      * 有数据的情况：成功
      */
     @ApiModelProperty("接口响应数据体")
+    @Schema(description = "接口响应数据体")
     private T data;
 
     /**
@@ -61,6 +64,7 @@ public class GlobalResult<T> implements Serializable {
      * 有数据的情况：失败
      */
     @ApiModelProperty("异常类型信息")
+    @Schema(description = "异常类型信息")
     private String type;
 
     /**
@@ -69,6 +73,7 @@ public class GlobalResult<T> implements Serializable {
      * 有数据的情况：失败
      */
     @ApiModelProperty("异常类信息")
+    @Schema(description = "异常类信息")
     private String exception;
 
     /**
@@ -77,6 +82,7 @@ public class GlobalResult<T> implements Serializable {
      * 有数据的情况：失败
      */
     @ApiModelProperty("客户端 IP 地址")
+    @Schema(description = "客户端 IP 地址")
     private String ip;
 
     /**
@@ -85,6 +91,7 @@ public class GlobalResult<T> implements Serializable {
      * 有数据的情况：失败
      */
     @ApiModelProperty("调用接口路径地址")
+    @Schema(description = "调用接口路径地址")
     private String path;
 
     /**
@@ -93,6 +100,16 @@ public class GlobalResult<T> implements Serializable {
      * 有数据的情况：失败
      */
     @ApiModelProperty("时间戳")
+    @Schema(description = "时间戳")
     private Long timestamp;
+
+    /**
+     * 校验 Feign 远程调用时，响应数据体是否异常
+     */
+    public void feignValidation() {
+        if (code == null || !code.equals(SUCCESS_CODE)) {
+            throw new RemoteCallException(this);
+        }
+    }
 
 }

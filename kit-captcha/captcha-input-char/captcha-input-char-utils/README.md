@@ -8,7 +8,7 @@
 
 ## 使用
 
-该模块提供一个 `CaptchaUtils` 工具类，可根据传入的若干个字符，生成验证码图片。
+该模块提供一个 `InputCharCaptchaUtils` 工具类，可根据传入的若干个字符，生成验证码图片。
 
 ```java
 
@@ -19,7 +19,7 @@ public class CharCaptchaUtilsTest {
         int codeNum = 5;
 
         // 创建输入型字符 验证码工具类
-        CaptchaUtils captchaUtils = new CaptchaUtils(codeNum, codeNum * 25, 35, 200, 2);
+        InputCharCaptchaUtils captchaUtils = new InputCharCaptchaUtils(codeNum, codeNum * 25, 35, 200, 2);
 
         // 创建验证码
         // 也可自己定义验证码

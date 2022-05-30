@@ -32,6 +32,25 @@
 |[desensitization-utils](kit-desensitization/desensitization-utils/README.md)|数据脱敏 Utils 模块|
 |[spring-boot-starter-desensitization](kit-desensitization/spring-boot-starter-desensitization/README.md)|数据脱敏 Spring Boot Starter 模块|
 
+## kit-doc 文档模块
+
+### springdoc SringDoc 模块
+
+|模块|介绍|
+|---|---|
+|[spring-boot-springdoc-common](kit-doc/springdoc/spring-boot-springdoc-common/README.md)|SpringDoc Common Spring Boot 模块|
+|[spring-boot-starter-springdoc](kit-doc/springdoc/spring-boot-starter-springdoc/README.md)|SpringDoc Spring Boot Starter 模块|
+|[spring-boot-starter-springdoc-knife4j](kit-doc/springdoc/spring-boot-starter-springdoc-knife4j/README.md)|SpringDoc Knife4j Spring Boot Starter 模块|
+|[spring-boot-starter-webflux-springdoc](kit-doc/springdoc/spring-boot-starter-webflux-springdoc/README.md)|WebFlux SpringDoc Spring Boot Starter 模块|
+|[spring-boot-starter-webflux-springdoc-knife4j](kit-doc/springdoc/spring-boot-starter-webflux-springdoc-knife4j/README.md)|WebFlux SpringDoc Knife4j Spring Boot Starter 模块|
+
+### springfox SpringFox 模块
+
+|模块|介绍|
+|---|---|
+|[spring-boot-starter-springfox](kit-doc/springfox/spring-boot-starter-springfox/README.md)|SpringDoc Spring Boot Starter 模块|
+|[spring-boot-starter-springfox-knife4j](kit-doc/springfox/spring-boot-starter-springfox-knife4j/README.md)|SpringDoc Knife4j Spring Boot Starter 模块|
+
 ## kit-excel 导入/导出 Excel 模块
 
 |模块|介绍|
@@ -54,6 +73,7 @@
 |[spring-boot-starter-core](kit-spring-boot/spring-boot-starter-core/README.md)|Core Spring Boot Starter 模块|
 |[spring-boot-starter-dynamic-datasource](kit-spring-boot/spring-boot-starter-dynamic-datasource/README.md)|动态数据源 Spring Boot Starter 模块|
 |[spring-boot-starter-global-response](kit-spring-boot/spring-boot-starter-global-response/README.md)|全局响应 Spring Boot Starter 模块|
+|[spring-boot-starter-trace](kit-spring-boot/spring-boot-starter-trace/README.md)|链路 Spring Boot Starter 模块|
 |[spring-boot-starter-web](kit-spring-boot/spring-boot-starter-web/README.md)|Web Spring Boot Starter 模块|
 |[spring-boot-starter-web-core](kit-spring-boot/spring-boot-starter-web-core/README.md)|Web Core Spring Boot Starter 模块|
 
@@ -159,6 +179,26 @@ implementation "com.pongsky.kit:spring-boot-starter-captcha-input-math:$latestVe
 logging:
   pattern:
     console: ${CONSOLE_LOG_PATTERN:%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}  %-5.5L{5}){cyan} %clr([%39X{X-Trace-Id}]){yellow} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}} # 控制台日志打印格式
+```
+
+## Feign 日志打印
+
+```java
+    @Bean
+    public feign.Logger logger() {
+        return new Slf4jLogger();
+    }
+```
+
+```yml
+logging:
+  level:
+    feign.Logger: debug # Feign 日志打印
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: basic # Feign 日志打印等级
 ```
 
 # 模块建议
@@ -282,6 +322,8 @@ spring:
 logging:
   pattern:
     console: ${CONSOLE_LOG_PATTERN:%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}  %-5.5L{5}){cyan} %clr([%39X{X-Trace-Id}]){yellow} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}} # 控制台日志打印格式
+  level:
+    feign.Logger: debug # Feign 日志打印
 server:
   shutdown: graceful # 优雅关机
 management:
@@ -297,6 +339,12 @@ mybatis-plus:
     banner: false # 关闭 mybatis-plus banner 打印
     db-config:
       id-type: input # 主键策略
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: basic # Feign 日志打印等级
+
 ```
 
 ## `${project}`-config-web

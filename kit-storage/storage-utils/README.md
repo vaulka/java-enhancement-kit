@@ -1,6 +1,9 @@
 # storage-utils 模块说明
 
 > 云存储 utils 模块
+>
+> 该模块依赖
+> * [storage-annotation](../storage-annotation/README.md) 模块
 
 ## 功能说明
 

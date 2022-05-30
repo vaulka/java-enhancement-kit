@@ -3,7 +3,10 @@ package com.pongsky.kit.dynamic.datasource.properties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.Map;
 
 /**
@@ -13,6 +16,7 @@ import java.util.Map;
  **/
 @Getter
 @Setter
+@Validated
 @ConfigurationProperties(prefix = "spring")
 public class MultiDataSourceProperties {
 
@@ -24,6 +28,7 @@ public class MultiDataSourceProperties {
      * <p>
      * V：数据源配置
      */
+    @Valid
     private Map<String, DataSourceProperties> multiDatasets;
 
     /**
@@ -36,6 +41,7 @@ public class MultiDataSourceProperties {
         /**
          * 数据库 URL
          */
+        @NotBlank
         private String url;
 
         /**

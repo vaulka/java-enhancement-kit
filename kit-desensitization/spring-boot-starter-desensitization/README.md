@@ -3,7 +3,7 @@
 > 数据脱敏 Spring Boot Starter 模块
 >
 > 该模块依赖
-> * [desensitization-annotation](../desensitization-annotation/README.md) 模块
+> * [type-parser-utils](../../kit-type-parser/type-parser-utils/README.md) 模块
 > * [desensitization-utils](../desensitization-utils/README.md) 模块
 
 ## 功能说明

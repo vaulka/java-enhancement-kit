@@ -3,6 +3,7 @@
 > 云存储 Spring Boot 模块
 >
 > 该模块依赖 
+> * [type-parser-utils](../../kit-type-parser/type-parser-utils/README.md) 模块
 > * [storage-annotation](../storage-annotation/README.md) 模块
 
 ## 功能说明

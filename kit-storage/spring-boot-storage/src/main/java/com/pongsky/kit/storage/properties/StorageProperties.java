@@ -19,4 +19,9 @@ public class StorageProperties {
      */
     private String baseUri = "";
 
+    /**
+     * 是否启用补充 uri
+     */
+    private Boolean isEnableResourceMark = true;
+
 }

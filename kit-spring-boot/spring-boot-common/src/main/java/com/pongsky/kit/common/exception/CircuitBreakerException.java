@@ -7,6 +7,8 @@ package com.pongsky.kit.common.exception;
  */
 public class CircuitBreakerException extends RuntimeException {
 
+    private static final long serialVersionUID = -1868812864489368937L;
+
     public CircuitBreakerException() {
         super();
     }

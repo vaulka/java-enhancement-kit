@@ -2,20 +2,33 @@ plugins {
     id "signing"
     id "java-library"
     id "maven-publish"
+    id "org.springframework.boot" version "$springBootVersion"
+    id "io.spring.dependency-management" version "$springDependencyManagementVersion"
 }
 
 jar {
     enabled = true
 }
 
+bootJar {
+    enabled = false
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
+}
+
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
-    classifier 'sources'
+    classifier "sources"
 }
 
 task javadocJar(type: Jar) {
     from javadoc
-    classifier 'javadoc'
+    classifier "javadoc"
 }
 
 publishing {
@@ -72,5 +85,12 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    api "org.apache.commons:commons-lang3:$commonsLang3Version"
+
+    compileOnly "io.swagger.core.v3:swagger-annotations:$swaggerVersion"
     compileOnly "io.swagger:swagger-annotations:$swaggerAnnotationVersion"
+
+    compileOnly "org.springframework.boot:spring-boot-starter-web"
+
+    compileOnly "org.springframework.cloud:spring-cloud-starter-openfeign"
 }

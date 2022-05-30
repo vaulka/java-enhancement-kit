@@ -22,12 +22,12 @@ dependencyManagement {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
-    classifier 'sources'
+    classifier "sources"
 }
 
 task javadocJar(type: Jar) {
     from javadoc
-    classifier 'javadoc'
+    classifier "javadoc"
 }
 
 publishing {
@@ -85,8 +85,8 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     api "org.springframework.boot:spring-boot-starter:$springBootVersion"
-    api "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
-    api "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+    api "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    api "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 

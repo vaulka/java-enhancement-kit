@@ -8,7 +8,7 @@
 
 ## 使用
 
-该模块提供一个 `CaptchaUtils` 工具类，可根据传入的数字，生成随机地加减乘除验证码图片。
+该模块提供一个 `InputMathCaptchaUtils` 工具类，可根据传入的数字，生成随机地加减乘除验证码图片。
 
 ```java
 
@@ -22,7 +22,7 @@ public class MathCaptchaUtilsTest {
         int maxCode = 99;
 
         // 创建输入型算数 验证码工具类
-        CaptchaUtils captchaUtils = new CaptchaUtils(10, 99,
+        InputMathCaptchaUtils captchaUtils = new InputMathCaptchaUtils(10, 99,
                 (String.valueOf(maxCode).length() + 3) * 25,
                 35, 200, 2);
 

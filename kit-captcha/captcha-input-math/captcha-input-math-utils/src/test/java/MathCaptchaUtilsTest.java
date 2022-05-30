@@ -1,4 +1,4 @@
-import com.pongsky.kit.captcha.utils.CaptchaUtils;
+import com.pongsky.kit.captcha.utils.InputMathCaptchaUtils;
 import org.apache.commons.lang3.RandomUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -17,7 +17,7 @@ public class MathCaptchaUtilsTest {
         int maxCode = 99;
 
         // 创建输入型算数 验证码工具类
-        CaptchaUtils captchaUtils = new CaptchaUtils(10, 99,
+        InputMathCaptchaUtils captchaUtils = new InputMathCaptchaUtils(10, 99,
                 (String.valueOf(maxCode).length() + 3) * 25,
                 35, 200, 2);
 

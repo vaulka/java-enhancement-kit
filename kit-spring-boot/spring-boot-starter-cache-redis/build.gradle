@@ -22,12 +22,12 @@ dependencyManagement {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
-    classifier 'sources'
+    classifier "sources"
 }
 
 task javadocJar(type: Jar) {
     from javadoc
-    classifier 'javadoc'
+    classifier "javadoc"
 }
 
 publishing {
@@ -88,6 +88,7 @@ dependencies {
 
     api "commons-codec:commons-codec:$commonsCodecVersion"
     api "org.apache.commons:commons-lang3:$commonsLang3Version"
+    compileOnly "com.google.code.findbugs:annotations:$googleAnnotationsVersion"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 

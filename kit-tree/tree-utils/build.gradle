@@ -10,12 +10,12 @@ jar {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
-    classifier 'sources'
+    classifier "sources"
 }
 
 task javadocJar(type: Jar) {
     from javadoc
-    classifier 'javadoc'
+    classifier "javadoc"
 }
 
 publishing {
@@ -72,6 +72,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    compileOnly "io.swagger.core.v3:swagger-annotations:$swaggerVersion"
     compileOnly "io.swagger:swagger-annotations:$swaggerAnnotationVersion"
 
     testImplementation "com.alibaba:fastjson:$fastjsonVersion"

@@ -1,4 +1,4 @@
-import com.pongsky.kit.captcha.utils.CaptchaUtils;
+import com.pongsky.kit.captcha.utils.InputCharCaptchaUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -14,7 +14,7 @@ public class CharCaptchaUtilsTest {
         int codeNum = 5;
 
         // 创建输入型字符 验证码工具类
-        CaptchaUtils captchaUtils = new CaptchaUtils(codeNum, codeNum * 25, 35, 200, 2);
+        InputCharCaptchaUtils captchaUtils = new InputCharCaptchaUtils(codeNum, codeNum * 25, 35, 200, 2);
 
         // 创建验证码
         // 也可自己定义验证码

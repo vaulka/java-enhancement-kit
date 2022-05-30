@@ -1,6 +1,7 @@
 package com.pongsky.kit.common.page;
 
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +28,7 @@ public class PageQuery {
      * 当前页号
      */
     @ApiModelProperty("当前页号 最小 1")
+    @Schema(description = "当前页号 最小 1")
     private Integer pageNumber;
 
     public Integer getPageNumber() {
@@ -55,6 +57,7 @@ public class PageQuery {
      * 一页数量
      */
     @ApiModelProperty("一页数量 最小 1 最大 100")
+    @Schema(description = "一页数量 最小 1 最大 100")
     private Integer pageSize;
 
     public Integer getPageSize() {
@@ -72,6 +75,7 @@ public class PageQuery {
      * @return 偏移量
      * @author pengsenhao
      */
+    @Schema(description = "偏移量", hidden = true)
     @ApiModelProperty(value = "偏移量", hidden = true)
     public Long getOffset() {
         return (long) (this.getPageNumber() - 1) * this.getPageSize();

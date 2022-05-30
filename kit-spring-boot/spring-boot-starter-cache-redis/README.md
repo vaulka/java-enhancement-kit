@@ -1,6 +1,9 @@
 # spring-boot-starter-cache-redis 模块说明
 
 > Redis 缓存 Spring Boot Starter 模块
+>
+> 该模块依赖
+> * [spring-boot-starter-web-core](../spring-boot-starter-web-core/README.md) 模块
 
 ## 功能说明
 

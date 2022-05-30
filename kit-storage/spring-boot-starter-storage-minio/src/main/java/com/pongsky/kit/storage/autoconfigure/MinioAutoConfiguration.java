@@ -12,7 +12,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.util.Assert;
 
 /**
  * MinIO 自动装配
@@ -34,10 +33,6 @@ public class MinioAutoConfiguration {
      */
     @Bean
     public StorageUtils storageUtils(MinioProperties properties) {
-        Assert.notNull(properties.getEndpoint(), "yml 配置 minio.endpoint 不能为空");
-        Assert.notNull(properties.getBucket(), "yml 配置 minio.bucket 不能为空");
-        Assert.notNull(properties.getAccessKey(), "yml 配置 minio.accessKey 不能为空");
-        Assert.notNull(properties.getSecretKey(), "yml 配置 minio.secretKey 不能为空");
         return new MinIoUtils(properties.getEndpoint(), properties.getBucket(),
                 properties.getAccessKey(), properties.getSecretKey());
     }
