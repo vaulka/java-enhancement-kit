@@ -82,7 +82,6 @@
 |模块|介绍|
 |---|---|
 |[storage-annotation](kit-storage/storage-annotation/README.md)|云存储 Annotation 模块|
-|[storage-utils](kit-storage/storage-utils/README.md)|云存储 Utils 模块|
 |[spring-boot-storage](kit-storage/spring-boot-storage/README.md)|云存储 Spring Boot 模块|
 |[spring-boot-starter-storage-oss](kit-storage/spring-boot-starter-storage-oss/README.md)|云存储 阿里云 OSS Spring Boot Starter 模块|
 |[spring-boot-starter-storage-minio](kit-storage/spring-boot-starter-storage-minio/README.md)|云存储 MinIO Spring Boot Starter 模块|

@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author pengsenhao
  */
-public class AliYunOssUtils implements StorageUtils<PartETag> {
+public class AliYunOssUtils {
 
     /**
      * endpoint
@@ -74,7 +74,6 @@ public class AliYunOssUtils implements StorageUtils<PartETag> {
      * <li><a href="https://help.aliyun.com/document_detail/32012.html">创建存储空间</a></li>
      * </ui>
      */
-    @Override
     public void createBucket() {
         // 判断 bucket 是否存在
         boolean isExists;
@@ -109,12 +108,10 @@ public class AliYunOssUtils implements StorageUtils<PartETag> {
      * </ui>
      *
      * @param fileName    文件名称
-     * @param contentType 文件类型
      * @param inputStream input 流
      * @return 文件访问路径
      */
-    @Override
-    public String upload(String fileName, String contentType, InputStream inputStream) {
+    public String upload(String fileName, InputStream inputStream) {
         PutObjectRequest request = new PutObjectRequest(bucket, fileName, inputStream);
         try {
             client.putObject(request);
@@ -144,7 +141,6 @@ public class AliYunOssUtils implements StorageUtils<PartETag> {
      * @param fileName 文件名称
      * @return 分片上传ID
      */
-    @Override
     public String initPartUpload(String fileName) {
         InitiateMultipartUploadRequest request = new InitiateMultipartUploadRequest(bucket, fileName);
         try {
@@ -170,7 +166,6 @@ public class AliYunOssUtils implements StorageUtils<PartETag> {
      * @param inputStream input 流
      * @return 分片ID
      */
-    @Override
     public PartETag partUpload(String uploadId, Integer partNumber, Long partSize, String fileName, InputStream inputStream) {
         UploadPartRequest uploadPartRequest = new UploadPartRequest();
         uploadPartRequest.setBucketName(bucket);
@@ -208,7 +203,6 @@ public class AliYunOssUtils implements StorageUtils<PartETag> {
      * @param parts    分片信息列表
      * @return 文件访问路径
      */
-    @Override
     public String completePartUpload(String uploadId, String fileName, List<PartETag> parts) {
         CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, fileName, uploadId, parts);
         try {

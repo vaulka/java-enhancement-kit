@@ -48,9 +48,6 @@ findProject(":kit-storage")?.name = "storage"
 include "storage:storage-annotation"
 findProject(":storage:storage-annotation")?.name = "storage-annotation"
 
-include "storage:storage-utils"
-findProject(":storage:storage-utils")?.name = "storage-utils"
-
 include "storage:spring-boot-storage"
 findProject(":storage:spring-boot-storage")?.name = "spring-boot-storage"
 
