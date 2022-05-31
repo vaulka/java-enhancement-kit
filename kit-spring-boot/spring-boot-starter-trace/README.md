@@ -20,6 +20,7 @@
 |---|---|---|---|
 |application.name|true|应用名称||
 |application.version|true|应用版本号||
+|application.active|true|环境||
 |application.host-name|true|HostName|系统的 HostName|
 |application.instance-id|true|实例ID|自生成的 brokerId|
 
