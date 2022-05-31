@@ -4,7 +4,6 @@ import com.aliyun.oss.OSS;
 import com.pongsky.kit.storage.properties.OssProperties;
 import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.storage.utils.AliYunOssUtils;
-import com.pongsky.kit.storage.utils.StorageUtils;
 import com.pongsky.kit.storage.web.aspect.around.StorageAspect;
 import com.pongsky.kit.storage.web.aspect.before.UploadAspect;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -32,7 +31,7 @@ public class OssAutoConfiguration {
      * @author pengsenhao
      */
     @Bean
-    public StorageUtils storageUtils(OssProperties properties) {
+    public AliYunOssUtils aliYunOssUtils(OssProperties properties) {
         return new AliYunOssUtils(properties.getEndpoint(), properties.getBucket(),
                 properties.getAccessKeyId(), properties.getSecretAccessKey());
     }

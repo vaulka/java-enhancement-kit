@@ -36,19 +36,64 @@ aliyun:
 
 ## 使用
 
+### 简单上传
+
 ```java
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UploadController {
+@RequestMapping(value = "/storage", produces = MediaType.APPLICATION_JSON_VALUE)
+public class StorageController {
 
-    private final StorageUtils storageUtils;
+    private final AliYunOssUtils aliYunOssUtils;
 
-    @PostMapping
+    @PostMapping("/upload")
     public String upload(@RequestParam MultipartFile file) throws IOException {
-        String fileName = storageUtils.upload(file.getOriginalFilename(), file.getContentType(), file.getInputStream());
+        String fileName = aliYunOssUtils.upload(file.getOriginalFilename(), file.getContentType(), file.getInputStream());
         return fileName;
+    }
+
+}
+
+```
+
+### 分片上传
+
+流程如下：
+
+1. 前端调用 `init-part-upload` 接口，获取到 `uploadId`。
+2. 前端将原始文件进行分片处理，将分片后的文件调用 `part-upload` 接口进行上传。
+3. 所有文件都上传完毕后，调用 `complete-part-upload` 接口进行合并分片，并返回文件访问路径。
+
+```java
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(value = "/storage", produces = MediaType.APPLICATION_JSON_VALUE)
+public class StorageController {
+
+    private final AliYunOssUtils aliYunOssUtils;
+
+    @PostMapping("init-part-upload")
+    public String initPartUpload(@RequestParam String fileName) {
+        String uploadId = aliYunOssUtils.initPartUpload(fileName);
+        return uploadId;
+    }
+
+    @PostMapping("part-upload")
+    public PartETag partUpload(@RequestParam MultipartFile file,
+                               @RequestParam String uploadId,
+                               @RequestParam Integer partNumber) throws IOException {
+        PartETag partETag = aliYunOssUtils.partUpload(uploadId, partNumber, file.getSize(), file.getName(), file.getInputStream());
+        return partETag;
+    }
+
+    @PostMapping("complete-part-upload")
+    public String completePartUpload(@RequestParam String uploadId,
+                                     @RequestParam String fileName,
+                                     @RequestParam List<PartETag> partETagList) {
+        String url = aliYunOssUtils.completePartUpload(uploadId, fileName, partETagList);
+        return url;
     }
 
 }
