@@ -3,7 +3,6 @@ package com.pongsky.kit.storage.autoconfigure;
 import com.pongsky.kit.storage.properties.MinioProperties;
 import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.storage.utils.MinIoUtils;
-import com.pongsky.kit.storage.utils.StorageUtils;
 import com.pongsky.kit.storage.web.aspect.around.StorageAspect;
 import com.pongsky.kit.storage.web.aspect.before.UploadAspect;
 import io.minio.MinioClient;
@@ -32,7 +31,7 @@ public class MinioAutoConfiguration {
      * @author pengsenhao
      */
     @Bean
-    public StorageUtils storageUtils(MinioProperties properties) {
+    public MinIoUtils minIoUtils(MinioProperties properties) {
         return new MinIoUtils(properties.getEndpoint(), properties.getBucket(),
                 properties.getAccessKey(), properties.getSecretKey());
     }

@@ -81,6 +81,7 @@ signing {
 }
 
 dependencies {
+    api project(":storage:storage-annotation")
     api project(":type-parser:type-parser-utils")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"

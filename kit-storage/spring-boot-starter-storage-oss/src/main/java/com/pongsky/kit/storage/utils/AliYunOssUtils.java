@@ -132,14 +132,14 @@ public class AliYunOssUtils {
     }
 
     /**
-     * 获取分片上传ID
+     * 获取分片上传事件ID
      * docs：
      * <ui>
      * <li><a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a></li>
      * </ui>
      *
      * @param fileName 文件名称
-     * @return 分片上传ID
+     * @return 分片上传事件ID
      */
     public String initPartUpload(String fileName) {
         InitiateMultipartUploadRequest request = new InitiateMultipartUploadRequest(bucket, fileName);
@@ -164,9 +164,9 @@ public class AliYunOssUtils {
      * @param partSize    当前分片文件大小，单位为字节，譬如：1MB = 1 * 1024 * 1024L
      * @param fileName    文件名称
      * @param inputStream input 流
-     * @return 分片ID
+     * @return 分片信息
      */
-    public PartETag partUpload(String uploadId, Integer partNumber, Long partSize, String fileName, InputStream inputStream) {
+    public PartETag partUpload(String uploadId, int partNumber, long partSize, String fileName, InputStream inputStream) {
         UploadPartRequest uploadPartRequest = new UploadPartRequest();
         uploadPartRequest.setBucketName(bucket);
         uploadPartRequest.setKey(fileName);

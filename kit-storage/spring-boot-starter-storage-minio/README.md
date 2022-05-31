@@ -35,18 +35,20 @@ minio:
 
 ## 使用
 
+### 简单上传
+
 ```java
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UploadController {
+@RequestMapping(value = "/storage", produces = MediaType.APPLICATION_JSON_VALUE)
+public class StorageController {
 
-    private final StorageUtils storageUtils;
+    private final MinIoUtils minIoUtils;
 
     @PostMapping
     public String upload(@RequestParam MultipartFile file) throws IOException {
-        String fileName = storageUtils.upload(file.getOriginalFilename(), file.getContentType(), file.getInputStream());
+        String fileName = minIoUtils.upload(file.getOriginalFilename(), file.getContentType(), file.getInputStream());
         return fileName;
     }
 

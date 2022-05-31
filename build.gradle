@@ -34,7 +34,7 @@ ext {
     poiVersion = "5.2.2"
     oshiVersion = "6.1.6"
     druidVersion = "1.2.8"
-    minioVersion = "7.1.4"
+    minioVersion = "8.2.1"
     jolCoreVersion = "0.16"
     jsoupVersion = "1.14.3"
     mysqlVersion = "8.0.26"
