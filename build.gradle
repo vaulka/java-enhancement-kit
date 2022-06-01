@@ -34,7 +34,7 @@ ext {
     poiVersion = "5.2.2"
     oshiVersion = "6.1.6"
     druidVersion = "1.2.8"
-    minioVersion = "7.1.4"
+    minioVersion = "8.2.1"
     jolCoreVersion = "0.16"
     jsoupVersion = "1.14.3"
     mysqlVersion = "8.0.26"
@@ -43,7 +43,6 @@ ext {
     swaggerVersion = "2.2.0"
     springDocVersion = "1.6.8"
     commonsTextVersion = "1.9"
-    fastjsonVersion = "1.2.79"
     springFoxVersion = "3.0.0"
     mybatisPlusVersion = "3.5.1"
     commonsCodecVersion = "1.15"
@@ -61,7 +60,7 @@ allprojects {
     targetCompatibility = 8
 
     group "com.pongsky.kit"
-    version "3.11.1-2.4.13"
+    version "4.0.0-2.4.13"
 
     repositories {
         mavenLocal()
@@ -70,4 +69,8 @@ allprojects {
         mavenCentral()
     }
 
+}
+
+task release(type: GradleBuild) {
+    tasks = ["clean", "build", "publish"]
 }

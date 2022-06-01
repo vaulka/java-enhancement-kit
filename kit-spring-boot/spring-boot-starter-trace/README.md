@@ -3,7 +3,7 @@
 > 链路 Spring Boot Starter 模块
 >
 > 该模块依赖
-> * [spring-boot-common](../spring-boot-common/README.md) 模块
+> * [spring-boot-starter-common](../spring-boot-starter-common/README.md) 模块
 
 ## 功能说明
 
@@ -20,6 +20,7 @@
 |---|---|---|---|
 |application.name|true|应用名称||
 |application.version|true|应用版本号||
+|application.active|true|环境||
 |application.host-name|true|HostName|系统的 HostName|
 |application.instance-id|true|实例ID|自生成的 brokerId|
 

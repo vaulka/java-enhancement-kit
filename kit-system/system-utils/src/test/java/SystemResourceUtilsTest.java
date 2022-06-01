@@ -1,4 +1,5 @@
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pongsky.kit.system.entity.SystemResource;
 import com.pongsky.kit.system.utils.SystemResourceUtils;
 
@@ -7,9 +8,11 @@ import com.pongsky.kit.system.utils.SystemResourceUtils;
  */
 public class SystemResourceUtilsTest {
 
-    public static void main(String[] args) {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    public static void main(String[] args) throws JsonProcessingException {
         SystemResource resource = SystemResourceUtils.read();
-        System.out.println(JSON.toJSONString(resource));
+        System.out.println(OBJECT_MAPPER.writeValueAsString(resource));
 
         System.out.println();
     }

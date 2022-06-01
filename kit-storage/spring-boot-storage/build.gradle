@@ -81,8 +81,9 @@ signing {
 }
 
 dependencies {
-    api project(":storage:storage-utils")
+    api project(":storage:storage-annotation")
     api project(":type-parser:type-parser-utils")
+    api project(":spring-boot:spring-boot-starter-common")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"

@@ -1,6 +1,7 @@
 package com.pongsky.kit.tree;
 
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pongsky.kit.tree.entity.TreeNode;
 import com.pongsky.kit.tree.utils.TreeUtils;
 
@@ -46,7 +47,9 @@ public class TreeUtilsTest {
 
     }
 
-    public static void main(String[] args) {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    public static void main(String[] args) throws JsonProcessingException {
         List<User> users = new ArrayList<>();
         users.add(new User(1L, 0L, "a", 1));
         users.add(new User(2L, 0L, "b", 2));
@@ -57,7 +60,7 @@ public class TreeUtilsTest {
         users.add(new User(7L, 5L, "g", 7));
         users.add(new User(8L, 9L, "h", 8));
         List<User> treeNodes = new TreeUtils<User>().buildNode(users);
-        System.out.println(JSON.toJSONString(treeNodes));
+        System.out.println(OBJECT_MAPPER.writeValueAsString(treeNodes));
     }
 
 }

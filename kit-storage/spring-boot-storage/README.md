@@ -5,6 +5,7 @@
 > 该模块依赖 
 > * [type-parser-utils](../../kit-type-parser/type-parser-utils/README.md) 模块
 > * [storage-annotation](../storage-annotation/README.md) 模块
+> * [spring-boot-starter-common](../../kit-spring-boot/spring-boot-starter-common/README.md) 模块
 
 ## 功能说明
 

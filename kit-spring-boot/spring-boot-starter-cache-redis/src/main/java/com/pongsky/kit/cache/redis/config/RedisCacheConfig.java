@@ -8,16 +8,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.time.Duration;
 
 /**
  * Redis 配置
@@ -67,30 +64,6 @@ public class RedisCacheConfig {
     @Bean
     public PlatformTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
-    }
-
-    /**
-     * 配置 RedisCacheConfiguration
-     *
-     * @return RedisCacheConfiguration
-     */
-    @Bean
-    public RedisCacheConfiguration redisCacheConfiguration() {
-        // 使用自定义前缀进行序列化 key
-        // 使用默认的 Jackson 进行序列化 value
-        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-                .serializeKeysWith(RedisSerializationContext.SerializationPair
-                        .fromSerializer(new StringRedisSerializer(properties.getPrefix())))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair
-                        .fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)));
-        // 设置缓存过期时间
-        switch (properties.getTimeUnit()) {
-            case HOURS:
-                return configuration.entryTtl(Duration.ofHours(properties.getTime()));
-            case DAYS:
-            default:
-                return configuration.entryTtl(Duration.ofDays(properties.getTime()));
-        }
     }
 
 }

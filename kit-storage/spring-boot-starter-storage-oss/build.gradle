@@ -86,7 +86,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-    implementation "com.aliyun.oss:aliyun-sdk-oss:$aliyunSdkOssVersion"
+    api "com.aliyun.oss:aliyun-sdk-oss:$aliyunSdkOssVersion"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }

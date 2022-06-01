@@ -1,5 +1,6 @@
 package com.pongsky.kit.trace.properties;
 
+import com.pongsky.kit.common.Active;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,9 @@ import java.net.UnknownHostException;
 @ConfigurationProperties(prefix = "application")
 public class ApplicationProperties {
 
-    public ApplicationProperties(@Value("${application.instance-id:${brokerId}}") String instanceId) {
+    public ApplicationProperties(@Value("${application.active:${spring.profiles.active:}}") Active active,
+                                 @Value("${application.instance-id:${brokerId}}") String instanceId) {
+        this.active = active;
         InetAddress address;
         try {
             address = InetAddress.getLocalHost();
@@ -43,6 +46,11 @@ public class ApplicationProperties {
      */
     @NotBlank
     private String version;
+
+    /**
+     * 环境
+     */
+    private Active active;
 
     /**
      * HostName

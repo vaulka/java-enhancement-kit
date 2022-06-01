@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.cache.redis.autoconfigure.RedisCacheAutoConfiguration
+com.pongsky.kit.cache.redis.autoconfigure.RedisCacheAutoConfiguration,\
+com.pongsky.kit.cache.redis.autoconfigure.RedisCacheManagerAutoConfiguration
