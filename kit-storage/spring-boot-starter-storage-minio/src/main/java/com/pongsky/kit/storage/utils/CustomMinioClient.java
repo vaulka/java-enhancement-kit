@@ -2,6 +2,7 @@ package com.pongsky.kit.storage.utils;
 
 import com.google.common.collect.Multimap;
 import io.minio.CreateMultipartUploadResponse;
+import io.minio.ListPartsResponse;
 import io.minio.MinioClient;
 import io.minio.S3Base;
 import io.minio.UploadPartResponse;
@@ -102,6 +103,43 @@ public class CustomMinioClient extends MinioClient {
                 partNumber,
                 extraHeaders,
                 extraQueryParams);
+    }
+
+    /**
+     * 将 {@link S3Base#listParts(java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
+     *
+     * @param bucketName       Name of the bucket.
+     * @param region           Name of the bucket (Optional).
+     * @param objectName       Object name in the bucket.
+     * @param maxParts         Maximum parts information to fetch (Optional).
+     * @param partNumberMarker Part number marker (Optional).
+     * @param uploadId         Upload ID.
+     * @param extraHeaders     Extra headers for request (Optional).
+     * @param extraQueryParams Extra query parameters for request (Optional).
+     * @return {@link ListPartsResponse} object.
+     * @throws ErrorResponseException    thrown to indicate S3 service returned an error response.
+     * @throws InsufficientDataException thrown to indicate not enough data available in InputStream.
+     * @throws InternalException         thrown to indicate internal library error.
+     * @throws InvalidKeyException       thrown to indicate missing of HMAC SHA-256 library.
+     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error
+     *                                   response.
+     * @throws IOException               thrown to indicate I/O error on S3 operation.
+     * @throws NoSuchAlgorithmException  thrown to indicate missing of MD5 or SHA-256 digest library.
+     * @throws XmlParserException        thrown to indicate XML parsing error.
+     */
+    public ListPartsResponse listPart(
+            String bucketName,
+            String region,
+            String objectName,
+            Integer maxParts,
+            Integer partNumberMarker,
+            String uploadId,
+            Multimap<String, String> extraHeaders,
+            Multimap<String, String> extraQueryParams)
+            throws NoSuchAlgorithmException, InsufficientDataException, IOException, InvalidKeyException,
+            ServerException, XmlParserException, ErrorResponseException, InternalException,
+            InvalidResponseException {
+        return this.listParts(bucketName, region, objectName, maxParts, partNumberMarker, uploadId, extraHeaders, extraQueryParams);
     }
 
     /**

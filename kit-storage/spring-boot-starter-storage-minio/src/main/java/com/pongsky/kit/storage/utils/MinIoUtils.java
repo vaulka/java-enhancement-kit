@@ -3,6 +3,7 @@ package com.pongsky.kit.storage.utils;
 import com.google.common.collect.HashMultimap;
 import io.minio.BucketExistsArgs;
 import io.minio.CreateMultipartUploadResponse;
+import io.minio.ListPartsResponse;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
@@ -222,6 +223,10 @@ public class MinIoUtils {
 
     /**
      * 分片上传
+     * <p>
+     * 需要注意，最小分片大小需要 5MB，不然合并会报错，相关 <a href="https://github.com/minio/minio/issues/11076">issues</a>
+     * <p>
+     * 也就意味着，适用场景为文件 >= 10MB，使用分片上传更合适。（10 MB 以下也只能分一片，不如用简单上传，减少接口请求次数）
      *
      * @param uploadId    分片上传事件ID
      * @param partNumber  当前分片数
@@ -250,6 +255,23 @@ public class MinIoUtils {
      */
     public String completePartUpload(String uploadId, String fileName, List<Part> parts) {
         return this.completePartUpload(uploadId, fileName, parts.toArray(new Part[0]));
+    }
+
+    /**
+     * 查询分片信息
+     *
+     * @param uploadId 分片上传事件ID
+     * @param fileName 文件名称
+     * @return 分片信息列表
+     */
+    public List<Part> listPart(String uploadId, String fileName) {
+        ListPartsResponse response;
+        try {
+            response = client.listPart(bucket, null, fileName, null, null, uploadId, null, null);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getLocalizedMessage(), e);
+        }
+        return response.result().partList();
     }
 
     /**
