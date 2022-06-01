@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +45,6 @@ public class MinIoUtilsTest {
     public static void main(String[] args) throws IOException {
         File file = new File(FILE_NAME);
         String uploadId = UTILS.initPartUpload(file.getName(), "image/jpeg");
-        List<Part> partETags = new ArrayList<>();
         // 每个分片的大小，用于计算文件有多少个分片。单位为字节。这里为 5 MB。
         final long partSize = 5 * 1024 * 1024L;
         long fileLength = file.length();
@@ -59,10 +57,10 @@ public class MinIoUtilsTest {
             // 跳过已经上传的分片。
             instream.skip(startPos);
             BufferedInputStream bis = new BufferedInputStream(instream);
-            Part partETag = UTILS.partUpload(uploadId, i + 1, (int) curPartSize, file.getName(), bis);
-            partETags.add(partETag);
+            UTILS.partUpload(uploadId, i + 1, (int) curPartSize, file.getName(), bis);
         }
-        String url = UTILS.completePartUpload(uploadId, file.getName(), partETags);
+        List<Part> parts = UTILS.listPart(uploadId, file.getName());
+        String url = UTILS.completePartUpload(uploadId, file.getName(), parts);
         System.out.println(url);
     }
 

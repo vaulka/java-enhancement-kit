@@ -267,7 +267,8 @@ public class MinIoUtils {
     public List<Part> listPart(String uploadId, String fileName) {
         ListPartsResponse response;
         try {
-            response = client.listPart(bucket, null, fileName, null, null, uploadId, null, null);
+            response = client.listPart(bucket, null, fileName, null, null, uploadId,
+                    null, null);
         } catch (Exception e) {
             throw new RuntimeException(e.getLocalizedMessage(), e);
         }
@@ -284,7 +285,8 @@ public class MinIoUtils {
      */
     public String completePartUpload(String uploadId, String fileName, Part[] parts) {
         try {
-            client.completePartUpload(bucket, null, fileName, uploadId, parts, null, null);
+            client.completePartUpload(bucket, null, fileName, uploadId, parts,
+                    null, null);
         } catch (Exception e) {
             throw new RuntimeException(e.getLocalizedMessage(), e);
         }
