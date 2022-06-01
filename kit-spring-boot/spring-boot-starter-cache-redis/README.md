@@ -11,11 +11,12 @@
 * 定义统一的前缀。
 * 统一序列化、反序列化器。
 * 定义是否启用事务。
-* 设置 @Cacheable 缓存过期时间。 
+* 设置 @Cacheable 缓存过期时间。
 * 模糊删除 key。
 * 防重检测。
 * 令牌桶限流。
 * 分布式锁。
+* @Cacheable 缓存时间增强。
 
 ## 约定
 
@@ -37,7 +38,6 @@
 |spring.cache.rate-limit.bucket-max|true|令牌桶大小|30000|
 |spring.cache.distributed-lock.prefix|true|Redis 分布式锁缓存前缀|distributed-lock|
 |spring.cache.distributed-lock.expire|true|锁过期时间，单位毫秒|60000|
-
 
 示例如下：
 
@@ -146,4 +146,12 @@ public class TestService {
 
 }
 
+```
+
+### @Cacheable 缓存时间增强
+
+1. 使用 # 分隔，支持 ms（毫秒），s（秒默认），m（分），h（小时），d（天）等单位。
+
+```java
+@Cacheable(cacheNames = "user#5m", key = "#id")
 ```

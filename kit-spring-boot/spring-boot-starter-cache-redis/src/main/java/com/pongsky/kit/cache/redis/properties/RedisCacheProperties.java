@@ -31,12 +31,12 @@ public class RedisCacheProperties {
     private Boolean enableTransactionSupport = false;
 
     /**
-     * {@link org.springframework.cache.annotation.Cacheable} 缓存时长
+     * {@link org.springframework.cache.annotation.Cacheable} 默认缓存时长
      */
     private Long time = 30L;
 
     /**
-     * {@link org.springframework.cache.annotation.Cacheable} 缓存时长单位
+     * {@link org.springframework.cache.annotation.Cacheable} 默认缓存时长单位
      * <p>
      * 仅支持 DAYS、HOURS
      */
