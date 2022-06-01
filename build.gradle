@@ -43,7 +43,6 @@ ext {
     swaggerVersion = "2.2.0"
     springDocVersion = "1.6.8"
     commonsTextVersion = "1.9"
-    fastjsonVersion = "1.2.79"
     springFoxVersion = "3.0.0"
     mybatisPlusVersion = "3.5.1"
     commonsCodecVersion = "1.15"
