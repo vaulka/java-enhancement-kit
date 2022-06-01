@@ -84,11 +84,11 @@ findProject(":system:system-utils")?.name = "system-utils"
 include "kit-spring-boot"
 findProject(":kit-spring-boot")?.name = "spring-boot"
 
-include "spring-boot:spring-boot-common"
-findProject(":spring-boot:spring-boot-common")?.name = "spring-boot-common"
-
 include "spring-boot:spring-boot-starter-cache-redis"
 findProject(":spring-boot:spring-boot-starter-cache-redis")?.name = "spring-boot-starter-cache-redis"
+
+include "spring-boot:spring-boot-starter-common"
+findProject(":spring-boot:spring-boot-starter-common")?.name = "spring-boot-starter-common"
 
 include "spring-boot:spring-boot-starter-core"
 findProject(":spring-boot:spring-boot-starter-core")?.name = "spring-boot-starter-core"

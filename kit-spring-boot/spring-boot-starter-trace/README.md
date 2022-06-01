@@ -3,7 +3,7 @@
 > 链路 Spring Boot Starter 模块
 >
 > 该模块依赖
-> * [spring-boot-common](../spring-boot-common/README.md) 模块
+> * [spring-boot-starter-common](../spring-boot-starter-common/README.md) 模块
 
 ## 功能说明
 

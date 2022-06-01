@@ -1,5 +1,6 @@
 package com.pongsky.kit.storage.autoconfigure;
 
+import com.pongsky.kit.storage.processor.fail.MinIoExceptionFailProcessor;
 import com.pongsky.kit.storage.properties.MinioProperties;
 import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.storage.utils.MinIoUtils;
@@ -19,7 +20,10 @@ import org.springframework.context.annotation.Import;
  */
 @ConditionalOnClass({MinioClient.class})
 @Configuration(proxyBeanMethods = false)
-@Import({StorageAspect.class, UploadAspect.class})
+@Import({
+        StorageAspect.class, UploadAspect.class,
+        MinIoExceptionFailProcessor.class
+})
 @EnableConfigurationProperties({StorageProperties.class, MinioProperties.class})
 public class MinioAutoConfiguration {
 

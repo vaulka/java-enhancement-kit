@@ -68,8 +68,8 @@
 
 |模块|介绍|
 |---|---|
-|[spring-boot-common](kit-spring-boot/spring-boot-common/README.md)|公共 Spring Boot 模块|
 |[spring-boot-starter-cache-redis](kit-spring-boot/spring-boot-starter-cache-redis/README.md)|Redis 缓存 Spring Boot Starter 模块|
+|[spring-boot-starter-common](kit-spring-boot/spring-boot-starter-common/README.md)|公共 Spring Boot Starter 模块|
 |[spring-boot-starter-core](kit-spring-boot/spring-boot-starter-core/README.md)|Core Spring Boot Starter 模块|
 |[spring-boot-starter-dynamic-datasource](kit-spring-boot/spring-boot-starter-dynamic-datasource/README.md)|动态数据源 Spring Boot Starter 模块|
 |[spring-boot-starter-global-response](kit-spring-boot/spring-boot-starter-global-response/README.md)|全局响应 Spring Boot Starter 模块|

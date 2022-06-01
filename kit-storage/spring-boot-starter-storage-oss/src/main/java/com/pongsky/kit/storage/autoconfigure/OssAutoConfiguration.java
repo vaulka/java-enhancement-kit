@@ -1,6 +1,8 @@
 package com.pongsky.kit.storage.autoconfigure;
 
 import com.aliyun.oss.OSS;
+import com.pongsky.kit.storage.processor.fail.ClientExceptionFailProcessor;
+import com.pongsky.kit.storage.processor.fail.OssExceptionFailProcessor;
 import com.pongsky.kit.storage.properties.OssProperties;
 import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.storage.utils.AliYunOssUtils;
@@ -19,7 +21,10 @@ import org.springframework.context.annotation.Import;
  */
 @ConditionalOnClass({OSS.class})
 @Configuration(proxyBeanMethods = false)
-@Import({StorageAspect.class, UploadAspect.class})
+@Import({
+        StorageAspect.class, UploadAspect.class,
+        ClientExceptionFailProcessor.class, OssExceptionFailProcessor.class
+})
 @EnableConfigurationProperties({StorageProperties.class, OssProperties.class})
 public class OssAutoConfiguration {
 

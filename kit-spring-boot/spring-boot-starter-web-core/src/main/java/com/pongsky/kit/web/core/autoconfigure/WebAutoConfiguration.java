@@ -7,7 +7,6 @@ import com.pongsky.kit.web.core.config.RepeatedlyReadRequestBodyFilterConfig;
 import com.pongsky.kit.web.core.config.XssDefenseFilterConfig;
 import com.pongsky.kit.web.core.interceptor.ControllerAttrInterceptor;
 import com.pongsky.kit.web.core.properties.XssDefenseProperties;
-import com.pongsky.kit.web.core.utils.SpringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -21,7 +20,7 @@ import org.springframework.context.annotation.Import;
 @EnableConfigurationProperties({XssDefenseProperties.class})
 @Import({CorsFilterConfig.class, RepeatedlyReadRequestBodyFilterConfig.class, XssDefenseFilterConfig.class,
         ControllerAttrConfigurer.class, ControllerAttrInterceptor.class,
-        ControllerAspect.class, SpringUtils.class})
+        ControllerAspect.class})
 public class WebAutoConfiguration {
 
 

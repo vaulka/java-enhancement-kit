@@ -1,9 +1,7 @@
 package com.pongsky.kit.storage.utils;
 
-import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.CompleteMultipartUploadRequest;
 import com.aliyun.oss.model.CreateBucketRequest;
@@ -76,14 +74,7 @@ public class AliYunOssUtils {
      */
     public void createBucket() {
         // 判断 bucket 是否存在
-        boolean isExists;
-        try {
-            isExists = client.doesBucketExist(bucket);
-        } catch (OSSException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        } catch (ClientException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        }
+        boolean isExists = client.doesBucketExist(bucket);
         if (isExists) {
             return;
         }
@@ -91,13 +82,7 @@ public class AliYunOssUtils {
         CreateBucketRequest request = new CreateBucketRequest(bucket)
                 // 设置 bucket 策略为公共读
                 .withCannedACL(CannedAccessControlList.PublicRead);
-        try {
-            client.createBucket(request);
-        } catch (OSSException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        } catch (ClientException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        }
+        client.createBucket(request);
     }
 
     /**
@@ -115,10 +100,6 @@ public class AliYunOssUtils {
         PutObjectRequest request = new PutObjectRequest(bucket, fileName, inputStream);
         try {
             client.putObject(request);
-        } catch (OSSException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        } catch (ClientException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
         } finally {
             if (inputStream != null) {
                 try {
@@ -143,13 +124,7 @@ public class AliYunOssUtils {
      */
     public String initPartUpload(String fileName) {
         InitiateMultipartUploadRequest request = new InitiateMultipartUploadRequest(bucket, fileName);
-        try {
-            return client.initiateMultipartUpload(request).getUploadId();
-        } catch (OSSException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        } catch (ClientException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        }
+        return client.initiateMultipartUpload(request).getUploadId();
     }
 
     /**
@@ -176,10 +151,6 @@ public class AliYunOssUtils {
         uploadPartRequest.setPartNumber(partNumber);
         try {
             return client.uploadPart(uploadPartRequest).getPartETag();
-        } catch (OSSException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        } catch (ClientException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
         } finally {
             if (inputStream != null) {
                 try {
@@ -205,13 +176,7 @@ public class AliYunOssUtils {
      */
     public String completePartUpload(String uploadId, String fileName, List<PartETag> parts) {
         CompleteMultipartUploadRequest request = new CompleteMultipartUploadRequest(bucket, fileName, uploadId, parts);
-        try {
-            client.completeMultipartUpload(request);
-        } catch (OSSException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        } catch (ClientException e) {
-            throw new RuntimeException(e.getErrorMessage(), e);
-        }
+        client.completeMultipartUpload(request);
         return "/" + fileName;
     }
 

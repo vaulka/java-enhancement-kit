@@ -1,6 +1,7 @@
 package com.pongsky.kit.storage.utils;
 
 import com.google.common.collect.HashMultimap;
+import com.pongsky.kit.storage.exception.MinIoException;
 import io.minio.BucketExistsArgs;
 import io.minio.CreateMultipartUploadResponse;
 import io.minio.ListPartsResponse;
@@ -125,7 +126,7 @@ public class MinIoUtils {
                     .bucket(bucket)
                     .build());
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
+            throw new MinIoException(e.getLocalizedMessage(), e);
         }
         if (isExists) {
             return;
@@ -136,7 +137,7 @@ public class MinIoUtils {
                     .bucket(bucket)
                     .build());
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
+            throw new MinIoException(e.getLocalizedMessage(), e);
         }
         // 设置 bucket 策略为公共读
         try {
@@ -145,7 +146,7 @@ public class MinIoUtils {
                     .config(BUCKET_POLICY_BY_PUBLIC_READ.replace(BUCKET_PLACEHOLDER, bucket))
                     .build());
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
+            throw new MinIoException(e.getLocalizedMessage(), e);
         }
     }
 
@@ -179,7 +180,7 @@ public class MinIoUtils {
                     .contentType(contentType)
                     .build());
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
+            throw new MinIoException(e.getLocalizedMessage(), e);
         } finally {
             if (inputStream != null) {
                 try {
@@ -216,7 +217,7 @@ public class MinIoUtils {
         try {
             response = client.initPartUpload(bucket, null, fileName, headers, null);
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
+            throw new MinIoException(e.getLocalizedMessage(), e);
         }
         return response.result().uploadId();
     }
@@ -240,7 +241,7 @@ public class MinIoUtils {
         try {
             response = client.partUpload(bucket, null, fileName, inputStream, partSize, uploadId, partNumber, null, null);
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
+            throw new MinIoException(e.getLocalizedMessage(), e);
         }
         return new Part(response.partNumber(), response.etag());
     }
@@ -270,7 +271,7 @@ public class MinIoUtils {
             response = client.listPart(bucket, null, fileName, null, null, uploadId,
                     null, null);
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
+            throw new MinIoException(e.getLocalizedMessage(), e);
         }
         return response.result().partList();
     }
@@ -288,7 +289,7 @@ public class MinIoUtils {
             client.completePartUpload(bucket, null, fileName, uploadId, parts,
                     null, null);
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage(), e);
+            throw new MinIoException(e.getLocalizedMessage(), e);
         }
         return "/" + fileName;
     }
