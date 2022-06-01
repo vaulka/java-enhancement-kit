@@ -44,11 +44,11 @@ public class CustomMinioClient extends MinioClient {
      * @throws InsufficientDataException thrown to indicate not enough data available in InputStream.
      * @throws InternalException         thrown to indicate internal library error.
      * @throws InvalidKeyException       thrown to indicate missing of HMAC SHA-256 library.
-     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error
-     *                                   response.
+     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error response.
      * @throws IOException               thrown to indicate I/O error on S3 operation.
      * @throws NoSuchAlgorithmException  thrown to indicate missing of MD5 or SHA-256 digest library.
      * @throws XmlParserException        thrown to indicate XML parsing error.
+     * @throws ServerException           ex
      */
     public CreateMultipartUploadResponse initPartUpload(String bucketName, String region, String objectName,
                                                         Multimap<String, String> headers, Multimap<String, String> extraQueryParams)
@@ -75,11 +75,11 @@ public class CustomMinioClient extends MinioClient {
      * @throws InsufficientDataException thrown to indicate not enough data available in InputStream.
      * @throws InternalException         thrown to indicate internal library error.
      * @throws InvalidKeyException       thrown to indicate missing of HMAC SHA-256 library.
-     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error
-     *                                   response.
+     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error response.
      * @throws IOException               thrown to indicate I/O error on S3 operation.
      * @throws NoSuchAlgorithmException  thrown to indicate missing of MD5 or SHA-256 digest library.
      * @throws XmlParserException        thrown to indicate XML parsing error.
+     * @throws ServerException           ex
      */
     public UploadPartResponse partUpload(
             String bucketName,
@@ -121,11 +121,11 @@ public class CustomMinioClient extends MinioClient {
      * @throws InsufficientDataException thrown to indicate not enough data available in InputStream.
      * @throws InternalException         thrown to indicate internal library error.
      * @throws InvalidKeyException       thrown to indicate missing of HMAC SHA-256 library.
-     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error
-     *                                   response.
+     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error response.
      * @throws IOException               thrown to indicate I/O error on S3 operation.
      * @throws NoSuchAlgorithmException  thrown to indicate missing of MD5 or SHA-256 digest library.
      * @throws XmlParserException        thrown to indicate XML parsing error.
+     * @throws ServerException           ex
      */
     public ListPartsResponse listPart(
             String bucketName,
@@ -156,11 +156,11 @@ public class CustomMinioClient extends MinioClient {
      * @throws InsufficientDataException thrown to indicate not enough data available in InputStream.
      * @throws InternalException         thrown to indicate internal library error.
      * @throws InvalidKeyException       thrown to indicate missing of HMAC SHA-256 library.
-     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error
-     *                                   response.
+     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error response.
      * @throws IOException               thrown to indicate I/O error on S3 operation.
      * @throws NoSuchAlgorithmException  thrown to indicate missing of MD5 or SHA-256 digest library.
      * @throws XmlParserException        thrown to indicate XML parsing error.
+     * @throws ServerException           ex
      */
     public void completePartUpload(
             String bucketName,

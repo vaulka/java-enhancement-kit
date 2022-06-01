@@ -217,7 +217,7 @@ public class MinIoUtils {
      * <p>
      * 需要注意，最小分片大小需要 5MB，不然合并会报错，相关 <a href="https://github.com/minio/minio/issues/11076">issues</a>
      * <p>
-     * 也就意味着，适用场景为文件 >= 10MB，使用分片上传更合适。（10 MB 以下也只能分一片，不如用简单上传，减少接口请求次数）
+     * 也就意味着，适用场景为文件 &gt;= 10MB，使用分片上传更合适。（10MB 以下也只能分一片，不如用简单上传，减少接口请求次数）
      *
      * @param uploadId    分片上传事件ID
      * @param partNumber  当前分片数

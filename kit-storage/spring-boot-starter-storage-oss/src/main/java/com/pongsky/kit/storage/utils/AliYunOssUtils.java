@@ -70,10 +70,7 @@ public class AliYunOssUtils {
     /**
      * 创建 bucket（如果不存在，则自动创建）
      * <p>
-     * docs：
-     * <ui>
-     * <li><a href="https://help.aliyun.com/document_detail/32012.html">创建存储空间</a></li>
-     * </ui>
+     * <a href="https://help.aliyun.com/document_detail/32012.html">创建存储空间</a>
      */
     public void createBucket() {
         // 判断 bucket 是否存在
@@ -90,10 +87,8 @@ public class AliYunOssUtils {
 
     /**
      * 文件上传
-     * docs：
-     * <ui>
-     * <li><a href="https://help.aliyun.com/document_detail/84781.html">简单上传</a></li>
-     * </ui>
+     * <p>
+     * <a href="https://help.aliyun.com/document_detail/84781.html">简单上传</a>
      *
      * @param fileName    文件名称
      * @param inputStream input 流
@@ -117,10 +112,8 @@ public class AliYunOssUtils {
 
     /**
      * 获取分片上传事件ID
-     * docs：
-     * <ui>
-     * <li><a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a></li>
-     * </ui>
+     * <p>
+     * <a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a>
      *
      * @param fileName 文件名称
      * @return 分片上传事件ID
@@ -132,10 +125,8 @@ public class AliYunOssUtils {
 
     /**
      * 分片上传
-     * docs：
-     * <ui>
-     * <li><a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a></li>
-     * </ui>
+     * <p>
+     * <a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a>
      *
      * @param uploadId    分片上传事件ID
      * @param partNumber  当前分片数
@@ -167,10 +158,8 @@ public class AliYunOssUtils {
 
     /**
      * 列举已上传的分片
-     * docs：
-     * <ui>
-     * <li><a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a></li>
-     * </ui>
+     * <p>
+     * <a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a>
      *
      * @param uploadId 分片上传事件ID
      * @param fileName 文件名称
@@ -186,10 +175,8 @@ public class AliYunOssUtils {
 
     /**
      * 合并分片上传
-     * docs：
-     * <ui>
-     * <li><a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a></li>
-     * </ui>
+     * <p>
+     * <a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a>
      *
      * @param uploadId 分片上传事件ID
      * @param fileName 文件名称
