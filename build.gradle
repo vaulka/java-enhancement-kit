@@ -60,7 +60,7 @@ allprojects {
     targetCompatibility = 8
 
     group "com.pongsky.kit"
-    version "3.11.1-2.4.13"
+    version "4.0.0-2.4.13"
 
     repositories {
         mavenLocal()
@@ -69,4 +69,8 @@ allprojects {
         mavenCentral()
     }
 
+}
+
+task release(type: GradleBuild) {
+    tasks = ["clean", "build", "publish"]
 }
