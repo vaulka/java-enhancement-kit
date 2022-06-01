@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,14 +37,14 @@ public class AliYunOssUtilsTest {
     /**
      * 文件名称
      */
-    private static final String FILE_NAME = "/Users/pengsenhao/Downloads/----4k.jpg";
+    private static final String FILE_NAME = "/Users/pengsenhao/Downloads/test.jpeg";
 
     private static final AliYunOssUtils UTILS = new AliYunOssUtils(endpoint, bucket, accessKeyId, secretAccessKey);
 
     public static void main(String[] args) throws IOException {
         File file = new File(FILE_NAME);
         String uploadId = UTILS.initPartUpload(file.getName());
-        List<PartETag> partETags = new ArrayList<>();
+//        List<PartETag> parts = new ArrayList<>();
         // 每个分片的大小，用于计算文件有多少个分片。单位为字节。这里为 1 MB。
         final long partSize = 1 * 1024 * 1024L;
         long fileLength = file.length();
@@ -60,10 +59,12 @@ public class AliYunOssUtilsTest {
             InputStream instream = new FileInputStream(file);
             // 跳过已经上传的分片。
             instream.skip(startPos);
-            PartETag partETag = UTILS.partUpload(uploadId, i + 1, curPartSize, file.getName(), instream);
-            partETags.add(partETag);
+            PartETag part = UTILS.partUpload(uploadId, i + 1, curPartSize, file.getName(), instream);
+            // 可保存 part 信息 / 直接调用 listPart 方法获取所有分片信息，后续合并分片用。
+//            parts.add(part);
         }
-        String url = UTILS.completePartUpload(uploadId, file.getName(), partETags);
+        List<PartETag> parts = UTILS.listPart(uploadId, file.getName());
+        String url = UTILS.completePartUpload(uploadId, file.getName(), parts);
         System.out.println(url);
     }
 

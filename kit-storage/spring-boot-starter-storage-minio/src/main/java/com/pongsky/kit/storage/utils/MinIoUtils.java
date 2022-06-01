@@ -150,14 +150,6 @@ public class MinIoUtils {
         }
     }
 
-    /**
-     * 文件上传
-     *
-     * @param fileName    文件名称
-     * @param inputStream input 流
-     * @return 文件访问路径
-     * @author pengsenhao
-     */
     public String upload(String fileName, InputStream inputStream) {
         return this.upload(fileName, DEFAULT_CONTENT_TYPE, inputStream);
     }
@@ -193,12 +185,6 @@ public class MinIoUtils {
         return "/" + fileName;
     }
 
-    /**
-     * 获取分片上传事件ID
-     *
-     * @param fileName 文件名称
-     * @return 分片上传事件ID
-     */
     public String initPartUpload(String fileName) {
         return this.initPartUpload(fileName, DEFAULT_CONTENT_TYPE);
     }
@@ -222,6 +208,10 @@ public class MinIoUtils {
         return response.result().uploadId();
     }
 
+    public Part partUpload(String uploadId, int partNumber, int partSize, String fileName, InputStream inputStream) {
+        return this.partUpload(uploadId, partNumber, partSize, fileName, new BufferedInputStream(inputStream));
+    }
+
     /**
      * 分片上传
      * <p>
@@ -242,18 +232,18 @@ public class MinIoUtils {
             response = client.partUpload(bucket, null, fileName, inputStream, partSize, uploadId, partNumber, null, null);
         } catch (Exception e) {
             throw new MinIoException(e.getLocalizedMessage(), e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return new Part(response.partNumber(), response.etag());
     }
 
-    /**
-     * 合并分片上传
-     *
-     * @param uploadId 分片上传事件ID
-     * @param fileName 文件名称
-     * @param parts    分片信息列表
-     * @return 文件访问路径
-     */
     public String completePartUpload(String uploadId, String fileName, List<Part> parts) {
         return this.completePartUpload(uploadId, fileName, parts.toArray(new Part[0]));
     }

@@ -6,13 +6,16 @@ import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.CompleteMultipartUploadRequest;
 import com.aliyun.oss.model.CreateBucketRequest;
 import com.aliyun.oss.model.InitiateMultipartUploadRequest;
+import com.aliyun.oss.model.ListPartsRequest;
 import com.aliyun.oss.model.PartETag;
+import com.aliyun.oss.model.PartListing;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.UploadPartRequest;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 阿里云 OSS 工具类
@@ -160,6 +163,25 @@ public class AliYunOssUtils {
                 }
             }
         }
+    }
+
+    /**
+     * 列举已上传的分片
+     * docs：
+     * <ui>
+     * <li><a href="https://help.aliyun.com/document_detail/84786.html">分片上传</a></li>
+     * </ui>
+     *
+     * @param uploadId 分片上传事件ID
+     * @param fileName 文件名称
+     * @return 分片信息列表
+     */
+    public List<PartETag> listPart(String uploadId, String fileName) {
+        ListPartsRequest request = new ListPartsRequest(bucket, fileName, uploadId);
+        PartListing partListing = client.listParts(request);
+        return partListing.getParts().stream()
+                .map(p -> new PartETag(p.getPartNumber(), p.getETag()))
+                .collect(Collectors.toList());
     }
 
     /**

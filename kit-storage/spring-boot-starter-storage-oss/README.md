@@ -49,8 +49,8 @@ public class StorageController {
 
     @PostMapping("/upload")
     public String upload(@RequestParam MultipartFile file) throws IOException {
-        String fileName = aliYunOssUtils.upload(file.getOriginalFilename(), file.getContentType(), file.getInputStream());
-        return fileName;
+        String url = aliYunOssUtils.upload(file.getOriginalFilename(), file.getInputStream());
+        return url;
     }
 
 }
@@ -81,18 +81,17 @@ public class StorageController {
     }
 
     @PostMapping("part-upload")
-    public PartETag partUpload(@RequestParam MultipartFile file,
-                               @RequestParam String uploadId,
-                               @RequestParam Integer partNumber) throws IOException {
-        PartETag partETag = aliYunOssUtils.partUpload(uploadId, partNumber, file.getSize(), file.getName(), file.getInputStream());
-        return partETag;
+    public void partUpload(@RequestParam MultipartFile file,
+                           @RequestParam String uploadId,
+                           @RequestParam Integer partNumber) throws IOException {
+        aliYunOssUtils.partUpload(uploadId, partNumber, (int) file.getSize(), file.getName(), new BufferedInputStream(file.getInputStream()));
     }
 
     @PostMapping("complete-part-upload")
     public String completePartUpload(@RequestParam String uploadId,
-                                     @RequestParam String fileName,
-                                     @RequestParam List<PartETag> partETagList) {
-        String url = aliYunOssUtils.completePartUpload(uploadId, fileName, partETagList);
+                                     @RequestParam String fileName) {
+        List<PartETag> parts = aliYunOssUtils.listPart(uploadId, fileName);
+        String url = aliYunOssUtils.completePartUpload(uploadId, fileName, parts);
         return url;
     }
 

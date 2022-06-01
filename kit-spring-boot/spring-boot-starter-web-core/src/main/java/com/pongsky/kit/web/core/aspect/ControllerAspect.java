@@ -2,8 +2,8 @@ package com.pongsky.kit.web.core.aspect;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pongsky.kit.common.utils.HttpServletRequestUtils;
 import com.pongsky.kit.ip.utils.IpUtils;
-import com.pongsky.kit.web.core.utils.HttpServletRequestUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

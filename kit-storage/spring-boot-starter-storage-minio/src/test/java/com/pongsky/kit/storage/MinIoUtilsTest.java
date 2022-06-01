@@ -3,7 +3,6 @@ package com.pongsky.kit.storage;
 import com.pongsky.kit.storage.utils.MinIoUtils;
 import io.minio.messages.Part;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -45,6 +44,7 @@ public class MinIoUtilsTest {
     public static void main(String[] args) throws IOException {
         File file = new File(FILE_NAME);
         String uploadId = UTILS.initPartUpload(file.getName(), "image/jpeg");
+//        List<Part> parts = new ArrayList<>();
         // 每个分片的大小，用于计算文件有多少个分片。单位为字节。这里为 5 MB。
         final long partSize = 5 * 1024 * 1024L;
         long fileLength = file.length();
@@ -56,8 +56,9 @@ public class MinIoUtilsTest {
             InputStream instream = new FileInputStream(file);
             // 跳过已经上传的分片。
             instream.skip(startPos);
-            BufferedInputStream bis = new BufferedInputStream(instream);
-            UTILS.partUpload(uploadId, i + 1, (int) curPartSize, file.getName(), bis);
+            Part part = UTILS.partUpload(uploadId, i + 1, (int) curPartSize, file.getName(), instream);
+            // 可保存 part 信息 / 直接调用 listPart 方法获取所有分片信息，后续合并分片用。
+//            parts.add(part);
         }
         List<Part> parts = UTILS.listPart(uploadId, file.getName());
         String url = UTILS.completePartUpload(uploadId, file.getName(), parts);
