@@ -31,24 +31,36 @@ ext {
 
     springDependencyManagementVersion = "1.0.11.RELEASE"
 
+    // Excel 读/写
     poiVersion = "5.2.2"
+    // 系统资源监控
     oshiVersion = "6.1.6"
+    // 数据库连接池
     druidVersion = "1.2.8"
+    // 文件服务器
     minioVersion = "8.2.1"
-    jolCoreVersion = "0.16"
+    // HTML 解析
     jsoupVersion = "1.14.3"
+    // MySQL 驱动
     mysqlVersion = "8.0.26"
+    // HTTP 连接
     okhttpVersion = "4.9.3"
+    // Swagger UI 美化 by Knife4j
     knife4jVersion = "3.0.3"
+    // Swagger API Docs
     swaggerVersion = "2.2.0"
+    // Swagger UI 美化 by SpringDoc
     springDocVersion = "1.6.8"
-    commonsTextVersion = "1.9"
+    // Swagger UI 美化 by SpringFox
     springFoxVersion = "3.0.0"
-    mybatisPlusVersion = "3.5.1"
-    commonsCodecVersion = "1.15"
+    // 阿里云 OSS SDK
     aliyunSdkOssVersion = "3.14.0"
-    commonsLang3Version = "3.12.0"
+    // Google 注解
     googleAnnotationsVersion = "3.0.1"
+    // Apache 工具包
+    commonsTextVersion = "1.9"
+    commonsCodecVersion = "1.15"
+    commonsLang3Version = "3.12.0"
     commonsCollections4Version = "4.4"
 }
 

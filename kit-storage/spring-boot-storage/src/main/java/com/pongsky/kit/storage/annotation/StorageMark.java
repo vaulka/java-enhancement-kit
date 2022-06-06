@@ -1,5 +1,9 @@
 package com.pongsky.kit.storage.annotation;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pongsky.kit.storage.serializer.StorageMarkJsonSerializer;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -17,9 +21,11 @@ import java.lang.annotation.Target;
  * @author pengsenhao
  */
 @Documented
+@JacksonAnnotationsInside
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})
-public @interface StorageResourceMark {
+@JsonSerialize(using = StorageMarkJsonSerializer.class)
+public @interface StorageMark {
 
 
 }

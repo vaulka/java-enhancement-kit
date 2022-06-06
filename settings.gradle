@@ -42,9 +42,6 @@ findProject(":excel:spring-boot-starter-excel")?.name = "spring-boot-starter-exc
 include "kit-storage"
 findProject(":kit-storage")?.name = "storage"
 
-include "storage:storage-annotation"
-findProject(":storage:storage-annotation")?.name = "storage-annotation"
-
 include "storage:spring-boot-storage"
 findProject(":storage:spring-boot-storage")?.name = "spring-boot-storage"
 
