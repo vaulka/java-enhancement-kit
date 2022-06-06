@@ -1,6 +1,9 @@
 package com.pongsky.kit.desensitization.annotation;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.pongsky.kit.desensitization.handler.DesensitizationHandler;
+import com.pongsky.kit.desensitization.serializer.DesensitizationMarkJsonSerializer;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -19,8 +22,10 @@ import java.lang.annotation.Target;
  * @author pengsenhao
  */
 @Documented
+@JacksonAnnotationsInside
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})
+@JsonSerialize(using = DesensitizationMarkJsonSerializer.class)
 public @interface DesensitizationMark {
 
     /**

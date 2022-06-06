@@ -30,9 +30,6 @@ findProject(":desensitization:desensitization-annotation")?.name = "desensitizat
 include "desensitization:desensitization-utils"
 findProject(":desensitization:desensitization-utils")?.name = "desensitization-utils"
 
-include ":desensitization:spring-boot-starter-desensitization"
-findProject(":desensitization:spring-boot-starter-desensitization")?.name = "spring-boot-starter-desensitization"
-
 include "kit-excel"
 findProject(":kit-excel")?.name = "excel"
 
