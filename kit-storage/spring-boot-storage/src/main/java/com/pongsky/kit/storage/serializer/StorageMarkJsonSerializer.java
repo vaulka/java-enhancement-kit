@@ -15,7 +15,7 @@ import org.springframework.context.ApplicationContext;
 import java.io.IOException;
 
 /**
- * 数据脱敏序列化配置
+ * 云存储序列化配置
  *
  * @author pengsenhao
  */
