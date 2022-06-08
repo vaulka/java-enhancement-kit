@@ -42,17 +42,26 @@ findProject(":excel:spring-boot-starter-excel")?.name = "spring-boot-starter-exc
 include "kit-storage"
 findProject(":kit-storage")?.name = "storage"
 
+include "storage:minio"
+findProject(":storage:minio")?.name = "minio"
+
+include "storage:minio:spring-boot-starter-storage-minio"
+findProject(":storage:minio:spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
+
+include "storage:minio:storage-minio-utils"
+findProject(":storage:minio:storage-minio-utils")?.name = "storage-minio-utils"
+
+include "storage:oss"
+findProject(":storage:oss")?.name = "oss"
+
+include "storage:oss:storage-oss-utils"
+findProject(":storage:oss:storage-oss-utils")?.name = "storage-oss-utils"
+
+include "storage:oss:spring-boot-starter-storage-oss"
+findProject(":storage:oss:spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
+
 include "storage:spring-boot-storage"
 findProject(":storage:spring-boot-storage")?.name = "spring-boot-storage"
-
-include "storage:spring-boot-starter-storage-minio"
-findProject(":storage:spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
-
-include "storage:spring-boot-starter-storage-oss"
-findProject(":storage:spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
-
-include "storage:storage-minio-utils"
-findProject(":storage:storage-minio-utils")?.name = "storage-minio-utils"
 
 include "kit-type-parser"
 findProject(":kit-type-parser")?.name = "type-parser"

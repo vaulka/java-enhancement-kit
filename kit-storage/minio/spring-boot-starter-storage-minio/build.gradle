@@ -82,7 +82,7 @@ signing {
 
 dependencies {
     api project(":storage:spring-boot-storage")
-    api project(":storage:storage-minio-utils")
+    api project(":storage:minio:storage-minio-utils")
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"

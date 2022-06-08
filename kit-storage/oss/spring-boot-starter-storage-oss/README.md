@@ -1,16 +1,16 @@
-# spring-boot-starter-storage-minio 模块说明
+# spring-boot-starter-storage-oss 模块说明
 
-> 云存储 MinIO Spring Boot Starter 模块
+> 云存储 阿里云 OSS Spring Boot Starter 模块
 >
 > 该模块依赖
-> * [spring-boot-storage](../spring-boot-storage/README.md) 模块
-> * [storage-minio-utils](../storage-minio-utils/README.md) 模块
+> * [spring-boot-storage](../../spring-boot-storage/README.md) 模块
+> * [storage-oss-utils](../storage-oss-utils/README.md) 模块
 
 ## 功能说明
 
-* 实现 MinIO 创建 bucket。
-* 实现 MinIO 简单上传。
-* 实现 MinIO 分片上传。
+* 实现 阿里云 OSS 创建 bucket。
+* 实现 阿里云 OSS 简单上传。
+* 实现 阿里云 OSS 分片上传。
 
 ## 配置云存储参数
 
@@ -18,20 +18,21 @@
 
 |参数|是否可空|描述|默认值|
 |---|---|---|---|
-|minio.endpoint|false|endpoint||
-|minio.bucket|false|bucket||
-|minio.access-key|false|accessKey||
-|minio.secret-key|false|secretKey||
+|aliyun.oss.endpoint|false|endpoint||
+|aliyun.oss.bucket|false|bucket||
+|aliyun.oss.access-key-id|false|accessKeyId||
+|aliyun.oss.secret-access-key|false|secretAccessKey||
 
 示例如下：
 
 ```yml
 
-minio:
-  endpoint: endpoint
-  bucket: bucket
-  access-key: accessKey
-  secret-key: secretKey
+aliyun:
+  oss:
+    endpoint: endpoint
+    bucket: bucket
+    access-key: accessKeyId
+    secret-access-key: secretAccessKey
 
 ```
 
@@ -46,11 +47,11 @@ minio:
 @RequestMapping(value = "/storage", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StorageController {
 
-    private final MinIoUtils minIoUtils;
+    private final AliYunOssUtils aliYunOssUtils;
 
-    @PostMapping
+    @PostMapping("/upload")
     public String upload(@RequestParam MultipartFile file) throws IOException {
-        String url = minIoUtils.upload(file.getOriginalFilename(), file.getContentType(), file.getInputStream());
+        String url = aliYunOssUtils.upload(file.getOriginalFilename(), file.getInputStream());
         return url;
     }
 
@@ -73,11 +74,11 @@ public class StorageController {
 @RequestMapping(value = "/storage", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StorageController {
 
-    private final MinIoUtils minIoUtils;
+    private final AliYunOssUtils aliYunOssUtils;
 
     @PostMapping("init-part-upload")
     public String initPartUpload(@RequestParam String fileName) {
-        String uploadId = minIoUtils.initPartUpload(fileName);
+        String uploadId = aliYunOssUtils.initPartUpload(fileName);
         return uploadId;
     }
 
@@ -85,14 +86,14 @@ public class StorageController {
     public void partUpload(@RequestParam MultipartFile file,
                            @RequestParam String uploadId,
                            @RequestParam Integer partNumber) throws IOException {
-        minIoUtils.partUpload(uploadId, partNumber, (int) file.getSize(), file.getName(), file.getInputStream());
+        aliYunOssUtils.partUpload(uploadId, partNumber, (int) file.getSize(), file.getName(), new BufferedInputStream(file.getInputStream()));
     }
 
     @PostMapping("complete-part-upload")
     public String completePartUpload(@RequestParam String uploadId,
                                      @RequestParam String fileName) {
-        List<Part> parts = minIoUtils.listPart(uploadId, fileName);
-        String url = minIoUtils.completePartUpload(uploadId, fileName, parts);
+        List<PartETag> parts = aliYunOssUtils.listPart(uploadId, fileName);
+        String url = aliYunOssUtils.completePartUpload(uploadId, fileName, parts);
         return url;
     }
 
