@@ -37,9 +37,9 @@ public class OssProperties {
     private String accessKeyId;
 
     /**
-     * secretAccessKey
+     * accessKeySecret
      */
     @NotBlank
-    private String secretAccessKey;
+    private String accessKeySecret;
 
 }

@@ -30,16 +30,16 @@ public class AliYunOssUtilsTest {
     private static final String accessKeyId = "";
 
     /**
-     * secretAccessKey
+     * accessKeySecret
      */
-    private static final String secretAccessKey = "";
+    private static final String accessKeySecret = "";
 
     /**
      * 文件名称
      */
     private static final String FILE_NAME = "/Users/pengsenhao/Downloads/test.jpeg";
 
-    private static final AliYunOssUtils UTILS = new AliYunOssUtils(endpoint, bucket, accessKeyId, secretAccessKey);
+    private static final AliYunOssUtils UTILS = new AliYunOssUtils(endpoint, bucket, accessKeyId, accessKeySecret);
 
     public static void main(String[] args) throws IOException {
         File file = new File(FILE_NAME);

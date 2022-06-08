@@ -34,7 +34,7 @@ public class OssAutoConfiguration {
     @Bean
     public AliYunOssUtils aliYunOssUtils(OssProperties properties) {
         return new AliYunOssUtils(properties.getEndpoint(), properties.getBucket(),
-                properties.getAccessKeyId(), properties.getSecretAccessKey());
+                properties.getAccessKeyId(), properties.getAccessKeySecret());
     }
 
 }

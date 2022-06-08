@@ -40,20 +40,20 @@ public class AliYunOssUtils {
     private final String accessKeyId;
 
     /**
-     * secretAccessKey
+     * accessKeySecret
      */
-    private final String secretAccessKey;
+    private final String accessKeySecret;
 
     /**
      * OSS client
      */
     private final OSS client;
 
-    public AliYunOssUtils(String endpoint, String bucket, String accessKeyId, String secretAccessKey) {
+    public AliYunOssUtils(String endpoint, String bucket, String accessKeyId, String accessKeySecret) {
         this.endpoint = endpoint;
         this.bucket = bucket;
         this.accessKeyId = accessKeyId;
-        this.secretAccessKey = secretAccessKey;
+        this.accessKeySecret = accessKeySecret;
         this.client = getClient();
         this.createBucket();
     }
@@ -64,7 +64,7 @@ public class AliYunOssUtils {
      * @return 创建 client
      */
     private OSS getClient() {
-        return new OSSClientBuilder().build(endpoint, accessKeyId, secretAccessKey);
+        return new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
     }
 
     /**
