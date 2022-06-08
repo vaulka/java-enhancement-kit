@@ -4,6 +4,7 @@
 >
 > 该模块依赖
 > * [spring-boot-storage](../spring-boot-storage/README.md) 模块
+> * [storage-minio-utils](../storage-minio-utils/README.md) 模块
 
 ## 功能说明
 

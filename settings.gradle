@@ -51,6 +51,9 @@ findProject(":storage:spring-boot-starter-storage-minio")?.name = "spring-boot-s
 include "storage:spring-boot-starter-storage-oss"
 findProject(":storage:spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
 
+include "storage:storage-minio-utils"
+findProject(":storage:storage-minio-utils")?.name = "storage-minio-utils"
+
 include "kit-type-parser"
 findProject(":kit-type-parser")?.name = "type-parser"
 

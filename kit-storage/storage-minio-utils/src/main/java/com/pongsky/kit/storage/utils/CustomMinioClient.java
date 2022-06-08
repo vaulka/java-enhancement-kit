@@ -32,7 +32,7 @@ public class CustomMinioClient extends MinioClient {
     }
 
     /**
-     * 将 {@link io.minio.S3Base#createMultipartUpload(java.lang.String, java.lang.String, java.lang.String, com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
+     * 将 {@link io.minio.S3Base#createMultipartUpload(String, String, String, com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
      *
      * @param bucketName       Name of the bucket.
      * @param region           Region name of buckets in S3 service.
@@ -59,7 +59,7 @@ public class CustomMinioClient extends MinioClient {
     }
 
     /**
-     * 将 {@link S3Base#uploadPart(java.lang.String, java.lang.String, java.lang.String, java.lang.Object, int, java.lang.String, int, com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
+     * 将 {@link S3Base#uploadPart(String, String, String, Object, int, String, int, com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
      *
      * @param bucketName       Name of the bucket.
      * @param region           Region of the bucket (Optional).
@@ -106,7 +106,7 @@ public class CustomMinioClient extends MinioClient {
     }
 
     /**
-     * 将 {@link S3Base#listParts(java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
+     * 将 {@link S3Base#listParts(String, String, String, Integer, Integer, String, com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
      *
      * @param bucketName       Name of the bucket.
      * @param region           Name of the bucket (Optional).
@@ -143,7 +143,7 @@ public class CustomMinioClient extends MinioClient {
     }
 
     /**
-     * 将 {@link S3Base#completeMultipartUpload(java.lang.String, java.lang.String, java.lang.String, java.lang.String, io.minio.messages.Part[], com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
+     * 将 {@link S3Base#completeMultipartUpload(String, String, String, String, io.minio.messages.Part[], com.google.common.collect.Multimap, com.google.common.collect.Multimap)} 修饰符改为 public
      *
      * @param bucketName       Name of the bucket.
      * @param region           Region of the bucket.
