@@ -1,4 +1,4 @@
-# spring-boot-starter-storage-minio 模块说明
+# storage-minio-utils 模块说明
 
 > 云存储 MinIO Utils 模块
 

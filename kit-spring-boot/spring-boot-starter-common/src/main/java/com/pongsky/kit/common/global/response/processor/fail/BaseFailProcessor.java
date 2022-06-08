@@ -45,6 +45,15 @@ public interface BaseFailProcessor<T extends Throwable> {
     boolean isHitProcessor(Throwable exception);
 
     /**
+     * 命中处理器排序顺序，默认从小到大
+     *
+     * @return 命中处理器排序顺序
+     */
+    default int hitProcessorSort() {
+        return Integer.MIN_VALUE;
+    }
+
+    /**
      * 返回的响应结果
      *
      * @param exception 异常

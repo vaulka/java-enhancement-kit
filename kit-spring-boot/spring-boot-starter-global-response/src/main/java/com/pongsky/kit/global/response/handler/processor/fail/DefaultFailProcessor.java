@@ -21,7 +21,12 @@ public class DefaultFailProcessor implements BaseFailProcessor<Throwable> {
 
     @Override
     public boolean isHitProcessor(Throwable exception) {
-        return exception.getClass() == Throwable.class;
+        return true;
+    }
+
+    @Override
+    public int hitProcessorSort() {
+        return Integer.MAX_VALUE;
     }
 
 }
