@@ -64,6 +64,15 @@
 |---|---|
 |[ip-utils](kit-ip/ip-utils/README.md)|IP Utils 模块|
 
+## kit-sms 短信模块
+
+### aliyun-sms 阿里云短信模块
+
+|模块|介绍|
+|---|---|
+|[aliyun-sms-utils](kit-sms/aliyun-sms/aliyun-sms-utils/README.md)|阿里云短信 Utils 模块|
+|[spring-boot-starter-aliyun-sms](kit-sms/aliyun-sms/spring-boot-starter-aliyun-sms/README.md)|阿里云短信 Spring Boot Starter 模块|
+
 ## kit-spring-boot Spring Boot 增强模块
 
 |模块|介绍|
@@ -94,8 +103,8 @@
 
 |模块|介绍|
 |---|---|
-|[spring-boot-starter-storage-oss](kit-storage/oss/spring-boot-starter-storage-oss/README.md)|云存储 OSS Spring Boot Starter 模块|
-|[storage-oss-utils](kit-storage/oss/storage-oss-utils/README.md)|云存储 OSS Utils 模块|
+|[spring-boot-starter-aliyun-oss](kit-storage/aliyun-oss/spring-boot-starter-aliyun-oss/README.md)|云存储 OSS Spring Boot Starter 模块|
+|[storage-aliyun-utils](kit-storage/aliyun-oss/aliyun-oss-utils/README.md)|云存储 OSS Utils 模块|
 
 ## kit-system 系统模块
 
