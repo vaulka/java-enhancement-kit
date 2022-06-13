@@ -8,14 +8,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @author pengsenhao
  */
-public abstract class SmsTemplate<T> {
+public abstract class AliYunSmsTemplate<T> {
 
     /**
      * 短信模版变量
      */
     private final T PARAM;
 
-    public SmsTemplate(T param) {
+    public AliYunSmsTemplate(T param) {
         this.PARAM = param;
     }
 

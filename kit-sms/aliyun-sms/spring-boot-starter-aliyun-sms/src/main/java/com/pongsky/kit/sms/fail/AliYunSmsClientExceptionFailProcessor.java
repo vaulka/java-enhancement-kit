@@ -8,7 +8,7 @@ import com.pongsky.kit.sms.exception.AliYunSmsClientException;
  *
  * @author pengsenhao
  */
-public class AliYunOssClientExceptionFailProcessor implements BaseFailProcessor<AliYunSmsClientException> {
+public class AliYunSmsClientExceptionFailProcessor implements BaseFailProcessor<AliYunSmsClientException> {
 
     @Override
     public Integer code() {

@@ -15,16 +15,16 @@
 
 |参数|是否可空|描述|默认值|
 |---|---|---|---|
-|aliyun.oss.region-id|false|regionId||
-|aliyun.oss.access-key-id|false|accessKeyId||
-|aliyun.oss.access-key-secret|false|accessKeySecret||
+|aliyun.sms.region-id|false|regionId||
+|aliyun.sms.access-key-id|false|accessKeyId||
+|aliyun.sms.access-key-secret|false|accessKeySecret||
 
 示例如下：
 
 ```yml
 
 aliyun:
-  oss:
+  sms:
     region-id: regionId
     access-key-id: accessKeyId
     access-key-secret: accessKeySecret
@@ -40,11 +40,11 @@ aliyun:
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/sms", produces = MediaType.APPLICATION_JSON_VALUE)
-public class StorageController {
+public class SmsController {
 
     private final AliYunSmsUtils aliyunSmsUtils;
 
-    public static class TestTemplate extends SmsTemplate<TestTemplateParam> {
+    public static class TestTemplate extends AliYunSmsTemplate<TestTemplateParam> {
 
         public TestTemplate(TestTemplateParam param) {
             super(param);

@@ -1,6 +1,6 @@
 package com.pongsky.kit.sms;
 
-import com.pongsky.kit.sms.entity.SmsTemplate;
+import com.pongsky.kit.sms.entity.AliYunSmsTemplate;
 import com.pongsky.kit.sms.utils.AliYunSmsUtils;
 
 /**
@@ -10,9 +10,9 @@ import com.pongsky.kit.sms.utils.AliYunSmsUtils;
  */
 public class AliYunSmsUtilsTest {
 
-    public static class TestTemplate extends SmsTemplate<TestTemplateParam> {
+    public static class TestTemplateAliYun extends AliYunSmsTemplate<TestTemplateParam> {
 
-        public TestTemplate(TestTemplateParam param) {
+        public TestTemplateAliYun(TestTemplateParam param) {
             super(param);
         }
 
@@ -63,7 +63,7 @@ public class AliYunSmsUtilsTest {
     private static final AliYunSmsUtils UTILS = new AliYunSmsUtils(regionId, accessKeyId, accessKeySecret);
 
     public static void main(String[] args) {
-        UTILS.sendSms("阿里云短信测试", new TestTemplate(new TestTemplateParam("123456")), "1515****510");
+        UTILS.sendSms("阿里云短信测试", new TestTemplateAliYun(new TestTemplateParam("123456")), "1515****510");
     }
 
 }

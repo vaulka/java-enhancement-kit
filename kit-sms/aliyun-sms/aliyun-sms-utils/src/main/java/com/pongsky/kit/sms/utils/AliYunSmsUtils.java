@@ -6,7 +6,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
-import com.pongsky.kit.sms.entity.SmsTemplate;
+import com.pongsky.kit.sms.entity.AliYunSmsTemplate;
 import com.pongsky.kit.sms.exception.AliYunSmsBizException;
 import com.pongsky.kit.sms.exception.AliYunSmsClientException;
 
@@ -59,11 +59,11 @@ public class AliYunSmsUtils {
         return new DefaultAcsClient(profile);
     }
 
-    public void sendSms(String signName, SmsTemplate<?> template, String phoneNumbers) {
+    public void sendSms(String signName, AliYunSmsTemplate<?> template, String phoneNumbers) {
         this.sendSms(signName, template, Collections.singletonList(phoneNumbers));
     }
 
-    public void sendSms(String signName, SmsTemplate<?> template, List<String> phoneNumbers) {
+    public void sendSms(String signName, AliYunSmsTemplate<?> template, List<String> phoneNumbers) {
         this.sendSms(signName, template, phoneNumbers, null, null);
     }
 
@@ -83,7 +83,7 @@ public class AliYunSmsUtils {
      * @param smsUpExtendCode 上行短信扩展码
      * @param outId           外部流水扩展字段
      */
-    public void sendSms(String signName, SmsTemplate<?> template, List<String> phoneNumbers,
+    public void sendSms(String signName, AliYunSmsTemplate<?> template, List<String> phoneNumbers,
                         String smsUpExtendCode, String outId) {
         SendSmsRequest request = new SendSmsRequest();
         request.setSignName(signName);

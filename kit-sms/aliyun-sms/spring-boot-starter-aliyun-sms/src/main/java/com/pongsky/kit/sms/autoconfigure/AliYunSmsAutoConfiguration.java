@@ -1,10 +1,9 @@
 package com.pongsky.kit.sms.autoconfigure;
 
-import com.pongsky.kit.sms.fail.AliYunOssClientExceptionFailProcessor;
 import com.pongsky.kit.sms.fail.AliYunSmsBizExceptionFailProcessor;
+import com.pongsky.kit.sms.fail.AliYunSmsClientExceptionFailProcessor;
 import com.pongsky.kit.sms.properties.AliYunSmsProperties;
 import com.pongsky.kit.sms.utils.AliYunSmsUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration(proxyBeanMethods = false)
 @Import({
-        AliYunOssClientExceptionFailProcessor.class, AliYunSmsBizExceptionFailProcessor.class
+        AliYunSmsClientExceptionFailProcessor.class, AliYunSmsBizExceptionFailProcessor.class
 })
 @EnableConfigurationProperties({AliYunSmsProperties.class})
 public class AliYunSmsAutoConfiguration {
@@ -28,7 +27,6 @@ public class AliYunSmsAutoConfiguration {
      * @param properties properties
      * @return 获取阿里云 SMS 工具类
      */
-    @ConditionalOnProperty(value = "aliyun.sms.enabled", havingValue = "true", matchIfMissing = true)
     @Bean
     public AliYunSmsUtils aliYunSmsUtils(AliYunSmsProperties properties) {
         return new AliYunSmsUtils(properties.getRegionId(),
