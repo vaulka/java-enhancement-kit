@@ -1,8 +1,8 @@
 package com.pongsky.kit.storage.autoconfigure;
 
-import com.pongsky.kit.storage.processor.fail.AliyunOssClientExceptionFailProcessor;
-import com.pongsky.kit.storage.processor.fail.AliyunOssExceptionFailProcessor;
-import com.pongsky.kit.storage.properties.AliyunOssProperties;
+import com.pongsky.kit.storage.processor.fail.AliYunOssClientExceptionFailProcessor;
+import com.pongsky.kit.storage.processor.fail.AliYunOssExceptionFailProcessor;
+import com.pongsky.kit.storage.properties.AliYunOssProperties;
 import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.storage.utils.AliYunOssUtils;
 import com.pongsky.kit.storage.web.aspect.before.UploadAspect;
@@ -20,10 +20,10 @@ import org.springframework.context.annotation.Import;
 @Configuration(proxyBeanMethods = false)
 @Import({
         UploadAspect.class,
-        AliyunOssClientExceptionFailProcessor.class, AliyunOssExceptionFailProcessor.class
+        AliYunOssClientExceptionFailProcessor.class, AliYunOssExceptionFailProcessor.class
 })
-@EnableConfigurationProperties({StorageProperties.class, AliyunOssProperties.class})
-public class AliyunOssAutoConfiguration {
+@EnableConfigurationProperties({StorageProperties.class, AliYunOssProperties.class})
+public class AliYunOssAutoConfiguration {
 
     /**
      * 获取阿里云 OSS 工具类
@@ -34,7 +34,7 @@ public class AliyunOssAutoConfiguration {
      */
     @ConditionalOnProperty(value = "aliyun.oss.enabled", havingValue = "true", matchIfMissing = true)
     @Bean
-    public AliYunOssUtils aliYunOssUtils(AliyunOssProperties properties) {
+    public AliYunOssUtils aliYunOssUtils(AliYunOssProperties properties) {
         return new AliYunOssUtils(properties.getEndpoint(), properties.getBucket(),
                 properties.getAccessKeyId(), properties.getAccessKeySecret());
     }

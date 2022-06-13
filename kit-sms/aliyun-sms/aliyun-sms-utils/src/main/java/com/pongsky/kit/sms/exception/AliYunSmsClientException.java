@@ -5,15 +5,15 @@ package com.pongsky.kit.sms.exception;
  *
  * @author pengsenhao
  */
-public class AliyunSmsClientException extends RuntimeException {
+public class AliYunSmsClientException extends RuntimeException {
 
     private static final long serialVersionUID = 2123039075370982639L;
 
-    public AliyunSmsClientException(String message) {
+    public AliYunSmsClientException(String message) {
         super(message);
     }
 
-    public AliyunSmsClientException(String message, Exception e) {
+    public AliYunSmsClientException(String message, Exception e) {
         super(message, e);
     }
 

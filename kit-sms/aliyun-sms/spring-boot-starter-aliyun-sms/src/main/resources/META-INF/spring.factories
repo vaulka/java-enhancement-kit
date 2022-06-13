@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.sms.autoconfigure.AliyunSmsAutoConfiguration
+com.pongsky.kit.sms.autoconfigure.AliYunSmsAutoConfiguration

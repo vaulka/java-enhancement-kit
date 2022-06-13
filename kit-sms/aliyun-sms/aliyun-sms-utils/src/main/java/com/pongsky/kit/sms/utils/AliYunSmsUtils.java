@@ -7,8 +7,11 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.pongsky.kit.sms.entity.SmsTemplate;
-import com.pongsky.kit.sms.exception.AliyunSmsBizException;
-import com.pongsky.kit.sms.exception.AliyunSmsClientException;
+import com.pongsky.kit.sms.exception.AliYunSmsBizException;
+import com.pongsky.kit.sms.exception.AliYunSmsClientException;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 阿里云 SMS 工具类
@@ -56,14 +59,18 @@ public class AliYunSmsUtils {
         return new DefaultAcsClient(profile);
     }
 
+    public void sendSms(String signName, SmsTemplate<?> template, String phoneNumbers) {
+        this.sendSms(signName, template, Collections.singletonList(phoneNumbers));
+    }
+
+    public void sendSms(String signName, SmsTemplate<?> template, List<String> phoneNumbers) {
+        this.sendSms(signName, template, phoneNumbers, null, null);
+    }
+
     /**
      * 成功 请求状态码
      */
     private static final String SUCCESS_CODE = "OK";
-
-    public void sendSms(String signName, SmsTemplate<?> template, String phoneNumbers) {
-        this.sendSms(signName, template, phoneNumbers, null, null);
-    }
 
     /**
      * 发送短信
@@ -72,27 +79,27 @@ public class AliYunSmsUtils {
      *
      * @param signName        短信签名名称
      * @param template        短信模版以及模版参数
-     * @param phoneNumbers    手机号列表，多个手机号以半角逗号（,）分隔
+     * @param phoneNumbers    手机号列表
      * @param smsUpExtendCode 上行短信扩展码
      * @param outId           外部流水扩展字段
      */
-    public void sendSms(String signName, SmsTemplate<?> template, String phoneNumbers,
+    public void sendSms(String signName, SmsTemplate<?> template, List<String> phoneNumbers,
                         String smsUpExtendCode, String outId) {
         SendSmsRequest request = new SendSmsRequest();
         request.setSignName(signName);
         request.setTemplateCode(template.getCode());
         request.setTemplateParam(template.buildParam());
-        request.setPhoneNumbers(phoneNumbers);
+        request.setPhoneNumbers(String.join(",", phoneNumbers));
         request.setSmsUpExtendCode(smsUpExtendCode);
         request.setOutId(outId);
         SendSmsResponse response;
         try {
             response = client.getAcsResponse(request);
         } catch (ClientException e) {
-            throw new AliyunSmsClientException(e.getErrMsg(), e);
+            throw new AliYunSmsClientException(e.getErrMsg(), e);
         }
         if (!SUCCESS_CODE.equals(response.getCode())) {
-            throw new AliyunSmsBizException(response.getMessage());
+            throw new AliYunSmsBizException(response.getMessage());
         }
     }
 

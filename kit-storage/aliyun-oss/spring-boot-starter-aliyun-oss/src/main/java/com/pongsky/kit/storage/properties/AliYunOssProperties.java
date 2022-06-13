@@ -1,4 +1,4 @@
-package com.pongsky.kit.sms.properties;
+package com.pongsky.kit.storage.properties;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,12 +13,12 @@ import javax.validation.constraints.NotBlank;
  *
  * @author pengsenhao
  */
-@ConditionalOnProperty(value = "aliyun.sms.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "aliyun.oss.enabled", havingValue = "true", matchIfMissing = true)
 @Getter
 @Setter
 @Validated
-@ConfigurationProperties("aliyun.sms")
-public class AliyunSmsProperties {
+@ConfigurationProperties("aliyun.oss")
+public class AliYunOssProperties {
 
     /**
      * 是否启用
@@ -26,10 +26,16 @@ public class AliyunSmsProperties {
     private boolean enabled = true;
 
     /**
-     * regionId
+     * endpoint
      */
     @NotBlank
-    private String regionId;
+    private String endpoint;
+
+    /**
+     * bucket
+     */
+    @NotBlank
+    private String bucket;
 
     /**
      * accessKeyId

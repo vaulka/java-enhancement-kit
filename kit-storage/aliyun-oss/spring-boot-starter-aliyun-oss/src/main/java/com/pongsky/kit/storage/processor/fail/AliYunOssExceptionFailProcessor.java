@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author pengsenhao
  */
-public class AliyunOssExceptionFailProcessor implements BaseFailProcessor<OSSException> {
+public class AliYunOssExceptionFailProcessor implements BaseFailProcessor<OSSException> {
 
     @Override
     public Integer code() {

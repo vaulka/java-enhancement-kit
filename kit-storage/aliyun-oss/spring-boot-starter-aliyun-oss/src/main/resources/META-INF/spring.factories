@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pongsky.kit.storage.autoconfigure.AliyunOssAutoConfiguration
+com.pongsky.kit.storage.autoconfigure.AliYunOssAutoConfiguration
