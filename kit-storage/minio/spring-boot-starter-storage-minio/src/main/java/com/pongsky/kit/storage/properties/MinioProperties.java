@@ -2,6 +2,7 @@ package com.pongsky.kit.storage.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
@@ -12,11 +13,17 @@ import javax.validation.constraints.NotBlank;
  *
  * @author pengsenhao
  */
+@ConditionalOnProperty(value = "minio.enabled", havingValue = "true", matchIfMissing = true)
 @Getter
 @Setter
 @Validated
 @ConfigurationProperties(prefix = "minio")
 public class MinioProperties {
+
+    /**
+     * 是否启用
+     */
+    private boolean enabled = true;
 
     /**
      * endpoint
