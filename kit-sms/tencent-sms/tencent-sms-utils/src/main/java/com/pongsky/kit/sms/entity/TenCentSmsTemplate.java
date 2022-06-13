@@ -7,14 +7,14 @@ import java.util.List;
  *
  * @author pengsenhao
  */
-public abstract class SmsTemplate {
+public abstract class TenCentSmsTemplate {
 
     /**
      * 短信模版变量
      */
     private final List<String> PARAM;
 
-    public SmsTemplate(List<String> param) {
+    public TenCentSmsTemplate(List<String> param) {
         this.PARAM = param;
     }
 

@@ -1,6 +1,6 @@
 package com.pongsky.kit.sms;
 
-import com.pongsky.kit.sms.entity.SmsTemplate;
+import com.pongsky.kit.sms.entity.TenCentSmsTemplate;
 import com.pongsky.kit.sms.utils.TenCentSmsUtils;
 import com.tencentcloudapi.sms.v20210111.models.SendStatus;
 
@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class TenCentSmsUtilsTest {
 
-    public static class TestTemplate extends SmsTemplate {
+    public static class TestTemplateTenCent extends TenCentSmsTemplate {
 
-        public TestTemplate(List<String> param) {
+        public TestTemplateTenCent(List<String> param) {
             super(param);
         }
 
@@ -56,7 +56,7 @@ public class TenCentSmsUtilsTest {
 
     public static void main(String[] args) {
         List<SendStatus> sendStatuses = UTILS.sendSms("小彭同学生活记录",
-                new TestTemplate(Arrays.asList("13579", "5")),
+                new TestTemplateTenCent(Arrays.asList("13579", "5")),
                 "1515***5510");
         System.out.println(sendStatuses.toString());
     }

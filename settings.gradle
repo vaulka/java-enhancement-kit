@@ -167,3 +167,6 @@ findProject(":sms:tencent-sms")?.name = "tencent-sms"
 
 include "sms:tencent-sms:tencent-sms-utils"
 findProject(":sms:tencent-sms:tencent-sms-utils")?.name = "tencent-sms-utils"
+
+include "sms:tencent-sms:spring-boot-starter-tencent-sms"
+findProject(":sms:tencent-sms:spring-boot-starter-tencent-sms")?.name = "spring-boot-starter-tencent-sms"

@@ -1,6 +1,6 @@
 package com.pongsky.kit.sms.utils;
 
-import com.pongsky.kit.sms.entity.SmsTemplate;
+import com.pongsky.kit.sms.entity.TenCentSmsTemplate;
 import com.pongsky.kit.sms.exception.TenCentSmsException;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
@@ -72,11 +72,11 @@ public class TenCentSmsUtils {
         return new SmsClient(cred, region, clientProfile);
     }
 
-    public List<SendStatus> sendSms(String signName, SmsTemplate template, String phoneNumbers) {
+    public List<SendStatus> sendSms(String signName, TenCentSmsTemplate template, String phoneNumbers) {
         return this.sendSms(signName, template, Collections.singletonList(phoneNumbers));
     }
 
-    public List<SendStatus> sendSms(String signName, SmsTemplate template, List<String> phoneNumbers) {
+    public List<SendStatus> sendSms(String signName, TenCentSmsTemplate template, List<String> phoneNumbers) {
         return this.sendSms(signName, template, phoneNumbers, null, null, null);
     }
 
@@ -93,7 +93,7 @@ public class TenCentSmsUtils {
      * @param senderId       国内短信无需填写该项；国际/港澳台短信已申请独立 SenderId 需要填写该字段，默认使用公共 SenderId，无需填写该字段
      * @return 短信发送状态列表
      */
-    public List<SendStatus> sendSms(String signName, SmsTemplate template, List<String> phoneNumbers,
+    public List<SendStatus> sendSms(String signName, TenCentSmsTemplate template, List<String> phoneNumbers,
                                     String extendCode, String sessionContext, String senderId) {
         SendSmsRequest req = new SendSmsRequest();
         req.setPhoneNumberSet(phoneNumbers.toArray(new String[0]));
