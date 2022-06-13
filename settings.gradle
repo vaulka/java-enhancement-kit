@@ -162,3 +162,8 @@ findProject(":sms:aliyun-sms:aliyun-sms-utils")?.name = "aliyun-sms-utils"
 include "sms:aliyun-sms:spring-boot-starter-aliyun-sms"
 findProject(":sms:aliyun-sms:spring-boot-starter-aliyun-sms")?.name = "spring-boot-starter-aliyun-sms"
 
+include "sms:tencent-sms"
+findProject(":sms:tencent-sms")?.name = "tencent-sms"
+
+include "sms:tencent-sms:tencent-sms-utils"
+findProject(":sms:tencent-sms:tencent-sms-utils")?.name = "tencent-sms-utils"
