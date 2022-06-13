@@ -6,6 +6,7 @@ import com.pongsky.kit.storage.properties.AliyunOssProperties;
 import com.pongsky.kit.storage.properties.StorageProperties;
 import com.pongsky.kit.storage.utils.AliYunOssUtils;
 import com.pongsky.kit.storage.web.aspect.before.UploadAspect;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ public class AliyunOssAutoConfiguration {
      * @return 获取阿里云 OSS 工具类
      * @author pengsenhao
      */
+    @ConditionalOnProperty(value = "aliyun.oss.enabled", havingValue = "true", matchIfMissing = true)
     @Bean
     public AliYunOssUtils aliYunOssUtils(AliyunOssProperties properties) {
         return new AliYunOssUtils(properties.getEndpoint(), properties.getBucket(),
