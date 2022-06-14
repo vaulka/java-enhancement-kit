@@ -42,7 +42,7 @@ tencent:
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/sms", produces = MediaType.APPLICATION_JSON_VALUE)
-public class StorageController {
+public class SmsController {
 
     private final TenCentSmsUtils tenCentSmsUtils;
 

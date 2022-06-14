@@ -73,6 +73,13 @@
 |[aliyun-sms-utils](kit-sms/aliyun-sms/aliyun-sms-utils/README.md)|阿里云短信 Utils 模块|
 |[spring-boot-starter-aliyun-sms](kit-sms/aliyun-sms/spring-boot-starter-aliyun-sms/README.md)|阿里云短信 Spring Boot Starter 模块|
 
+### tencent-sms 腾讯云短信模块
+
+|模块|介绍|
+|---|---|
+|[tencent-sms-utils](kit-sms/tencent-sms/tencent-sms-utils/README.md)|腾讯云短信 Utils 模块|
+|[spring-boot-starter-tencent-sms](kit-sms/tencent-sms/spring-boot-starter-tencent-sms/README.md)|腾讯云短信 Spring Boot Starter 模块|
+
 ## kit-spring-boot Spring Boot 增强模块
 
 |模块|介绍|
