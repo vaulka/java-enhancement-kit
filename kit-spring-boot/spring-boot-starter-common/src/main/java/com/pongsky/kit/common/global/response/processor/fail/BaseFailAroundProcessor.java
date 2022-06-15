@@ -1,7 +1,5 @@
 package com.pongsky.kit.common.global.response.processor.fail;
 
-import com.pongsky.kit.common.global.response.processor.success.BaseSuccessAroundProcessor;
-
 /**
  * 【失败】全局响应环绕处理器
  *
@@ -22,7 +20,7 @@ public interface BaseFailAroundProcessor {
     /**
      * 处理器选择顺序
      * <p>
-     * 从小到大排序，只取符合 {@link BaseSuccessAroundProcessor#isHitProcessor(Object)} 条件的第一个处理器
+     * 从小到大排序，只取符合 {@link BaseFailAroundProcessor#isHitProcessor(java.lang.Throwable)} 条件的第一个处理器
      *
      * @return 处理器选择顺序
      */

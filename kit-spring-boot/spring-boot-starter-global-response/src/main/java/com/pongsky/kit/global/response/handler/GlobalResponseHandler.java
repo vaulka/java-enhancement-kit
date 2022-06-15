@@ -252,7 +252,7 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
         // 其次匹配处理器
         Optional<BaseFailProcessor> opProcessor = FAIL_PROCESSORS.stream()
                 .filter(p -> p.isHitProcessor(exception))
-                .min(Comparator.comparing(BaseFailProcessor::hitProcessorSort));
+                .max(Comparator.comparing(BaseFailProcessor::order));
         if (!isHitAroundProcessor && opProcessor.isPresent()) {
             BaseFailProcessor processor = opProcessor.get();
             result = processor.exec(exception);
@@ -294,7 +294,7 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
         // 其次匹配处理器
         Optional<BaseSuccessProcessor> opProcessor = SUCCESS_PROCESSORS.stream()
                 .filter(BaseSuccessProcessor::isHitProcessor)
-                .min(Comparator.comparing(BaseSuccessProcessor::hitProcessorSort));
+                .max(Comparator.comparing(BaseSuccessProcessor::order));
         if (!isHitAroundProcessor && opProcessor.isPresent()) {
             BaseSuccessProcessor processor = opProcessor.get();
             result = processor.exec(body);

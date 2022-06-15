@@ -36,12 +36,14 @@ public interface BaseSuccessProcessor {
     boolean isHitProcessor();
 
     /**
-     * 命中处理器排序顺序，默认从小到大
+     * 处理器选择顺序
+     * <p>
+     * 从小到大排序，只取符合 {@link BaseSuccessProcessor#isHitProcessor()} 条件的最大排序值处理器
      *
-     * @return 命中处理器排序顺序
+     * @return 处理器选择顺序
      */
-    default int hitProcessorSort() {
-        return Integer.MIN_VALUE;
+    default int order() {
+        return 0;
     }
 
     /**

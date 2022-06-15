@@ -25,8 +25,8 @@ public class DefaultFailProcessor implements BaseFailProcessor<Throwable> {
     }
 
     @Override
-    public int hitProcessorSort() {
-        return Integer.MAX_VALUE;
+    public int order() {
+        return -1;
     }
 
 }
