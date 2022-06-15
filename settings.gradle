@@ -30,9 +30,6 @@ findProject(":desensitization:desensitization-annotation")?.name = "desensitizat
 include "desensitization:desensitization-utils"
 findProject(":desensitization:desensitization-utils")?.name = "desensitization-utils"
 
-include ":desensitization:spring-boot-starter-desensitization"
-findProject(":desensitization:spring-boot-starter-desensitization")?.name = "spring-boot-starter-desensitization"
-
 include "kit-excel"
 findProject(":kit-excel")?.name = "excel"
 
@@ -45,17 +42,26 @@ findProject(":excel:spring-boot-starter-excel")?.name = "spring-boot-starter-exc
 include "kit-storage"
 findProject(":kit-storage")?.name = "storage"
 
-include "storage:storage-annotation"
-findProject(":storage:storage-annotation")?.name = "storage-annotation"
+include "storage:minio"
+findProject(":storage:minio")?.name = "minio"
+
+include "storage:minio:spring-boot-starter-storage-minio"
+findProject(":storage:minio:spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
+
+include "storage:minio:storage-minio-utils"
+findProject(":storage:minio:storage-minio-utils")?.name = "storage-minio-utils"
+
+include "storage:aliyun-oss"
+findProject(":storage:aliyun-oss")?.name = "aliyun-oss"
+
+include "storage:aliyun-oss:aliyun-oss-utils"
+findProject(":storage:aliyun-oss:aliyun-oss-utils")?.name = "aliyun-oss-utils"
+
+include "storage:aliyun-oss:spring-boot-starter-aliyun-oss"
+findProject(":storage:aliyun-oss:spring-boot-starter-aliyun-oss")?.name = "spring-boot-starter-aliyun-oss"
 
 include "storage:spring-boot-storage"
 findProject(":storage:spring-boot-storage")?.name = "spring-boot-storage"
-
-include "storage:spring-boot-starter-storage-minio"
-findProject(":storage:spring-boot-starter-storage-minio")?.name = "spring-boot-starter-storage-minio"
-
-include "storage:spring-boot-starter-storage-oss"
-findProject(":storage:spring-boot-starter-storage-oss")?.name = "spring-boot-starter-storage-oss"
 
 include "kit-type-parser"
 findProject(":kit-type-parser")?.name = "type-parser"
@@ -143,3 +149,24 @@ findProject(":doc:springfox:spring-boot-starter-springfox")?.name = "spring-boot
 
 include "doc:springfox:spring-boot-starter-springfox-knife4j"
 findProject(":doc:springfox:spring-boot-starter-springfox-knife4j")?.name = "spring-boot-starter-springfox-knife4j"
+
+include "kit-sms"
+findProject(":kit-sms")?.name = "sms"
+
+include "sms:aliyun-sms"
+findProject(":sms:aliyun-sms")?.name = "aliyun-sms"
+
+include "sms:aliyun-sms:aliyun-sms-utils"
+findProject(":sms:aliyun-sms:aliyun-sms-utils")?.name = "aliyun-sms-utils"
+
+include "sms:aliyun-sms:spring-boot-starter-aliyun-sms"
+findProject(":sms:aliyun-sms:spring-boot-starter-aliyun-sms")?.name = "spring-boot-starter-aliyun-sms"
+
+include "sms:tencent-sms"
+findProject(":sms:tencent-sms")?.name = "tencent-sms"
+
+include "sms:tencent-sms:tencent-sms-utils"
+findProject(":sms:tencent-sms:tencent-sms-utils")?.name = "tencent-sms-utils"
+
+include "sms:tencent-sms:spring-boot-starter-tencent-sms"
+findProject(":sms:tencent-sms:spring-boot-starter-tencent-sms")?.name = "spring-boot-starter-tencent-sms"

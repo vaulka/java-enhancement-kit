@@ -64,6 +64,22 @@
 |---|---|
 |[ip-utils](kit-ip/ip-utils/README.md)|IP Utils 模块|
 
+## kit-sms 短信模块
+
+### aliyun-sms 阿里云短信模块
+
+|模块|介绍|
+|---|---|
+|[aliyun-sms-utils](kit-sms/aliyun-sms/aliyun-sms-utils/README.md)|阿里云短信 Utils 模块|
+|[spring-boot-starter-aliyun-sms](kit-sms/aliyun-sms/spring-boot-starter-aliyun-sms/README.md)|阿里云短信 Spring Boot Starter 模块|
+
+### tencent-sms 腾讯云短信模块
+
+|模块|介绍|
+|---|---|
+|[tencent-sms-utils](kit-sms/tencent-sms/tencent-sms-utils/README.md)|腾讯云短信 Utils 模块|
+|[spring-boot-starter-tencent-sms](kit-sms/tencent-sms/spring-boot-starter-tencent-sms/README.md)|腾讯云短信 Spring Boot Starter 模块|
+
 ## kit-spring-boot Spring Boot 增强模块
 
 |模块|介绍|
@@ -81,10 +97,21 @@
 
 |模块|介绍|
 |---|---|
-|[storage-annotation](kit-storage/storage-annotation/README.md)|云存储 Annotation 模块|
 |[spring-boot-storage](kit-storage/spring-boot-storage/README.md)|云存储 Spring Boot 模块|
-|[spring-boot-starter-storage-oss](kit-storage/spring-boot-starter-storage-oss/README.md)|云存储 阿里云 OSS Spring Boot Starter 模块|
-|[spring-boot-starter-storage-minio](kit-storage/spring-boot-starter-storage-minio/README.md)|云存储 MinIO Spring Boot Starter 模块|
+
+### minio MinIO 云存储模块
+
+|模块|介绍|
+|---|---|
+|[spring-boot-starter-storage-minio](kit-storage/minio/spring-boot-starter-storage-minio/README.md)|云存储 MinIO Spring Boot Starter 模块|
+|[storage-minio-utils](kit-storage/minio/storage-minio-utils/README.md)|云存储 MinIO Utils 模块|
+
+### oss OSS 云存储模块
+
+|模块|介绍|
+|---|---|
+|[spring-boot-starter-aliyun-oss](kit-storage/aliyun-oss/spring-boot-starter-aliyun-oss/README.md)|云存储 OSS Spring Boot Starter 模块|
+|[storage-aliyun-utils](kit-storage/aliyun-oss/aliyun-oss-utils/README.md)|云存储 OSS Utils 模块|
 
 ## kit-system 系统模块
 

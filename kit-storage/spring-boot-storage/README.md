@@ -4,11 +4,11 @@
 >
 > 该模块依赖 
 > * [type-parser-utils](../../kit-type-parser/type-parser-utils/README.md) 模块
-> * [storage-annotation](../storage-annotation/README.md) 模块
 > * [spring-boot-starter-common](../../kit-spring-boot/spring-boot-starter-common/README.md) 模块
 
 ## 功能说明
 
+* 云存储资源标记，定义哪些字段需要添加文件基地址前缀。
 * 上传空文件校验。
 * 云存储资源路径可自动添加基地址前缀。
 
