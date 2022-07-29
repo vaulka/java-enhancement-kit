@@ -1,5 +1,6 @@
 package com.pongsky.kit.ip.config;
 
+import com.pongsky.kit.ip.core.IpInfo;
 import com.pongsky.kit.ip.properties.IpProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,9 +59,10 @@ public class IpSearcherConfig implements InitializingBean, DisposableBean, IpSea
      * @return 地址
      */
     @Override
-    public String getAddress(String ip) {
+    public IpInfo getAddress(String ip) {
         try {
-            return searcher.search(ip);
+            String address = searcher.search(ip);
+            return new IpInfo(address);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
         }

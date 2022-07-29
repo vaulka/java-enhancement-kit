@@ -1,5 +1,7 @@
 package com.pongsky.kit.ip.config;
 
+import com.pongsky.kit.ip.core.IpInfo;
+
 /**
  * IP 搜索器
  *
@@ -15,6 +17,6 @@ public interface IpSearcher {
      * @param ip IP
      * @return 地址
      */
-    String getAddress(String ip);
+    IpInfo getAddress(String ip);
 
 }

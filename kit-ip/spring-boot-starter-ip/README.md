@@ -40,8 +40,8 @@ public class TestService {
 
     @PostConstruct
     public void test() {
-        String address = ipSearcher.getAddress("1.2.3.4");
-        log.info("地址：{}", address);
+        IpInfo info = ipSearcher.getAddress("1.2.3.4");
+        log.info("地址：{}", info.getAddress());
     }
 }
 
