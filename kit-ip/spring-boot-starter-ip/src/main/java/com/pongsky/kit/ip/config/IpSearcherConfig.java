@@ -66,7 +66,7 @@ public class IpSearcherConfig implements InitializingBean, DisposableBean, IpSea
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
         }
-        return null;
+        return new IpInfo();
     }
 
 }

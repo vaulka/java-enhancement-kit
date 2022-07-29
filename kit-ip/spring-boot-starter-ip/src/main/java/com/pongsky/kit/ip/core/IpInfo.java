@@ -1,6 +1,7 @@
 package com.pongsky.kit.ip.core;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
  * @author pengsenhao
  */
 @Data
+@NoArgsConstructor
 public class IpInfo implements Serializable {
 
     private static final long serialVersionUID = -9032761088785200116L;
