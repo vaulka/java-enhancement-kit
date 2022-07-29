@@ -158,8 +158,8 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
      * @param returnType   returnType
      * @param mavContainer mavContainer
      * @param webRequest   webRequest
-     * @throws HttpMediaTypeNotAcceptableException HttpMediaTypeNotAcceptableException
-     * @throws IOException                         IOException
+     * @throws HttpMediaTypeNotAcceptableException HTTP 媒体类型不可接受异常
+     * @throws IOException                         IO 异常
      */
     @Override
     public void handleReturnValue(Object returnValue,
@@ -168,27 +168,24 @@ public class GlobalResponseHandler extends RequestResponseBodyMethodProcessor im
                                   @NonNull NativeWebRequest webRequest) throws HttpMediaTypeNotAcceptableException, IOException {
         Object result = returnValue;
         Class<?> methodReturnType = Objects.requireNonNull(returnType.getMethod()).getReturnType();
+        HttpServletRequest request = SpringUtils.getHttpServletRequest();
         try {
             if (result != null && result.getClass() == ResponseEntity.class || methodReturnType == ResponseEntity.class) {
                 if (returnType.getContainingClass() == GlobalExceptionHandler.class) {
                     // 已在全局异常处理过了，直接返回
                     result = this.getResponseEntityBody(false, result);
                     return;
-                } else if (returnType.getContainingClass() == BasicErrorController.class) {
+                } else if (returnType.getContainingClass() == BasicErrorController.class && request != null) {
                     // 是否是 404 Not Found
-                    HttpServletRequest request = SpringUtils.getHttpServletRequest();
-                    if (request != null) {
-                        Throwable exception = new NoHandlerFoundException(request.getMethod(), request.getRequestURI(),
-                                new ServletServerHttpRequest(request).getHeaders());
-                        result = this.processFail(exception);
-                        return;
-                    }
+                    Throwable exception = new NoHandlerFoundException(request.getMethod(), request.getRequestURI(),
+                            new ServletServerHttpRequest(request).getHeaders());
+                    result = this.processFail(exception);
+                    return;
                 }
                 // 其他 Web 资源信息
                 result = this.getResponseEntityBody(true, result);
                 return;
             }
-            HttpServletRequest request = SpringUtils.getHttpServletRequest();
             if (request != null) {
                 Object exception = request.getAttribute(GlobalExceptionHandler.class.getName());
                 if (exception != null) {
