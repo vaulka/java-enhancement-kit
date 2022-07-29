@@ -3,7 +3,7 @@ package com.pongsky.kit.cache.redis.web.aspect.before;
 import com.pongsky.kit.cache.redis.handler.RateLimitHandler;
 import com.pongsky.kit.cache.redis.properties.RateLimitProperties;
 import com.pongsky.kit.cache.redis.service.RateLimitService;
-import com.pongsky.kit.ip.utils.IpUtils;
+import com.pongsky.kit.common.utils.IpUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
