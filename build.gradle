@@ -53,6 +53,8 @@ ext {
     springDocVersion = "1.6.8"
     // Swagger UI 美化 by SpringFox
     springFoxVersion = "3.0.0"
+    // IP 地址解析
+    ip2regionVersion = "2.6.5"
     // 阿里云 OSS SDK
     aliyunSdkOssVersion = "3.14.0"
     // 阿里云 Core SDK
@@ -78,7 +80,7 @@ allprojects {
     targetCompatibility = 8
 
     group "com.pongsky.kit"
-    version "4.1.1-2.4.13"
+    version "4.1.2-2.4.13"
 
     repositories {
         mavenLocal()

@@ -82,8 +82,6 @@ signing {
 }
 
 dependencies {
-    api project(":ip:ip-utils")
-
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 

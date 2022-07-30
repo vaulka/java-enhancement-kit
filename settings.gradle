@@ -78,8 +78,8 @@ findProject(":validation:validation-utils")?.name = "validation-utils"
 include "kit-ip"
 findProject(":kit-ip")?.name = "ip"
 
-include "ip:ip-utils"
-findProject(":ip:ip-utils")?.name = "ip-utils"
+include "ip:spring-boot-starter-ip"
+findProject(":ip:spring-boot-starter-ip")?.name = "spring-boot-starter-ip"
 
 include "kit-system"
 findProject(":kit-system")?.name = "system"

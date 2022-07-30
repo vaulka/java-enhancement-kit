@@ -6,7 +6,7 @@ import com.pongsky.kit.cache.redis.annotation.PreventDuplication;
 import com.pongsky.kit.cache.redis.handler.PreventDuplicationHandler;
 import com.pongsky.kit.common.exception.FrequencyException;
 import com.pongsky.kit.common.utils.HttpServletRequestUtils;
-import com.pongsky.kit.ip.utils.IpUtils;
+import com.pongsky.kit.common.utils.IpUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

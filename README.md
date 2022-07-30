@@ -62,7 +62,7 @@
 
 |模块|介绍|
 |---|---|
-|[ip-utils](kit-ip/ip-utils/README.md)|IP Utils 模块|
+|[spring-boot-starter-ip](kit-ip/spring-boot-starter-ip/README.md)|IP Spring Boot Starter 模块|
 
 ## kit-sms 短信模块
 
