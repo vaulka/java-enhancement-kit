@@ -26,6 +26,9 @@ public class ParseResultUtils {
      * @return 解析数据
      */
     public static Object parseFieldValue(Field field, String attrs, Object result) {
+        if (result == null) {
+            return null;
+        }
         Object fieldValue = ReflectUtils.getValue(result, field);
         return ParseResultUtils.parseFieldValue(attrs, fieldValue);
     }
@@ -38,6 +41,9 @@ public class ParseResultUtils {
      * @return 解析数据
      */
     public static Object parseFieldValue(String attrs, Object result) {
+        if (result == null) {
+            return null;
+        }
         if (StringUtils.isNotBlank(attrs)) {
             result = ParseResultUtils.parseFieldValueByAttrs(attrs, result);
         }
